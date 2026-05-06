@@ -3,10 +3,11 @@ import Link from 'next/link'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import { OfferFAQ } from '@/components/offer/OfferFAQ'
+import { BackButton } from '@/components/BackButton'
 import { isCourseActive } from '@/config/feature-flags'
 
 export const metadata: Metadata = {
-  title: 'Выбери формат — HAIRLAB',
+  title: 'Выбери формат - HAIRLAB',
   description: 'Два формата восстановления волос: Full Course (39€) и KM Guide (13€).',
 }
 
@@ -45,10 +46,12 @@ export default function OfferPage() {
       <main className="bg-[var(--color-bg)] pt-20 md:pt-24 pb-24 px-5">
         <div className="max-w-5xl mx-auto">
 
+          <BackButton />
+
           {/* Page header */}
           <div className="text-center mb-16">
             <p className="text-[11px] font-medium tracking-[3px] uppercase text-[var(--color-text-muted)] mb-4">
-              HAIRLAB
+              KM
             </p>
             <h1 className="font-display text-2xl md:text-4xl font-medium text-[var(--color-text)] mb-4 text-balance">
               Два формата. Одна система.
@@ -58,13 +61,13 @@ export default function OfferPage() {
             </p>
           </div>
 
-          {/* Emotional block 1 — результат */}
+          {/* Emotional block 1 - результат */}
           <div className="bg-[var(--color-bg-dark)] text-[var(--color-text-on-dark)] rounded-[var(--radius-xl)] px-6 md:px-12 py-10 mb-6">
             <p className="text-[11px] font-medium tracking-[3px] uppercase text-[var(--color-text-muted)] mb-3">
               р е з у л ь т а т
             </p>
             <h2 className="font-display text-xl md:text-2xl font-medium mb-4 text-balance leading-snug">
-              Гладкие, плотные волосы — это не генетика. Это система.
+              Гладкие, плотные волосы - это не генетика. Это система.
             </h2>
             <p className="text-sm md:text-base leading-relaxed text-[var(--color-text-on-dark)] opacity-80 max-w-xl">
               Они всегда выглядят дорого. Без сложной укладки, без идеального цвета, даже в обычном хвосте.
@@ -74,7 +77,7 @@ export default function OfferPage() {
             </p>
           </div>
 
-          {/* Emotional block 2 — доступность */}
+          {/* Emotional block 2 - доступность */}
           <div className="bg-[var(--color-bg-warm)] border border-[var(--color-border)] rounded-[var(--radius-xl)] px-6 md:px-12 py-10 mb-16">
             <p className="text-[11px] font-medium tracking-[3px] uppercase text-[var(--color-text-muted)] mb-3">
               д о с т у п н о с т ь
@@ -83,7 +86,7 @@ export default function OfferPage() {
               Салонное восстановление работает. Но не у всех есть на него 200€ в месяц.
             </h2>
             <p className="text-sm md:text-base leading-relaxed text-[var(--color-text-soft)] max-w-xl">
-              Профессиональные процедуры дают результат, если делать их регулярно. Но ходить каждые 3–4 недели —
+              Профессиональные процедуры дают результат, если делать их регулярно. Но ходить каждые 3–4 недели -
               это и деньги, и время. Не у всех рядом мастер, которому доверяешь. HAIRLAB создан для тех, кто
               хочет ухаживать за волосами дома осознанно. Понимать, что происходит. Не покупать лишнее.
               Собрать протокол и поддерживать качество волос между визитами в салон или вместо них.
@@ -93,7 +96,7 @@ export default function OfferPage() {
           {/* Product cards */}
           <div className="grid md:grid-cols-2 gap-6 mb-8 items-start">
 
-            {/* Full Course — visually larger */}
+            {/* Full Course - visually larger */}
             <div className="relative bg-[var(--color-surface)] border-2 border-[var(--color-accent)] rounded-[var(--radius-xl)] p-8 shadow-[var(--shadow-lg)]">
               <span className="absolute -top-3 left-6 bg-[var(--color-accent)] text-white text-[11px] font-medium px-3 py-1 rounded-full">
                 Полный формат
@@ -108,7 +111,7 @@ export default function OfferPage() {
               <ul className="space-y-3 mb-8">
                 {[
                   { title: '5 видеоуроков от Елены', desc: 'Пошаговое обучение на реальных примерах. 10–15 минут каждый.' },
-                  { title: 'AI-диагностика по фото', desc: 'Загрузи фото — система покажет степень повреждения.' },
+                  { title: 'AI-диагностика по фото', desc: 'Загрузи фото - система покажет степень повреждения.' },
                   { title: 'Личный кабинет', desc: 'Видишь, где остановилась. Возвращаешься в любой момент.' },
                   { title: 'Персональный протокол', desc: 'На основе твоих ответов и AI-анализа.' },
                   { title: 'KM Guide включён', desc: 'PDF-карта ухода (32 стр.) уже входит в курс.' },
@@ -128,17 +131,17 @@ export default function OfferPage() {
                 ))}
               </ul>
               <p className="text-xs text-[var(--color-text-muted)] mb-4">
-                Одна покупка — полный доступ. Без подписок, без доплат.
+                Одна покупка - полный доступ. Без подписок, без доплат.
               </p>
               <Link
                 href="/checkout?product=course"
                 className="block text-center bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white font-medium px-6 py-4 rounded-[var(--radius-full)] transition-colors text-sm"
               >
-                {courseActive ? 'Получить полный доступ — 39€' : 'Оформить предзаказ — 39€'}
+                {courseActive ? 'Получить полный доступ - 39€' : 'Оформить предзаказ - 39€'}
               </Link>
             </div>
 
-            {/* KM Guide — compact */}
+            {/* KM Guide - compact */}
             <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[var(--radius-xl)] p-7">
               <span className="inline-block bg-[var(--color-bg-warm)] text-[var(--color-text-soft)] text-[11px] font-medium px-3 py-1 rounded-full mb-4">
                 Лёгкий старт
@@ -171,17 +174,9 @@ export default function OfferPage() {
                 href="/checkout?product=guide"
                 className="block text-center bg-[var(--color-bg-dark)] hover:opacity-90 text-[var(--color-text-on-dark)] font-medium px-6 py-4 rounded-[var(--radius-full)] transition-opacity text-sm"
               >
-                Начать с KM Guide — 13€
+                Начать с KM Guide - 13€
               </Link>
             </div>
-          </div>
-
-          {/* Hint */}
-          <div className="bg-[var(--color-accent-soft)] border border-[var(--color-border)] rounded-[var(--radius-lg)] px-6 py-4 mb-20 text-center max-w-2xl mx-auto">
-            <p className="text-sm text-[var(--color-text-soft)] leading-relaxed">
-              Не уверена, какой формат выбрать? Начни с KM Guide. Он даст базу и покажет, подходит ли тебе подход Елены.
-              Если потом решишь перейти на полный курс, стоимость гайда учтётся.
-            </p>
           </div>
 
           {/* Comparison table */}

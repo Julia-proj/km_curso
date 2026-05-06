@@ -74,7 +74,7 @@ export function HeroSection() {
         >
           <Image
             src="/images/hair-hero.webp"
-            alt="Здоровые ухоженные волосы"
+            alt="красивые здоровые волосы"
             width={600}
             height={750}
             priority
@@ -83,7 +83,7 @@ export function HeroSection() {
           {/* Placeholder badge - remove when real photo is added */}
           <div className="absolute inset-0 flex items-center justify-center">
             <p className="text-text-soft text-xs tracking-widest uppercase">
-              фото Елены
+              Фото скоро
             </p>
           </div>
         </motion.div>

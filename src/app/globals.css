@@ -1,31 +1,48 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* Фоны */
-  --color-bg: #FAF7F4;
-  --color-bg-warm: #F3ECE4;
-  --color-bg-dark: #1A1613;
-  --color-surface: #FFFFFF;
+  --font-display: var(--font-display-face), Georgia, serif;
+  --font-sans: var(--font-body-face), Inter, system-ui, sans-serif;
+  --font-body: var(--font-body-face), Inter, system-ui, sans-serif;
 
-  /* Текст */
-  --color-text: #1A1613;
-  --color-text-soft: #6B5E54;
-  --color-text-muted: #A89B91;
-  --color-text-on-dark: #FAF7F4;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--primary-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-rose: var(--rose);
+  --color-sand: var(--sand);
+  --color-cocoa: var(--cocoa);
+  --color-cream: var(--cream);
 
-  /* Акценты */
-  --color-accent: #C4956A;
-  --color-accent-hover: #B07E52;
-  --color-accent-soft: #F0E4D8;
-  --color-rose: #D4A0A0;
-  --color-rose-soft: #F2E0E0;
+  --color-bg: var(--background);
+  --color-bg-warm: var(--sand);
+  --color-bg-dark: var(--primary);
+  --color-surface: var(--card);
+  --color-text: var(--foreground);
+  --color-text-soft: var(--muted-foreground);
+  --color-text-muted: oklch(0.63 0.02 42);
+  --color-text-on-dark: var(--primary-foreground);
+  --color-accent-hover: var(--cocoa);
+  --color-accent-soft: oklch(0.9 0.025 28);
+  --color-rose-soft: oklch(0.92 0.024 22);
+  --color-success: oklch(0.62 0.11 140);
+  --color-error: oklch(0.58 0.15 25);
 
-  /* Утилитарные */
-  --color-border: #E8DDD4;
-  --color-success: #7BAF6E;
-  --color-error: #C76B6B;
-
-  /* Скругления */
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
@@ -38,10 +55,106 @@
   --shadow-lg: 0 8px 24px rgba(26, 22, 19, 0.08);
 }
 
+:root {
+  --radius: 1rem;
+  --background: oklch(0.965 0.012 70);
+  --foreground: oklch(0.235 0.018 35);
+  --cream: oklch(0.965 0.012 70);
+  --sand: oklch(0.905 0.022 65);
+  --rose: oklch(0.86 0.035 25);
+  --cocoa: oklch(0.32 0.025 35);
+  --card: oklch(0.98 0.008 70);
+  --card-foreground: oklch(0.235 0.018 35);
+  --popover: oklch(0.98 0.008 70);
+  --primary: oklch(0.235 0.018 35);
+  --primary-foreground: oklch(0.97 0.012 70);
+  --secondary: oklch(0.92 0.025 50);
+  --secondary-foreground: oklch(0.25 0.018 35);
+  --muted: oklch(0.93 0.018 60);
+  --muted-foreground: oklch(0.45 0.02 40);
+  --accent: oklch(0.84 0.045 22);
+  --accent-foreground: oklch(0.235 0.018 35);
+  --destructive: oklch(0.55 0.18 25);
+  --border: oklch(0.85 0.018 50 / 0.5);
+  --input: oklch(0.85 0.018 50);
+  --ring: oklch(0.7 0.04 30);
+  --gradient-nude: linear-gradient(
+    135deg,
+    oklch(0.93 0.022 65),
+    oklch(0.88 0.035 22)
+  );
+  --gradient-soft: radial-gradient(
+    ellipse at top,
+    oklch(0.92 0.04 25 / 0.5),
+    transparent 70%
+  );
+  --shadow-soft: 0 30px 80px -40px oklch(0.4 0.05 30 / 0.3);
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  font-family: var(--font-body);
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body-face), Inter, system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "ss01", "cv11";
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display-face), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.05;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--foreground);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .grain {
+    position: relative;
+  }
+
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 0.3 0 0 0 0 0.2 0 0 0 0 0.15 0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.5'/></svg>");
+    opacity: 0.07;
+    mix-blend-mode: multiply;
+  }
+
+  .marquee {
+    animation: marquee 40s linear infinite;
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(-50%);
+    }
+  }
 }

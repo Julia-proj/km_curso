@@ -2,6 +2,7 @@ export interface QuizOption {
   id: string
   label: string
   score: number
+  feedback: string
 }
 
 export interface QuizQuestion {

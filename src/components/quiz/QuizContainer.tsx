@@ -39,7 +39,7 @@ export function QuizContainer() {
       </div>
 
       {/* Fixed-height container prevents CLS during question transitions */}
-      <div style={{ minHeight: '360px' }}>
+      <div style={{ minHeight: '480px' }}>
         <AnimatePresence mode="wait">
           <QuizQuestion
             key={question.id}

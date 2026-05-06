@@ -40,8 +40,8 @@ export const useQuizStore = create<QuizStore>()((set, get) => ({
 
   getDamageLevel: (): DamageLevel => {
     const score = get().getScore()
-    if (score <= 2) return 'low'
-    if (score <= 5) return 'medium'
+    if (score <= 4) return 'low'
+    if (score <= 9) return 'medium'
     return 'high'
   },
 

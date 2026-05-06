@@ -5,27 +5,35 @@ import './globals.css'
 const playfair = Playfair_Display({
   subsets: ['cyrillic', 'latin'],
   weight: ['400', '500', '600'],
-  variable: '--font-display',
+  variable: '--font-display-face',
   display: 'swap',
 })
 
 const inter = Inter({
   subsets: ['cyrillic', 'latin'],
   weight: ['400', '500', '600'],
-  variable: '--font-body',
+  variable: '--font-body-face',
   display: 'swap',
 })
 
 export const metadata: Metadata = {
-  title: 'HAIRLAB - Система восстановления волос',
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
+  title: 'Елена Александрова. Салонное восстановление волос дома',
   description:
-    'Профессиональная система восстановления волос от мастера из Мадрида. Видео-уроки, AI-диагностика, персональный протокол.',
+    'Авторский курс по восстановлению волос в домашних условиях. Подбор составов, протоколы и гайды от практика с 6+ лет опыта.',
+  openGraph: {
+    title: 'Елена Александрова. Салонное восстановление волос дома',
+    description:
+      'Авторский курс по восстановлению волос в домашних условиях. Подбор составов, протоколы и гайды от практика с 6+ лет опыта.',
+    type: 'website',
+    images: ['/images/alchemy-hero.jpg'],
+  },
 }
 
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#FAF7F4',
+  themeColor: '#F7F2EB',
 }
 
 export default function RootLayout({
