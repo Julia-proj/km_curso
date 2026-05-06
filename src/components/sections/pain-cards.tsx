@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import { useInView } from "framer-motion"
 import { useRef } from "react"
+import Image from "next/image"
 
 const painPoints = [
   "Покупаешь маску за 40€. Наносишь по инструкции. Через два дня волосы снова как солома.",
@@ -38,6 +39,24 @@ export function PainCardsSection() {
   return (
     <section ref={ref} className="py-16 md:py-24 px-5">
       <div className="max-w-4xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+          transition={{ duration: 0.6 }}
+          className="flex justify-center mb-8"
+        >
+          <div className="relative w-16 h-16 rounded-full overflow-hidden bg-bg-warm">
+            <Image
+              src="/images/hair-texture.webp"
+              alt=""
+              width={64}
+              height={64}
+              className="object-cover w-full h-full"
+              aria-hidden="true"
+            />
+          </div>
+        </motion.div>
+
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}

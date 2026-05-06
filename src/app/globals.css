@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@theme {
+@theme inline {
   /* Фоны */
   --color-bg: #FAF7F4;
   --color-bg-warm: #F3ECE4;
@@ -24,10 +24,6 @@
   --color-border: #E8DDD4;
   --color-success: #7BAF6E;
   --color-error: #C76B6B;
-
-  /* Шрифты */
-  --font-display: var(--font-playfair);
-  --font-body: var(--font-inter);
 
   /* Скругления */
   --radius-sm: 8px;

@@ -4,20 +4,20 @@ import './globals.css'
 
 const playfair = Playfair_Display({
   subsets: ['cyrillic', 'latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-playfair',
+  weight: ['400', '500', '600'],
+  variable: '--font-display',
   display: 'swap',
 })
 
 const inter = Inter({
   subsets: ['cyrillic', 'latin'],
   weight: ['400', '500', '600'],
-  variable: '--font-inter',
+  variable: '--font-body',
   display: 'swap',
 })
 
 export const metadata: Metadata = {
-  title: 'HAIRLAB - Домашняя система восстановления волос',
+  title: 'HAIRLAB - Система восстановления волос',
   description:
     'Профессиональная система восстановления волос от мастера из Мадрида. Видео-уроки, AI-диагностика, персональный протокол.',
 }
@@ -34,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="ru" className={`${playfair.variable} ${inter.variable} bg-bg`}>
+    <html lang="ru" className={`${playfair.variable} ${inter.variable}`}>
       <body>{children}</body>
     </html>
   )
