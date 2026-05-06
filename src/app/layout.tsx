@@ -34,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="ru" className={`${playfair.variable} ${inter.variable}`}>
+    <html lang="ru" className={`${playfair.variable} ${inter.variable} bg-bg`}>
       <body>{children}</body>
     </html>
   )

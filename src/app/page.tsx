@@ -1,17 +1,29 @@
+import { Header } from "@/components/header"
+import { HeroSection } from "@/components/sections/hero"
+import { PainCardsSection } from "@/components/sections/pain-cards"
+import { WhyAdviceSection } from "@/components/sections/why-advice"
+import { ProductsDontSaveSection } from "@/components/sections/products-dont-save"
+import { SystemComparisonSection } from "@/components/sections/system-comparison"
+import { OfferSection } from "@/components/sections/offer"
+import { ComparisonTableSection } from "@/components/sections/comparison-table"
+import { FAQSection } from "@/components/sections/faq"
+import { Footer } from "@/components/footer"
+
 export default function HomePage() {
   return (
-    <main className="min-h-screen flex items-center justify-center bg-bg">
-      <div className="text-center">
-        <p className="text-text-muted text-[11px] font-medium tracking-[3px] uppercase mb-4">
-          h a i r l a b
-        </p>
-        <h1 className="font-display text-4xl font-medium text-text">
-          Проект запущен
-        </h1>
-        <p className="mt-4 text-text-soft text-sm">
-          Keratin Madrid
-        </p>
-      </div>
-    </main>
+    <>
+      <Header />
+      <main>
+        <HeroSection />
+        <PainCardsSection />
+        <WhyAdviceSection />
+        <ProductsDontSaveSection />
+        <SystemComparisonSection />
+        <OfferSection />
+        <ComparisonTableSection />
+        <FAQSection />
+      </main>
+      <Footer />
+    </>
   )
 }
