@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     description:
       'Авторский курс по восстановлению волос в домашних условиях. Подбор составов, протоколы и гайды от практика с 6+ лет опыта.',
     type: 'website',
-    images: ['/images/alchemy-hero.jpg'],
+    images: ['/images/hero.png'],
   },
 }
 

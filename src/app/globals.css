@@ -144,6 +144,14 @@ h4 {
     mix-blend-mode: multiply;
   }
 
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
   .marquee {
     animation: marquee 40s linear infinite;
   }

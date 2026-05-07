@@ -13,7 +13,6 @@ import {
   marqueeItems,
   principleCards,
   problemItems,
-  resultImages,
 } from "@/config/landing-content"
 import {
   ArrowUpRightIcon,
@@ -190,15 +189,54 @@ function Hero() {
                 fill
                 priority
                 sizes="(min-width: 1024px) 38vw, 100vw"
-                src="/images/alchemy-hero.jpg"
+                src="/images/hero.png"
               />
             </motion.div>
+
+            {/* До · После */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.1, duration: 0.8, ease }}
+              className="absolute top-5 left-5 z-10"
+            >
+              <div
+                className="flex gap-2.5 rounded-2xl p-2.5"
+                style={{
+                  background: "rgba(250,246,240,0.88)",
+                  backdropFilter: "blur(12px)",
+                  border: "1px solid rgba(255,255,255,0.9)",
+                  boxShadow: "0 16px 48px -12px rgba(50,25,15,0.5)",
+                }}
+              >
+                <div className="relative rounded-xl overflow-hidden" style={{ width: 78, height: 108 }}>
+                  <Image
+                    src="/images/beforeafter2.jpg"
+                    alt="До"
+                    fill
+                    sizes="78px"
+                    className="object-contain"
+                  />
+                </div>
+                <div className="relative rounded-xl overflow-hidden" style={{ width: 78, height: 108 }}>
+                  <Image
+                    src="/images/beforeafter3.jpeg"
+                    alt="После"
+                    fill
+                    sizes="78px"
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+            </motion.div>
           </div>
+
+          {/* Метод — скрыт на мобиле, виден только на десктопе */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 1, duration: 0.6 }}
-            className="absolute -bottom-6 -left-2 max-w-[240px] rounded-2xl border border-border bg-cream p-5 shadow-[0_30px_80px_-40px_rgba(80,40,30,0.3)] md:-left-12"
+            className="absolute -bottom-6 -left-12 hidden max-w-[220px] rounded-2xl border border-border bg-cream p-5 shadow-[0_30px_80px_-40px_rgba(80,40,30,0.3)] md:block"
           >
             <div className="mb-2 text-xs uppercase tracking-[0.18em] text-muted-foreground">
               Метод
@@ -258,31 +296,31 @@ function PainSection() {
 function About() {
   return (
     <section id="about" className="bg-sand/50 px-5 py-28 md:px-10">
-      <div className="mx-auto grid max-w-[1300px] items-start gap-14 lg:grid-cols-12">
+      <div className="mx-auto grid max-w-[1300px] items-start gap-10 lg:grid-cols-12">
         <motion.div
           {...fadeUp()}
-          className="lg:sticky lg:top-32 lg:col-span-5"
+          className="lg:col-span-3"
         >
-          <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
+          <div className="relative aspect-square overflow-hidden rounded-2xl max-w-[220px]">
             <Image
               alt="Елена Александрова"
-              className="object-cover"
+              className="object-cover object-top"
               fill
-              sizes="(min-width: 1024px) 38vw, 100vw"
-              src="/images/alchemy-elena.jpg"
+              sizes="220px"
+              src="/images/foto2.png"
             />
           </div>
-          <div className="mt-6">
+          <div className="mt-4">
             <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
               Автор курса
             </div>
-            <div className="mt-1 font-display text-2xl">
+            <div className="mt-1 font-display text-xl">
               Елена Александрова
             </div>
           </div>
         </motion.div>
 
-        <div className="lg:col-span-7">
+        <div className="lg:col-span-9">
           <motion.h2
             {...fadeUp()}
             className="text-balance text-[1.8rem] md:text-[2.5rem] xl:text-[3rem]"
@@ -498,11 +536,27 @@ function WhatYouGet() {
   )
 }
 
+const reels = [
+  { id: "DMZ0aAzNxnS" },
+  { id: "DJuJTRNNhrm" },
+  { id: "DIDm-r5t-UT" },
+  { id: "DWEygVggtYT" },
+  { id: "DTTToGojHWE" },
+]
+
+function IgIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+    </svg>
+  )
+}
+
 function Results() {
   return (
-    <section className="bg-accent/30 px-5 py-28 md:px-10">
-      <div className="mx-auto grid max-w-[1300px] items-center gap-12 lg:grid-cols-12">
-        <motion.div {...fadeUp()} className="lg:col-span-7">
+    <section className="bg-accent/30 py-28">
+      <div className="mx-auto max-w-[1300px] px-5 md:px-10">
+        <motion.div {...fadeUp()} className="mb-12">
           <div className="mb-4 text-xs uppercase tracking-[0.25em] text-muted-foreground">
             Доказательства
           </div>
@@ -515,33 +569,55 @@ function Results() {
             восстановили и отрастили
             <br /> свои волосы.
           </h2>
-          <p className="mt-8 max-w-xl text-lg text-muted-foreground">
-            На курсе: реальные кейсы, фото «до/после», результаты учениц и
-            отзывы из Instagram.
+          <p className="mt-6 max-w-xl text-lg text-muted-foreground">
+            Реальные результаты. Смотри видео прямо здесь или переходи в Instagram.
           </p>
         </motion.div>
-        <div className="grid grid-cols-2 gap-4 lg:col-span-5">
-          {resultImages.map((image, index) => (
-            <motion.div
-              key={`${image.src}-${index}`}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.6 }}
-              className={`relative aspect-[4/5] overflow-hidden rounded-2xl ${
-                index % 2 ? "translate-y-8" : ""
-              }`}
+      </div>
+
+      {/*
+        Горизонтальный скролл карточек.
+        Каждая карточка — iframe с явными пиксельными размерами.
+        Instagram адаптирует плеер под размер iframe без искажений.
+        Последний пустой div даёт правый отступ при скролле до конца.
+      */}
+      <div className="no-scrollbar flex gap-4 overflow-x-auto snap-x snap-mandatory px-5 md:px-10">
+        {reels.map(({ id }, index) => (
+          <motion.div
+            key={id}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: index * 0.08, duration: 0.6 }}
+            className="shrink-0 snap-start flex flex-col gap-3 pb-4"
+          >
+            <div
+              className="rounded-2xl border border-border/40 overflow-hidden bg-sand"
+              style={{ width: 300, height: 534 }}
             >
-              <Image
-                alt={image.alt}
-                className="object-cover"
-                fill
-                sizes="(min-width: 1024px) 18vw, 50vw"
-                src={image.src}
+              <iframe
+                src={`https://www.instagram.com/reel/${id}/embed/`}
+                width={300}
+                height={534}
+                style={{ border: "none", display: "block" }}
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                loading="lazy"
+                title={`Отзыв клиента ${index + 1}`}
               />
-            </motion.div>
-          ))}
-        </div>
+            </div>
+            <a
+              href={`https://www.instagram.com/reel/${id}/`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors py-1"
+            >
+              <IgIcon />
+              Открыть в Instagram
+            </a>
+          </motion.div>
+        ))}
+        {/* правый отступ после последней карточки */}
+        <div className="shrink-0 w-5 md:w-10" aria-hidden="true" />
       </div>
     </section>
   )
