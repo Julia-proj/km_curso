@@ -70,22 +70,53 @@ export function HeroSection() {
           initial={{ opacity: 0, scale: 0.97 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.15 }}
-          className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-bg-warm hidden md:block"
+          className="relative mt-8 md:mt-0 w-full aspect-[4/5] sm:aspect-[3/4] max-w-[360px] md:max-w-md mx-auto"
         >
-          <Image
-            src="/images/hair-hero.webp"
-            alt="красивые здоровые волосы"
-            width={600}
-            height={750}
-            priority
-            className="object-cover w-full h-full"
-          />
-          {/* Placeholder badge - remove when real photo is added */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <p className="text-text-soft text-xs tracking-widest uppercase">
-              Фото скоро
-            </p>
+          {/* Main photo — overflow-hidden only here for rounded corners */}
+          <div className="relative w-full h-full rounded-[2rem] overflow-hidden bg-bg-warm">
+            <Image
+              src="/images/hair-hero.webp"
+              alt="красивые здоровые волосы"
+              fill
+              priority
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
           </div>
+
+          {/* Floating Collage 1 — top of the pair */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="absolute bottom-[5.5rem] right-3 md:bottom-auto md:top-10 md:right-3 w-14 md:w-20 rounded-xl overflow-hidden shadow-2xl border-2 border-white/80"
+          >
+            <Image
+              src="/images/beforeafter2.jpg"
+              alt="результат до и после"
+              width={320}
+              height={400}
+              className="w-full h-auto"
+              sizes="(max-width: 768px) 56px, 80px"
+            />
+          </motion.div>
+
+          {/* Floating Collage 2 — bottom of the pair */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="absolute bottom-3 right-3 md:bottom-auto md:top-[7.5rem] md:right-3 w-14 md:w-20 rounded-xl overflow-hidden shadow-2xl border-2 border-white/80"
+          >
+            <Image
+              src="/images/beforeafter3.jpeg"
+              alt="результат до и после"
+              width={320}
+              height={400}
+              className="w-full h-auto"
+              sizes="(max-width: 768px) 56px, 80px"
+            />
+          </motion.div>
         </motion.div>
 
       </div>

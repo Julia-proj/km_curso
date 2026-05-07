@@ -198,7 +198,7 @@ export default function OfferPage() {
               </div>
               <Link
                 href="/checkout?product=guide"
-                className="block text-center bg-[var(--color-bg-dark)] hover:opacity-90 text-[var(--color-text-on-dark)] font-medium px-6 py-4 rounded-[var(--radius-full)] transition-opacity text-sm"
+                className="block text-center border border-border text-foreground hover:bg-sand/60 font-medium px-6 py-4 rounded-[var(--radius-full)] transition-colors text-sm"
               >
                 Начать с HAIRLAB Guide - 13€
               </Link>

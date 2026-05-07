@@ -25,8 +25,7 @@ export const authorPoints = [
 
 export const forYouItems = [
   "устала ходить по разным салонам, отдавая за процедуры от 100€, а результат не устраивает",
-  "не понимаешь, какой у тебя тип кожи головы и состояние волос",
-  "не знаешь, какой домашний уход подобрать",
+  "не понимаешь, какой у тебя тип кожи головы и состояние волос — и не знаешь, какой домашний уход подобрать",
   "устала покупать дорогие средства по советам блогеров и ChatGPT, а результата нет",
   "чувствуешь, что совершаешь ошибки, и волосы становятся хуже с каждым месяцем",
   "думаешь, что натуральным волосам не нужно восстановление, но видишь ломкость",
@@ -111,6 +110,67 @@ export const resultImages = [
   { src: "/images/alchemy-hero.jpg", alt: "восстановленный блонд" },
   { src: "/images/alchemy-elena.jpg", alt: "Елена Александрова" },
   { src: "/images/alchemy-hair-texture.jpg", alt: "блеск и плотность волос" },
+] as const
+
+export const instagramReels = [
+  {
+    id: "DMZ0aAzNxnS",
+    href: "https://www.instagram.com/reel/DMZ0aAzNxnS/?igsh=MXRxNWo4bzE0NmZoZA==",
+    tag: "Отзыв",
+    title: "Отзыв из Instagram",
+    description: "Скрин из Reels: реальный результат и живой формат доказательства.",
+    image: "/images/rev1.png",
+    alt: "Скриншот отзыва из Instagram Reels",
+    objectPosition: "50% 50%",
+  },
+  {
+    id: "DJuJTRNNhrm",
+    href: "https://www.instagram.com/reel/DJuJTRNNhrm/?igsh=NnB1dDN6YXM1bm1p",
+    tag: "Reel",
+    title: "Результат клиентки",
+    description: "Видео в Instagram с результатом и состоянием волос после ухода.",
+    image: "/images/rev2.png",
+    alt: "Скриншот результата клиентки из Instagram Reels",
+    objectPosition: "50% 50%",
+  },
+  {
+    id: "DIDm-r5t-UT",
+    href: "https://www.instagram.com/reel/DIDm-r5t-UT/?igsh=MXZ2aHpmMnRrdmwxNQ==",
+    tag: "Отзыв",
+    title: "История ученицы",
+    description: "Живой отзыв о подходе, результате и понятной системе восстановления.",
+    image: "/images/rev3.png",
+    alt: "Скриншот истории ученицы из Instagram Reels",
+    objectPosition: "50% 50%",
+  },
+  {
+    id: "DWEygVggtYT",
+    href: "https://www.instagram.com/reel/DWEygVggtYT/?igsh=Y3kydWV4eDYxbWRv",
+    tag: "Блонд",
+    title: "Работа с длиной",
+    description: "Кейс про блонд без сухости и результат после правильно подобранного протокола.",
+    image: "/images/rev4.png",
+    alt: "Скриншот Reels про восстановление блонда",
+    objectPosition: "50% 50%",
+  },
+  {
+    id: "DTTToGojHWE",
+    href: "https://www.instagram.com/reel/DTTToGojHWE/?igsh=MTltYXk2Y3UzcnFrYw==",
+    tag: "Студия",
+    title: "Процесс и доверие",
+    description: "Видео из Instagram, где видно подход студии и реальные материалы курса.",
+    image: "/images/rev5.png",
+    alt: "Скриншот процесса из Instagram Reels",
+    objectPosition: "50% 50%",
+  },
+] as const
+
+export const courseFeatures = [
+  { title: "AI-диагностика по фото", desc: "Загрузи фото - система покажет степень повреждения.", soon: true },
+  { title: "Личный кабинет", desc: "Видишь, где остановилась. Возвращаешься в любой момент.", soon: false },
+  { title: "Персональный протокол", desc: "На основе твоих ответов и AI-анализа.", soon: false },
+  { title: "Hairlab Guide включён", desc: "PDF-карта ухода (32 стр.) уже входит в курс.", soon: false },
+  { title: "Чек-листы и дополнительные материалы", desc: "", soon: false },
 ] as const
 
 export const faqItems = [

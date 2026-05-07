@@ -25,15 +25,15 @@ export default function LessonPage() {
             Как разобраться, что происходит с твоими волосами
           </h1>
 
-          {/* Dailymotion embed — responsive 16:9 */}
+          {/* YouTube embed — responsive 16:9 */}
           <div
             className="w-full rounded-[var(--radius-xl)] overflow-hidden bg-[var(--color-bg-warm)]"
             style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}
           >
             <iframe
-              src="https://www.dailymotion.com/embed/video/k4YCuWH550CrEeFSrIe"
+              src="https://www.youtube.com/embed/0OYmg4DoXPk?rel=0&vq=hd1080"
               style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
-              allow="autoplay; fullscreen; picture-in-picture"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
               title="Бесплатный урок — HAIRLAB"
             />
