@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Start-Sleep -Seconds 5)",
+      "Bash(Invoke-WebRequest -Uri \"http://localhost:3000\" -UseBasicParsing)",
+      "Bash(Select-Object -First 5)",
+      "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\Julee\\\\OneDrive\\\\Desktop\\\\proyectos_postbootcamp\\\\km_curso\" -Recurse -Directory)",
+      "Bash(Select-Object -First 30 FullName)"
+    ]
+  }
+}

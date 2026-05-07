@@ -8,7 +8,7 @@ import { isCourseActive } from '@/config/feature-flags'
 
 export const metadata: Metadata = {
   title: 'Выбери формат - HAIRLAB',
-  description: 'Два формата восстановления волос: Full Course (39€) и KM Guide (13€).',
+  description: 'Два формата восстановления волос: Full Course (39€) и HAIRLAB Guide (13€).',
 }
 
 const comparisonFeatures = [
@@ -51,45 +51,13 @@ export default function OfferPage() {
           {/* Page header */}
           <div className="text-center mb-16">
             <p className="text-[11px] font-medium tracking-[3px] uppercase text-[var(--color-text-muted)] mb-4">
-              KM
+              HAIRLAB
             </p>
             <h1 className="font-display text-2xl md:text-4xl font-medium text-[var(--color-text)] mb-4 text-balance">
               Два формата. Одна система.
             </h1>
             <p className="text-[var(--color-text-soft)] text-sm md:text-base max-w-xl mx-auto">
               Ты уже прошла диагностику и посмотрела урок. Теперь выбери, как хочешь двигаться дальше.
-            </p>
-          </div>
-
-          {/* Emotional block 1 - результат */}
-          <div className="bg-[var(--color-bg-dark)] text-[var(--color-text-on-dark)] rounded-[var(--radius-xl)] px-6 md:px-12 py-10 mb-6">
-            <p className="text-[11px] font-medium tracking-[3px] uppercase text-[var(--color-text-muted)] mb-3">
-              р е з у л ь т а т
-            </p>
-            <h2 className="font-display text-xl md:text-2xl font-medium mb-4 text-balance leading-snug">
-              Гладкие, плотные волосы - это не генетика. Это система.
-            </h2>
-            <p className="text-sm md:text-base leading-relaxed text-[var(--color-text-on-dark)] opacity-80 max-w-xl">
-              Они всегда выглядят дорого. Без сложной укладки, без идеального цвета, даже в обычном хвосте.
-              Плотность, блеск и гладкость создают тот самый ухоженный вид, который не получается собрать
-              из случайных масок и советов из интернета. Но такой результат начинается не с дорогого средства.
-              Он начинается с понимания: что нужно, в каком порядке и почему.
-            </p>
-          </div>
-
-          {/* Emotional block 2 - доступность */}
-          <div className="bg-[var(--color-bg-warm)] border border-[var(--color-border)] rounded-[var(--radius-xl)] px-6 md:px-12 py-10 mb-16">
-            <p className="text-[11px] font-medium tracking-[3px] uppercase text-[var(--color-text-muted)] mb-3">
-              д о с т у п н о с т ь
-            </p>
-            <h2 className="font-display text-xl md:text-2xl font-medium text-[var(--color-text)] mb-4 text-balance leading-snug">
-              Салонное восстановление работает. Но не у всех есть на него 200€ в месяц.
-            </h2>
-            <p className="text-sm md:text-base leading-relaxed text-[var(--color-text-soft)] max-w-xl">
-              Профессиональные процедуры дают результат, если делать их регулярно. Но ходить каждые 3–4 недели -
-              это и деньги, и время. Не у всех рядом мастер, которому доверяешь. HAIRLAB создан для тех, кто
-              хочет ухаживать за волосами дома осознанно. Понимать, что происходит. Не покупать лишнее.
-              Собрать протокол и поддерживать качество волос между визитами в салон или вместо них.
             </p>
           </div>
 
@@ -108,28 +76,59 @@ export default function OfferPage() {
               <p className="text-sm text-[var(--color-text-soft)] mb-6 leading-relaxed">
                 Для тех, кому нужен не просто гайд, а пошаговый маршрут. С видео, AI-анализом и персональным протоколом.
               </p>
-              <ul className="space-y-3 mb-8">
-                {[
-                  { title: '5 видеоуроков от Елены', desc: 'Пошаговое обучение на реальных примерах. 10–15 минут каждый.' },
-                  { title: 'AI-диагностика по фото', desc: 'Загрузи фото - система покажет степень повреждения.' },
-                  { title: 'Личный кабинет', desc: 'Видишь, где остановилась. Возвращаешься в любой момент.' },
-                  { title: 'Персональный протокол', desc: 'На основе твоих ответов и AI-анализа.' },
-                  { title: 'KM Guide включён', desc: 'PDF-карта ухода (32 стр.) уже входит в курс.' },
-                  { title: 'Чек-листы и дополнительные материалы', desc: '' },
-                ].map((item) => (
-                  <li key={item.title} className="flex gap-3">
-                    <span className="text-[var(--color-accent)] mt-0.5 shrink-0">
-                      <CheckIcon />
-                    </span>
-                    <div>
-                      <span className="text-sm font-medium text-[var(--color-text)]">{item.title}</span>
-                      {item.desc && (
-                        <p className="text-xs text-[var(--color-text-muted)] mt-0.5 leading-relaxed">{item.desc}</p>
-                      )}
-                    </div>
-                  </li>
-                ))}
-              </ul>
+              <div className="mb-8 space-y-5">
+                {/* Video lessons */}
+                <div>
+                  <p className="text-sm font-medium text-[var(--color-text)] mb-2">Видео-уроки:</p>
+                  <ul className="space-y-1.5 mb-2">
+                    {[
+                      'как правильно диагностировать состояние волос',
+                      'какие типы повреждений бывают',
+                      'какие составы действительно работают',
+                      'как подобрать правильный домашний уход',
+                      'какие ошибки нельзя допускать',
+                      'как восстановить даже сильно повреждённый блонд',
+                    ].map((point) => (
+                      <li key={point} className="flex gap-2 text-sm text-[var(--color-text-soft)]">
+                        <span className="mt-2 size-1.5 shrink-0 rounded-full bg-[var(--color-accent)]" />
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="text-xs text-[var(--color-text-muted)] leading-relaxed">
+                    Отдельный урок: разбор восстановления натуральных волос, составы и этапы. Пошагово на себе и моделях: пилинг, мытьё, кондиционер, маски, несмываемые, сушка феном.
+                  </p>
+                </div>
+                {/* Feature items */}
+                <ul className="space-y-3">
+                  {[
+                    { title: 'AI-диагностика по фото', desc: 'Загрузи фото - система покажет степень повреждения.', soon: true },
+                    { title: 'Личный кабинет', desc: 'Видишь, где остановилась. Возвращаешься в любой момент.', soon: false },
+                    { title: 'Персональный протокол', desc: 'На основе твоих ответов и AI-анализа.', soon: false },
+                    { title: 'Hairlab Guide включён', desc: 'PDF-карта ухода (32 стр.) уже входит в курс.', soon: false },
+                    { title: 'Чек-листы и дополнительные материалы', desc: '', soon: false },
+                  ].map((item) => (
+                    <li key={item.title} className="flex gap-3">
+                      <span className="text-[var(--color-accent)] mt-0.5 shrink-0">
+                        <CheckIcon />
+                      </span>
+                      <div>
+                        <span className="text-sm font-medium text-[var(--color-text)]">
+                          {item.title}
+                          {item.soon && (
+                            <span className="ml-2 inline-block rounded-full bg-[var(--color-accent)]/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[var(--color-accent)]">
+                              SOON
+                            </span>
+                          )}
+                        </span>
+                        {item.desc && (
+                          <p className="text-xs text-[var(--color-text-muted)] mt-0.5 leading-relaxed">{item.desc}</p>
+                        )}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
               <p className="text-xs text-[var(--color-text-muted)] mb-4">
                 Одна покупка - полный доступ. Без подписок, без доплат.
               </p>
@@ -141,40 +140,67 @@ export default function OfferPage() {
               </Link>
             </div>
 
-            {/* KM Guide - compact */}
+            {/* HAIRLAB Guide - compact */}
             <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[var(--radius-xl)] p-7">
               <span className="inline-block bg-[var(--color-bg-warm)] text-[var(--color-text-soft)] text-[11px] font-medium px-3 py-1 rounded-full mb-4">
                 Лёгкий старт
               </span>
               <h3 className="font-display text-lg font-medium text-[var(--color-text)] mb-1">
-                KM Guide: Карта восстановления
+                только методичка HAIRLAB: Карта восстановления
               </h3>
-              <p className="font-display text-2xl font-medium text-[var(--color-text)] mb-3">13€</p>
-              <p className="text-sm text-[var(--color-text-soft)] mb-5 leading-relaxed">
-                Для тех, кто хочет сначала разобраться самостоятельно: понять свои волосы, найти ошибки и собрать базовый протокол.
-              </p>
-              <ul className="space-y-2 mb-7">
-                {[
-                  '32 страницы от мастера с 6-летним опытом',
-                  'Диагностика и шкала повреждения 1–5',
-                  'Готовые протоколы для натуральных, окрашенных и осветлённых',
-                  'Карточки проверенных средств',
-                  'Чеклисты и календарь ухода на 14 дней',
-                  'Бланк персонального протокола',
-                ].map((item) => (
-                  <li key={item} className="flex gap-3 text-sm text-[var(--color-text-soft)]">
-                    <span className="text-[var(--color-text-muted)] mt-0.5 shrink-0">
-                      <CheckIcon />
-                    </span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
+              <p className="font-display text-2xl font-medium text-[var(--color-accent)] mb-5">13€</p>
+              <div className="space-y-5 mb-7">
+                {/* Block 1 */}
+                <div>
+                  <p className="text-sm font-medium text-[var(--color-text)] mb-2">Готовые рабочие средства</p>
+                  <ul className="space-y-1.5 mb-2">
+                    {['шампуни', 'маски', 'кондиционеры', 'термозащита'].map((item) => (
+                      <li key={item} className="flex gap-2 text-sm text-[var(--color-text-soft)]">
+                        <span className="mt-2 size-1.5 shrink-0 rounded-full bg-[var(--color-accent)]" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="text-xs text-[var(--color-text-muted)] leading-relaxed">
+                    Под каждый тип кожи и волос, без привязки к бренду. По таблице ты выбираешь то, что подходит именно тебе.
+                  </p>
+                </div>
+                {/* Block 2 */}
+                <div>
+                  <p className="text-sm font-medium text-[var(--color-text)] mb-2">Гайд по аксессуарам</p>
+                  <ul className="space-y-1.5 mb-2">
+                    {['Что не повреждает волосы', 'какое полотенце выбрать', 'материал для сна', 'расчёски, резинки, зажимы'].map((item) => (
+                      <li key={item} className="flex gap-2 text-sm text-[var(--color-text-soft)]">
+                        <span className="mt-2 size-1.5 shrink-0 rounded-full bg-[var(--color-accent)]" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="text-xs text-[var(--color-text-muted)] leading-relaxed">
+                    Маленькие детали, которые годами незаметно ломают волосы.
+                  </p>
+                </div>
+                {/* Block 3 */}
+                <div>
+                  <p className="text-sm font-medium text-[var(--color-text)] mb-2">Протоколы восстановления</p>
+                  <ul className="space-y-1.5 mb-2">
+                    {['Чёткие схемы', 'под разные типы волос', 'под разную степень повреждения', 'пошаговые сценарии'].map((item) => (
+                      <li key={item} className="flex gap-2 text-sm text-[var(--color-text-soft)]">
+                        <span className="mt-2 size-1.5 shrink-0 rounded-full bg-[var(--color-accent)]" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="text-xs text-[var(--color-text-muted)] leading-relaxed">
+                    Берёшь свой протокол и просто следуешь шагам.
+                  </p>
+                </div>
+              </div>
               <Link
                 href="/checkout?product=guide"
                 className="block text-center bg-[var(--color-bg-dark)] hover:opacity-90 text-[var(--color-text-on-dark)] font-medium px-6 py-4 rounded-[var(--radius-full)] transition-opacity text-sm"
               >
-                Начать с KM Guide - 13€
+                Начать с HAIRLAB Guide - 13€
               </Link>
             </div>
           </div>
@@ -193,7 +219,7 @@ export default function OfferPage() {
                   <tr className="border-b border-[var(--color-border)]">
                     <th className="text-left py-3 pr-4 font-medium text-[var(--color-text-soft)] w-1/2"></th>
                     <th className="text-center py-3 px-4 font-medium text-[var(--color-text)] whitespace-nowrap">
-                      KM Guide <span className="text-[var(--color-text-soft)]">13€</span>
+                      HAIRLAB Guide <span className="text-[var(--color-text-soft)]">13€</span>
                     </th>
                     <th className="text-center py-3 pl-4 font-medium text-[var(--color-accent)] whitespace-nowrap">
                       Full Course <span className="font-normal">39€</span>
@@ -223,6 +249,22 @@ export default function OfferPage() {
                 </tbody>
               </table>
             </div>
+          </div>
+
+          {/* Результат */}
+          <div className="bg-[var(--color-bg-warm)] border border-[var(--color-border)] rounded-[var(--radius-xl)] px-6 md:px-12 py-10 mb-16">
+            <p className="text-[11px] font-medium tracking-[3px] uppercase text-[var(--color-text-muted)] mb-3">
+              р е з у л ь т а т
+            </p>
+            <h2 className="font-display text-xl md:text-2xl font-medium text-[var(--color-text)] mb-4 text-balance leading-snug">
+              Гладкие, плотные волосы - это не генетика, а система.
+            </h2>
+            <p className="text-sm md:text-base leading-relaxed text-[var(--color-text-soft)] max-w-xl">
+              Они всегда выглядят дорого. Без сложной укладки, без идеального цвета, даже в обычном хвосте.
+              Плотность, блеск и гладкость создают тот самый ухоженный вид, который не получается собрать
+              из случайных масок и советов из интернета. Но такой результат начинается не с дорогого средства.
+              Он начинается с понимания: что нужно, в каком порядке и почему.
+            </p>
           </div>
 
           {/* FAQ */}

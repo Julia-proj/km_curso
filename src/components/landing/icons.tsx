@@ -35,6 +35,15 @@ export function ArrowUpRightIcon(props: IconProps) {
   )
 }
 
+export function ArrowRightIcon(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path d="M5 12h14" />
+      <path d="m12 5 7 7-7 7" />
+    </IconBase>
+  )
+}
+
 export function CheckIcon(props: IconProps) {
   return (
     <IconBase {...props}>

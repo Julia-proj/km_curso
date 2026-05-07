@@ -111,7 +111,7 @@ export function OfferSection() {
             р е з у л ь т а т
           </p>
           <h3 className="font-display text-xl md:text-2xl font-medium text-text mb-4">
-            Гладкие, плотные волосы - это не генетика. Это система.
+            Гладкие, плотные волосы - это не генетика, а система.
           </h3>
           <p className="text-text-soft text-sm md:text-base leading-relaxed">
             Они всегда выглядят дорого. Без сложной укладки, без идеального
