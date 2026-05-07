@@ -119,9 +119,10 @@ body {
   overflow-x: clip;
   background-color: var(--background);
   color: var(--foreground);
-  font-family: var(--font-body-face), Inter, system-ui, sans-serif;
+  font-family: var(--font-body-face), "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
   font-size: 16px;
   line-height: 1.6;
+  letter-spacing: -0.012em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: "ss01", "cv11";
@@ -328,8 +329,9 @@ h4 {
 
   .km-lead {
     min-width: 0;
-    font-size: 0.9375rem;
-    line-height: 1.6;
+    font-size: 1rem;
+    line-height: 1.65;
+    letter-spacing: -0.01em;
     color: var(--muted-foreground);
     overflow-wrap: break-word;
   }
@@ -337,8 +339,9 @@ h4 {
   .km-copy {
     display: block;
     min-width: 0;
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
     line-height: 1.65;
+    letter-spacing: -0.01em;
     overflow-wrap: break-word;
   }
 
@@ -519,10 +522,12 @@ h4 {
 
     .km-lead {
       font-size: 1.125rem;
+      letter-spacing: -0.012em;
     }
 
     .km-copy {
-      font-size: 1rem;
+      font-size: 1.0625rem;
+      letter-spacing: -0.012em;
     }
 
     .km-card-title {

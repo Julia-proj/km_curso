@@ -138,8 +138,6 @@ function Hero() {
       id="hero-section"
       className="km-hero relative isolate overflow-hidden"
     >
-
-
       {/* Mobile: full hero photo without overlays */}
       <div className="absolute inset-0 -z-10 bg-cream lg:hidden">
         <Image
@@ -156,83 +154,89 @@ function Hero() {
       <div className="km-container grid items-center gap-8 lg:grid-cols-12 lg:gap-10">
         <div className="flex min-h-[calc(100svh-9.25rem)] flex-col lg:col-span-7 lg:min-h-0 lg:block">
           <div className="-mt-6 md:-mt-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="km-eyebrow-pill mb-4 md:mb-5"
-          >
-            <SparklesIcon className="opacity-60" size={12} />
-            Авторский курс · 2026
-          </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="km-eyebrow-pill mb-4 md:mb-5"
+            >
+              <SparklesIcon className="opacity-60" size={12} />
+              Авторский курс · 2026
+            </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease }}
-            className="km-hero-title"
-          >
-            Салонное
-            <br />
-            восстановление волос в
-            <br />
-            <span className="italic text-accent-foreground/90">
-              домашних условиях
-            </span>
-          </motion.h1>
+            <motion.h1
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, ease }}
+              className="km-hero-title"
+            >
+              Салонное
+              <br />
+              восстановление волос в
+              <br />
+              <span className="italic text-accent-foreground/90">
+                домашних условиях
+              </span>
+            </motion.h1>
 
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-            className="km-lead mt-4 max-w-xl"
-          >
-            + составы для волос.
-          </motion.p>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+              className="km-lead mt-4 max-w-xl"
+            >
+              + составы для волос.
+            </motion.p>
           </div>
 
-          {/* До/После коллаж — мобильная и десктоп */}
+          {/* До/После коллаж — мобайл: внизу справа поверх фото */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.7, duration: 0.9, ease }}
-            className="absolute left-4 top-[52%] flex flex-col gap-1.5 lg:hidden"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.8, duration: 0.9, ease }}
+            className="absolute bottom-28 right-4 z-10 lg:hidden"
           >
-            <div className="rounded-md overflow-hidden shadow-[0_4px_16px_-4px_rgba(50,25,15,0.3)]" style={{ width: 68 }}>
-              <Image
-                src="/images/beforeafter2.jpg"
-                alt="До"
-                width={200}
-                height={200}
-                sizes="68px"
-                className="w-full h-auto block"
-              />
-            </div>
-            <div className="rounded-md overflow-hidden shadow-[0_4px_16px_-4px_rgba(50,25,15,0.3)]" style={{ width: 68 }}>
-              <Image
-                src="/images/beforeafter3.jpeg"
-                alt="После"
-                width={200}
-                height={200}
-                sizes="68px"
-                className="w-full h-auto block"
-              />
+            <div className="flex flex-col gap-1.5">
+              <div className="flex items-center gap-1 mb-1">
+                <span className="text-[9px] font-medium tracking-[0.15em] uppercase text-white/70 bg-black/30 rounded px-1.5 py-0.5 backdrop-blur-sm">До</span>
+                <span className="text-[9px] font-medium tracking-[0.15em] uppercase text-white/70 bg-black/30 rounded px-1.5 py-0.5 backdrop-blur-sm">После</span>
+              </div>
+              <div className="flex gap-1.5">
+                <div className="rounded-xl overflow-hidden shadow-[0_8px_24px_-4px_rgba(20,10,5,0.45)]" style={{ width: 72, height: 96 }}>
+                  <Image
+                    src="/images/beforeafter2.jpg"
+                    alt="До"
+                    width={200}
+                    height={266}
+                    sizes="72px"
+                    className="w-full h-full object-cover block"
+                  />
+                </div>
+                <div className="rounded-xl overflow-hidden shadow-[0_8px_24px_-4px_rgba(20,10,5,0.45)]" style={{ width: 72, height: 96 }}>
+                  <Image
+                    src="/images/beforeafter3.jpeg"
+                    alt="После"
+                    width={200}
+                    height={266}
+                    sizes="72px"
+                    className="w-full h-full object-cover block"
+                  />
+                </div>
+              </div>
             </div>
           </motion.div>
 
           <div className="mt-auto space-y-4 pt-8 md:mt-7 md:space-y-0 md:pt-0">
             <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap md:gap-4">
-            <CTA href="#format">Хочу на обучение</CTA>
-            <a
-              href="#about"
-              className="hidden items-center gap-2 px-7 py-4 text-sm uppercase tracking-[0.18em] text-primary/70 transition-colors hover:text-primary sm:inline-flex"
-            >
-              Узнать подробнее
-            </a>
+              <CTA href="#format">Хочу на обучение</CTA>
+              <a
+                href="#about"
+                className="hidden items-center gap-2 px-7 py-4 text-sm uppercase tracking-[0.18em] text-primary/70 transition-colors hover:text-primary sm:inline-flex"
+              >
+                Узнать подробнее
+              </a>
+            </div>
           </div>
-
-
-        </div>
         </div>
 
         {/* Right image column — desktop only */}
@@ -249,53 +253,57 @@ function Hero() {
               />
             </motion.div>
 
-            {/* До · После */}
+            {/* До · После — внизу справа */}
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.1, duration: 0.8, ease }}
-              className="absolute top-5 left-5 z-10"
+              className="absolute bottom-5 right-5 z-10"
             >
-              <div
-                className="flex gap-2.5 p-0"
-                style={{
-                  boxShadow: "0 16px 48px -12px rgba(50,25,15,0.5)",
-                }}
-              >
-                <div className="rounded-md overflow-hidden" style={{ width: 78 }}>
-                  <Image
-                    src="/images/beforeafter2.jpg"
-                    alt="До"
-                    width={200}
-                    height={200}
-                    sizes="78px"
-                    className="w-full h-auto block"
-                  />
+              <div className="flex flex-col gap-2 items-end">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[10px] font-medium tracking-[0.12em] uppercase text-white/80 bg-black/35 rounded-full px-2 py-0.5 backdrop-blur-sm">До</span>
+                  <span className="text-[10px] font-medium tracking-[0.12em] uppercase text-white/80 bg-black/35 rounded-full px-2 py-0.5 backdrop-blur-sm">После</span>
                 </div>
-                <div className="rounded-md overflow-hidden" style={{ width: 78 }}>
-                  <Image
-                    src="/images/beforeafter3.jpeg"
-                    alt="После"
-                    width={200}
-                    height={200}
-                    sizes="78px"
-                    className="w-full h-auto block"
-                  />
+                <div
+                  className="flex gap-2"
+                  style={{ filter: "drop-shadow(0 16px 32px rgba(20,10,5,0.5))" }}
+                >
+                  <div className="rounded-xl overflow-hidden" style={{ width: 90, height: 120 }}>
+                    <Image
+                      src="/images/beforeafter2.jpg"
+                      alt="До"
+                      width={200}
+                      height={266}
+                      sizes="90px"
+                      className="w-full h-full object-cover block"
+                    />
+                  </div>
+                  <div className="rounded-xl overflow-hidden" style={{ width: 90, height: 120 }}>
+                    <Image
+                      src="/images/beforeafter3.jpeg"
+                      alt="После"
+                      width={200}
+                      height={266}
+                      sizes="90px"
+                      className="w-full h-full object-cover block"
+                    />
+                  </div>
                 </div>
               </div>
             </motion.div>
 
-            {/* Метод badge */}
+            {/* Метод badge — верхний левый */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 1, duration: 0.6 }}
-              className="absolute bottom-5 left-5 z-10 max-w-[220px] rounded-2xl border border-border/60 bg-cream/90 p-4 backdrop-blur-sm shadow-[0_30px_80px_-40px_rgba(80,40,30,0.3)]"
+              className="absolute top-5 left-5 z-10 max-w-[200px] rounded-2xl border border-border/60 bg-cream/90 p-4 backdrop-blur-sm shadow-[0_30px_80px_-40px_rgba(80,40,30,0.3)]"
             >
-              <div className="mb-1 text-xs uppercase tracking-[0.18em] text-muted-foreground">
+              <div className="mb-1 text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
                 Метод
               </div>
-              <div className="font-display text-xl leading-tight">
+              <div className="font-display text-lg leading-tight">
                 Не маркетинг. Рабочие составы
               </div>
             </motion.div>
@@ -352,67 +360,122 @@ function PainSection() {
 function About() {
   return (
     <section id="about" className="km-section bg-sand/50">
-      <div className="km-container km-container-wide grid items-start gap-8 lg:grid-cols-12 lg:gap-12">
-        <motion.div
-          {...fadeUp()}
-          className="lg:col-span-3"
-        >
-          {/* Мобиль: коллаж слева + имя справа */}
-          <div className="flex items-center gap-4 lg:hidden">
-            <div className="shrink-0" style={{ width: 180, height: 180 }}>
-              <Image alt="Елена Александрова" className="w-full h-full object-contain" width={180} height={180} src="/images/collage.png" />
+      <div className="km-container km-container-wide">
+
+        {/* Mobile layout: compact photo row + text below */}
+        <div className="lg:hidden">
+          <motion.div {...fadeUp()} className="flex items-center gap-4 mb-8">
+            {/* Portrait foto2 */}
+            <div className="relative shrink-0 rounded-2xl overflow-hidden shadow-md" style={{ width: 88, height: 110 }}>
+              <Image
+                alt="Елена Александрова"
+                src="/images/foto2.png"
+                fill
+                sizes="88px"
+                className="object-cover object-top"
+              />
             </div>
-            <div>
+            {/* Salon photo */}
+            <div className="relative shrink-0 rounded-2xl overflow-hidden shadow-md" style={{ width: 88, height: 110 }}>
+              <Image
+                alt="Студия Keratin Madrid"
+                src="/images/salon1.JPG"
+                fill
+                sizes="88px"
+                className="object-cover object-center"
+              />
+            </div>
+            {/* Name block */}
+            <div className="min-w-0">
               <div className="km-eyebrow text-muted-foreground">Автор курса</div>
               <div className="mt-1 font-display text-xl leading-tight">Елена Александрова</div>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Десктоп: коллаж на всю колонку */}
-          <div className="hidden lg:block">
-            <div className="w-full">
-              <Image alt="Елена Александрова" className="w-full h-auto" width={600} height={600} src="/images/collage.png" />
-            </div>
-            {/* Имя */}
-            <div className="mt-4">
-              <div className="km-eyebrow text-muted-foreground">Автор курса</div>
-              <div className="mt-1 font-display text-2xl">Елена Александрова</div>
-            </div>
-          </div>
-        </motion.div>
-
-        <div className="lg:col-span-9">
-          <motion.h2
-            {...fadeUp()}
-            className="km-section-title-sm"
-          >
+          <motion.h2 {...fadeUp()} className="km-section-title-sm mb-5">
             Уже более <span className="italic">6 лет</span> я и моя команда
             ежедневно восстанавливаем даже самые повреждённые волосы.
           </motion.h2>
-          <motion.p
-            {...fadeUp()}
-            className="km-lead mt-6 md:mt-8"
-          >
+          <motion.p {...fadeUp()} className="km-lead mb-6">
             Моя система восстановления и домашнего ухода работает благодаря:
           </motion.p>
-          <ul className="mt-8 divide-y divide-border md:mt-10">
+          <ul className="divide-y divide-border">
             {authorPoints.map((point, index) => (
               <motion.li
                 key={point}
                 {...fadeUp(index * 0.05)}
-                className="flex items-start gap-4 py-4 md:gap-5 md:py-5"
+                className="flex items-start gap-4 py-4"
               >
-                <span className="mt-1 font-display text-sm text-accent-foreground/70">
+                <span className="mt-1 font-display text-sm text-accent-foreground/70 shrink-0">
                   0{index + 1}
                 </span>
                 <span className="km-copy">{point}</span>
               </motion.li>
             ))}
           </ul>
-          <div className="mt-8 md:mt-12">
+          <div className="mt-8">
             <CTA href="/quiz">Пройти тест</CTA>
           </div>
         </div>
+
+        {/* Desktop layout: photos left column, text right */}
+        <div className="hidden lg:grid lg:grid-cols-12 lg:gap-12 items-start">
+          <motion.div {...fadeUp()} className="lg:col-span-4 xl:col-span-3">
+            {/* Stacked photos */}
+            <div className="flex flex-col gap-3">
+              <div className="relative w-full rounded-2xl overflow-hidden shadow-md" style={{ aspectRatio: "4/5" }}>
+                <Image
+                  alt="Елена Александрова"
+                  src="/images/foto2.png"
+                  fill
+                  sizes="(min-width: 1024px) 25vw"
+                  className="object-cover object-top"
+                />
+              </div>
+              <div className="relative w-full rounded-2xl overflow-hidden shadow-sm" style={{ aspectRatio: "16/9" }}>
+                <Image
+                  alt="Студия Keratin Madrid"
+                  src="/images/salon1.JPG"
+                  fill
+                  sizes="(min-width: 1024px) 25vw"
+                  className="object-cover object-center"
+                />
+              </div>
+            </div>
+            <div className="mt-4">
+              <div className="km-eyebrow text-muted-foreground">Автор курса</div>
+              <div className="mt-1 font-display text-2xl">Елена Александрова</div>
+            </div>
+          </motion.div>
+
+          <div className="lg:col-span-8 xl:col-span-9">
+            <motion.h2 {...fadeUp()} className="km-section-title-sm">
+              Уже более <span className="italic">6 лет</span> я и моя команда
+              ежедневно восстанавливаем даже самые повреждённые волосы.
+            </motion.h2>
+            <motion.p {...fadeUp()} className="km-lead mt-6 md:mt-8">
+              Моя система восстановления и домашнего ухода работает благодаря:
+            </motion.p>
+            <ul className="mt-8 divide-y divide-border md:mt-10">
+              {authorPoints.map((point, index) => (
+                <motion.li
+                  key={point}
+                  {...fadeUp(index * 0.05)}
+                  className="flex items-start gap-4 py-4 md:gap-5 md:py-5"
+                >
+                  <span className="mt-1 font-display text-sm text-accent-foreground/70">
+                    0{index + 1}
+                  </span>
+                  <span className="km-copy">{point}</span>
+                </motion.li>
+              ))}
+            </ul>
+            <div className="mt-8 md:mt-12">
+              <CTA href="/quiz">Пройти тест</CTA>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
   )
@@ -841,21 +904,44 @@ function Results() {
 
       <div className="km-container km-container-wide">
         <motion.div {...fadeUp()} className="mb-10 md:mb-12">
-          <div className="km-eyebrow mb-3 text-muted-foreground md:mb-4">
-            Доказательства
+          <div className="grid md:grid-cols-2 gap-8 items-end">
+            <div>
+              <div className="km-eyebrow mb-3 text-muted-foreground md:mb-4">
+                Доказательства
+              </div>
+              <h2 className="km-section-title">
+                <span className="font-display italic text-accent-foreground/90">
+                  5000+
+                </span>{" "}
+                клиентов студии
+                <br />
+                восстановили и отрастили
+                <br /> свои волосы.
+              </h2>
+              <p className="km-lead mt-5 max-w-xl md:mt-6">
+                Реальные кейсы, фото «до/после», результаты учениц и отзывы из Instagram.
+              </p>
+            </div>
+            {/* le.png - expert photo floating card */}
+            <motion.div
+              {...fadeUp(0.2)}
+              className="hidden md:flex justify-end"
+            >
+              <div className="relative rounded-2xl overflow-hidden shadow-lg" style={{ width: 220, height: 280 }}>
+                <Image
+                  alt="Елена - мастер Keratin Madrid"
+                  src="/images/le.png"
+                  fill
+                  sizes="220px"
+                  className="object-cover object-top"
+                />
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-4">
+                  <p className="text-white text-xs font-medium tracking-wide">Keratin Madrid</p>
+                  <p className="text-white/70 text-[11px] mt-0.5">6 лет практики · Мадрид</p>
+                </div>
+              </div>
+            </motion.div>
           </div>
-          <h2 className="km-section-title">
-            <span className="font-display italic text-accent-foreground/90">
-              5000+
-            </span>{" "}
-            клиентов студии
-            <br />
-            восстановили и отрастили
-            <br /> свои волосы.
-          </h2>
-          <p className="km-lead mt-5 max-w-xl md:mt-6">
-            Реальные кейсы, фото «до/после», результаты учениц и отзывы из Instagram.
-          </p>
         </motion.div>
       </div>
 
