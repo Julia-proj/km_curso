@@ -102,7 +102,7 @@ export function ResultsSection() {
       <div className="mx-auto max-w-6xl">
         <div className="grid gap-6 sm:gap-8 md:gap-10">
           <motion.div {...fadeUp()}>
-            <p className="mb-3 font-sans text-xs font-medium text-[#D29B9B] sm:mb-4 sm:text-sm">Доказательства</p>
+            <p className="mb-3 font-sans text-sm font-medium text-[#D29B9B] sm:mb-4 sm:text-sm">Доказательства</p>
             <h2 className="font-display text-2xl leading-tight text-[#1A1A1A] sm:text-3xl md:text-5xl">
               <span className="italic">5000+</span> клиентов студии восстановили и отрастили свои волосы.
             </h2>
@@ -143,7 +143,8 @@ export function ResultsSection() {
         <div
           ref={scrollerRef}
           onScroll={updateCarouselState}
-          className="no-scrollbar -mx-4 mt-4 flex snap-x snap-mandatory gap-2 overflow-x-auto px-4 pb-4 touch-pan-x overscroll-x-contain sm:-mx-6 sm:gap-3 sm:px-6 sm:pb-4 md:mt-5 md:gap-4 lg:mx-0 lg:grid lg:grid-cols-3 xl:grid-cols-5 lg:overflow-visible lg:px-0 lg:pb-0"
+          className="no-scrollbar -mx-4 mt-4 flex snap-x snap-mandatory gap-2 overflow-x-auto overflow-y-hidden px-4 pb-4 touch-pan-x overscroll-x-contain overscroll-y-none sm:-mx-6 sm:gap-3 sm:px-6 sm:pb-4 md:mt-5 md:gap-4 lg:mx-0 lg:grid lg:grid-cols-3 xl:grid-cols-5 lg:overflow-visible lg:px-0 lg:pb-0"
+          style={{ touchAction: 'pan-x' }}
         >
           {instagramReels.map((reel, index) => (
             <motion.a
@@ -167,7 +168,7 @@ export function ResultsSection() {
                     style={{ objectPosition: reel.objectPosition }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-b from-black/15 via-transparent to-black/20" />
-                  <div className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-white/90 px-2.5 py-1 font-sans text-[10px] font-semibold uppercase tracking-[0.12em] text-[#1A1A1A] shadow-sm backdrop-blur">
+                  <div className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-white/90 px-2.5 py-1 font-sans text-xs font-semibold uppercase tracking-[0.12em] text-[#1A1A1A] shadow-sm backdrop-blur">
                     {reel.tag}
                   </div>
                   <div className="absolute inset-0 grid place-items-center">
@@ -180,16 +181,16 @@ export function ResultsSection() {
                 <div className="flex flex-col px-3 py-3 font-sans sm:px-4 sm:py-4">
                   <div className="flex items-center gap-1 mb-2 sm:gap-1.5 sm:mb-3">
                     <IgIcon className="h-3.5 w-3.5 shrink-0 text-[#D29B9B] sm:h-4 sm:w-4" />
-                    <span className="text-[10px] text-[#777] sm:text-[11px]">@keratin_madrid</span>
+                    <span className="text-xs text-[#777] sm:text-xs">@keratin_madrid</span>
                   </div>
-                  <h3 className="text-[12px] font-semibold text-[#1A1A1A] leading-tight mb-1.5 line-clamp-2 sm:text-[13px] sm:mb-2">
+                  <h3 className="text-[12px] font-semibold text-[#1A1A1A] leading-tight mb-1.5 line-clamp-2 sm:text-xs sm:mb-2">
                     {reel.title}
                   </h3>
-                  <p className="text-[10px] text-[#777] leading-relaxed mb-2 line-clamp-2 sm:text-[11px] sm:mb-3">
+                  <p className="text-xs text-[#777] leading-relaxed mb-2 line-clamp-2 sm:text-sm sm:mb-3">
                     {reel.description}
                   </p>
                   <div className="mt-auto">
-                    <span className="inline-flex items-center gap-0.5 text-[10px] font-semibold text-[#D29B9B] sm:gap-1 sm:text-[11px]">
+                    <span className="inline-flex items-center gap-0.5 text-xs font-semibold text-[#D29B9B] sm:gap-1 sm:text-xs">
                       Смотреть
                       <ArrowIcon />
                     </span>

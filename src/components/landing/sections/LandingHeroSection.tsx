@@ -212,7 +212,7 @@ export function LandingHeroSection() {
 
           <MobilePreviewStrip />
 
-          <div className="absolute inset-x-5 bottom-5 z-20 flex flex-col gap-3 min-[390px]:inset-x-6 min-[390px]:bottom-6">
+          <div className="absolute inset-x-5 bottom-5 z-20 flex flex-col gap-2 min-[390px]:inset-x-6 min-[390px]:bottom-6">
             <a
               href="#what-you-get"
               className="inline-flex min-h-[3.35rem] w-full items-center justify-center rounded-full bg-[#D9A19D] px-5 py-3.5 font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-white shadow-[0_22px_48px_rgba(34,25,21,0.28)] transition-all hover:bg-[#C9918C] min-[390px]:min-h-[3.75rem] min-[390px]:px-6 min-[390px]:text-[13px] min-[390px]:tracking-[0.26em]"
@@ -234,7 +234,7 @@ export function LandingHeroSection() {
       <div className="hidden lg:block">
         <div className="flex flex-col justify-center pt-8" style={{ minHeight: '85vh' }}>
           <div className="mx-auto w-full max-w-6xl px-6">
-            <nav className="mb-8 flex items-center justify-center gap-6 border-b border-[#E5DDD5] pb-4 font-sans text-[11px] font-medium uppercase tracking-[0.16em] text-[#7A7066] xl:gap-8 xl:text-[12px]">
+            <nav className="mb-8 flex items-center justify-center gap-6 border-b border-[#E5DDD5] pb-4 font-sans text-xs font-medium uppercase tracking-[0.16em] text-[#7A7066] xl:gap-8 xl:text-xs">
               <a href="#about" className="transition-colors hover:text-[#1A1A1A] hover:tracking-[0.18em]">Об авторе</a>
               <a href="#program" className="transition-colors hover:text-[#1A1A1A] hover:tracking-[0.18em]">Программа</a>
               <a href="#what-you-get" className="transition-colors hover:text-[#1A1A1A] hover:tracking-[0.18em]">Что внутри</a>

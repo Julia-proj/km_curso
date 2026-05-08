@@ -54,7 +54,7 @@ export function InstagramSection() {
                 {/* Badge с иконкой Instagram */}
                 <div className="absolute left-4 top-4 flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5">
                   <InstagramIcon className="h-3 w-3" />
-                  <span className="font-semibold uppercase text-[11px] tracking-[0.15em] text-[#3d3d3d]">
+                  <span className="font-semibold uppercase text-xs tracking-[0.15em] text-[#3d3d3d]">
                     {reel.tag}
                   </span>
                 </div>
@@ -70,7 +70,7 @@ export function InstagramSection() {
               {/* Нижняя часть с текстом */}
               <div className="flex flex-col p-5 md:p-[18px_20px_20px] md:min-h-[240px]">
                 {/* KERATIN_MADRID */}
-                <p className="mb-2 font-semibold uppercase text-[11px] tracking-[0.18em] text-[#8B7D72]">
+                <p className="mb-2 font-semibold uppercase text-xs tracking-[0.18em] text-[#8B7D72]">
                   KERATIN_MADRID
                 </p>
 
@@ -89,7 +89,7 @@ export function InstagramSection() {
                   href={reel.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-auto flex items-center gap-2 font-semibold uppercase text-[12px] tracking-[0.2em] text-[#3d3d3d]"
+                  className="mt-auto flex items-center gap-2 font-semibold uppercase text-xs tracking-[0.2em] text-[#3d3d3d]"
                 >
                   <span>СМОТРЕТЬ В INSTAGRAM</span>
                   <ArrowIcon />

@@ -11,10 +11,10 @@ export function FAQSection() {
   const [open, setOpen] = useState<number | null>(0)
 
   return (
-    <section id="faq" className="bg-[#FAF7F4] px-6 py-20 md:py-24">
+    <section id="faq" className="bg-[#FAF7F4] px-6 py-12 md:py-20">
       <div className="mx-auto max-w-2xl">
         <motion.div {...fadeUp()} className="mb-10 text-center md:mb-12">
-          <p className="mb-4 font-sans text-sm font-medium text-[#D29B9B]">Вопросы</p>
+          <p className="mb-4 font-sans text-sm font-medium text-[#D29B9B] sm:text-sm">Вопросы</p>
           <h2 className="font-display text-3xl leading-tight text-[#1A1A1A] md:text-4xl">
             Часто спрашивают
           </h2>
@@ -45,7 +45,7 @@ export function FAQSection() {
                     initial={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.25 }}
                   >
-                    <p className="pb-5 pr-10 font-sans text-sm leading-relaxed text-[#666]">{item.answer}</p>
+                    <p className="pb-5 pr-10 font-sans text-sm leading-relaxed text-[#666] sm:text-sm sm:text-base">{item.answer}</p>
                   </motion.div>
                 )}
               </AnimatePresence>

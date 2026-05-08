@@ -68,10 +68,10 @@ export function ProblemsSection() {
   }
 
   return (
-    <section className="bg-[#F5F0EB] py-20 md:py-24">
+    <section className="bg-[#F5F0EB] py-12 md:py-20">
       <div className="mx-auto max-w-6xl">
         <motion.div {...fadeUp()} className="mx-auto mb-12 max-w-3xl px-6 text-center md:mb-14">
-          <p className="mb-4 font-sans text-sm font-medium text-[#D29B9B]">Узнаёшь себя?</p>
+          <p className="mb-4 font-sans text-sm font-medium text-[#D29B9B] sm:text-sm">Узнаёшь себя?</p>
           <h2 className="font-display text-3xl leading-tight text-[#1A1A1A] md:text-4xl">
             7 проблем, которые решает курс
           </h2>
@@ -79,7 +79,8 @@ export function ProblemsSection() {
 
         <div
           ref={scrollerRef}
-          className="no-scrollbar flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-4 [scroll-padding-inline:1.25rem] sm:gap-4 sm:px-6 sm:pb-3 touch-pan-x overscroll-x-contain"
+          className="no-scrollbar flex snap-x snap-mandatory gap-3 overflow-x-auto overflow-y-hidden px-5 pb-4 [scroll-padding-inline:1.25rem] sm:gap-4 sm:px-6 sm:pb-3 touch-pan-x overscroll-x-contain overscroll-y-none"
+          style={{ touchAction: 'pan-x' }}
         >
           {problemCards.map((card, index) => (
             <motion.article
@@ -97,13 +98,13 @@ export function ProblemsSection() {
                   sizes="(max-width: 640px) 85vw, 288px"
                   src={card.image}
                 />
-                <span className="absolute left-3 top-4 bg-white/90 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.22em] text-[#1A1A1A]">
+                <span className="absolute left-3 top-4 bg-white/90 px-2 py-1 font-mono text-xs uppercase tracking-[0.22em] text-[#1A1A1A]">
                   {String(index + 1).padStart(2, "0")}
                 </span>
               </div>
               <div className="p-4">
                 <h3 className="font-display text-base leading-tight text-[#1A1A1A]">{card.title}</h3>
-                <p className="mt-1.5 font-sans text-xs leading-relaxed text-[#666]">{card.description}</p>
+                <p className="mt-1.5 font-sans text-sm leading-relaxed text-[#666] sm:text-base">{card.description}</p>
               </div>
             </motion.article>
           ))}

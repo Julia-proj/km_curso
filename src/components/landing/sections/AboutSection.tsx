@@ -8,10 +8,10 @@ import { fadeUp } from "@/lib/animations"
 
 export function AboutSection() {
   return (
-    <section id="about" className="bg-white px-6 py-20 md:py-24">
+    <section id="about" className="bg-white px-5 py-12 sm:px-6 md:py-24">
       <div className="mx-auto grid max-w-6xl items-start gap-10 md:grid-cols-2 md:gap-16">
         <motion.div {...fadeUp()} className="order-2 md:order-1">
-          <p className="mb-4 font-sans text-sm font-medium text-[#D29B9B]">Об Елене</p>
+          <p className="mb-4 font-sans text-sm font-medium text-[#D29B9B] sm:text-sm">Об Елене</p>
           <h2 className="mb-6 font-display text-3xl leading-tight text-[#1A1A1A] md:text-4xl">
             Система, основанная на практике
           </h2>
@@ -24,7 +24,7 @@ export function AboutSection() {
               <motion.li
                 key={point}
                 {...fadeUp(index * 0.04)}
-                className="flex items-start gap-3 font-sans text-sm leading-relaxed text-[#444]"
+                className="flex items-start gap-3 font-sans text-sm leading-relaxed text-[#444] sm:text-base"
               >
                 <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-lg border border-[#D29B9B] font-mono text-xs text-[#D29B9B]">
                   {String(index + 1).padStart(2, "0")}

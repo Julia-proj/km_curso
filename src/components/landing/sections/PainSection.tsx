@@ -6,11 +6,11 @@ import { fadeUp } from "@/lib/animations"
 
 export function PainSection() {
   return (
-    <section className="bg-[#FAF7F4] px-6 py-20 md:py-24">
+    <section className="bg-[#FAF7F4] px-6 py-12 md:py-16">
       <div className="mx-auto max-w-4xl text-center">
         <motion.p
           {...fadeUp()}
-          className="mb-6 font-sans text-sm font-medium text-[#D29B9B]"
+          className="mb-6 font-sans text-sm font-medium text-[#D29B9B] sm:text-sm"
         >
           Почему уход не работает
         </motion.p>

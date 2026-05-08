@@ -76,12 +76,12 @@ export function WhatYouGetSection({
   return (
     <section
       id={sectionId}
-      className="bg-[#FAF7F4] px-5 py-16 sm:px-6 md:py-24"
+      className="bg-[#FAF7F4] px-5 py-12 sm:px-6 md:py-20"
       data-testid="section-what-you-get"
     >
       <div className="mx-auto max-w-5xl">
         <motion.div {...fadeUp()} className="mb-10 text-center sm:mb-14">
-          <p className="mb-3 font-sans text-xs font-medium text-[#D29B9B] sm:text-sm">Что внутри</p>
+          <p className="mb-3 font-sans text-sm font-medium text-[#D29B9B] sm:text-sm">Что внутри</p>
           <h2 className="font-display text-2xl leading-tight text-[#1A1A1A] sm:text-3xl md:text-4xl">
             {title}
           </h2>
@@ -95,7 +95,7 @@ export function WhatYouGetSection({
           >
             <div className="mb-6 flex items-end justify-between gap-4 sm:mb-8">
               <div>
-                <p className="mb-1 font-sans text-[10px] uppercase tracking-[0.2em] text-[#999] sm:text-xs">
+                <p className="mb-1 font-sans text-xs uppercase tracking-[0.2em] text-[#999] sm:text-xs">
                   Полный курс
                 </p>
                 <div className="flex items-baseline gap-2">
@@ -103,25 +103,25 @@ export function WhatYouGetSection({
                   <div className="font-display text-4xl text-[#1A1A1A] sm:text-5xl">38€</div>
                 </div>
               </div>
-              <span className="border border-[#D29B9B] px-2 py-1 font-sans text-[10px] font-semibold text-[#D29B9B]">
+              <span className="border border-[#D29B9B] px-2 py-1 font-sans text-xs font-semibold text-[#D29B9B]">
                 Доступ навсегда
               </span>
             </div>
 
-            <p className="mb-2 font-sans text-[10px] font-semibold text-[#999] sm:mb-3">Видео-уроки</p>
+            <p className="mb-2 font-sans text-xs font-semibold text-[#999] sm:mb-3">Видео-уроки</p>
             <ul className="mb-4 space-y-2 sm:mb-6">
               {videoLessons.map((lesson) => (
-                <li key={lesson} className="flex items-start gap-2.5 font-sans text-xs sm:text-sm text-[#444]">
+                <li key={lesson} className="flex items-start gap-2.5 font-sans text-sm text-[#444] sm:text-base">
                   <CheckIcon className="mt-0.5 shrink-0 text-[#1A1A1A]" />
                   {lesson}
                 </li>
               ))}
             </ul>
 
-            <p className="mb-2 font-sans text-[10px] font-semibold text-[#999] sm:mb-3">Дополнительно</p>
+            <p className="mb-2 font-sans text-xs font-semibold text-[#999] sm:mb-3">Дополнительно</p>
             <ul className="mb-6 flex-1 space-y-2 sm:mb-8">
               {extras.map((item) => (
-                <li key={item} className="flex items-start gap-2.5 font-sans text-xs sm:text-sm text-[#666]">
+                <li key={item} className="flex items-start gap-2.5 font-sans text-sm text-[#666] sm:text-base">
                   <CheckIcon className="mt-0.5 shrink-0 text-[#D29B9B]" />
                   {item}
                 </li>
@@ -144,7 +144,7 @@ export function WhatYouGetSection({
           >
             <div className="mb-6 flex items-end justify-between gap-4 sm:mb-8">
               <div>
-                <p className="mb-1 font-sans text-[10px] uppercase tracking-[0.2em] text-[#999] sm:text-xs">
+                <p className="mb-1 font-sans text-xs uppercase tracking-[0.2em] text-[#999] sm:text-xs">
                   Hairlab Guide
                 </p>
                 <div className="flex items-baseline gap-2">
@@ -152,7 +152,7 @@ export function WhatYouGetSection({
                   <div className="font-display text-4xl text-[#1A1A1A] sm:text-5xl">12€</div>
                 </div>
               </div>
-              <span className="border border-[#E0DCD6] px-2 py-1 font-sans text-[10px] font-semibold text-[#999]">
+              <span className="border border-[#E0DCD6] px-2 py-1 font-sans text-xs font-semibold text-[#999]">
                 Методичка
               </span>
             </div>
@@ -161,9 +161,9 @@ export function WhatYouGetSection({
               {guideItems.map((item, index) => (
                 <li
                   key={item}
-                  className="flex items-start gap-3 border-b border-[#F0EBE5] pb-3 font-sans text-xs sm:text-sm text-[#444] last:border-0 sm:pb-4"
+                  className="flex items-start gap-3 border-b border-[#F0EBE5] pb-3 font-sans text-sm text-[#444] last:border-0 sm:pb-4 sm:text-base"
                 >
-                  <span className="mt-0.5 shrink-0 font-mono text-[10px] text-[#D29B9B]">
+                  <span className="mt-0.5 shrink-0 font-mono text-xs text-[#D29B9B]">
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   {item}
@@ -201,13 +201,13 @@ export function WhatYouGetSection({
                 </div>
                 
                 <div className="flex-1">
-                  <p className="mb-2 font-sans text-[10px] font-semibold uppercase tracking-[0.48em] text-[#D29B9B] sm:mb-3 sm:text-[11px]">
+                  <p className="mb-2 font-sans text-xs font-semibold uppercase tracking-[0.48em] text-[#D29B9B] sm:mb-3 sm:text-xs">
                     р е з у л ь т а т
                   </p>
                   <h2 className="mb-3 font-display text-lg font-medium leading-tight tracking-normal text-[#1A1A1A] text-balance sm:text-xl md:text-2xl">
                     Гладкие, плотные волосы - это не генетика, а система.
                   </h2>
-                  <div className="space-y-2 font-sans text-sm leading-relaxed text-[#5E554C] sm:text-[15px] md:text-base">
+                  <div className="space-y-2 font-sans text-sm leading-relaxed text-[#5E554C] sm:text-sm md:text-base">
                     <p>
                       Они всегда выглядят дорого: без сложной укладки, без идеального цвета, даже в обычном хвосте.
                     </p>
