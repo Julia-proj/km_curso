@@ -85,7 +85,7 @@ export function ProblemsSection() {
           ref={scrollerRef}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
-          className="no-scrollbar flex snap-x snap-start gap-3 overflow-x-auto px-5 pb-4 scroll-smooth [scroll-padding-inline:1.25rem] sm:gap-4 sm:px-6 sm:pb-3"
+          className="no-scrollbar flex snap-x snap-start gap-3 overflow-x-auto px-5 pb-4 scroll-smooth [scroll-padding-inline:1.25rem] sm:gap-4 sm:px-6 sm:pb-3 touch-pan-x"
         >
           {problemCards.map((card, index) => (
             <motion.article

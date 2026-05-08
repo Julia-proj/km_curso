@@ -152,13 +152,13 @@ export function LandingHeroSection() {
         <div className="absolute inset-0">
           <Image
             alt="Елена - основатель HairLab"
-            className="h-full w-full translate-x-[0.75rem] translate-y-6 scale-[1.08] object-cover"
+            className="h-full w-full translate-x-[-1rem] translate-y-6 scale-[1.08] object-cover"
             fill
             priority
             quality={92}
             sizes="100vw"
             src={mobileHeroImage}
-            style={{ objectPosition: "50% 50%" }}
+            style={{ objectPosition: "45% 50%" }}
           />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(54,45,39,0.42)_0%,rgba(54,45,39,0.22)_43%,rgba(54,45,39,0.02)_100%)]" />
           <div className="absolute inset-x-0 bottom-0 h-[35%] bg-[linear-gradient(180deg,rgba(55,45,39,0)_0%,rgba(44,35,30,0.54)_44%,rgba(39,31,27,0.9)_100%)]" />
