@@ -134,9 +134,9 @@ export function LandingHeroSection() {
                 <CTA href="#format">Хочу на обучение</CTA>
                 <a
                   href="/quiz"
-                  className="text-sm font-medium text-primary/75 underline decoration-primary/35 underline-offset-4 transition-colors hover:text-primary hover:decoration-primary"
+                  className="ml-8 text-sm font-medium text-primary/75 underline decoration-primary/35 underline-offset-4 transition-colors hover:text-primary hover:decoration-primary sm:ml-14"
                 >
-                  или пройти тест
+                  начать с теста
                 </a>
               </div>
               <a
