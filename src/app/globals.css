@@ -1,9 +1,13 @@
-/* Tailwind imports */
+/* ======================================== */
+/* IMPORTS                                   */
+/* ======================================== */
 @import "tailwindcss";
 
-/* CSS variables / design tokens */
+/* ======================================== */
+/* DESIGN TOKENS / CSS VARIABLES            */
+/* ======================================== */
 @theme inline {
-  --font-display: var(--font-display-face), Georgia, serif;
+  --font-display: var(--font-hero-face), Manrope, system-ui, sans-serif;
   --font-sans: var(--font-hero-face), Manrope, system-ui, sans-serif;
   --font-body: var(--font-hero-face), Manrope, system-ui, sans-serif;
 
@@ -57,7 +61,9 @@
   --shadow-lg: 0 8px 24px rgba(26, 22, 19, 0.08);
 }
 
-/* Base styles */
+/* ======================================== */
+/* CSS VARIABLES (ROOT)                     */
+/* ======================================== */
 :root {
   --radius: 1rem;
   --page-x: 1.25rem;
@@ -103,6 +109,9 @@
   --principles-bg-soft: oklch(0.215 0.038 45);
 }
 
+/* ======================================== */
+/* BASE STYLES                              */
+/* ======================================== */
 *,
 *::before,
 *::after {
@@ -131,21 +140,30 @@ body {
   font-feature-settings: "ss01", "cv11";
 }
 
+/* ======================================== */
+/* TYPOGRAPHY                                */
+/* ======================================== */
 h1,
 h2,
 h3,
 h4 {
-  font-family: var(--font-display-face), Georgia, serif;
-  font-weight: 400;
-  letter-spacing: 0;
-  line-height: 1.05;
+  font-family: var(--font-hero-face), Manrope, system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
 }
 
+/* ======================================== */
+/* SELECTION                                */
+/* ======================================== */
 ::selection {
   background: var(--accent);
   color: var(--foreground);
 }
 
+/* ======================================== */
+/* RESPONSIVE BASE STYLES                   */
+/* ======================================== */
 @media (min-width: 768px) {
   :root {
     --page-x: 2.5rem;
@@ -158,6 +176,9 @@ h4 {
   }
 }
 
+/* ======================================== */
+/* COMPONENT LAYER                          */
+/* ======================================== */
 @layer components {
   /* Layout utilities */
   .km-container {
@@ -179,6 +200,9 @@ h4 {
     --container-default: var(--container-narrow);
   }
 
+  /* ======================================== */
+  /* SECTION STYLES                          */
+  /* ======================================== */
   .km-section {
     padding-block: var(--section-y);
   }
@@ -187,7 +211,9 @@ h4 {
     padding-block: var(--section-y-large);
   }
 
-  /* Section-specific styles */
+  /* ======================================== */
+  /* HERO STYLES                             */
+  /* ======================================== */
   .km-principles-bg {
     position: relative;
     isolation: isolate;
@@ -322,7 +348,9 @@ h4 {
     overflow-wrap: anywhere;
   }
 
-  /* Typography utilities */
+  /* ======================================== */
+  /* TYPOGRAPHY UTILITIES                    */
+  /* ======================================== */
   .km-eyebrow {
     font-size: 0.6875rem;
     font-weight: 500;
@@ -347,6 +375,9 @@ h4 {
     text-transform: uppercase;
   }
 
+  /* ======================================== */
+  /* TITLE STYLES                            */
+  /* ======================================== */
   .km-hero-title,
   .km-section-title,
   .km-section-title-sm,
@@ -402,6 +433,9 @@ h4 {
     letter-spacing: -0.03em;
   }
 
+  /* ======================================== */
+  /* BODY TEXT STYLES                        */
+  /* ======================================== */
   .km-lead {
     min-width: 0;
     font-size: 1rem;
@@ -432,7 +466,9 @@ h4 {
     letter-spacing: -0.02em;
   }
 
-  /* Reusable components */
+  /* ======================================== */
+  /* REUSABLE COMPONENTS                     */
+  /* ======================================== */
   .km-card {
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
@@ -463,6 +499,9 @@ h4 {
     background: var(--accent);
   }
 
+  /* ======================================== */
+  /* CTA BUTTON STYLES                       */
+  /* ======================================== */
   .km-cta {
     box-sizing: border-box;
     display: inline-flex;
@@ -574,6 +613,9 @@ h4 {
     transform: translateX(5px);
   }
 
+  /* ======================================== */
+  /* MARQUEE & FAQ STYLES                    */
+  /* ======================================== */
   .km-marquee-text {
     font-family: var(--font-hero-face), Manrope, system-ui, sans-serif;
     font-size: 1.875rem;
@@ -595,7 +637,9 @@ h4 {
     color: var(--muted-foreground);
   }
 
-  /* Responsive overrides */
+  /* ======================================== */
+  /* RESPONSIVE OVERRIDES                     */
+  /* ======================================== */
   @media (min-width: 640px) {
     .km-hero-stats {
       max-width: 32rem;
@@ -753,6 +797,9 @@ h4 {
   }
 }
 
+/* ======================================== */
+/* UTILITIES LAYER                          */
+/* ======================================== */
 @layer utilities {
   /* Typography utilities */
   .text-balance {
@@ -865,10 +912,12 @@ h4 {
     box-shadow: 0 2px 0 oklch(0.80 0.020 55);
   }
 
-  /* Animations / keyframes */
+  /* ======================================== */
+  /* ANIMATIONS & KEYFRAMES                  */
+  /* ======================================== */
   @keyframes btn-shimmer {
     0%        { transform: translateX(-150%); }
-    50%, 100% { transform: translateX(250%); }
+    50%, 100% { transform: translateX(-150%); }
   }
 
   @keyframes km-cta-sheen {
@@ -902,6 +951,9 @@ h4 {
     }
   }
 
+  /* ======================================== */
+  /* MARQUEE ANIMATION                       */
+  /* ======================================== */
   .marquee {
     animation: marquee 14s linear infinite;
   }
@@ -916,7 +968,9 @@ h4 {
     }
   }
 
-  /* Reduced motion */
+  /* ======================================== */
+  /* REDUCED MOTION                           */
+  /* ======================================== */
   @media (prefers-reduced-motion: reduce) {
     .km-cta,
     .km-cta::before {

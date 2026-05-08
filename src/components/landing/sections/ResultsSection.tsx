@@ -153,7 +153,7 @@ export function ResultsSection() {
               rel="noopener noreferrer"
               data-carousel-card
               {...fadeUp(index * 0.05)}
-              className="group block h-full w-[min(70vw,14rem)] shrink-0 snap-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D29B9B] sm:w-[min(64vw,15rem)] md:w-[17rem] lg:w-auto"
+              className="group block h-full w-[min(60vw,12rem)] shrink-0 snap-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D29B9B] sm:w-[min(55vw,13rem)] md:w-[14rem] lg:w-auto"
             >
               <article className="flex h-full min-h-full flex-col overflow-hidden rounded-lg border border-[#E6DED7] bg-white shadow-sm transition duration-300 group-hover:-translate-y-1 group-hover:shadow-md">
                 <div className="relative aspect-[9/16] overflow-hidden bg-[#E8E1DA]">

@@ -50,11 +50,21 @@ export function ProblemsSection() {
   const scrollCards = (direction: "prev" | "next") => {
     const scroller = scrollerRef.current
     if (!scroller) return
-    const step = 304
-    scroller.scrollBy({
-      left: direction === "next" ? step : -step,
-      behavior: "smooth",
+    
+    const cards = Array.from(scroller.querySelectorAll<HTMLElement>("[data-carousel-card]"))
+    if (!cards.length) return
+
+    const currentIndex = cards.findIndex(card => {
+      const cardCenter = card.offsetLeft + card.offsetWidth / 2
+      const scrollerCenter = scroller.scrollLeft + scroller.clientWidth / 2
+      return Math.abs(cardCenter - scrollerCenter) < card.offsetWidth / 2
     })
+
+    const targetIndex = direction === "next" 
+      ? Math.min(currentIndex + 1, cards.length - 1)
+      : Math.max(currentIndex - 1, 0)
+
+    cards[targetIndex].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" })
   }
 
   const handleTouchStart = () => {
@@ -85,7 +95,7 @@ export function ProblemsSection() {
           ref={scrollerRef}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
-          className="no-scrollbar flex snap-x snap-start gap-3 overflow-x-auto px-5 pb-4 scroll-smooth [scroll-padding-inline:1.25rem] sm:gap-4 sm:px-6 sm:pb-3 touch-pan-x"
+          className="no-scrollbar flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-4 scroll-smooth [scroll-padding-inline:1.25rem] sm:gap-4 sm:px-6 sm:pb-3 touch-pan-x"
         >
           {problemCards.map((card, index) => (
             <motion.article
