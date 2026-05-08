@@ -18,7 +18,7 @@ const inter = Inter({
 
 const manrope = Manrope({
   subsets: ['cyrillic', 'latin'],
-  weight: ['500', '600', '700'],
+  weight: ['400', '500', '600', '700', '800'],
   variable: '--font-hero-face',
   display: 'swap',
 })

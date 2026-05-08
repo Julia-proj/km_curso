@@ -21,7 +21,7 @@ export function FinalCTASection() {
         >
           <CTA href="/quiz">Пройти тест бесплатно</CTA>
         </motion.div>
-        <p className="mt-6 text-sm text-muted-foreground md:mt-8">
+        <p className="mt-6 text-sm font-medium text-muted-foreground md:mt-8">
           2 минуты · без регистрации · персональные рекомендации
         </p>
       </div>

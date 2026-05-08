@@ -37,11 +37,11 @@ export default function ResultPage() {
     <main className="min-h-screen bg-[var(--color-bg)] flex flex-col items-center justify-center px-4 py-16">
       <div className="w-full max-w-lg">
         <BackButton />
-        <p className="text-[11px] font-medium tracking-[3px] uppercase text-[var(--color-text-muted)] mb-3 text-center">
+        <p className="text-[11px] font-semibold tracking-[3px] uppercase text-[var(--color-text-muted)] mb-3 text-center">
           KM · Результат опроса
         </p>
 
-        <h1 className="font-display text-2xl md:text-3xl font-medium text-[var(--color-text)] mb-10 text-center text-balance">
+        <h1 className="text-2xl md:text-3xl font-semibold text-[var(--color-text)] mb-10 text-center text-balance tracking-tight">
           Твой персональный анализ
         </h1>
 
@@ -56,7 +56,7 @@ export default function ResultPage() {
                 key={id}
                 className="border border-[var(--color-border)] rounded-[var(--radius-lg)] px-6 py-5 bg-[var(--color-card)]"
               >
-                <p className="text-[10px] font-medium tracking-[2px] uppercase text-[var(--color-text-muted)] mb-2">
+                <p className="text-[10px] font-semibold tracking-[2px] uppercase text-[var(--color-text-muted)] mb-2">
                   {label}
                 </p>
                 <p className="text-sm text-[var(--color-text)] leading-relaxed">
@@ -77,7 +77,7 @@ export default function ResultPage() {
         <div className="text-center">
           <Link
             href="/lesson"
-            className="inline-block bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white font-medium px-8 py-4 rounded-[var(--radius-full)] transition-colors text-sm"
+            className="inline-block bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white font-semibold px-8 py-4 rounded-[var(--radius-full)] transition-colors text-sm"
           >
             Посмотреть бесплатный урок
           </Link>

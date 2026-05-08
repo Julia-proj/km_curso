@@ -96,13 +96,13 @@ export function ResultsSection() {
   }, [updateCarouselState])
 
   return (
-    <section id="results" className="bg-accent/25 py-14 md:py-28">
+    <section id="results" className="bg-accent/20 py-14 md:py-20">
       <div className="km-container km-container-wide">
         <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_280px] md:items-end md:gap-10">
           <motion.div {...fadeUp()}>
             <div className="km-eyebrow mb-3 text-muted-foreground md:mb-4">Доказательства</div>
             <h2 className="km-section-title">
-              <span className="font-display italic text-accent-foreground/90">5000+</span>{" "}
+              <span className="font-semibold text-accent-foreground/90">5000+</span>{" "}
               клиентов студии
               <br />
               восстановили и отрастили
@@ -130,7 +130,7 @@ export function ResultsSection() {
         </div>
 
         <div className="mt-9 flex items-center justify-between gap-4 md:mt-12">
-          <div className="inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
+          <div className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
             <IgIcon className="text-accent-foreground/80" />
             Instagram
           </div>
@@ -187,26 +187,26 @@ export function ResultsSection() {
                     style={{ objectPosition: reel.objectPosition }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/20" />
-                  <div className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-white/88 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-primary shadow-sm backdrop-blur">
+                  <div className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-white/88 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-primary shadow-sm backdrop-blur">
                     <IgIcon className="h-3 w-3 text-accent-foreground" />
                     {reel.tag}
                   </div>
                   <div className="absolute inset-0 grid place-items-center">
-                    <div className="grid h-14 w-14 place-items-center rounded-full bg-white/88 pl-0.5 text-primary shadow-lg backdrop-blur transition group-hover:scale-105">
+                    <div className="grid h-12 w-12 place-items-center rounded-full bg-white/88 pl-0.5 text-primary shadow-lg backdrop-blur transition group-hover:scale-105">
                       <PlayIcon />
                     </div>
                   </div>
                 </div>
 
-                <div className="flex grow flex-col p-2.5 sm:p-4">
-                  <p className="hidden text-[10px] font-medium uppercase tracking-[0.18em] text-muted-foreground/70 sm:block">
+                <div className="flex grow flex-col p-3 sm:p-4">
+                  <p className="hidden text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground/70 sm:block">
                     keratin_madrid
                   </p>
-                  <h3 className="mt-1 font-display text-lg leading-tight text-foreground sm:text-2xl">{reel.title}</h3>
+                  <h3 className="mt-1 text-base font-semibold leading-tight tracking-tight text-foreground sm:text-lg">{reel.title}</h3>
                   <p className="mt-2 hidden text-sm leading-relaxed text-muted-foreground sm:block">
                     {reel.description}
                   </p>
-                  <span className="mt-auto inline-flex items-center gap-2 pt-3 text-[10px] font-bold uppercase tracking-[0.16em] text-primary sm:pt-4 sm:text-[11px]">
+                  <span className="mt-auto inline-flex items-center gap-2 pt-3 text-[10px] font-bold uppercase tracking-[0.14em] text-primary sm:pt-4 sm:text-[11px]">
                     Смотреть в Instagram
                     <ArrowIcon />
                   </span>

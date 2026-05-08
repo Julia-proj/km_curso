@@ -50,10 +50,10 @@ export default function OfferPage() {
 
           {/* Page header */}
           <div className="text-center mb-16">
-            <p className="text-[11px] font-medium tracking-[3px] uppercase text-[var(--color-text-muted)] mb-4">
+            <p className="text-[11px] font-semibold tracking-[3px] uppercase text-[var(--color-text-muted)] mb-4">
               HAIRLAB
             </p>
-            <h1 className="font-display text-2xl md:text-4xl font-medium text-[var(--color-text)] mb-4 text-balance">
+            <h1 className="text-2xl md:text-4xl font-semibold text-[var(--color-text)] mb-4 text-balance tracking-tight">
               Два формата. Одна система.
             </h1>
             <p className="text-[var(--color-text-soft)] text-sm md:text-base max-w-xl mx-auto">
@@ -66,20 +66,20 @@ export default function OfferPage() {
 
             {/* Full Course - visually larger */}
             <div className="relative bg-[var(--color-surface)] border-2 border-[var(--color-accent)] rounded-[var(--radius-xl)] p-8 shadow-[var(--shadow-lg)]">
-              <span className="absolute -top-3 left-6 bg-[var(--color-accent)] text-white text-[11px] font-medium px-3 py-1 rounded-full">
+              <span className="absolute -top-3 left-6 bg-[var(--color-accent)] text-white text-[11px] font-semibold px-3 py-1 rounded-full">
                 Полный формат
               </span>
-              <h3 className="font-display text-xl font-medium text-[var(--color-text)] mt-2 mb-1">
+              <h3 className="text-xl font-semibold text-[var(--color-text)] mt-2 mb-1 tracking-tight">
                 Система восстановления с Еленой
               </h3>
-              <p className="font-display text-3xl font-medium text-[var(--color-accent)] mb-4">39€</p>
+              <p className="text-3xl font-semibold text-[var(--color-accent)] mb-4 tracking-tight">39€</p>
               <p className="text-sm text-[var(--color-text-soft)] mb-6 leading-relaxed">
                 Для тех, кому нужен не просто гайд, а пошаговый маршрут. С видео, AI-анализом и персональным протоколом.
               </p>
               <div className="mb-8 space-y-5">
                 {/* Video lessons */}
                 <div>
-                  <p className="text-sm font-medium text-[var(--color-text)] mb-2">Видео-уроки:</p>
+                  <p className="text-sm font-semibold text-[var(--color-text)] mb-2">Видео-уроки:</p>
                   <ul className="space-y-1.5 mb-2">
                     {[
                       'как правильно диагностировать состояние волос',
@@ -113,7 +113,7 @@ export default function OfferPage() {
                         <CheckIcon />
                       </span>
                       <div>
-                        <span className="text-sm font-medium text-[var(--color-text)]">
+                        <span className="text-sm font-semibold text-[var(--color-text)]">
                           {item.title}
                           {item.soon && (
                             <span className="ml-2 inline-block rounded-full bg-[var(--color-accent)]/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[var(--color-accent)]">
@@ -134,7 +134,7 @@ export default function OfferPage() {
               </p>
               <Link
                 href="/checkout?product=course"
-                className="block text-center bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white font-medium px-6 py-4 rounded-[var(--radius-full)] transition-colors text-sm"
+                className="block text-center bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white font-semibold px-6 py-4 rounded-[var(--radius-full)] transition-colors text-sm"
               >
                 {courseActive ? 'Получить полный доступ - 39€' : 'Оформить предзаказ - 39€'}
               </Link>
@@ -142,17 +142,17 @@ export default function OfferPage() {
 
             {/* HAIRLAB Guide - compact */}
             <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-[var(--radius-xl)] p-7">
-              <span className="inline-block bg-[var(--color-bg-warm)] text-[var(--color-text-soft)] text-[11px] font-medium px-3 py-1 rounded-full mb-4">
+              <span className="inline-block bg-[var(--color-bg-warm)] text-[var(--color-text-soft)] text-[11px] font-semibold px-3 py-1 rounded-full mb-4">
                 Лёгкий старт
               </span>
-              <h3 className="font-display text-lg font-medium text-[var(--color-text)] mb-1">
+              <h3 className="text-lg font-semibold text-[var(--color-text)] mb-1 tracking-tight">
                 только методичка HAIRLAB: Карта восстановления
               </h3>
-              <p className="font-display text-2xl font-medium text-[var(--color-accent)] mb-5">13€</p>
+              <p className="text-2xl font-semibold text-[var(--color-accent)] mb-5 tracking-tight">13€</p>
               <div className="space-y-5 mb-7">
                 {/* Block 1 */}
                 <div>
-                  <p className="text-sm font-medium text-[var(--color-text)] mb-2">Готовые рабочие средства</p>
+                  <p className="text-sm font-semibold text-[var(--color-text)] mb-2">Готовые рабочие средства</p>
                   <ul className="space-y-1.5 mb-2">
                     {['шампуни', 'маски', 'кондиционеры', 'термозащита'].map((item) => (
                       <li key={item} className="flex gap-2 text-sm text-[var(--color-text-soft)]">
@@ -167,7 +167,7 @@ export default function OfferPage() {
                 </div>
                 {/* Block 2 */}
                 <div>
-                  <p className="text-sm font-medium text-[var(--color-text)] mb-2">Гайд по аксессуарам</p>
+                  <p className="text-sm font-semibold text-[var(--color-text)] mb-2">Гайд по аксессуарам</p>
                   <ul className="space-y-1.5 mb-2">
                     {['Что не повреждает волосы', 'какое полотенце выбрать', 'материал для сна', 'расчёски, резинки, зажимы'].map((item) => (
                       <li key={item} className="flex gap-2 text-sm text-[var(--color-text-soft)]">
@@ -182,7 +182,7 @@ export default function OfferPage() {
                 </div>
                 {/* Block 3 */}
                 <div>
-                  <p className="text-sm font-medium text-[var(--color-text)] mb-2">Протоколы восстановления</p>
+                  <p className="text-sm font-semibold text-[var(--color-text)] mb-2">Протоколы восстановления</p>
                   <ul className="space-y-1.5 mb-2">
                     {['Чёткие схемы', 'под разные типы волос', 'под разную степень повреждения', 'пошаговые сценарии'].map((item) => (
                       <li key={item} className="flex gap-2 text-sm text-[var(--color-text-soft)]">
@@ -198,7 +198,7 @@ export default function OfferPage() {
               </div>
               <Link
                 href="/checkout?product=guide"
-                className="block text-center border border-border text-foreground hover:bg-sand/60 font-medium px-6 py-4 rounded-[var(--radius-full)] transition-colors text-sm"
+                className="block text-center border border-border text-foreground hover:bg-sand/60 font-semibold px-6 py-4 rounded-[var(--radius-full)] transition-colors text-sm"
               >
                 Начать с HAIRLAB Guide - 13€
               </Link>
@@ -207,10 +207,10 @@ export default function OfferPage() {
 
           {/* Comparison table */}
           <div className="mb-20">
-            <p className="text-[11px] font-medium tracking-[3px] uppercase text-[var(--color-text-muted)] text-center mb-3">
+            <p className="text-[11px] font-semibold tracking-[3px] uppercase text-[var(--color-text-muted)] text-center mb-3">
               с р а в н е н и е
             </p>
-            <h2 className="font-display text-xl md:text-2xl font-medium text-[var(--color-text)] text-center mb-8">
+            <h2 className="text-xl md:text-2xl font-semibold text-[var(--color-text)] text-center mb-8 tracking-tight">
               Что входит в каждый формат
             </h2>
             <div className="overflow-x-auto">
@@ -218,10 +218,10 @@ export default function OfferPage() {
                 <thead>
                   <tr className="border-b border-[var(--color-border)]">
                     <th className="text-left py-3 pr-4 font-medium text-[var(--color-text-soft)] w-1/2"></th>
-                    <th className="text-center py-3 px-4 font-medium text-[var(--color-text)] whitespace-nowrap">
-                      HAIRLAB Guide <span className="text-[var(--color-text-soft)]">13€</span>
+                    <th className="text-center py-3 px-4 font-semibold text-[var(--color-text)] whitespace-nowrap">
+                      HAIRLAB Guide <span className="font-normal text-[var(--color-text-soft)]">13€</span>
                     </th>
-                    <th className="text-center py-3 pl-4 font-medium text-[var(--color-accent)] whitespace-nowrap">
+                    <th className="text-center py-3 pl-4 font-semibold text-[var(--color-accent)] whitespace-nowrap">
                       Full Course <span className="font-normal">39€</span>
                     </th>
                   </tr>
@@ -253,10 +253,10 @@ export default function OfferPage() {
 
           {/* Результат */}
           <div className="bg-[var(--color-bg-warm)] border border-[var(--color-border)] rounded-[var(--radius-xl)] px-6 md:px-12 py-10 mb-16">
-            <p className="text-[11px] font-medium tracking-[3px] uppercase text-[var(--color-text-muted)] mb-3">
+            <p className="text-[11px] font-semibold tracking-[3px] uppercase text-[var(--color-text-muted)] mb-3">
               р е з у л ь т а т
             </p>
-            <h2 className="font-display text-xl md:text-2xl font-medium text-[var(--color-text)] mb-4 text-balance leading-snug">
+            <h2 className="text-xl md:text-2xl font-semibold text-[var(--color-text)] mb-4 text-balance leading-snug tracking-tight">
               Гладкие, плотные волосы - это не генетика, а система.
             </h2>
             <p className="text-sm md:text-base leading-relaxed text-[var(--color-text-soft)] max-w-xl">
@@ -269,10 +269,10 @@ export default function OfferPage() {
 
           {/* FAQ */}
           <div className="max-w-2xl mx-auto">
-            <p className="text-[11px] font-medium tracking-[3px] uppercase text-[var(--color-text-muted)] text-center mb-3">
+            <p className="text-[11px] font-semibold tracking-[3px] uppercase text-[var(--color-text-muted)] text-center mb-3">
               в о п р о с ы
             </p>
-            <h2 className="font-display text-xl md:text-2xl font-medium text-[var(--color-text)] text-center mb-8">
+            <h2 className="text-xl md:text-2xl font-semibold text-[var(--color-text)] text-center mb-8 tracking-tight">
               Частые вопросы
             </h2>
             <OfferFAQ />

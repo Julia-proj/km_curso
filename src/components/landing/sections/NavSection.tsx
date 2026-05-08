@@ -28,26 +28,26 @@ export function NavSection() {
           transition={{ duration: 0.4, ease }}
           className="fixed inset-x-0 top-0 z-50 border-b border-border/40 bg-cream/80 backdrop-blur-xl"
         >
-          <div className="mx-auto flex max-w-[1200px] items-center justify-between px-5 py-2.5 md:px-10">
-            <a href="#" className="font-display text-lg text-foreground">
+          <div className="mx-auto flex max-w-[1200px] items-center justify-between px-5 py-3 md:px-10">
+            <a href="#" className="font-display text-lg tracking-tight text-foreground">
               HAIRLAB
             </a>
-            <nav className="hidden gap-8 text-sm text-muted-foreground md:flex">
+            <nav className="hidden gap-8 text-sm font-medium text-muted-foreground md:flex">
               <a href="#about" className="transition-colors hover:text-foreground">Об авторе</a>
               <a href="#program" className="transition-colors hover:text-foreground">Программа</a>
               <a href="#format" className="transition-colors hover:text-foreground">Формат</a>
               <a href="#faq" className="transition-colors hover:text-foreground">FAQ</a>
             </nav>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2.5">
               <a
                 href="/quiz"
-                className="rounded-full border border-border/60 bg-sand px-4 py-2 text-xs font-medium uppercase tracking-[0.15em] text-foreground transition-colors hover:border-accent hover:bg-accent"
+                className="rounded-full border border-border/60 bg-sand px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-foreground transition-colors hover:border-accent hover:bg-accent"
               >
                 Тест
               </a>
               <a
                 href="#format"
-                className="rounded-full bg-primary px-4 py-2 text-xs font-medium uppercase tracking-[0.15em] text-primary-foreground transition-opacity hover:opacity-80"
+                className="rounded-full bg-primary px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-primary-foreground transition-opacity hover:opacity-80"
               >
                 <span className="hidden sm:inline">Хочу на обучение</span>
                 <span className="sm:hidden">Обучение</span>

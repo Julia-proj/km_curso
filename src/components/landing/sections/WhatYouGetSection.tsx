@@ -26,7 +26,7 @@ export function WhatYouGetSection() {
             className="km-card km-card-roomy transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_30px_80px_-40px_rgba(80,40,30,0.25)]"
           >
             <h3 className="km-card-title">Система восстановления с Еленой</h3>
-            <p className="font-display text-2xl font-medium text-accent mt-1 mb-5">39€</p>
+            <p className="text-2xl font-semibold text-accent mt-1 mb-5 tracking-tight">39€</p>
 
             <div className="mb-5">
               <p className="km-copy font-medium mb-2">Видео-уроки:</p>
@@ -63,7 +63,7 @@ export function WhatYouGetSection() {
             </ul>
             <a
               href="/checkout?product=course"
-              className="btn-luxury mt-7 block w-full rounded-full py-3.5 text-center text-xs font-medium uppercase tracking-[0.15em]"
+              className="btn-luxury mt-7 block w-full rounded-full py-3.5 text-center text-xs font-semibold uppercase tracking-[0.15em]"
             >
               Получить доступ 39€
             </a>
@@ -75,7 +75,7 @@ export function WhatYouGetSection() {
             className="km-card km-card-roomy flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_30px_80px_-40px_rgba(80,40,30,0.25)]"
           >
             <h3 className="km-card-title">только методичка HAIRLAB: Карта восстановления</h3>
-            <p className="font-display text-2xl font-medium text-accent mt-1 mb-5">13€</p>
+            <p className="text-2xl font-semibold text-accent mt-1 mb-5 tracking-tight">13€</p>
 
             <div className="space-y-5">
               {courseBlocks.slice(1).map((block) => (
@@ -95,7 +95,7 @@ export function WhatYouGetSection() {
             </div>
             <a
               href="/checkout?product=guide"
-              className="btn-luxury-sand mt-7 block w-full rounded-full py-3.5 text-center text-xs font-medium uppercase tracking-[0.15em] md:mt-auto"
+              className="btn-luxury-sand mt-7 block w-full rounded-full py-3.5 text-center text-xs font-semibold uppercase tracking-[0.15em] md:mt-auto"
             >
               Приобрести методичку 13€
             </a>
@@ -104,12 +104,12 @@ export function WhatYouGetSection() {
 
         <motion.div
           {...fadeUp(0.15)}
-          className="mt-8 rounded-[var(--radius-xl,1.5rem)] bg-[hsl(var(--foreground))] px-6 py-10 text-[hsl(var(--background))] md:px-12"
+          className="mt-8 rounded-3xl bg-primary px-6 py-10 text-primary-foreground md:px-12"
         >
-          <p className="mb-3 text-[11px] font-medium uppercase tracking-[3px] opacity-50">
+          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[3px] opacity-50">
             р е з у л ь т а т
           </p>
-          <h2 className="font-display mb-4 text-xl font-medium leading-snug text-balance md:text-2xl">
+          <h2 className="mb-4 text-xl font-semibold leading-snug text-balance md:text-2xl tracking-tight">
             Гладкие, плотные волосы - это не генетика, а система.
           </h2>
           <p className="max-w-xl text-sm leading-relaxed opacity-80 md:text-base">

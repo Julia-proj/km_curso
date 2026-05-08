@@ -22,7 +22,7 @@ export function Header() {
       }`}
     >
       <div className="max-w-6xl mx-auto px-5 h-full flex items-center">
-        <span className="font-display text-lg font-medium text-text tracking-wide">
+        <span className="text-lg font-bold tracking-tight text-text">
           HAIRLAB
         </span>
       </div>

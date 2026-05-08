@@ -16,7 +16,7 @@ export function ForYouSection() {
             Этот курс <span className="italic">для тебя</span>, если:
           </h2>
         </motion.div>
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-2">
           {forYouItems.map((item, index) => {
             const isLoneLastItem =
               index === forYouItems.length - 1 && forYouItems.length % 2 !== 0
@@ -25,7 +25,7 @@ export function ForYouSection() {
               key={item}
               {...fadeUp((index % 2) * 0.1)}
               className={`km-card group transition-colors hover:border-accent/60 hover:bg-accent/15 ${
-                isLoneLastItem ? "md:col-span-2 md:max-w-lg md:mx-auto md:w-full" : ""
+                isLoneLastItem ? "sm:col-span-2 sm:max-w-lg sm:mx-auto sm:w-full" : ""
               }`}
             >
               <div className="flex items-start gap-4">

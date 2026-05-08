@@ -18,13 +18,13 @@ export function Footer() {
       >
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
           <div>
-            <p className="font-display text-lg font-medium text-text-on-dark mb-2">
+            <p className="text-lg font-bold tracking-tight text-text-on-dark mb-2">
               HAIRLAB
             </p>
             <p className="text-text-on-dark/60 text-sm">Keratin Madrid</p>
           </div>
 
-          <div className="flex flex-wrap gap-6 text-sm">
+          <div className="flex flex-wrap gap-6 text-sm font-medium">
             <a
               href="#about"
               className="text-text-on-dark/60 hover:text-text-on-dark transition-colors"
@@ -49,7 +49,7 @@ export function Footer() {
             href="https://instagram.com/keratinmadrid"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-text-on-dark/60 hover:text-text-on-dark transition-colors text-sm"
+            className="text-text-on-dark/60 hover:text-text-on-dark transition-colors text-sm font-medium"
           >
             Instagram: @keratinmadrid
           </a>

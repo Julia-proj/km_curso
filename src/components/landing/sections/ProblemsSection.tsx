@@ -58,7 +58,7 @@ export function ProblemsSection() {
           </motion.h2>
         </div>
 
-        {/* Mobile: horizontal scroll carousel (unchanged) */}
+        {/* Mobile: horizontal scroll carousel */}
         <div className="md:hidden flex gap-3 overflow-x-auto snap-x snap-mandatory no-scrollbar pl-5 pb-4">
           {problemItems.map((item, index) => (
             <div
@@ -68,12 +68,12 @@ export function ProblemsSection() {
               <div className="relative aspect-[4/3]">
                 <Image src={`/images/${index + 1}.PNG`} alt="" fill sizes="78vw" className="object-cover" />
               </div>
-              <p className="px-4 py-4 text-sm leading-snug text-foreground/80">{item}</p>
+              <p className="px-4 py-4 text-sm font-medium leading-snug text-foreground/80">{item}</p>
             </div>
           ))}
           <div className="shrink-0 w-4" aria-hidden="true" />
         </div>
-        <p className="md:hidden text-center text-[11px] tracking-widest text-muted-foreground/50 mt-3 uppercase">
+        <p className="md:hidden text-center text-[11px] font-semibold tracking-widest text-muted-foreground/50 mt-3 uppercase">
           листай →
         </p>
 
@@ -147,7 +147,7 @@ export function ProblemsSection() {
                         className="object-cover"
                       />
                     </div>
-                    <p className="px-5 py-4 text-sm leading-snug text-foreground/80">{item}</p>
+                    <p className="px-5 py-4 text-sm font-medium leading-snug text-foreground/80">{item}</p>
                   </div>
                 )
               })}

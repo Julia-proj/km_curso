@@ -16,12 +16,12 @@ export default function LessonPage() {
         <div className="max-w-2xl mx-auto">
           <BackButton />
           {/* Overline */}
-          <p className="text-[11px] font-medium tracking-[3px] uppercase text-[var(--color-text-muted)] mb-4 text-center">
+          <p className="text-[11px] font-semibold tracking-[3px] uppercase text-[var(--color-text-muted)] mb-4 text-center">
             Бесплатный урок от Елены
           </p>
 
           {/* Headline */}
-          <h1 className="font-display text-2xl md:text-4xl font-medium text-[var(--color-text)] text-center mb-8 text-balance leading-snug">
+          <h1 className="text-2xl md:text-4xl font-semibold text-[var(--color-text)] text-center mb-8 text-balance leading-snug tracking-tight">
             Как разобраться, что происходит с твоими волосами
           </h1>
 
@@ -55,7 +55,7 @@ export default function LessonPage() {
           <div className="text-center">
             <Link
               href="/offer"
-              className="inline-block bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white font-medium px-8 py-4 rounded-[var(--radius-full)] transition-colors text-sm"
+              className="inline-block bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white font-semibold px-8 py-4 rounded-[var(--radius-full)] transition-colors text-sm"
             >
               Выбрать свой формат
             </Link>

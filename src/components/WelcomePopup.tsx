@@ -45,7 +45,7 @@ export function WelcomePopup() {
               ✕
             </button>
             <div className="km-eyebrow mb-3 text-accent-foreground/60">Уже готова?</div>
-            <h3 className="font-display text-2xl leading-tight">
+            <h3 className="text-2xl font-semibold leading-tight tracking-tight">
               Выбери свой<br />формат обучения
             </h3>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -55,7 +55,7 @@ export function WelcomePopup() {
               <a
                 href="#format"
                 onClick={() => setOpen(false)}
-                className="flex items-center justify-between rounded-2xl bg-primary px-5 py-4 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-80"
+                className="flex items-center justify-between rounded-2xl bg-primary px-5 py-4 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-80"
               >
                 <span>Полный курс</span>
                 <ArrowUpRightIcon size={14} />
@@ -63,7 +63,7 @@ export function WelcomePopup() {
               <a
                 href="#format"
                 onClick={() => setOpen(false)}
-                className="flex items-center justify-between rounded-2xl border border-border px-5 py-4 text-sm font-medium text-foreground transition-colors hover:bg-sand/60"
+                className="flex items-center justify-between rounded-2xl border border-border px-5 py-4 text-sm font-semibold text-foreground transition-colors hover:bg-sand/60"
               >
                 <span>Купить методичку</span>
                 <ArrowUpRightIcon size={14} />

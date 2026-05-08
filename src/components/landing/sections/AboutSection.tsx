@@ -26,7 +26,7 @@ export function AboutSection() {
             </div>
             <div className="pt-1">
               <div className="km-eyebrow text-muted-foreground">Автор курса</div>
-              <div className="mt-1 font-display text-xl leading-tight">Елена Александрова</div>
+              <div className="mt-1 text-xl font-semibold leading-tight tracking-tight">Елена Александрова</div>
             </div>
           </div>
 
@@ -39,7 +39,7 @@ export function AboutSection() {
             </div>
             <div className="mt-4">
               <div className="km-eyebrow text-muted-foreground">Автор курса</div>
-              <div className="mt-1 font-display text-2xl">Елена Александрова</div>
+              <div className="mt-1 text-2xl font-semibold tracking-tight">Елена Александрова</div>
             </div>
           </div>
         </motion.div>
@@ -59,7 +59,7 @@ export function AboutSection() {
                 {...fadeUp(index * 0.05)}
                 className="flex items-start gap-4 py-4 md:gap-5 md:py-5"
               >
-                <span className="mt-1 font-display text-sm text-accent-foreground/70">0{index + 1}</span>
+                <span className="mt-0.5 text-sm font-semibold text-accent-foreground/70 tabular-nums">0{index + 1}</span>
                 <span className="km-copy">{point}</span>
               </motion.li>
             ))}
