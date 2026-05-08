@@ -160,7 +160,7 @@ export function ResultsSection() {
         <div
           ref={scrollerRef}
           onScroll={updateCarouselState}
-          className="no-scrollbar mt-5 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-5 md:gap-5 lg:grid lg:grid-cols-5 lg:overflow-visible lg:snap-none lg:gap-3"
+          className="no-scrollbar mt-4 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth px-5 pb-3 md:mt-5 md:gap-5 lg:grid lg:grid-cols-5 lg:px-0 lg:overflow-visible lg:snap-none lg:gap-3"
         >
           {instagramReels.map((reel, index) => (
             <motion.a
@@ -173,7 +173,7 @@ export function ResultsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.06, duration: 0.5 }}
-              className="group block w-[min(76vw,18rem)] shrink-0 snap-center rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-ring md:w-[20.5rem] lg:w-auto"
+              className="group block w-[min(62vw,15rem)] shrink-0 snap-center rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-ring md:w-[20.5rem] lg:w-auto"
             >
               <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-border/70 bg-card shadow-sm transition duration-300 group-hover:-translate-y-1 group-hover:border-primary/25 group-hover:shadow-lg">
                 <div className="relative aspect-[4/5] overflow-hidden bg-primary/5 lg:aspect-[9/16]">
@@ -198,15 +198,15 @@ export function ResultsSection() {
                   </div>
                 </div>
 
-                <div className="flex grow flex-col p-3 sm:p-4">
-                  <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-muted-foreground/70">
+                <div className="flex grow flex-col p-2.5 sm:p-4">
+                  <p className="hidden text-[10px] font-medium uppercase tracking-[0.18em] text-muted-foreground/70 sm:block">
                     keratin_madrid
                   </p>
-                  <h3 className="mt-1 font-display text-xl leading-none text-foreground sm:text-2xl">{reel.title}</h3>
+                  <h3 className="mt-1 font-display text-lg leading-tight text-foreground sm:text-2xl">{reel.title}</h3>
                   <p className="mt-2 hidden text-sm leading-relaxed text-muted-foreground sm:block">
                     {reel.description}
                   </p>
-                  <span className="mt-3 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.16em] text-primary sm:mt-4">
+                  <span className="mt-2 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.16em] text-primary sm:mt-4 sm:text-[11px]">
                     Смотреть в Instagram
                     <ArrowIcon />
                   </span>
