@@ -48,7 +48,7 @@ function MobileBeforeAfterStrip() {
       {beforeAfterCards.map((card) => (
         <div
           key={card.src}
-          className="relative h-[170px] w-32 overflow-hidden rounded-xl border-2 border-white/30 shadow-2xl backdrop-blur-sm"
+          className="relative h-[170px] w-32 overflow-hidden rounded-2xl border-2 border-white/40 shadow-2xl backdrop-blur-md"
         >
           <Image
             alt={card.alt}
@@ -75,7 +75,7 @@ function DesktopBeforeAfterGrid() {
       className="grid grid-cols-2 gap-4 pt-8"
     >
       {beforeAfterCards.map((card) => (
-        <div key={card.src} className="group relative h-[220px] overflow-hidden rounded-xl border-2 border-[#E1D9D1] bg-white shadow-lg">
+        <div key={card.src} className="group relative h-[220px] overflow-hidden rounded-2xl border-2 border-[#E1D9D1] bg-white shadow-xl">
           <Image
             alt={card.alt}
             className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
@@ -106,20 +106,20 @@ export function LandingHeroSection() {
             src={heroImage}
             style={{ objectPosition: "center 60%" }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/90" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/70" />
         </div>
 
-        <div className="relative z-10 flex flex-1 flex-col justify-between pb-4 pt-14">
+        <div className="relative z-10 flex flex-1 flex-col justify-between pb-8 pt-16">
           <MobileBeforeAfterStrip />
 
           <div className="px-5">
-            <div className="space-y-3">
+            <div className="space-y-5">
               <motion.div
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.08, duration: 0.55 }}
               >
-                <span className="inline-block border border-white/55 bg-transparent px-3 py-1 font-sans text-[10px] font-medium text-white shadow-sm backdrop-blur-sm">
+                <span className="inline-block bg-[#D29B9B]/90 px-4 py-1.5 font-sans text-[11px] font-semibold text-white shadow-lg backdrop-blur-sm rounded-full">
                   Авторский курс · 2026
                 </span>
               </motion.div>
@@ -128,7 +128,7 @@ export function LandingHeroSection() {
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.14, duration: 0.55 }}
-                className="max-w-[21.5rem] font-display text-[2.35rem] leading-[1.1] text-white"
+                className="max-w-[21.5rem] font-display text-[2.5rem] leading-[1.05] text-white font-medium"
               >
                 Салонное восстановление волос дома
               </motion.h1>
@@ -137,7 +137,7 @@ export function LandingHeroSection() {
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2, duration: 0.55 }}
-                className="font-sans text-sm leading-relaxed text-white/65"
+                className="font-sans text-[15px] leading-relaxed text-white/80 font-medium"
               >
                 + составы для волос.
               </motion.p>
@@ -146,18 +146,18 @@ export function LandingHeroSection() {
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.27, duration: 0.55 }}
-                className="flex flex-col gap-2"
+                className="flex flex-col gap-3"
               >
                 <a
                   href="#what-you-get"
-                  className="inline-flex w-full items-center justify-center gap-2.5 bg-white px-6 py-3.5 font-sans text-sm font-semibold text-[#1A1A1A] transition-colors hover:bg-white/90 rounded-lg"
+                  className="inline-flex w-full items-center justify-center gap-2.5 bg-[#1A1A1A] px-6 py-4 font-sans text-sm font-semibold text-white transition-all hover:bg-[#333] hover:shadow-xl rounded-xl"
                 >
                   Хочу на обучение
                   <ArrowRightIcon size={15} />
                 </a>
                 <a
                   href="/quiz"
-                  className="inline-flex w-full items-center justify-center gap-2 border border-white/30 px-6 py-3.5 font-sans text-sm text-white transition-colors hover:border-white/60 rounded-lg"
+                  className="inline-flex w-full items-center justify-center gap-2 border-2 border-[#E0DCD6] px-6 py-4 font-sans text-sm font-semibold text-[#1A1A1A] transition-all hover:border-[#1A1A1A] hover:bg-[#1A1A1A]/5 rounded-xl"
                 >
                   ПРОЙТИ ТЕСТ
                 </a>
@@ -177,18 +177,69 @@ export function LandingHeroSection() {
               <a href="#faq" className="transition-colors hover:text-[#1A1A1A] hover:tracking-[0.18em]">FAQ</a>
             </nav>
 
-            <div className="grid items-center gap-6 lg:grid-cols-[1fr_1fr]">
+            <div className="grid items-center gap-12 lg:grid-cols-[1fr_1fr]">
               <div className="max-w-xl">
+                <div className="space-y-4">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.55 }}
+                  >
+                    <span className="inline-block bg-[#D29B9B]/90 px-4 py-2 font-sans text-[11px] font-semibold text-white shadow-lg backdrop-blur-sm rounded-full">
+                      Авторский курс · 2026
+                    </span>
+                  </motion.div>
+
+                  <motion.h1
+                    initial={{ opacity: 0, y: 22 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.08, duration: 0.55 }}
+                    className="font-display text-5xl leading-[1.08] tracking-tight text-[#1A1A1A] xl:text-6xl font-medium"
+                  >
+                    Салонное восстановление волос дома
+                  </motion.h1>
+
+                  <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.16, duration: 0.55 }}
+                    className="font-sans text-lg leading-relaxed text-[#666] font-medium"
+                  >
+                    + составы для волос.
+                  </motion.p>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.23, duration: 0.55 }}
+                    className="flex gap-3 pt-2"
+                  >
+                    <a
+                      href="#what-you-get"
+                      className="inline-flex items-center gap-3 bg-[#1A1A1A] px-8 py-4 font-sans text-sm font-semibold text-white transition-all hover:bg-[#333] hover:shadow-xl rounded-xl"
+                    >
+                      Хочу на обучение
+                      <ArrowRightIcon />
+                    </a>
+                    <a
+                      href="/quiz"
+                      className="inline-flex items-center gap-2 border-2 border-[#E0DCD6] px-8 py-4 font-sans text-sm font-semibold text-[#1A1A1A] transition-all hover:border-[#1A1A1A] hover:bg-[#1A1A1A]/5 rounded-xl"
+                    >
+                      ПРОЙТИ ТЕСТ
+                    </a>
+                  </motion.div>
+                </div>
+
                 <motion.div
                   initial={{ opacity: 0, y: 24 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.05, duration: 0.55 }}
-                  className="mb-3 flex gap-4"
+                  transition={{ delay: 0.3, duration: 0.55 }}
+                  className="mt-10 flex gap-4"
                 >
                   {beforeAfterCards.map((card) => (
                     <div
                       key={card.src}
-                      className="relative h-52 w-56 overflow-hidden rounded-xl border-2 border-[#E1D9D1] shadow-lg"
+                      className="relative h-44 w-48 overflow-hidden rounded-2xl border-2 border-[#E1D9D1] shadow-xl"
                     >
                       <Image
                         alt={card.alt}
@@ -202,77 +253,26 @@ export function LandingHeroSection() {
                     </div>
                   ))}
                 </motion.div>
-
-                <div className="space-y-3">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.55 }}
-                  >
-                    <span className="inline-block border border-[#D8CEC6] bg-transparent px-3 py-1.5 font-sans text-[10px] font-medium text-[#6F655D] shadow-sm backdrop-blur-sm">
-                      Авторский курс · 2026
-                    </span>
-                  </motion.div>
-
-                  <motion.h1
-                    initial={{ opacity: 0, y: 22 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.08, duration: 0.55 }}
-                    className="font-display text-5xl leading-[1.08] tracking-tight text-[#1A1A1A] xl:text-6xl"
-                  >
-                    Салонное восстановление волос дома
-                  </motion.h1>
-
-                  <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.16, duration: 0.55 }}
-                    className="font-sans text-lg leading-relaxed text-[#666]"
-                  >
-                    + составы для волос.
-                  </motion.p>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.23, duration: 0.55 }}
-                    className="flex gap-3 pt-2"
-                  >
-                    <a
-                      href="#what-you-get"
-                      className="inline-flex items-center gap-3 bg-[#1A1A1A] px-8 py-4 font-sans text-sm font-semibold text-white transition-colors hover:bg-[#333] rounded-lg"
-                    >
-                      Хочу на обучение
-                      <ArrowRightIcon />
-                    </a>
-                    <a
-                      href="/quiz"
-                      className="inline-flex items-center gap-2 border border-[#E0DCD6] px-8 py-4 font-sans text-sm font-semibold text-[#1A1A1A] transition-colors hover:border-[#1A1A1A] rounded-lg"
-                    >
-                      ПРОЙТИ ТЕСТ
-                    </a>
-                  </motion.div>
-                </div>
               </div>
 
-              <div>
+              <div className="flex justify-center">
                 <motion.div
                   initial={{ opacity: 0, y: 22 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.12, duration: 0.55 }}
-                  className="relative mx-auto w-full max-w-[24rem]"
+                  className="relative w-full max-w-[28rem]"
                 >
                   <div className="relative">
-                    <div className="absolute inset-0 -z-10 translate-x-6 translate-y-6 rounded-2xl bg-[#E8DDD6] blur-sm" />
-                    <div className="absolute inset-0 -z-10 translate-x-3 translate-y-3 rounded-2xl bg-[#E8DDD6]" />
-                    <div className="relative h-[480px] w-full overflow-hidden rounded-2xl border-2 border-[#E1D9D1] bg-white shadow-xl">
+                    <div className="absolute inset-0 -z-10 translate-x-8 translate-y-8 rounded-2xl bg-[#E8DDD6] blur-md" />
+                    <div className="absolute inset-0 -z-10 translate-x-4 translate-y-4 rounded-2xl bg-[#E8DDD6]" />
+                    <div className="relative h-[600px] w-full overflow-hidden rounded-2xl border-2 border-[#E1D9D1] bg-white shadow-2xl">
                       <Image
                         alt="Елена - основатель HairLab"
                         className="object-cover object-bottom"
                         fill
                         preload
                         quality={92}
-                        sizes="(min-width: 1280px) 384px, 48vw"
+                        sizes="(min-width: 1280px) 448px, 48vw"
                         src={heroImage}
                       />
                     </div>

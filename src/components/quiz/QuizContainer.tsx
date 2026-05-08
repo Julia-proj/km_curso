@@ -30,16 +30,16 @@ export function QuizContainer() {
   }
 
   return (
-    <div className="w-full max-w-lg mx-auto px-4">
+    <div className="w-full max-w-lg mx-auto px-4 sm:px-6">
       <div className="mb-8">
         <QuizProgress total={total} current={currentStep} />
-        <p className="text-center text-sm text-[var(--color-text-muted)] mt-3">
+        <p className="text-center text-sm text-[#666] mt-3">
           {currentStep + 1} из {total}
         </p>
       </div>
 
       {/* Fixed-height container prevents CLS during question transitions */}
-      <div style={{ minHeight: '480px' }}>
+      <div style={{ minHeight: '480px' }} className="min-h-[400px] sm:min-h-[480px]">
         <AnimatePresence mode="wait">
           <QuizQuestion
             key={question.id}
@@ -54,7 +54,7 @@ export function QuizContainer() {
         <button
           type="button"
           onClick={prevStep}
-          className="mt-6 text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
+          className="mt-6 text-sm text-[#666] hover:text-[#1A1A1A] transition-colors"
         >
           ← Назад
         </button>

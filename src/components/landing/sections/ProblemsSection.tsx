@@ -50,11 +50,25 @@ export function ProblemsSection() {
   const scrollCards = (direction: "prev" | "next") => {
     const scroller = scrollerRef.current
     if (!scroller) return
-    const step = 288
+    const step = 304
     scroller.scrollBy({
       left: direction === "next" ? step : -step,
       behavior: "smooth",
     })
+  }
+
+  const handleTouchStart = () => {
+    const scroller = scrollerRef.current
+    if (scroller) {
+      scroller.style.scrollBehavior = 'auto'
+    }
+  }
+
+  const handleTouchEnd = () => {
+    const scroller = scrollerRef.current
+    if (scroller) {
+      scroller.style.scrollBehavior = 'smooth'
+    }
   }
 
   return (
@@ -69,21 +83,23 @@ export function ProblemsSection() {
 
         <div
           ref={scrollerRef}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
           className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-3 scroll-smooth [scroll-padding-inline:1.5rem]"
         >
           {problemCards.map((card, index) => (
             <motion.article
               key={card.title}
               {...fadeUp((index % 4) * 0.05)}
-              className="group w-64 shrink-0 snap-start overflow-hidden rounded-lg border border-[#E0DCD6] bg-white shadow-sm"
+              className="group w-72 shrink-0 snap-start overflow-hidden rounded-lg border border-[#E0DCD6] bg-white shadow-sm"
             >
-              <div className="relative h-[220px] overflow-hidden bg-[#E8E1DA]">
+              <div className="relative h-[280px] overflow-hidden bg-[#E8E1DA]">
                 <Image
                   alt={card.title}
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                   fill
                   quality={88}
-                  sizes="256px"
+                  sizes="288px"
                   src={card.image}
                 />
                 <span className="absolute left-3 top-5 bg-white/90 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.22em] text-[#1A1A1A]">
@@ -98,25 +114,43 @@ export function ProblemsSection() {
           ))}
         </div>
 
-        <div className="mt-3 hidden justify-center px-6 md:mt-2 md:flex">
-          <div className="flex items-center gap-3">
+        <motion.div
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.6, duration: 0.6 }}
+          className="mt-4 flex items-center justify-center gap-1.5 md:hidden"
+        >
+          <span className="font-sans text-xs font-medium text-[#D29B9B]">Листай</span>
+          <motion.div
+            animate={{ x: [0, 12, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            className="text-[#D29B9B]"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </motion.div>
+        </motion.div>
+
+        <div className="mt-4 hidden justify-center px-6 md:flex md:mt-2">
+          <div className="flex items-center gap-4">
             <button
               type="button"
               onClick={() => scrollCards("prev")}
-              className="grid h-10 w-10 place-items-center rounded-full border border-[#D9D1C8] bg-white text-[#5A524A] transition-all hover:border-[#BEB2A5] hover:bg-[#F8F5F1] hover:shadow-md"
+              className="grid h-12 w-12 place-items-center rounded-full border-2 border-[#E0DCD6] bg-white text-[#1A1A1A] transition-all hover:border-[#D29B9B] hover:bg-[#D29B9B] hover:text-white hover:shadow-lg active:scale-95"
               aria-label="Прокрутить карточки влево"
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M15 18l-6-6 6-6" />
               </svg>
             </button>
             <button
               type="button"
               onClick={() => scrollCards("next")}
-              className="grid h-10 w-10 place-items-center rounded-full border border-[#D9D1C8] bg-white text-[#5A524A] transition-all hover:border-[#BEB2A5] hover:bg-[#F8F5F1] hover:shadow-md"
+              className="grid h-12 w-12 place-items-center rounded-full border-2 border-[#E0DCD6] bg-white text-[#1A1A1A] transition-all hover:border-[#D29B9B] hover:bg-[#D29B9B] hover:text-white hover:shadow-lg active:scale-95"
               aria-label="Прокрутить карточки вправо"
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M9 18l6-6-6-6" />
               </svg>
             </button>

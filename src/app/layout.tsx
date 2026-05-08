@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Playfair_Display, Inter, Manrope } from 'next/font/google'
 import './globals.css'
+import { LoadingScreen } from '@/components/LoadingScreen'
 const playfair = Playfair_Display({
   subsets: ['cyrillic', 'latin'],
   weight: ['400', '500', '600'],
@@ -49,7 +50,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ru" className={`${playfair.variable} ${inter.variable} ${manrope.variable}`}>
-      <body>{children}</body>
+      <body>
+        <LoadingScreen />
+        {children}
+      </body>
     </html>
   )
 }

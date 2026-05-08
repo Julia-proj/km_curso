@@ -13,10 +13,10 @@ export function QuizProgress({ total, current }: QuizProgressProps) {
           key={i}
           className={`block rounded-full transition-all duration-300 ${
             i === current
-              ? 'w-6 h-2 bg-[var(--color-accent)]'
+              ? 'w-6 h-2 sm:w-8 sm:h-2.5 bg-[#D29B9B]'
               : i < current
-              ? 'w-2 h-2 bg-[var(--color-accent)] opacity-50'
-              : 'w-2 h-2 bg-[var(--color-border)]'
+              ? 'w-2 h-2 sm:w-2.5 sm:h-2.5 bg-[#D29B9B] opacity-50'
+              : 'w-2 h-2 sm:w-2.5 sm:h-2.5 bg-[#E0DCD6]'
           }`}
         />
       ))}

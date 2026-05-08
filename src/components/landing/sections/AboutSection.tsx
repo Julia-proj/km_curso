@@ -39,20 +39,20 @@ export function AboutSection() {
           <div className="grid grid-cols-2 gap-3 md:grid-cols-[1.08fr_0.92fr] md:gap-5">
             <div className="relative overflow-hidden rounded-lg border border-[#E6DED7] bg-[#F8F5F1] shadow-sm md:shadow-md">
               <div className="hidden md:block absolute inset-0 translate-x-3 translate-y-3 bg-[#E8E1DA] -z-10" />
-              <div className="relative aspect-[2/3] md:h-[25.5rem] md:aspect-auto">
+              <div className="relative aspect-[3/4] sm:aspect-[2/3] md:h-[20rem] md:aspect-auto">
                 <Image
                   alt="Елена HairLab"
                   className="object-contain object-center p-1.5 md:p-2"
                   fill
                   quality={92}
                   sizes="(min-width: 1024px) 320px, (min-width: 768px) 280px, 45vw"
-                  src="/images/foto2.png"
+                  src="/images/foto3.png"
                 />
               </div>
             </div>
 
-            <div className="relative mt-3 overflow-hidden rounded-lg border border-[#E6DED7] bg-[#F8F5F1] shadow-sm md:mt-10 md:h-[23rem]">
-              <div className="relative aspect-[2/3] md:h-full md:aspect-auto">
+            <div className="relative mt-3 overflow-hidden rounded-lg border border-[#E6DED7] bg-[#F8F5F1] shadow-sm md:mt-10 md:h-[18rem]">
+              <div className="relative aspect-[3/4] sm:aspect-[2/3] md:h-full md:aspect-auto">
                 <Image
                   alt="Студия HairLab"
                   className="object-contain object-center p-1.5 md:p-2"
