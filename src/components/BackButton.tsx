@@ -8,13 +8,7 @@ export function BackButton() {
   return (
     <button
       type="button"
-      onClick={() => {
-        if (window.history.length > 1) {
-          router.back()
-        } else {
-          router.push('/')
-        }
-      }}
+      onClick={() => router.push('/')}
       className="inline-flex items-center gap-2 text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors mb-8"
     >
       ← Назад

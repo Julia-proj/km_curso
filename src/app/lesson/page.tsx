@@ -13,7 +13,15 @@ export default function LessonPage() {
     <>
       <Header />
       <main className="min-h-screen bg-[#F8F5F1] pt-20 pb-16 px-5 md:pt-24">
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-2xl mx-auto relative">
+          <div className="absolute top-0 right-0">
+            <Link
+              href="/offer"
+              className="inline-flex items-center gap-2 text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
+            >
+              Выбрать свой формат →
+            </Link>
+          </div>
           <BackButton />
           {/* Overline */}
           <p className="text-[11px] font-semibold tracking-[3px] uppercase text-[var(--color-text-muted)] mb-4 text-center">
