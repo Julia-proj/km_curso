@@ -22,6 +22,20 @@ import {
   PlusIcon,
   SparklesIcon,
 } from "@/components/landing/icons"
+import { AboutSection } from "@/components/landing/sections/AboutSection"
+import { FAQSection } from "@/components/landing/sections/FAQSection"
+import { FinalCTASection } from "@/components/landing/sections/FinalCTASection"
+import { FooterSection } from "@/components/landing/sections/FooterSection"
+import { ForYouSection } from "@/components/landing/sections/ForYouSection"
+import { FormatSection } from "@/components/landing/sections/FormatSection"
+import { LandingHeroSection } from "@/components/landing/sections/LandingHeroSection"
+import { MarqueeSection } from "@/components/landing/sections/MarqueeSection"
+import { NavSection } from "@/components/landing/sections/NavSection"
+import { PainSection } from "@/components/landing/sections/PainSection"
+import { PrinciplesSection } from "@/components/landing/sections/PrinciplesSection"
+import { ProblemsSection } from "@/components/landing/sections/ProblemsSection"
+import { ResultsSection } from "@/components/landing/sections/ResultsSection"
+import { WhatYouGetSection } from "@/components/landing/sections/WhatYouGetSection"
 
 const ease = [0.22, 1, 0.36, 1] as const
 const viewport = { once: true, margin: "-80px" } as const
@@ -327,7 +341,7 @@ function Marquee() {
   )
 }
 
-function PainSection() {
+function PainSectionLegacy() {
   return (
     <section className="km-section">
       <div className="km-container km-container-mid">
