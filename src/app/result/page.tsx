@@ -35,8 +35,18 @@ export default function ResultPage() {
 
   return (
     <main className="min-h-screen bg-[#F8F5F1] flex flex-col items-center justify-center px-4 py-16">
-      <div className="w-full max-w-lg">
+      <div className="absolute top-4 left-4">
         <BackButton />
+      </div>
+      <div className="absolute top-4 right-4">
+        <Link
+          href="/lesson"
+          className="inline-flex items-center gap-2 text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
+        >
+          Бесплатный урок →
+        </Link>
+      </div>
+      <div className="w-full max-w-lg pt-12">
         <p className="text-[11px] font-semibold tracking-[3px] uppercase text-[var(--color-text-muted)] mb-3 text-center">
           KM · Результат опроса
         </p>
@@ -74,21 +84,13 @@ export default function ResultPage() {
           </p>
         </div>
 
-        <div className="space-y-4 text-center">
+        <div className="text-center">
           <Link
             href="/lesson"
             className="inline-block rounded-none bg-[var(--color-accent)] px-8 py-4 text-sm font-semibold text-white transition-colors hover:bg-[var(--color-accent-hover)]"
           >
             Посмотреть бесплатный урок
           </Link>
-          <div>
-            <Link
-              href="/"
-              className="inline-block text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors underline underline-offset-2"
-            >
-              Узнать больше о курсе
-            </Link>
-          </div>
         </div>
       </div>
     </main>

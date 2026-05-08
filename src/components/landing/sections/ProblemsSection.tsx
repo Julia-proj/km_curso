@@ -67,20 +67,6 @@ export function ProblemsSection() {
     cards[targetIndex].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" })
   }
 
-  const handleTouchStart = () => {
-    const scroller = scrollerRef.current
-    if (scroller) {
-      scroller.style.scrollBehavior = 'auto'
-    }
-  }
-
-  const handleTouchEnd = () => {
-    const scroller = scrollerRef.current
-    if (scroller) {
-      scroller.style.scrollBehavior = 'smooth'
-    }
-  }
-
   return (
     <section className="bg-[#F5F0EB] py-20 md:py-24">
       <div className="mx-auto max-w-6xl">
@@ -93,9 +79,7 @@ export function ProblemsSection() {
 
         <div
           ref={scrollerRef}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-          className="no-scrollbar flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-4 scroll-smooth [scroll-padding-inline:1.25rem] sm:gap-4 sm:px-6 sm:pb-3 touch-pan-x"
+          className="no-scrollbar flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-4 [scroll-padding-inline:1.25rem] sm:gap-4 sm:px-6 sm:pb-3 touch-pan-x overscroll-x-contain"
         >
           {problemCards.map((card, index) => (
             <motion.article

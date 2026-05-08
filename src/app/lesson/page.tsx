@@ -55,7 +55,7 @@ export default function LessonPage() {
           <div className="text-center">
             <Link
               href="/offer"
-              className="inline-block rounded-none bg-[var(--color-accent)] px-8 py-4 text-sm font-semibold text-white transition-colors hover:bg-[var(--color-accent-hover)]"
+              className="inline-block rounded-none bg-[var(--color-accent)] px-8 py-4 text-sm font-semibold text-white transition-all hover:bg-[var(--color-accent-hover)] hover:shadow-lg hover:shadow-[var(--color-accent)]/30 hover:scale-105"
             >
               Выбрать свой формат
             </Link>
