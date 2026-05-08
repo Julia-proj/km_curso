@@ -129,16 +129,8 @@ export function LandingHeroSection() {
           </div>
 
           <div className="mt-auto space-y-4 pt-8 md:mt-8 lg:mt-12 md:space-y-0 md:pt-0">
-            <div className="flex flex-col items-start gap-4 sm:flex-row sm:flex-wrap sm:items-center md:gap-5">
-              <div className="flex w-full flex-col items-center gap-2 sm:w-auto">
-                <CTA href="#format">Хочу на обучение</CTA>
-                <a
-                  href="/quiz"
-                  className="ml-8 text-sm font-medium text-primary/75 underline decoration-primary/35 underline-offset-4 transition-colors hover:text-primary hover:decoration-primary sm:ml-14"
-                >
-                  начать с теста
-                </a>
-              </div>
+            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap md:gap-4">
+              <CTA href="#format">Хочу на обучение</CTA>
               <a
                 href="#about"
                 className="hidden items-center gap-2 px-7 py-4 text-sm uppercase tracking-[0.18em] text-primary/70 transition-colors hover:text-primary sm:inline-flex"
