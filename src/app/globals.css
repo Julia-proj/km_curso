@@ -235,7 +235,7 @@ h4 {
 
   .km-hero-mobile-photo {
     object-fit: cover;
-    object-position: 70% 30%;
+    object-position: center center;
   }
 
   .km-hero-desktop-photo {
