@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import NextImage from "next/image"
+import Image from "next/image"
 
 import { getPaymentLink } from "@/config/payments"
 import { fadeUp } from "@/lib/animations"
@@ -85,17 +85,6 @@ export function WhatYouGetSection({
           <h2 className="font-display text-2xl leading-tight text-[#1A1A1A] sm:text-3xl md:text-4xl">
             {title}
           </h2>
-          <div className="mt-6 flex justify-center sm:mt-8">
-            <div className="relative h-32 w-32 sm:h-40 sm:w-40">
-              <NextImage
-                alt="Декоративное фото"
-                src="/images/foto2.png"
-                fill
-                quality={90}
-                className="object-contain"
-              />
-            </div>
-          </div>
         </motion.div>
 
         <div className="grid gap-4 sm:gap-6 md:grid-cols-2" data-testid="products-grid">
@@ -193,19 +182,45 @@ export function WhatYouGetSection({
         </div>
 
         {showResultBlock && (
-          <motion.div {...fadeUp(0.15)} className="mt-6 bg-[#F0E9E2] px-5 py-8 sm:mt-8 sm:px-6 sm:py-10 md:px-12">
-            <p className="mb-2 text-[10px] font-semibold uppercase tracking-[3px] text-[#7C7268] sm:mb-3 sm:text-[11px]">
-              р е з у л ь т а т
-            </p>
-            <h2 className="mb-3 text-lg font-semibold leading-snug tracking-tight text-[#1A1A1A] text-balance sm:mb-4 sm:text-xl md:text-2xl">
-              Гладкие, плотные волосы - это не генетика, а система.
-            </h2>
-            <p className="max-w-xl text-xs leading-relaxed text-[#5E554C] sm:text-sm md:text-base">
-              Они всегда выглядят дорого. Без сложной укладки, без идеального цвета, даже в обычном хвосте.
-              Плотность, блеск и гладкость создают тот самый ухоженный вид, который не получается собрать из
-              случайных масок и советов из интернета. Но такой результат начинается не с дорогого средства.
-              Он начинается с понимания: что нужно, в каком порядке и почему.
-            </p>
+          <motion.div 
+            {...fadeUp(0.15)} 
+            className="relative mt-8 overflow-hidden rounded-2xl border border-[#E5DDD5] bg-[#F8F5F1] sm:mt-10"
+          >
+            <div className="px-5 py-6 sm:px-8 sm:py-8 md:px-10 md:py-10">
+              <div className="flex flex-col gap-4 md:flex-row md:items-start md:gap-6">
+                <div className="relative aspect-[3/4] h-24 w-20 shrink-0 md:h-32 md:w-24">
+                  <Image
+                    alt="Результат восстановления волос"
+                    src="/images/foto2.png"
+                    fill
+                    loading="lazy"
+                    quality={92}
+                    className="object-cover object-top rounded-lg"
+                    sizes="96px"
+                  />
+                </div>
+                
+                <div className="flex-1">
+                  <p className="mb-2 font-sans text-[10px] font-semibold uppercase tracking-[0.48em] text-[#D29B9B] sm:mb-3 sm:text-[11px]">
+                    р е з у л ь т а т
+                  </p>
+                  <h2 className="mb-3 font-display text-lg font-medium leading-tight tracking-normal text-[#1A1A1A] text-balance sm:text-xl md:text-2xl">
+                    Гладкие, плотные волосы - это не генетика, а система.
+                  </h2>
+                  <div className="space-y-2 font-sans text-sm leading-relaxed text-[#5E554C] sm:text-[15px] md:text-base">
+                    <p>
+                      Они всегда выглядят дорого: без сложной укладки, без идеального цвета, даже в обычном хвосте.
+                    </p>
+                    <p>
+                      Плотность, блеск и гладкость создают тот самый ухоженный вид.
+                    </p>
+                    <p className="text-[#3E2723]">
+                      Такой результат начинается с понимания: что нужно, в каком порядке и почему.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </motion.div>
         )}
       </div>

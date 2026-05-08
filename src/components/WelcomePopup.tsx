@@ -5,9 +5,12 @@ import { useEffect, useState } from "react"
 
 import { ArrowUpRightIcon } from "@/components/landing/icons"
 import { ease } from "@/lib/animations"
+import { getPaymentLink } from "@/config/payments"
 
 export function WelcomePopup() {
   const [open, setOpen] = useState(false)
+  const courseLink = getPaymentLink("course")
+  const guideLink = getPaymentLink("guide")
 
   useEffect(() => {
     if (sessionStorage.getItem("popup_shown")) return
@@ -53,7 +56,7 @@ export function WelcomePopup() {
             </p>
             <div className="mt-6 flex flex-col gap-3">
               <a
-                href="#format"
+                href={courseLink}
                 onClick={() => setOpen(false)}
                 className="flex items-center justify-between rounded-2xl bg-primary px-5 py-4 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-80"
               >
@@ -61,7 +64,7 @@ export function WelcomePopup() {
                 <ArrowUpRightIcon size={14} />
               </a>
               <a
-                href="#format"
+                href={guideLink}
                 onClick={() => setOpen(false)}
                 className="flex items-center justify-between rounded-2xl border border-border px-5 py-4 text-sm font-semibold text-foreground transition-colors hover:bg-sand/60"
               >

@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@paper-design/shaders-react": "^0.0.76",
     "@stripe/stripe-js": "^9.4.0",
     "@supabase/supabase-js": "^2.105.3",
     "framer-motion": "^12.38.0",

@@ -16,7 +16,7 @@ export function AboutSection() {
             Система, основанная на практике
           </h2>
           <p className="mb-8 font-sans leading-relaxed text-[#666]">
-            6 лет ежедневной работы с клиентами студии в Мадриде. Система HairLab построена на:
+            Уже более 6 лет я и моя команда ежедневно восстанавливаем даже самые повреждённые волосы. Система HairLab построена на:
           </p>
 
           <ul className="space-y-3">
@@ -44,6 +44,7 @@ export function AboutSection() {
                   alt="Елена HairLab"
                   className="object-contain object-center p-1.5 md:p-2"
                   fill
+                  loading="lazy"
                   quality={92}
                   sizes="(min-width: 1024px) 320px, (min-width: 768px) 280px, 45vw"
                   src="/images/foto3.png"
@@ -57,6 +58,7 @@ export function AboutSection() {
                   alt="Студия HairLab"
                   className="object-contain object-center p-1.5 md:p-2"
                   fill
+                  loading="lazy"
                   quality={92}
                   sizes="(min-width: 1024px) 290px, (min-width: 768px) 250px, 45vw"
                   src="/images/salon1.JPG"

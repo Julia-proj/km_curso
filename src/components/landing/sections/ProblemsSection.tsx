@@ -85,24 +85,25 @@ export function ProblemsSection() {
           ref={scrollerRef}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
-          className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-3 scroll-smooth [scroll-padding-inline:1.5rem]"
+          className="no-scrollbar flex snap-x snap-start gap-3 overflow-x-auto px-5 pb-4 scroll-smooth [scroll-padding-inline:1.25rem] sm:gap-4 sm:px-6 sm:pb-3"
         >
           {problemCards.map((card, index) => (
             <motion.article
               key={card.title}
               {...fadeUp((index % 4) * 0.05)}
-              className="group w-72 shrink-0 snap-start overflow-hidden rounded-lg border border-[#E0DCD6] bg-white shadow-sm"
+              className="group w-[85vw] max-w-[320px] shrink-0 snap-start overflow-hidden rounded-lg border border-[#E0DCD6] bg-white shadow-sm sm:w-72"
             >
-              <div className="relative h-[280px] overflow-hidden bg-[#E8E1DA]">
+              <div className="relative h-[240px] overflow-hidden bg-[#E8E1DA] sm:h-[280px]">
                 <Image
                   alt={card.title}
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                   fill
+                  loading="lazy"
                   quality={88}
-                  sizes="288px"
+                  sizes="(max-width: 640px) 85vw, 288px"
                   src={card.image}
                 />
-                <span className="absolute left-3 top-5 bg-white/90 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.22em] text-[#1A1A1A]">
+                <span className="absolute left-3 top-4 bg-white/90 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.22em] text-[#1A1A1A]">
                   {String(index + 1).padStart(2, "0")}
                 </span>
               </div>

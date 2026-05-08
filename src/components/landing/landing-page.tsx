@@ -27,7 +27,7 @@ export function LandingPage() {
       <ProblemsSection />
       <PrinciplesSection />
       <FormatSection />
-      <WhatYouGetSection />
+      <WhatYouGetSection showResultBlock />
       <ResultsSection />
       <FAQSection />
       <FinalCTASection />
