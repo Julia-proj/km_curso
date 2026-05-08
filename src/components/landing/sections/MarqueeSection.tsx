@@ -1,5 +1,3 @@
-"use client"
-
 import { landingStats } from "@/config/landing-content"
 
 export function MarqueeSection() {
