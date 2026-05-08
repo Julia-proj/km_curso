@@ -173,7 +173,7 @@ export function ResultsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.06, duration: 0.5 }}
-              className="group block w-[min(62vw,15rem)] shrink-0 snap-center rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-ring md:w-[20.5rem] lg:w-auto"
+              className="group block h-full w-[min(62vw,15rem)] shrink-0 snap-center rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-ring md:w-[20.5rem] lg:w-auto"
             >
               <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-border/70 bg-card shadow-sm transition duration-300 group-hover:-translate-y-1 group-hover:border-primary/25 group-hover:shadow-lg">
                 <div className="relative aspect-[4/5] overflow-hidden bg-primary/5 lg:aspect-[9/16]">
@@ -206,7 +206,7 @@ export function ResultsSection() {
                   <p className="mt-2 hidden text-sm leading-relaxed text-muted-foreground sm:block">
                     {reel.description}
                   </p>
-                  <span className="mt-2 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.16em] text-primary sm:mt-4 sm:text-[11px]">
+                  <span className="mt-auto inline-flex items-center gap-2 pt-3 text-[10px] font-bold uppercase tracking-[0.16em] text-primary sm:pt-4 sm:text-[11px]">
                     Смотреть в Instagram
                     <ArrowIcon />
                   </span>

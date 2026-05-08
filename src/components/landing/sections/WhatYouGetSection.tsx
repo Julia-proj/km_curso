@@ -95,7 +95,7 @@ export function WhatYouGetSection() {
             </div>
             <a
               href="/checkout?product=guide"
-              className="btn-luxury-sand mt-auto block w-full rounded-full py-3.5 text-center text-xs font-medium uppercase tracking-[0.15em]"
+              className="btn-luxury-sand mt-7 block w-full rounded-full py-3.5 text-center text-xs font-medium uppercase tracking-[0.15em] md:mt-auto"
             >
               Приобрести методичку 13€
             </a>
