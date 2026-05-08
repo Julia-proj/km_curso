@@ -34,7 +34,7 @@ export default function ResultPage() {
   if (!hasAnswers) return null
 
   return (
-    <main className="min-h-screen bg-[var(--color-bg)] flex flex-col items-center justify-center px-4 py-16">
+    <main className="min-h-screen bg-[#F8F5F1] flex flex-col items-center justify-center px-4 py-16">
       <div className="w-full max-w-lg">
         <BackButton />
         <p className="text-[11px] font-semibold tracking-[3px] uppercase text-[var(--color-text-muted)] mb-3 text-center">
@@ -77,7 +77,7 @@ export default function ResultPage() {
         <div className="text-center">
           <Link
             href="/lesson"
-            className="inline-block bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white font-semibold px-8 py-4 rounded-[var(--radius-full)] transition-colors text-sm"
+            className="inline-block rounded-none bg-[var(--color-accent)] px-8 py-4 text-sm font-semibold text-white transition-colors hover:bg-[var(--color-accent-hover)]"
           >
             Посмотреть бесплатный урок
           </Link>

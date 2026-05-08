@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import Image from "next/image"
+import { useRef } from "react"
 
 import { fadeUp } from "@/lib/animations"
 
@@ -44,6 +45,18 @@ const problemCards = [
 ] as const
 
 export function ProblemsSection() {
+  const scrollerRef = useRef<HTMLDivElement>(null)
+
+  const scrollCards = (direction: "prev" | "next") => {
+    const scroller = scrollerRef.current
+    if (!scroller) return
+    const step = 288
+    scroller.scrollBy({
+      left: direction === "next" ? step : -step,
+      behavior: "smooth",
+    })
+  }
+
   return (
     <section className="bg-[#F5F0EB] py-20 md:py-24">
       <div className="mx-auto max-w-6xl">
@@ -54,14 +67,29 @@ export function ProblemsSection() {
           </h2>
         </motion.div>
 
-        <div className="mb-4 flex justify-end px-6">
-          <span className="inline-flex items-center gap-2 rounded-md border border-[#E0DCD6] bg-white/70 px-3 py-1.5 font-sans text-xs font-medium uppercase tracking-[0.14em] text-[#8A8177]">
-            Листай
-            <span aria-hidden="true">→</span>
-          </span>
+        <div className="mb-4 hidden items-center justify-end gap-2 px-6 md:flex">
+          <button
+            type="button"
+            onClick={() => scrollCards("prev")}
+            className="grid h-10 w-10 place-items-center border border-[#D9D1C8] bg-white text-[#5A524A] transition-colors hover:border-[#BEB2A5]"
+            aria-label="Прокрутить карточки влево"
+          >
+            ←
+          </button>
+          <button
+            type="button"
+            onClick={() => scrollCards("next")}
+            className="grid h-10 w-10 place-items-center border border-[#D9D1C8] bg-white text-[#5A524A] transition-colors hover:border-[#BEB2A5]"
+            aria-label="Прокрутить карточки вправо"
+          >
+            →
+          </button>
         </div>
 
-        <div className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-4 scroll-smooth">
+        <div
+          ref={scrollerRef}
+          className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-3 scroll-smooth [scroll-padding-inline:1.5rem]"
+        >
           {problemCards.map((card, index) => (
             <motion.article
               key={card.title}
@@ -77,7 +105,7 @@ export function ProblemsSection() {
                   sizes="224px"
                   src={card.image}
                 />
-                <span className="absolute left-3 top-3 bg-white/90 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.22em] text-[#1A1A1A]">
+                <span className="absolute left-3 top-5 bg-white/90 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.22em] text-[#1A1A1A]">
                   {String(index + 1).padStart(2, "0")}
                 </span>
               </div>
@@ -87,6 +115,14 @@ export function ProblemsSection() {
               </div>
             </motion.article>
           ))}
+        </div>
+
+        <div className="mt-3 flex justify-center px-6 md:mt-2">
+          <span className="inline-flex items-center gap-2 rounded-md border border-[#E0DCD6] bg-white/75 px-3 py-1.5 font-sans text-xs font-medium uppercase tracking-[0.14em] text-[#8A8177]">
+            <span className="md:hidden">Листай</span>
+            <span className="hidden md:inline">Кликни</span>
+            <span aria-hidden="true">→</span>
+          </span>
         </div>
       </div>
     </section>

@@ -16,7 +16,7 @@ import { WhatYouGetSection } from "@/components/landing/sections/WhatYouGetSecti
 
 export function LandingPage() {
   return (
-    <main className="overflow-x-hidden bg-background text-foreground">
+    <main className="overflow-x-hidden bg-[#F3E7E5] text-foreground">
       <WelcomePopup />
       <NavSection />
       <LandingHeroSection />

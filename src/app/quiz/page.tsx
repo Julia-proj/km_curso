@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function QuizPage() {
   return (
-    <main className="min-h-screen bg-[var(--color-bg)] flex flex-col items-center justify-center px-4 py-16">
+    <main className="min-h-screen bg-[#F8F5F1] flex flex-col items-center justify-center px-4 py-16">
       <Link
         href="/"
         className="absolute top-6 left-6 text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"

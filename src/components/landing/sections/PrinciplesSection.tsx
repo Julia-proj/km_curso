@@ -21,7 +21,7 @@ export function PrinciplesSection() {
             <motion.article
               key={card.number}
               {...fadeUp(index * 0.1)}
-              className="flex min-h-full flex-col rounded-lg border border-white/10 bg-white/[0.04] p-6 transition-colors hover:border-[#D29B9B]/70 md:p-8"
+              className="flex min-h-full flex-col rounded-lg border border-white/5 bg-white/[0.02] p-6 transition-colors hover:border-[#D29B9B]/55 md:p-8"
             >
               <div className="font-display text-4xl text-[#D29B9B] md:text-5xl">{card.number}</div>
               <h3 className="mt-5 font-display text-xl leading-tight md:text-2xl">{card.title}</h3>

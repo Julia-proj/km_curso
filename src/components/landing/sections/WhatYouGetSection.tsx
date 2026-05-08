@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 
+import { getPaymentLink } from "@/config/payments"
 import { fadeUp } from "@/lib/animations"
 
 const videoLessons = [
@@ -49,10 +50,21 @@ function CheckIcon({ className }: { className: string }) {
   )
 }
 
-export function WhatYouGetSection() {
+export function WhatYouGetSection({
+  sectionId = "what-you-get",
+  showResultBlock = false,
+  title = "Два продукта — одна система",
+}: {
+  sectionId?: string
+  showResultBlock?: boolean
+  title?: string
+}) {
+  const coursePaymentLink = getPaymentLink("course")
+  const guidePaymentLink = getPaymentLink("guide")
+
   return (
     <section
-      id="what-you-get"
+      id={sectionId}
       className="bg-[#FAF7F4] px-6 py-24"
       data-testid="section-what-you-get"
     >
@@ -60,7 +72,7 @@ export function WhatYouGetSection() {
         <motion.div {...fadeUp()} className="mb-14 text-center">
           <p className="mb-4 font-sans text-sm font-medium text-[#D29B9B]">Что внутри</p>
           <h2 className="font-display text-3xl leading-tight text-[#1A1A1A] md:text-4xl">
-            Два продукта — одна система
+            {title}
           </h2>
         </motion.div>
 
@@ -103,8 +115,8 @@ export function WhatYouGetSection() {
             </ul>
 
             <a
-              href="/offer"
-              className="block w-full bg-[#1A1A1A] py-4 text-center font-sans text-sm font-semibold text-white transition-colors hover:bg-[#333]"
+              href={coursePaymentLink}
+              className="block w-full rounded-none bg-[#1A1A1A] py-4 text-center font-sans text-sm font-semibold text-white transition-colors hover:bg-[#333]"
               data-testid="button-course"
             >
               Получить полный доступ
@@ -143,14 +155,31 @@ export function WhatYouGetSection() {
             </ol>
 
             <a
-              href="/offer"
-              className="block w-full border border-[#1A1A1A] py-4 text-center font-sans text-sm font-semibold text-[#1A1A1A] transition-colors hover:bg-[#1A1A1A] hover:text-white"
+              href={guidePaymentLink}
+              className="block w-full rounded-none border border-[#1A1A1A] py-4 text-center font-sans text-sm font-semibold text-[#1A1A1A] transition-colors hover:bg-[#1A1A1A] hover:text-white"
               data-testid="button-guide"
             >
               Получить методичку
             </a>
           </motion.article>
         </div>
+
+        {showResultBlock && (
+          <motion.div {...fadeUp(0.15)} className="mt-8 bg-[#F0E9E2] px-6 py-10 md:px-12">
+            <p className="mb-3 text-[11px] font-semibold uppercase tracking-[3px] text-[#7C7268]">
+              р е з у л ь т а т
+            </p>
+            <h2 className="mb-4 text-xl font-semibold leading-snug tracking-tight text-[#1A1A1A] text-balance md:text-2xl">
+              Гладкие, плотные волосы - это не генетика, а система.
+            </h2>
+            <p className="max-w-xl text-sm leading-relaxed text-[#5E554C] md:text-base">
+              Они всегда выглядят дорого. Без сложной укладки, без идеального цвета, даже в обычном хвосте.
+              Плотность, блеск и гладкость создают тот самый ухоженный вид, который не получается собрать из
+              случайных масок и советов из интернета. Но такой результат начинается не с дорогого средства.
+              Он начинается с понимания: что нужно, в каком порядке и почему.
+            </p>
+          </motion.div>
+        )}
       </div>
     </section>
   )

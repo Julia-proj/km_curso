@@ -12,7 +12,7 @@ export default function LessonPage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-[var(--color-bg)] pt-20 md:pt-24 pb-16 px-5">
+      <main className="min-h-screen bg-[#F8F5F1] pt-20 pb-16 px-5 md:pt-24">
         <div className="max-w-2xl mx-auto">
           <BackButton />
           {/* Overline */}
@@ -55,7 +55,7 @@ export default function LessonPage() {
           <div className="text-center">
             <Link
               href="/offer"
-              className="inline-block bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white font-semibold px-8 py-4 rounded-[var(--radius-full)] transition-colors text-sm"
+              className="inline-block rounded-none bg-[var(--color-accent)] px-8 py-4 text-sm font-semibold text-white transition-colors hover:bg-[var(--color-accent-hover)]"
             >
               Выбрать свой формат
             </Link>

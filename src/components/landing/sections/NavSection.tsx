@@ -41,13 +41,13 @@ export function NavSection() {
             <div className="flex items-center gap-2.5">
               <a
                 href="/quiz"
-                className="rounded-full border border-border/60 bg-sand px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-foreground transition-colors hover:border-accent hover:bg-accent"
+                className="rounded-none border border-border/60 bg-sand px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-foreground transition-colors hover:border-accent hover:bg-accent"
               >
                 Тест
               </a>
               <a
                 href="#what-you-get"
-                className="rounded-full bg-primary px-4 py-2 text-xs font-medium uppercase tracking-[0.15em] text-primary-foreground transition-opacity hover:opacity-80"
+                className="rounded-none bg-primary px-4 py-2 text-xs font-medium uppercase tracking-[0.15em] text-primary-foreground transition-opacity hover:opacity-80"
               >
                 <span className="hidden sm:inline">Хочу на обучение</span>
                 <span className="sm:hidden">Обучение</span>

@@ -72,13 +72,13 @@ function DesktopBeforeAfterGrid() {
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.25, duration: 0.55 }}
-      className="grid grid-cols-2 gap-4 pb-16 pt-12"
+      className="grid grid-cols-2 gap-4 pt-8"
     >
       {beforeAfterCards.map((card) => (
-        <div key={card.src} className="group relative h-[340px] overflow-hidden">
+        <div key={card.src} className="group relative h-[220px] overflow-hidden border border-[#E1D9D1] bg-white">
           <Image
             alt={card.alt}
-            className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
+            className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
             fill
             quality={95}
             sizes="(min-width: 1024px) 536px, 100vw"
@@ -119,7 +119,7 @@ export function LandingHeroSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.08, duration: 0.55 }}
               >
-                <span className="inline-block border border-white/55 bg-[#D29B9B]/55 px-3 py-1 font-sans text-[10px] font-medium text-white shadow-sm backdrop-blur-sm">
+                <span className="inline-block border border-white/55 bg-transparent px-3 py-1 font-sans text-[10px] font-medium text-white shadow-sm backdrop-blur-sm">
                   Авторский курс · 2026
                 </span>
               </motion.div>
@@ -167,17 +167,24 @@ export function LandingHeroSection() {
         </div>
       </div>
 
-      <div className="hidden flex-col lg:flex">
-        <div className="mx-auto w-full max-w-6xl px-6 pt-10">
-          <div className="flex items-start justify-between gap-8 pt-8">
-            <div className="max-w-lg flex-1 pt-16">
+      <div className="hidden lg:block">
+        <div className="mx-auto w-full max-w-6xl px-6 pb-16 pt-14">
+          <nav className="mb-10 flex items-center gap-7 border-b border-[#E5DDD5] pb-4 font-sans text-[11px] font-medium uppercase tracking-[0.16em] text-[#7A7066]">
+            <a href="#about" className="transition-colors hover:text-[#1A1A1A]">Об авторе</a>
+            <a href="#program" className="transition-colors hover:text-[#1A1A1A]">Программа</a>
+            <a href="#what-you-get" className="transition-colors hover:text-[#1A1A1A]">Что внутри</a>
+            <a href="#faq" className="transition-colors hover:text-[#1A1A1A]">FAQ</a>
+          </nav>
+
+          <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
+            <div className="max-w-xl">
               <div className="space-y-6">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.55 }}
                 >
-                  <span className="inline-block border border-white/70 bg-[#D29B9B]/70 px-3 py-1.5 font-sans text-[10px] font-medium text-white shadow-sm backdrop-blur-sm">
+                  <span className="inline-block border border-[#D8CEC6] bg-transparent px-3 py-1.5 font-sans text-[10px] font-medium text-[#6F655D] shadow-sm backdrop-blur-sm">
                     Авторский курс · 2026
                   </span>
                 </motion.div>
@@ -186,7 +193,7 @@ export function LandingHeroSection() {
                   initial={{ opacity: 0, y: 22 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.08, duration: 0.55 }}
-                  className="font-display text-5xl leading-[1.1] tracking-tight text-[#1A1A1A] lg:text-6xl"
+                  className="font-display text-5xl leading-[1.08] tracking-tight text-[#1A1A1A] xl:text-6xl"
                 >
                   Салонное восстановление волос дома
                 </motion.h1>
@@ -223,30 +230,32 @@ export function LandingHeroSection() {
               </div>
             </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 22 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.12, duration: 0.55 }}
-              className="relative w-72 flex-shrink-0 xl:w-80"
-            >
-              <div className="relative">
-                <div className="absolute inset-0 -z-10 translate-x-4 translate-y-4 bg-[#E8DDD6]" />
-                <div className="relative h-[520px] w-full overflow-hidden">
-                  <Image
-                    alt="Елена - основатель HairLab"
-                    className="object-cover object-top"
-                    fill
-                    preload
-                    quality={92}
-                    sizes="(min-width: 1280px) 320px, 288px"
-                    src={heroImage}
-                  />
+            <div>
+              <motion.div
+                initial={{ opacity: 0, y: 22 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.12, duration: 0.55 }}
+                className="relative mx-auto w-full max-w-[22rem]"
+              >
+                <div className="relative">
+                  <div className="absolute inset-0 -z-10 translate-x-4 translate-y-4 bg-[#E8DDD6]" />
+                  <div className="relative h-[500px] w-full overflow-hidden border border-[#E1D9D1] bg-white">
+                    <Image
+                      alt="Елена - основатель HairLab"
+                      className="object-cover object-top"
+                      fill
+                      preload
+                      quality={92}
+                      sizes="(min-width: 1280px) 352px, 42vw"
+                      src={heroImage}
+                    />
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-          </div>
+              </motion.div>
 
-          <DesktopBeforeAfterGrid />
+              <DesktopBeforeAfterGrid />
+            </div>
+          </div>
         </div>
       </div>
     </section>
