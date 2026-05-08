@@ -229,75 +229,20 @@ h4 {
 
   .km-hero {
     min-height: 100svh;
-    padding-block: 5.75rem 3.5rem;
+    padding-block: 5rem 3rem;
   }
 
   @media (min-width: 1024px) {
     .km-hero {
       min-height: auto;
+      padding-block: 6rem 5rem;
     }
   }
 
-  .km-hero-mobile-photo {
-    object-fit: cover;
-    object-position: center center;
-  }
-
-  .km-hero-desktop-photo {
-    object-fit: cover;
-    object-position: 50% 100%;
-  }
-
-  .km-hero-proof-collage {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: start;
-    gap: 0.56rem;
-    isolation: isolate;
-    pointer-events: none;
-    z-index: 10;
-  }
-
-  .km-hero-proof-collage--mobile {
-    gap: 0.52rem;
-  }
-
-  .km-hero-proof-mobile-wrap {
-    position: relative;
-    z-index: 10;
-    width: min(11.6rem, calc(100vw - 2.5rem));
-    margin-top: 1.15rem;
-    margin-left: 0.15rem;
-    filter: drop-shadow(0 14px 24px oklch(0.24 0.03 35 / 0.28));
-    pointer-events: none;
-  }
-
-  .km-hero-proof-frame {
-    position: relative;
-    min-width: 0;
-    overflow: hidden;
-    border: 1px solid oklch(1 0 0 / 0.88);
-    border-radius: 0.85rem;
-    background: oklch(0.98 0.008 70);
-    box-shadow:
-      0 0 0 1px oklch(1 0 0 / 0.34) inset,
-      0 10px 20px oklch(0.24 0.03 35 / 0.18);
-  }
-
-  .km-hero-proof-frame--light {
-    transform: rotate(-4deg);
-  }
-
-  .km-hero-proof-frame--dark {
-    margin-top: 1.05rem;
-    transform: rotate(4deg);
-  }
-
-  .km-hero-proof-frame--products {
-    grid-column: 1 / -1;
-    justify-self: center;
-    width: 78%;
-    margin-top: -0.1rem;
-    transform: rotate(-1.5deg);
+  @media (min-width: 1280px) {
+    .km-hero {
+      padding-block: 7rem 6rem;
+    }
   }
 
   .km-hero-stats {
@@ -362,17 +307,10 @@ h4 {
 
   .km-hero-title {
     font-family: var(--font-hero-face), var(--font-body-face), Inter, system-ui, sans-serif;
-    font-size: 2rem;
+    font-size: 1.85rem;
     font-weight: 700;
-    line-height: 1.03;
-  }
-
-  .km-hero-title-line {
-    display: block;
-  }
-
-  .km-hero-title-line--nowrap {
-    white-space: normal;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
   }
 
   .km-section-title {
@@ -611,18 +549,14 @@ h4 {
   }
 
   @media (min-width: 768px) {
-    .km-hero {
-      padding-block: 5rem 3rem;
-    }
-
     .km-eyebrow,
     .km-eyebrow-pill {
       font-size: 0.75rem;
     }
 
     .km-hero-title {
-      font-size: 4.25rem;
-      line-height: 1;
+      font-size: 2.75rem;
+      line-height: 1.08;
     }
 
     .km-section-title {
@@ -687,43 +621,13 @@ h4 {
   }
 
   @media (min-width: 1024px) {
-    .km-hero {
-      min-height: auto;
-      padding-block: 7rem 4rem;
-    }
-
-    .km-hero-proof-collage--desktop {
-      gap: 0.72rem;
-    }
-
-    .km-hero-proof-frame {
-      border-radius: 1rem;
-      box-shadow:
-        0 0 0 1px oklch(1 0 0 / 0.42) inset,
-        0 16px 28px oklch(0.24 0.03 35 / 0.26);
-    }
-
-    .km-hero-proof-frame--dark {
-      margin-top: 1.25rem;
-    }
-
-    .km-hero-proof-frame--products {
-      width: 72%;
-      margin-top: 0;
-    }
-
     .km-section {
       padding-block: 4rem;
     }
 
     .km-hero-title {
-      max-width: 36rem;
-      font-size: clamp(3.05rem, 3.8vw, 3.45rem);
-      line-height: 1.04;
-    }
-
-    .km-hero-title-line--nowrap {
-      white-space: nowrap;
+      font-size: 2.5rem;
+      line-height: 1.08;
     }
 
     .km-section-title {
@@ -740,6 +644,12 @@ h4 {
 
     .km-final-title {
       font-size: 5.5rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .km-hero-title {
+      font-size: 2.85rem;
     }
   }
 }
