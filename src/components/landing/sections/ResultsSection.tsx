@@ -114,20 +114,16 @@ export function ResultsSection() {
           </motion.div>
 
           <motion.div {...fadeUp(0.1)} className="hidden md:block">
-            <div className="overflow-hidden rounded-2xl bg-primary text-primary-foreground shadow-lg">
+            <div className="overflow-hidden rounded-2xl border border-border/70 bg-card shadow-lg">
               <div className="relative h-56">
                 <Image
                   alt="Елена Александрова"
-                  src="/images/le.png"
+                  src="/images/hero.png"
                   fill
-                  className="object-cover object-[center_24%]"
+                  className="object-cover object-[center_25%]"
                   sizes="280px"
+                  quality={95}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/5 to-transparent" />
-                <div className="absolute bottom-4 left-4 right-4">
-                  <p className="text-[10px] font-medium uppercase tracking-widest text-white/60">Keratin Madrid</p>
-                  <p className="mt-1 text-sm font-medium leading-snug text-white">6 лет практики · Мадрид</p>
-                </div>
               </div>
             </div>
           </motion.div>
@@ -177,15 +173,16 @@ export function ResultsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.06, duration: 0.5 }}
-              className="group block w-[min(82vw,20rem)] shrink-0 snap-center rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-ring md:w-[20.5rem] lg:w-auto"
+              className="group block w-[min(76vw,18rem)] shrink-0 snap-center rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-ring md:w-[20.5rem] lg:w-auto"
             >
               <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-border/70 bg-card shadow-sm transition duration-300 group-hover:-translate-y-1 group-hover:border-primary/25 group-hover:shadow-lg">
-                <div className="relative aspect-[9/16] overflow-hidden bg-primary/5">
+                <div className="relative aspect-[4/5] overflow-hidden bg-primary/5 lg:aspect-[9/16]">
                   <Image
                     alt={reel.alt}
                     src={reel.image}
                     fill
-                    sizes="(max-width: 768px) 82vw, 336px"
+                    sizes="(max-width: 768px) 76vw, 336px"
+                    quality={90}
                     className="object-cover transition duration-500 group-hover:scale-[1.03]"
                     style={{ objectPosition: reel.objectPosition }}
                   />
@@ -201,13 +198,15 @@ export function ResultsSection() {
                   </div>
                 </div>
 
-                <div className="flex grow flex-col p-4">
+                <div className="flex grow flex-col p-3 sm:p-4">
                   <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-muted-foreground/70">
                     keratin_madrid
                   </p>
-                  <h3 className="mt-1 font-display text-2xl leading-none text-foreground">{reel.title}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{reel.description}</p>
-                  <span className="mt-4 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.16em] text-primary">
+                  <h3 className="mt-1 font-display text-xl leading-none text-foreground sm:text-2xl">{reel.title}</h3>
+                  <p className="mt-2 hidden text-sm leading-relaxed text-muted-foreground sm:block">
+                    {reel.description}
+                  </p>
+                  <span className="mt-3 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.16em] text-primary sm:mt-4">
                     Смотреть в Instagram
                     <ArrowIcon />
                   </span>

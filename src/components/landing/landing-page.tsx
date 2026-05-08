@@ -39,7 +39,7 @@ import { WhatYouGetSection } from "@/components/landing/sections/WhatYouGetSecti
 
 const ease = [0.22, 1, 0.36, 1] as const
 const viewport = { once: true, margin: "-80px" } as const
-const heroImage = "/images/heroo.PNG"
+const heroImage = "/images/hero.png"
 
 function fadeUp(delay = 0) {
   return {

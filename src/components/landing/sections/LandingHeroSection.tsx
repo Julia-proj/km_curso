@@ -7,7 +7,7 @@ import { useRef } from "react"
 import { SparklesIcon } from "@/components/landing/icons"
 import { CTA } from "@/components/shared/CTA"
 
-const heroImage = "/images/heroo.PNG"
+const heroImage = "/images/hero.png"
 
 const heroProofPhotos = [
   {
