@@ -7,7 +7,7 @@ import { useRef } from "react"
 import { SparklesIcon } from "@/components/landing/icons"
 import { CTA } from "@/components/shared/CTA"
 
-const heroImage = "/images/hero.png"
+const heroImage = "/images/hero-clean.jpg"
 
 const heroProofPhotos = [
   {
@@ -87,6 +87,7 @@ export function LandingHeroSection() {
           alt=""
           className="km-hero-mobile-photo"
           fill
+          unoptimized
           preload
           quality={90}
           sizes="100vw"
@@ -149,10 +150,11 @@ export function LandingHeroSection() {
             <div className="relative h-full overflow-hidden rounded-2xl">
               <Image
                 alt="Елена Александрова"
-                src="/images/hero.png"
+                src="/images/hero-clean.jpg"
                 fill
                 sizes="40vw"
-                className="object-cover object-[center_25%] drop-shadow-2xl"
+                unoptimized
+                className="object-cover object-[70%_30%] drop-shadow-2xl"
                 preload
               />
             </div>

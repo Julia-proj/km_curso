@@ -21,7 +21,7 @@ export function AboutSection() {
                 <Image alt="Студия Елены" src="/images/salon1.JPG" fill className="object-cover" sizes="108px" />
               </div>
               <div className="relative w-[108px] h-[135px] rounded-xl overflow-hidden">
-                <Image alt="Елена Александрова" src="/images/hero.png" fill className="object-cover object-[center_25%]" sizes="108px" />
+                <Image alt="Елена Александрова" src="/images/hero-clean.jpg" fill unoptimized className="object-cover object-[70%_30%]" sizes="108px" />
               </div>
             </div>
             <div className="pt-1">
@@ -35,7 +35,7 @@ export function AboutSection() {
               <Image alt="Студия Елены" src="/images/salon1.JPG" fill className="object-cover" sizes="(min-width: 1280px) 260px, 25vw" />
             </div>
             <div className="relative ml-auto mt-2 w-[86%] aspect-[4/5] rounded-xl overflow-hidden">
-              <Image alt="Елена Александрова" src="/images/hero.png" fill className="object-cover object-[center_25%]" sizes="(min-width: 1280px) 260px, 25vw" />
+              <Image alt="Елена Александрова" src="/images/hero-clean.jpg" fill unoptimized className="object-cover object-[70%_30%]" sizes="(min-width: 1280px) 260px, 25vw" />
             </div>
             <div className="mt-4">
               <div className="km-eyebrow text-muted-foreground">Автор курса</div>

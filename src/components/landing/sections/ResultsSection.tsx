@@ -118,9 +118,10 @@ export function ResultsSection() {
               <div className="relative h-56">
                 <Image
                   alt="Елена Александрова"
-                  src="/images/hero.png"
+                  src="/images/hero-clean.jpg"
                   fill
-                  className="object-cover object-[center_25%]"
+                  unoptimized
+                  className="object-cover object-[70%_30%]"
                   sizes="280px"
                   quality={95}
                 />
