@@ -7,30 +7,26 @@ import { fadeUp } from "@/lib/animations"
 
 export function PrinciplesSection() {
   return (
-    <section
-      id="program"
-      className="km-principles-bg km-section rounded-t-[2rem] text-primary-foreground md:rounded-t-[2.5rem]"
-    >
-      <div className="km-container km-container-wide">
-        <motion.div {...fadeUp()} className="mb-12 max-w-2xl md:mb-20">
-          <div className="km-eyebrow mb-3 text-accent md:mb-4">Что важно понимать</div>
-          <h2 className="km-section-title">
-            Три принципа, на которых
-            <br />
-            построена <span className="italic">вся система</span>.
+    <section id="program" className="bg-[#1A1A1A] px-6 py-20 text-white md:py-24">
+      <div className="mx-auto max-w-6xl">
+        <motion.div {...fadeUp()} className="mb-12 max-w-2xl md:mb-14">
+          <p className="mb-4 font-sans text-sm font-medium text-[#D29B9B]">Что важно понимать</p>
+          <h2 className="font-display text-3xl leading-tight md:text-5xl">
+            Три принципа, на которых построена вся система.
           </h2>
         </motion.div>
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+
+        <div className="grid items-stretch gap-4 md:grid-cols-3">
           {principleCards.map((card, index) => (
-            <motion.div
+            <motion.article
               key={card.number}
-              {...fadeUp(index * 0.15)}
-              className="km-principle-card rounded-2xl border border-primary-foreground/10 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 md:p-8"
+              {...fadeUp(index * 0.1)}
+              className="flex min-h-full flex-col rounded-lg border border-white/10 bg-white/[0.04] p-6 transition-colors hover:border-[#D29B9B]/70 md:p-8"
             >
-              <div className="text-4xl font-bold tabular-nums text-accent md:text-5xl">{card.number}</div>
-              <h3 className="mt-4 text-xl font-semibold leading-snug tracking-tight md:mt-6 md:text-2xl">{card.title}</h3>
-              <p className="km-copy mt-4 text-primary-foreground/70 md:mt-5">{card.body}</p>
-            </motion.div>
+              <div className="font-display text-4xl text-[#D29B9B] md:text-5xl">{card.number}</div>
+              <h3 className="mt-5 font-display text-xl leading-tight md:text-2xl">{card.title}</h3>
+              <p className="mt-4 font-sans text-sm leading-relaxed text-white/65 md:text-base">{card.body}</p>
+            </motion.article>
           ))}
         </div>
       </div>

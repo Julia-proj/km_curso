@@ -1,271 +1,252 @@
 "use client"
 
-import { motion, useScroll, useTransform } from "framer-motion"
+import { motion } from "framer-motion"
 import Image from "next/image"
-import { useRef } from "react"
-
-import { SparklesIcon } from "@/components/landing/icons"
-import { CTA } from "@/components/shared/CTA"
-import { landingStats } from "@/config/landing-content"
 
 const heroImage = "/images/hero.PNG"
 
-const heroProofPhotos = [
+const beforeAfterCards = [
   {
     alt: "До и после восстановления светлых волос",
-    aspectRatio: "1 / 1",
-    filter: "saturate(1.04) contrast(1.02)",
     objectPosition: "50% 50%",
     src: "/images/beforeafter11.png",
-    variant: "light",
   },
   {
     alt: "До и после восстановления темных волос",
-    aspectRatio: "1 / 1",
-    filter: "saturate(1.12) contrast(1.06) brightness(1.04)",
     objectPosition: "50% 50%",
     src: "/images/beforeandafter33.png",
-    variant: "dark",
-  },
-  {
-    alt: "Профессиональные составы для восстановления волос",
-    aspectRatio: "16 / 10",
-    filter: "saturate(1.05) contrast(1.03) brightness(1.03)",
-    objectPosition: "50% 52%",
-    src: "/images/prodx.JPEG",
-    variant: "products",
   },
 ] as const
 
-function HeroProofCollage({
-  className,
-  sizes,
-  style,
-}: {
-  className: string
-  sizes: string
-  style?: React.CSSProperties
-}) {
+function ArrowRightIcon({ size = 16 }: { size?: number }) {
   return (
-    <div
-      className={`km-hero-proof-collage ${className}`}
-      style={style}
+    <svg
+      aria-hidden="true"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     >
-      {heroProofPhotos.map((photo) => (
+      <path d="M5 12h14" />
+      <path d="m12 5 7 7-7 7" />
+    </svg>
+  )
+}
+
+function MobileBeforeAfterStrip() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 18 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.55 }}
+      className="relative flex justify-center gap-3 px-5"
+    >
+      {beforeAfterCards.map((card) => (
         <div
-          key={photo.src}
-          className={`km-hero-proof-frame km-hero-proof-frame--${photo.variant}`}
-          style={{ aspectRatio: photo.aspectRatio }}
+          key={card.src}
+          className="relative h-[170px] w-32 overflow-hidden border border-white/25 shadow-lg"
         >
           <Image
-            alt={photo.alt}
-            className="object-cover"
+            alt={card.alt}
+            className="object-cover object-top"
             fill
             quality={95}
-            sizes={sizes}
-            src={photo.src}
-            style={{
-              objectPosition: photo.objectPosition,
-              filter: photo.filter,
-              transform: "scale(1.01)",
-            }}
+            sizes="128px"
+            src={card.src}
+            style={{ objectPosition: card.objectPosition }}
           />
         </div>
       ))}
-    </div>
+
+    </motion.div>
+  )
+}
+
+function DesktopBeforeAfterGrid() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.25, duration: 0.55 }}
+      className="grid grid-cols-2 gap-4 pb-16 pt-12"
+    >
+      {beforeAfterCards.map((card) => (
+        <div key={card.src} className="group relative h-[340px] overflow-hidden">
+          <Image
+            alt={card.alt}
+            className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
+            fill
+            quality={95}
+            sizes="(min-width: 1024px) 536px, 100vw"
+            src={card.src}
+            style={{ objectPosition: card.objectPosition }}
+          />
+        </div>
+      ))}
+    </motion.div>
   )
 }
 
 export function LandingHeroSection() {
-  const ref = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] })
-  const y = useTransform(scrollYProgress, [0, 1], [0, 120])
-
   return (
-    <section ref={ref} id="hero-section" className="km-hero relative isolate overflow-hidden">
-      {/* Mobile background */}
-      <div className="absolute inset-0 -z-10 lg:hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-cream via-cream/80 to-cream" />
-        <Image
-          alt=""
-          className="km-hero-mobile-photo opacity-30"
-          fill
-          preload
-          quality={80}
-          sizes="100vw"
-          src={heroImage}
-        />
-      </div>
-
-      {/* Desktop background */}
-      <div className="absolute inset-0 -z-10 hidden lg:block">
-        <div className="absolute inset-0 bg-cream" />
-        <div
-          className="absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage: `radial-gradient(circle at 20% 50%, oklch(0.84 0.045 22) 0%, transparent 50%), radial-gradient(circle at 80% 20%, oklch(0.86 0.035 25) 0%, transparent 40%)`,
-          }}
-        />
-      </div>
-
-      <div className="km-container">
-        {/* Top: eyebrow + title */}
-        <div className="pt-2 md:pt-6 lg:pt-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="km-eyebrow-pill mb-5 md:mb-6 lg:text-muted-foreground"
-          >
-            <SparklesIcon className="opacity-60" size={12} />
-            Авторский курс · 2026
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="km-hero-title max-w-3xl"
-          >
-            <span className="km-hero-title-line">Салонное</span>{" "}
-            <span className="km-hero-title-line">восстановление</span>{" "}
-            <span className="km-hero-title-line">волос</span>{" "}
-            <span className="km-hero-title-line km-hero-title-line--nowrap text-accent-foreground/90">
-              в домашних условиях
-            </span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="km-lead mt-5 max-w-md lg:mt-6"
-          >
-            + составы для волос.
-          </motion.p>
+    <section id="hero-section" className="relative flex flex-col overflow-hidden bg-[#FAF7F4]">
+      <div className="relative flex min-h-[100svh] flex-col lg:hidden">
+        <div className="absolute inset-0">
+          <Image
+            alt="Елена - основатель HairLab"
+            className="object-cover"
+            fill
+            preload
+            quality={92}
+            sizes="100vw"
+            src={heroImage}
+            style={{ objectPosition: "center 60%" }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/90" />
         </div>
 
-        {/* Cards grid: photo + proof + stats */}
-        <div className="mt-8 grid gap-5 md:mt-10 lg:mt-12 lg:grid-cols-12 lg:gap-6">
-          {/* Main photo card */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.25 }}
-            className="lg:col-span-5"
-          >
-            <div className="relative overflow-hidden rounded-2xl border border-border/40 bg-card shadow-lg lg:rounded-3xl">
-              <div className="relative aspect-[3/4] lg:aspect-[4/5]">
-                <Image
-                  alt="Елена Александрова"
-                  src={heroImage}
-                  fill
-                  sizes="(max-width: 1023px) 90vw, 40vw"
-                  className="object-cover object-center"
-                  preload
-                />
-              </div>
-              {/* Overlay gradient at bottom of photo */}
-              <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-primary/20 to-transparent" />
-            </div>
-          </motion.div>
+        <div className="relative z-10 flex flex-1 flex-col justify-between pb-8 pt-20">
+          <MobileBeforeAfterStrip />
 
-          {/* Right column: proof collage + stats card */}
-          <div className="lg:col-span-7 flex flex-col gap-5 lg:gap-6">
-            {/* Proof collage card */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.35 }}
-              className="rounded-2xl border border-border/40 bg-card p-5 shadow-md lg:rounded-3xl lg:p-7"
-            >
-              <div className="km-eyebrow mb-4 text-muted-foreground lg:mb-5">
-                Результаты
-              </div>
-              <div className="grid grid-cols-2 gap-3 lg:gap-4">
-                {heroProofPhotos.slice(0, 2).map((photo) => (
-                  <div
-                    key={photo.src}
-                    className="relative overflow-hidden rounded-xl border border-border/30 lg:rounded-2xl"
-                    style={{ aspectRatio: photo.aspectRatio }}
-                  >
-                    <Image
-                      alt={photo.alt}
-                      className="object-cover"
-                      fill
-                      quality={92}
-                      sizes="(max-width: 1023px) 40vw, 18vw"
-                      src={photo.src}
-                      style={{
-                        objectPosition: photo.objectPosition,
-                        filter: photo.filter,
-                      }}
-                    />
-                  </div>
-                ))}
-                {/* Products photo spanning full width */}
-                <div
-                  className="col-span-2 relative overflow-hidden rounded-xl border border-border/30 lg:rounded-2xl"
-                  style={{ aspectRatio: "16 / 8" }}
+          <div className="px-5">
+            <div className="space-y-4">
+              <motion.div
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.08, duration: 0.55 }}
+              >
+                <span className="inline-block border border-white/55 bg-[#D29B9B]/55 px-3 py-1 font-sans text-[10px] font-medium text-white shadow-sm backdrop-blur-sm">
+                  Авторский курс · 2026
+                </span>
+              </motion.div>
+
+              <motion.h1
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.14, duration: 0.55 }}
+                className="max-w-[21.5rem] font-display text-[2.35rem] leading-[1.1] text-white"
+              >
+                Салонное восстановление волос дома
+              </motion.h1>
+
+              <motion.p
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.55 }}
+                className="font-sans text-sm leading-relaxed text-white/65"
+              >
+                + составы для волос.
+              </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.27, duration: 0.55 }}
+                className="flex flex-col gap-2.5 pt-1"
+              >
+                <a
+                  href="#what-you-get"
+                  className="inline-flex w-full items-center justify-center gap-2.5 bg-white px-6 py-3.5 font-sans text-sm font-semibold text-[#1A1A1A] transition-colors hover:bg-white/90"
                 >
+                  Хочу на обучение
+                  <ArrowRightIcon size={15} />
+                </a>
+                <a
+                  href="/quiz"
+                  className="inline-flex w-full items-center justify-center gap-2 border border-white/30 px-6 py-3.5 font-sans text-sm text-white transition-colors hover:border-white/60"
+                >
+                  ПРОЙТИ ТЕСТ
+                </a>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="hidden flex-col lg:flex">
+        <div className="mx-auto w-full max-w-6xl px-6 pt-10">
+          <div className="flex items-start justify-between gap-8 pt-8">
+            <div className="max-w-lg flex-1 pt-16">
+              <div className="space-y-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.55 }}
+                >
+                  <span className="inline-block border border-white/70 bg-[#D29B9B]/70 px-3 py-1.5 font-sans text-[10px] font-medium text-white shadow-sm backdrop-blur-sm">
+                    Авторский курс · 2026
+                  </span>
+                </motion.div>
+
+                <motion.h1
+                  initial={{ opacity: 0, y: 22 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.08, duration: 0.55 }}
+                  className="font-display text-5xl leading-[1.1] tracking-tight text-[#1A1A1A] lg:text-6xl"
+                >
+                  Салонное восстановление волос дома
+                </motion.h1>
+
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.16, duration: 0.55 }}
+                  className="font-sans text-lg leading-relaxed text-[#666]"
+                >
+                  + составы для волос.
+                </motion.p>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.23, duration: 0.55 }}
+                  className="flex gap-3 pt-2"
+                >
+                  <a
+                    href="#what-you-get"
+                    className="inline-flex items-center gap-3 bg-[#1A1A1A] px-8 py-4 font-sans text-sm font-semibold text-white transition-colors hover:bg-[#333]"
+                  >
+                    Хочу на обучение
+                    <ArrowRightIcon />
+                  </a>
+                  <a
+                    href="/quiz"
+                    className="inline-flex items-center gap-2 border border-[#E0DCD6] px-8 py-4 font-sans text-sm font-semibold text-[#1A1A1A] transition-colors hover:border-[#1A1A1A]"
+                  >
+                    ПРОЙТИ ТЕСТ
+                  </a>
+                </motion.div>
+              </div>
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 22 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.12, duration: 0.55 }}
+              className="relative w-72 flex-shrink-0 xl:w-80"
+            >
+              <div className="relative">
+                <div className="absolute inset-0 -z-10 translate-x-4 translate-y-4 bg-[#E8DDD6]" />
+                <div className="relative h-[520px] w-full overflow-hidden">
                   <Image
-                    alt={heroProofPhotos[2].alt}
-                    className="object-cover"
+                    alt="Елена - основатель HairLab"
+                    className="object-cover object-top"
                     fill
+                    preload
                     quality={92}
-                    sizes="(max-width: 1023px) 85vw, 36vw"
-                    src={heroProofPhotos[2].src}
-                    style={{
-                      objectPosition: heroProofPhotos[2].objectPosition,
-                      filter: heroProofPhotos[2].filter,
-                    }}
+                    sizes="(min-width: 1280px) 320px, 288px"
+                    src={heroImage}
                   />
                 </div>
               </div>
             </motion.div>
-
-            {/* Stats card */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.45 }}
-              className="rounded-2xl border border-border/40 bg-card p-5 shadow-md lg:rounded-3xl lg:p-7"
-            >
-              <div className="km-eyebrow mb-4 text-muted-foreground lg:mb-5">
-                В цифрах
-              </div>
-              <div className="grid grid-cols-3 gap-4 lg:gap-8">
-                {landingStats.map((stat) => (
-                  <div key={stat.label} className="text-center lg:text-left">
-                    <div className="km-stat-value text-accent-foreground">{stat.value}</div>
-                    <div className="mt-1 text-xs leading-snug text-muted-foreground lg:text-sm">
-                      {stat.label}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* CTA card */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.55 }}
-              className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-5"
-            >
-              <CTA href="#format">Хочу на обучение</CTA>
-              <a
-                href="#about"
-                className="inline-flex items-center gap-2 text-sm font-medium uppercase tracking-[0.14em] text-primary/60 transition-colors hover:text-primary"
-              >
-                Узнать подробнее
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M7 17 17 7" />
-                  <path d="M8 7h9v9" />
-                </svg>
-              </a>
-            </motion.div>
           </div>
+
+          <DesktopBeforeAfterGrid />
         </div>
       </div>
     </section>

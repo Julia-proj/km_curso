@@ -1,158 +1,92 @@
 "use client"
 
-import { AnimatePresence, motion } from "framer-motion"
+import { motion } from "framer-motion"
 import Image from "next/image"
-import { useState } from "react"
 
-import { problemItems } from "@/config/landing-content"
+import { fadeUp } from "@/lib/animations"
 
-const ITEMS_PER_PAGE = 3
-const TOTAL_PAGES = Math.ceil(problemItems.length / ITEMS_PER_PAGE)
-
-function ArrowIcon({ direction = "next" }: { direction?: "prev" | "next" }) {
-  return (
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-      className={direction === "prev" ? "rotate-180" : ""}
-    >
-      <path d="M5 12h14" />
-      <path d="m13 6 6 6-6 6" />
-    </svg>
-  )
-}
+const problemCards = [
+  {
+    title: "Сухость",
+    description: "Волосы сухие даже после масок и кондиционеров",
+    image: "/images/1.PNG",
+  },
+  {
+    title: "Спутанность",
+    description: "Повреждение при расчёсывании, волосы рвутся",
+    image: "/images/2.PNG",
+  },
+  {
+    title: "Ломкость",
+    description: "Прозрачные концы, волосы ломаются по длине",
+    image: "/images/3.PNG",
+  },
+  {
+    title: "Секущиеся концы",
+    description: "Концы расщепляются и не поддаются уходу",
+    image: "/images/4.PNG",
+  },
+  {
+    title: "Пористость",
+    description: "Непослушные волосы, сложно укладывать",
+    image: "/images/5.PNG",
+  },
+  {
+    title: "Отсутствие блеска",
+    description: "Тусклые волосы без жизни и сияния",
+    image: "/images/6.PNG",
+  },
+  {
+    title: "Сложная укладка",
+    description: "Длительная укладка и постоянный дискомфорт",
+    image: "/images/7.PNG",
+  },
+] as const
 
 export function ProblemsSection() {
-  const [page, setPage] = useState(0)
-
-  const visibleItems = problemItems.slice(
-    page * ITEMS_PER_PAGE,
-    page * ITEMS_PER_PAGE + ITEMS_PER_PAGE
-  )
-
   return (
-    <section className="km-section relative">
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <Image alt="" className="object-cover opacity-40" fill sizes="100vw" src="/images/alchemy-hair-texture.jpg" />
-        <div className="absolute inset-0 bg-gradient-to-b from-cream via-cream/70 to-cream" />
-      </div>
+    <section className="bg-[#F5F0EB] py-20 md:py-24">
+      <div className="mx-auto max-w-6xl">
+        <motion.div {...fadeUp()} className="mx-auto mb-8 max-w-3xl px-6 text-center md:mb-10">
+          <p className="mb-4 font-sans text-sm font-medium text-[#D29B9B]">Узнаёшь себя?</p>
+          <h2 className="font-display text-3xl leading-tight text-[#1A1A1A] md:text-4xl">
+            7 проблем, которые решает курс
+          </h2>
+        </motion.div>
 
-      <div className="relative">
-        <div className="km-container km-container-mid mb-8 md:mb-12">
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.8 }}
-            className="km-section-title"
-          >
-            Какие проблемы
-            <br /> ты <span className="italic">закроешь</span> на курсе:
-          </motion.h2>
+        <div className="mb-4 flex justify-end px-6">
+          <span className="inline-flex items-center gap-2 rounded-md border border-[#E0DCD6] bg-white/70 px-3 py-1.5 font-sans text-xs font-medium uppercase tracking-[0.14em] text-[#8A8177]">
+            Листай
+            <span aria-hidden="true">→</span>
+          </span>
         </div>
 
-        {/* Mobile: horizontal scroll carousel */}
-        <div className="md:hidden flex gap-3 overflow-x-auto snap-x snap-mandatory no-scrollbar pl-5 pb-4">
-          {problemItems.map((item, index) => (
-            <div
-              key={item}
-              className="snap-start shrink-0 w-[78vw] rounded-2xl overflow-hidden bg-cream/90 border border-border/60 shadow-sm"
+        <div className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-4 scroll-smooth">
+          {problemCards.map((card, index) => (
+            <motion.article
+              key={card.title}
+              {...fadeUp((index % 4) * 0.05)}
+              className="group w-56 shrink-0 snap-start overflow-hidden rounded-md border border-[#E0DCD6] bg-white shadow-sm"
             >
-              <div className="relative aspect-[4/3]">
-                <Image src={`/images/${index + 1}.PNG`} alt="" fill sizes="78vw" className="object-cover" />
-              </div>
-              <p className="px-4 py-4 text-sm font-medium leading-snug text-foreground/80">{item}</p>
-            </div>
-          ))}
-          <div className="shrink-0 w-4" aria-hidden="true" />
-        </div>
-        <p className="md:hidden text-center text-[11px] font-semibold tracking-widest text-muted-foreground/50 mt-3 uppercase">
-          листай →
-        </p>
-
-        {/* Desktop: page-based carousel */}
-        <div className="hidden md:block km-container km-container-mid">
-          <div className="flex items-center justify-between gap-4 mb-6">
-            <div className="flex items-center gap-2">
-              {Array.from({ length: TOTAL_PAGES }).map((_, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  aria-label={`Страница ${i + 1}`}
-                  aria-current={page === i ? "true" : undefined}
-                  onClick={() => setPage(i)}
-                  className={[
-                    "h-2 rounded-full transition-all",
-                    page === i ? "w-8 bg-primary" : "w-2 bg-primary/25 hover:bg-primary/45",
-                  ].join(" ")}
+              <div className="relative h-[200px] overflow-hidden bg-[#E8E1DA]">
+                <Image
+                  alt={card.title}
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  fill
+                  quality={88}
+                  sizes="224px"
+                  src={card.image}
                 />
-              ))}
-            </div>
-
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                aria-label="Предыдущая страница"
-                onClick={() => setPage((p) => Math.max(0, p - 1))}
-                disabled={page === 0}
-                className="grid h-10 w-10 place-items-center rounded-full border border-border/70 bg-card text-foreground transition hover:border-primary/40 hover:bg-cream disabled:cursor-not-allowed disabled:opacity-35"
-              >
-                <ArrowIcon direction="prev" />
-              </button>
-              <button
-                type="button"
-                aria-label="Следующая страница"
-                onClick={() => setPage((p) => Math.min(TOTAL_PAGES - 1, p + 1))}
-                disabled={page === TOTAL_PAGES - 1}
-                className="grid h-10 w-10 place-items-center rounded-full border border-border/70 bg-card text-foreground transition hover:border-primary/40 hover:bg-cream disabled:cursor-not-allowed disabled:opacity-35"
-              >
-                <ArrowIcon />
-              </button>
-            </div>
-          </div>
-
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div
-              key={page}
-              initial={{ opacity: 0, x: 24 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -24 }}
-              transition={{ duration: 0.28, ease: "easeInOut" }}
-              className="grid grid-cols-3 gap-4 lg:gap-5"
-            >
-              {visibleItems.map((item, index) => {
-                const itemIndex = page * ITEMS_PER_PAGE + index
-                const isAlone = visibleItems.length === 1
-                return (
-                  <div
-                    key={item}
-                    className={[
-                      "rounded-2xl overflow-hidden bg-cream/80 border border-border/60 shadow-sm",
-                      isAlone ? "col-span-3 max-w-sm mx-auto w-full" : "",
-                    ].filter(Boolean).join(" ")}
-                  >
-                    <div className="relative aspect-[4/3]">
-                      <Image
-                        src={`/images/${itemIndex + 1}.PNG`}
-                        alt=""
-                        fill
-                        sizes="(min-width: 1024px) 33vw, 50vw"
-                        className="object-cover"
-                      />
-                    </div>
-                    <p className="px-5 py-4 text-sm font-medium leading-snug text-foreground/80">{item}</p>
-                  </div>
-                )
-              })}
-            </motion.div>
-          </AnimatePresence>
+                <span className="absolute left-3 top-3 bg-white/90 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.22em] text-[#1A1A1A]">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+              </div>
+              <div className="p-4">
+                <h3 className="font-display text-base leading-tight text-[#1A1A1A]">{card.title}</h3>
+                <p className="mt-1.5 font-sans text-xs leading-relaxed text-[#666]">{card.description}</p>
+              </div>
+            </motion.article>
+          ))}
         </div>
       </div>
     </section>

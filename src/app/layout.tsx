@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Playfair_Display, Inter, Manrope } from 'next/font/google'
 import './globals.css'
-
 const playfair = Playfair_Display({
   subsets: ['cyrillic', 'latin'],
   weight: ['400', '500', '600'],
@@ -18,7 +17,7 @@ const inter = Inter({
 
 const manrope = Manrope({
   subsets: ['cyrillic', 'latin'],
-  weight: ['400', '500', '600', '700', '800'],
+  weight: ['400', '500', '600', '700'],
   variable: '--font-hero-face',
   display: 'swap',
 })

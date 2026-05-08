@@ -4,70 +4,67 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 
 import { authorPoints } from "@/config/landing-content"
-import { CTA } from "@/components/shared/CTA"
 import { fadeUp } from "@/lib/animations"
 
 export function AboutSection() {
   return (
-    <section id="about" className="km-section bg-sand/50">
-      <div className="km-container km-container-wide grid items-start gap-8 lg:grid-cols-12 lg:gap-12">
-        <motion.div
-          {...fadeUp()}
-          className="lg:col-span-4 xl:col-span-4 lg:sticky lg:top-28"
-        >
-          <div className="flex items-start gap-3 lg:hidden">
-            <div className="flex gap-2 shrink-0">
-              <div className="relative w-[108px] h-[135px] rounded-xl overflow-hidden">
-                <Image alt="Студия Елены" src="/images/salon1.JPG" fill className="object-cover" sizes="108px" />
-              </div>
-              <div className="relative w-[108px] h-[135px] rounded-xl overflow-hidden">
-                <Image alt="Елена Александрова" src="/images/foto2.png" fill className="object-cover object-center" sizes="108px" />
-              </div>
-            </div>
-            <div className="pt-1">
-              <div className="km-eyebrow text-muted-foreground">Автор курса</div>
-              <div className="mt-1 text-xl font-semibold leading-tight tracking-tight">Елена Александрова</div>
-            </div>
-          </div>
+    <section id="about" className="bg-white px-6 py-20 md:py-24">
+      <div className="mx-auto grid max-w-6xl items-start gap-10 md:grid-cols-2 md:gap-16">
+        <motion.div {...fadeUp()} className="order-2 md:order-1">
+          <p className="mb-4 font-sans text-sm font-medium text-[#D29B9B]">Об Елене</p>
+          <h2 className="mb-6 font-display text-3xl leading-tight text-[#1A1A1A] md:text-4xl">
+            Система, основанная на практике
+          </h2>
+          <p className="mb-8 font-sans leading-relaxed text-[#666]">
+            6 лет ежедневной работы с клиентами студии в Мадриде. Система HairLab построена на:
+          </p>
 
-          <div className="hidden lg:block">
-            <div className="relative w-full aspect-[4/5] rounded-xl overflow-hidden">
-              <Image alt="Студия Елены" src="/images/salon1.JPG" fill className="object-cover" sizes="(min-width: 1280px) 260px, 25vw" />
-            </div>
-            <div className="relative ml-auto mt-2 w-[86%] aspect-[4/5] rounded-xl overflow-hidden">
-              <Image alt="Елена Александрова" src="/images/foto2.png" fill className="object-cover object-center" sizes="(min-width: 1280px) 260px, 25vw" />
-            </div>
-            <div className="mt-4">
-              <div className="km-eyebrow text-muted-foreground">Автор курса</div>
-              <div className="mt-1 text-2xl font-semibold tracking-tight">Елена Александрова</div>
-            </div>
-          </div>
-        </motion.div>
-
-        <div className="lg:col-span-8 xl:col-span-8">
-          <motion.h2 {...fadeUp()} className="km-section-title-sm">
-            Уже более <span className="italic">6 лет</span> я и моя команда
-            ежедневно восстанавливаем даже самые повреждённые волосы.
-          </motion.h2>
-          <motion.p {...fadeUp()} className="km-lead mt-6 md:mt-8">
-            Моя система восстановления и домашнего ухода работает благодаря:
-          </motion.p>
-          <ul className="mt-8 divide-y divide-border md:mt-10">
+          <ul className="space-y-3">
             {authorPoints.map((point, index) => (
               <motion.li
                 key={point}
-                {...fadeUp(index * 0.05)}
-                className="flex items-start gap-4 py-4 md:gap-5 md:py-5"
+                {...fadeUp(index * 0.04)}
+                className="flex items-start gap-3 font-sans text-sm leading-relaxed text-[#444]"
               >
-                <span className="mt-0.5 text-sm font-semibold text-accent-foreground/70 tabular-nums">0{index + 1}</span>
-                <span className="km-copy">{point}</span>
+                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center border border-[#D29B9B] font-mono text-xs text-[#D29B9B]">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span>{point}</span>
               </motion.li>
             ))}
           </ul>
-          <div className="mt-8 md:mt-12">
-            <CTA href="/quiz">Пройти тест</CTA>
+        </motion.div>
+
+        <motion.div {...fadeUp(0.1)} className="order-1 md:order-2">
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-1 md:gap-4">
+            <div className="relative overflow-hidden rounded-lg border border-[#E6DED7] bg-white shadow-sm md:shadow-md">
+              <div className="hidden md:block absolute inset-0 translate-x-3 translate-y-3 bg-[#E8E1DA] -z-10" />
+              <div className="relative aspect-[2/3] md:h-80 md:aspect-auto">
+                <Image
+                  alt="Елена HairLab"
+                  className="object-cover object-center"
+                  fill
+                  quality={92}
+                  sizes="(min-width: 768px) 520px, 45vw"
+                  src="/images/foto2.png"
+                />
+              </div>
+            </div>
+
+            <div className="relative overflow-hidden rounded-lg border border-[#E6DED7] bg-white shadow-sm md:h-56">
+              <div className="relative aspect-[2/3] md:h-full md:aspect-auto">
+                <Image
+                  alt="Студия HairLab"
+                  className="object-cover object-center"
+                  fill
+                  quality={92}
+                  sizes="(min-width: 768px) 520px, 45vw"
+                  src="/images/salon1.JPG"
+                />
+              </div>
+            </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   )

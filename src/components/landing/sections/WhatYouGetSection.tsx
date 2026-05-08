@@ -2,123 +2,155 @@
 
 import { motion } from "framer-motion"
 
-import { CheckIcon } from "@/components/landing/icons"
-import { courseBlocks, courseFeatures } from "@/config/landing-content"
 import { fadeUp } from "@/lib/animations"
 
-export function WhatYouGetSection() {
-  const videoBlock = courseBlocks[0]
+const videoLessons = [
+  "Как правильно диагностировать состояние волос",
+  "Какие типы повреждений бывают",
+  "Какие составы действительно работают",
+  "Как подобрать правильный домашний уход",
+  "Какие ошибки нельзя допускать",
+  "Как восстановить даже сильно повреждённый блонд",
+] as const
 
+const extras = [
+  "AI-диагностика по фото (SOON)",
+  "Личный кабинет",
+  "Персональный протокол",
+  "Hairlab Guide включён",
+  "Чек-листы и доп. материалы",
+] as const
+
+const guideItems = [
+  "Готовые рабочие средства: шампуни, маски, кондиционеры, термозащита",
+  "Гайд по аксессуарам: полотенце, материал для сна, расчёски, резинки, зажимы",
+  "Протоколы восстановления под разные типы волос",
+  "Протоколы под разную степень повреждения",
+] as const
+
+function CheckIcon({ className }: { className: string }) {
   return (
-    <section className="km-section">
-      <div className="km-container km-container-wide">
-        <motion.div {...fadeUp()} className="mb-10 max-w-2xl md:mb-16">
-          <div className="km-eyebrow mb-3 text-muted-foreground md:mb-4">Что внутри</div>
-          <h2 className="km-section-title">
-            Что ты <span className="italic">получишь</span>:
+    <svg
+      aria-hidden="true"
+      className={className}
+      fill="none"
+      height="14"
+      viewBox="0 0 24 24"
+      width="14"
+    >
+      <path
+        d="M20 6 9 17l-5-5"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+      />
+    </svg>
+  )
+}
+
+export function WhatYouGetSection() {
+  return (
+    <section
+      id="what-you-get"
+      className="bg-[#FAF7F4] px-6 py-24"
+      data-testid="section-what-you-get"
+    >
+      <div className="mx-auto max-w-5xl">
+        <motion.div {...fadeUp()} className="mb-14 text-center">
+          <p className="mb-4 font-sans text-sm font-medium text-[#D29B9B]">Что внутри</p>
+          <h2 className="font-display text-3xl leading-tight text-[#1A1A1A] md:text-4xl">
+            Два продукта — одна система
           </h2>
         </motion.div>
 
-        <div className="grid gap-6 md:grid-cols-2 items-stretch">
-          {/* Course card */}
+        <div className="grid gap-6 md:grid-cols-2" data-testid="products-grid">
           <motion.article
-            {...fadeUp(0)}
-            className="km-card km-card-roomy transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_30px_80px_-40px_rgba(80,40,30,0.25)]"
+            {...fadeUp()}
+            className="flex flex-col border-2 border-[#1A1A1A] bg-white p-8"
+            data-testid="product-course"
           >
-            <h3 className="km-card-title">Система восстановления с Еленой</h3>
-            <p className="text-2xl font-semibold text-accent mt-1 mb-5 tracking-tight">39€</p>
-
-            <div className="mb-5">
-              <p className="km-copy font-medium mb-2">Видео-уроки:</p>
-              <ul className="space-y-1.5 mb-3">
-                {videoBlock.points.map((point) => (
-                  <li key={point} className="km-copy flex items-start gap-2.5">
-                    <CheckIcon className="mt-0.5 shrink-0 text-accent" size={16} />
-                    <span>{point}</span>
-                  </li>
-                ))}
-              </ul>
-              <p className="km-copy text-muted-foreground text-sm">{videoBlock.extra}</p>
+            <div className="mb-8 flex items-end justify-between gap-4">
+              <div>
+                <p className="mb-1 font-sans text-xs uppercase tracking-[0.2em] text-[#999]">
+                  Полный курс
+                </p>
+                <div className="font-display text-5xl text-[#1A1A1A]">39€</div>
+              </div>
+              <span className="border border-[#D29B9B] px-2 py-1 font-sans text-[10px] font-semibold text-[#D29B9B]">
+                Доступ навсегда
+              </span>
             </div>
 
-            <ul className="space-y-3">
-              {courseFeatures.map((item) => (
-                <li key={item.title} className="flex gap-2.5">
-                  <CheckIcon className="mt-0.5 shrink-0 text-accent" size={16} />
-                  <div>
-                    <span className="km-copy font-medium">
-                      {item.title}
-                      {item.soon && (
-                        <span className="ml-2 inline-block rounded-full bg-accent/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-accent">
-                          SOON
-                        </span>
-                      )}
-                    </span>
-                    {item.desc && (
-                      <p className="km-copy text-muted-foreground text-sm mt-0.5">{item.desc}</p>
-                    )}
-                  </div>
+            <p className="mb-3 font-sans text-[10px] font-semibold text-[#999]">Видео-уроки</p>
+            <ul className="mb-6 space-y-2">
+              {videoLessons.map((lesson) => (
+                <li key={lesson} className="flex items-start gap-2.5 font-sans text-sm text-[#444]">
+                  <CheckIcon className="mt-0.5 shrink-0 text-[#1A1A1A]" />
+                  {lesson}
                 </li>
               ))}
             </ul>
+
+            <p className="mb-3 font-sans text-[10px] font-semibold text-[#999]">Дополнительно</p>
+            <ul className="mb-8 flex-1 space-y-2">
+              {extras.map((item) => (
+                <li key={item} className="flex items-start gap-2.5 font-sans text-sm text-[#666]">
+                  <CheckIcon className="mt-0.5 shrink-0 text-[#D29B9B]" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+
             <a
-              href="/checkout?product=course"
-              className="btn-luxury mt-7 block w-full rounded-full py-3.5 text-center text-xs font-semibold uppercase tracking-[0.15em]"
+              href="/offer"
+              className="block w-full bg-[#1A1A1A] py-4 text-center font-sans text-sm font-semibold text-white transition-colors hover:bg-[#333]"
+              data-testid="button-course"
             >
-              Получить доступ 39€
+              Получить полный доступ
             </a>
           </motion.article>
 
-          {/* Guide card */}
           <motion.article
-            {...fadeUp(0.1)}
-            className="km-card km-card-roomy flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_30px_80px_-40px_rgba(80,40,30,0.25)]"
+            {...fadeUp(0.08)}
+            className="flex flex-col border border-[#E0DCD6] bg-white p-8"
+            data-testid="product-guide"
           >
-            <h3 className="km-card-title">только методичка HAIRLAB: Карта восстановления</h3>
-            <p className="text-2xl font-semibold text-accent mt-1 mb-5 tracking-tight">13€</p>
-
-            <div className="space-y-5">
-              {courseBlocks.slice(1).map((block) => (
-                <div key={block.tag}>
-                  <p className="km-copy font-medium mb-2">{block.title}</p>
-                  <ul className="space-y-1.5 mb-2">
-                    {block.points.map((point) => (
-                      <li key={point} className="km-copy flex items-start gap-2.5">
-                        <CheckIcon className="mt-0.5 shrink-0 text-accent" size={16} />
-                        <span>{point}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="km-copy text-muted-foreground text-sm">{block.extra}</p>
-                </div>
-              ))}
+            <div className="mb-8 flex items-end justify-between gap-4">
+              <div>
+                <p className="mb-1 font-sans text-xs uppercase tracking-[0.2em] text-[#999]">
+                  Hairlab Guide
+                </p>
+                <div className="font-display text-5xl text-[#1A1A1A]">13€</div>
+              </div>
+              <span className="border border-[#E0DCD6] px-2 py-1 font-sans text-[10px] font-semibold text-[#999]">
+                Методичка
+              </span>
             </div>
+
+            <ol className="mb-8 flex-1 space-y-4">
+              {guideItems.map((item, index) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-3 border-b border-[#F0EBE5] pb-4 font-sans text-sm text-[#444] last:border-0"
+                >
+                  <span className="mt-0.5 shrink-0 font-mono text-[10px] text-[#D29B9B]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  {item}
+                </li>
+              ))}
+            </ol>
+
             <a
-              href="/checkout?product=guide"
-              className="btn-luxury-sand mt-7 block w-full rounded-full py-3.5 text-center text-xs font-semibold uppercase tracking-[0.15em] md:mt-auto"
+              href="/offer"
+              className="block w-full border border-[#1A1A1A] py-4 text-center font-sans text-sm font-semibold text-[#1A1A1A] transition-colors hover:bg-[#1A1A1A] hover:text-white"
+              data-testid="button-guide"
             >
-              Приобрести методичку 13€
+              Получить методичку
             </a>
           </motion.article>
         </div>
-
-        <motion.div
-          {...fadeUp(0.15)}
-          className="mt-8 rounded-3xl bg-primary px-6 py-10 text-primary-foreground md:px-12"
-        >
-          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[3px] opacity-50">
-            р е з у л ь т а т
-          </p>
-          <h2 className="mb-4 text-xl font-semibold leading-snug text-balance md:text-2xl tracking-tight">
-            Гладкие, плотные волосы - это не генетика, а система.
-          </h2>
-          <p className="max-w-xl text-sm leading-relaxed opacity-80 md:text-base">
-            Они всегда выглядят дорого. Без сложной укладки, без идеального цвета, даже в обычном хвосте.
-            Плотность, блеск и гладкость создают тот самый ухоженный вид, который не получается собрать
-            из случайных масок и советов из интернета. Но такой результат начинается не с дорогого средства.
-            Он начинается с понимания: что нужно, в каком порядке и почему.
-          </p>
-        </motion.div>
       </div>
     </section>
   )

@@ -8,35 +8,26 @@ import { fadeUp } from "@/lib/animations"
 
 export function ForYouSection() {
   return (
-    <section className="km-section">
-      <div className="km-container km-container-wide">
-        <motion.div {...fadeUp()} className="mb-10 max-w-2xl md:mb-16">
-          <div className="km-eyebrow mb-3 text-muted-foreground md:mb-4">Для кого</div>
-          <h2 className="km-section-title">
-            Этот курс <span className="italic">для тебя</span>, если:
+    <section className="bg-[#FAF7F4] px-6 py-20 md:py-24">
+      <div className="mx-auto max-w-5xl">
+        <motion.div {...fadeUp()} className="mb-12 text-center md:mb-14">
+          <p className="mb-4 font-sans text-sm font-medium text-[#D29B9B]">Для тебя, если</p>
+          <h2 className="font-display text-3xl leading-tight text-[#1A1A1A] md:text-4xl">
+            Этот курс для тебя, если...
           </h2>
         </motion.div>
-        <div className="grid gap-4 sm:grid-cols-2">
-          {forYouItems.map((item, index) => {
-            const isLoneLastItem =
-              index === forYouItems.length - 1 && forYouItems.length % 2 !== 0
-            return (
+
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {forYouItems.map((item, index) => (
             <motion.div
               key={item}
-              {...fadeUp((index % 2) * 0.1)}
-              className={`km-card group transition-colors hover:border-accent/60 hover:bg-accent/15 ${
-                isLoneLastItem ? "sm:col-span-2 sm:max-w-lg sm:mx-auto sm:w-full" : ""
-              }`}
+              {...fadeUp((index % 3) * 0.06)}
+              className="flex min-h-full items-start gap-4 rounded-lg border border-[#E6DED7] bg-white p-5 shadow-sm transition-colors hover:border-[#D29B9B]/70 md:p-6"
             >
-              <div className="flex items-start gap-4">
-                <span className="grid size-9 shrink-0 place-items-center rounded-full bg-accent">
-                  <CheckIcon className="text-primary" size={16} />
-                </span>
-                <p className="km-copy">{item}</p>
-              </div>
+              <CheckIcon className="mt-0.5 shrink-0 text-[#D29B9B]" size={16} />
+              <p className="font-sans text-sm leading-relaxed text-[#444]">{item}</p>
             </motion.div>
-            )
-          })}
+          ))}
         </div>
       </div>
     </section>

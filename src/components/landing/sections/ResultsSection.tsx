@@ -37,7 +37,7 @@ function ArrowIcon({ direction = "next" }: { direction?: "prev" | "next" }) {
 
 function PlayIcon() {
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
       <path d="M8 5.14v13.72a1 1 0 001.5.86l10.44-6.86a1 1 0 000-1.72L9.5 4.28A1 1 0 008 5.14z" />
     </svg>
   )
@@ -96,25 +96,21 @@ export function ResultsSection() {
   }, [updateCarouselState])
 
   return (
-    <section id="results" className="bg-accent/20 py-14 md:py-20">
-      <div className="km-container km-container-wide">
+    <section id="results" className="bg-[#FAF7F4] px-6 py-20 md:py-24">
+      <div className="mx-auto max-w-6xl">
         <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_280px] md:items-end md:gap-10">
           <motion.div {...fadeUp()}>
-            <div className="km-eyebrow mb-3 text-muted-foreground md:mb-4">Доказательства</div>
-            <h2 className="km-section-title">
-              <span className="font-semibold text-accent-foreground/90">5000+</span>{" "}
-              клиентов студии
-              <br />
-              восстановили и отрастили
-              <br /> свои волосы.
+            <p className="mb-4 font-sans text-sm font-medium text-[#D29B9B]">Доказательства</p>
+            <h2 className="font-display text-3xl leading-tight text-[#1A1A1A] md:text-5xl">
+              <span className="italic">5000+</span> клиентов студии восстановили и отрастили свои волосы.
             </h2>
-            <p className="km-lead mt-5 max-w-xl md:mt-6">
+            <p className="mt-5 max-w-xl font-sans text-base leading-relaxed text-[#666] md:mt-6 md:text-lg">
               Реальные кейсы, фото «до/после», результаты учениц и отзывы из Instagram.
             </p>
           </motion.div>
 
           <motion.div {...fadeUp(0.1)} className="hidden md:block">
-            <div className="overflow-hidden rounded-2xl border border-border/70 bg-card shadow-lg">
+            <div className="overflow-hidden rounded-lg border border-[#E6DED7] bg-white shadow-sm">
               <div className="relative h-56">
                 <Image
                   alt="Елена Александрова"
@@ -129,19 +125,19 @@ export function ResultsSection() {
           </motion.div>
         </div>
 
-        <div className="mt-9 flex items-center justify-between gap-4 md:mt-12">
-          <div className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-            <IgIcon className="text-accent-foreground/80" />
+        <div className="mt-10 flex items-center justify-between gap-4 md:mt-12">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#E6DED7] bg-white/65 px-3 py-2 font-sans text-[11px] font-medium uppercase tracking-[0.16em] text-[#666]">
+            <IgIcon className="h-3.5 w-3.5 text-[#D29B9B]" />
             Instagram
           </div>
 
-          <div className="hidden items-center gap-2 sm:flex lg:hidden">
+          <div className="flex items-center gap-2 lg:hidden">
             <button
               type="button"
               aria-label="Предыдущий отзыв"
               onClick={() => moveCarousel("prev")}
               disabled={!canScrollPrev}
-              className="grid h-10 w-10 place-items-center rounded-full border border-border/70 bg-card text-foreground transition hover:border-primary/40 hover:bg-cream disabled:cursor-not-allowed disabled:opacity-35"
+              className="grid h-10 w-10 place-items-center rounded-full border border-[#E6DED7] bg-white text-[#1A1A1A] transition-colors hover:border-[#1A1A1A] disabled:cursor-not-allowed disabled:opacity-35"
             >
               <ArrowIcon direction="prev" />
             </button>
@@ -150,7 +146,7 @@ export function ResultsSection() {
               aria-label="Следующий отзыв"
               onClick={() => moveCarousel("next")}
               disabled={!canScrollNext}
-              className="grid h-10 w-10 place-items-center rounded-full border border-border/70 bg-card text-foreground transition hover:border-primary/40 hover:bg-cream disabled:cursor-not-allowed disabled:opacity-35"
+              className="grid h-10 w-10 place-items-center rounded-full border border-[#E6DED7] bg-white text-[#1A1A1A] transition-colors hover:border-[#1A1A1A] disabled:cursor-not-allowed disabled:opacity-35"
             >
               <ArrowIcon />
             </button>
@@ -160,7 +156,7 @@ export function ResultsSection() {
         <div
           ref={scrollerRef}
           onScroll={updateCarouselState}
-          className="no-scrollbar mt-4 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth px-5 pb-3 md:mt-5 md:gap-5 lg:grid lg:grid-cols-5 lg:px-0 lg:overflow-visible lg:snap-none lg:gap-3"
+          className="no-scrollbar -mx-6 mt-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-6 pb-4 scroll-smooth md:mt-5 md:gap-4 lg:mx-0 lg:grid lg:grid-cols-5 lg:overflow-visible lg:px-0 lg:pb-0"
         >
           {instagramReels.map((reel, index) => (
             <motion.a
@@ -169,45 +165,38 @@ export function ResultsSection() {
               target="_blank"
               rel="noopener noreferrer"
               data-carousel-card
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.06, duration: 0.5 }}
-              className="group block h-full w-[min(62vw,15rem)] shrink-0 snap-center rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-ring md:w-[20.5rem] lg:w-auto"
+              {...fadeUp(index * 0.05)}
+              className="group block h-full w-[min(64vw,15rem)] shrink-0 snap-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D29B9B] md:w-[17rem] lg:w-auto"
             >
-              <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-border/70 bg-card shadow-sm transition duration-300 group-hover:-translate-y-1 group-hover:border-primary/25 group-hover:shadow-lg">
-                <div className="relative aspect-[4/5] overflow-hidden bg-primary/5 lg:aspect-[9/16]">
+              <article className="flex h-full min-h-full flex-col overflow-hidden rounded-lg border border-[#E6DED7] bg-white shadow-sm transition duration-300 group-hover:-translate-y-1 group-hover:shadow-md">
+                <div className="relative aspect-[9/14] overflow-hidden bg-[#E8E1DA] lg:aspect-[9/16]">
                   <Image
                     alt={reel.alt}
                     src={reel.image}
                     fill
-                    sizes="(max-width: 768px) 76vw, 336px"
+                    sizes="(min-width: 1024px) 210px, 70vw"
                     quality={90}
-                    className="object-cover transition duration-500 group-hover:scale-[1.03]"
+                    className="object-cover transition duration-700 group-hover:scale-[1.03]"
                     style={{ objectPosition: reel.objectPosition }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/20" />
-                  <div className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-white/88 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-primary shadow-sm backdrop-blur">
-                    <IgIcon className="h-3 w-3 text-accent-foreground" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/15 via-transparent to-black/20" />
+                  <div className="absolute left-3 top-3 inline-flex items-center gap-1.5 bg-white/90 px-2.5 py-1 font-sans text-[10px] font-semibold uppercase tracking-[0.12em] text-[#1A1A1A] shadow-sm backdrop-blur">
                     {reel.tag}
                   </div>
                   <div className="absolute inset-0 grid place-items-center">
-                    <div className="grid h-12 w-12 place-items-center rounded-full bg-white/88 pl-0.5 text-primary shadow-lg backdrop-blur transition group-hover:scale-105">
+                    <div className="grid h-12 w-12 place-items-center rounded-full bg-white/90 pl-0.5 text-[#1A1A1A] shadow-md backdrop-blur transition-transform group-hover:scale-105">
                       <PlayIcon />
                     </div>
                   </div>
                 </div>
 
-                <div className="flex grow flex-col p-3 sm:p-4">
-                  <p className="hidden text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground/70 sm:block">
-                    keratin_madrid
-                  </p>
-                  <h3 className="mt-1 text-base font-semibold leading-tight tracking-tight text-foreground sm:text-lg">{reel.title}</h3>
-                  <p className="mt-2 hidden text-sm leading-relaxed text-muted-foreground sm:block">
-                    {reel.description}
-                  </p>
-                  <span className="mt-auto inline-flex items-center gap-2 pt-3 text-[10px] font-bold uppercase tracking-[0.14em] text-primary sm:pt-4 sm:text-[11px]">
-                    Смотреть в Instagram
+                <div className="flex min-h-[3.75rem] items-center justify-between gap-2 px-3.5 py-3 font-sans">
+                  <div className="flex min-w-0 items-center gap-1.5">
+                    <IgIcon className="h-3.5 w-3.5 shrink-0 text-[#D29B9B]" />
+                    <span className="truncate text-[11px] text-[#777]">@keratin_madrid</span>
+                  </div>
+                  <span className="inline-flex shrink-0 items-center gap-1 text-[11px] font-semibold text-[#D29B9B]">
+                    Смотреть
                     <ArrowIcon />
                   </span>
                 </div>
@@ -216,7 +205,7 @@ export function ResultsSection() {
           ))}
         </div>
 
-        <div className="flex items-center justify-between gap-4 lg:hidden">
+        <div className="mt-2 flex items-center justify-between gap-4 lg:hidden">
           <div className="flex items-center gap-2">
             {instagramReels.map((reel, index) => (
               <button
@@ -227,31 +216,10 @@ export function ResultsSection() {
                 onClick={() => scrollToCard(index)}
                 className={[
                   "h-2 rounded-full transition-all",
-                  activeIndex === index ? "w-8 bg-primary" : "w-2 bg-primary/25 hover:bg-primary/45",
+                  activeIndex === index ? "w-8 bg-[#1A1A1A]" : "w-2 bg-[#1A1A1A]/25 hover:bg-[#1A1A1A]/45",
                 ].join(" ")}
               />
             ))}
-          </div>
-
-          <div className="flex items-center gap-2 sm:hidden">
-            <button
-              type="button"
-              aria-label="Предыдущий отзыв"
-              onClick={() => moveCarousel("prev")}
-              disabled={!canScrollPrev}
-              className="grid h-10 w-10 place-items-center rounded-full border border-border/70 bg-card text-foreground disabled:opacity-35"
-            >
-              <ArrowIcon direction="prev" />
-            </button>
-            <button
-              type="button"
-              aria-label="Следующий отзыв"
-              onClick={() => moveCarousel("next")}
-              disabled={!canScrollNext}
-              className="grid h-10 w-10 place-items-center rounded-full border border-border/70 bg-card text-foreground disabled:opacity-35"
-            >
-              <ArrowIcon />
-            </button>
           </div>
         </div>
       </div>
