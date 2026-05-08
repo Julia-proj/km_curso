@@ -26,7 +26,7 @@ export function NavSection() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.4, ease }}
-          className="fixed inset-x-0 top-0 z-50 border-b border-border/40 bg-cream/80 backdrop-blur-xl"
+          className="fixed inset-x-0 top-0 z-50 border-b border-gray-200/60 bg-white/90 backdrop-blur-xl"
         >
           <div className="mx-auto flex max-w-[1200px] items-center justify-between px-5 py-3 md:px-10">
             <a href="#" className="font-display text-lg tracking-tight text-foreground">
@@ -41,13 +41,13 @@ export function NavSection() {
             <div className="flex items-center gap-2.5">
               <a
                 href="/quiz"
-                className="rounded-none border border-border/60 bg-sand px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-foreground transition-colors hover:border-accent hover:bg-accent"
+                className="rounded-sm border border-zinc-300/50 bg-zinc-50/80 px-4 py-2 text-xs font-medium uppercase tracking-[0.12em] text-[var(--color-cocoa)] transition-colors hover:border-zinc-400/60 hover:bg-zinc-100/80"
               >
                 Тест
               </a>
               <a
                 href="#what-you-get"
-                className="rounded-none bg-primary px-4 py-2 text-xs font-medium uppercase tracking-[0.15em] text-primary-foreground transition-opacity hover:opacity-80"
+                className="rounded-sm bg-black px-4 py-2 text-xs font-medium uppercase tracking-[0.15em] text-white transition-opacity hover:bg-gray-800"
               >
                 <span className="hidden sm:inline">Хочу на обучение</span>
                 <span className="sm:hidden">Обучение</span>

@@ -39,7 +39,7 @@ export function FormatSection() {
             <motion.article
               key={card.title}
               {...fadeUp(index * 0.05)}
-              className="border border-[#E0DCD6] p-8 text-center"
+              className="border border-[#E0DCD6] p-8 text-center rounded-2xl"
               data-testid={`format-item-${index}`}
             >
               <h3 className="mb-2 font-display text-xl leading-tight text-[#1A1A1A]">{card.title}</h3>

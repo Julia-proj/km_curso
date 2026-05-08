@@ -53,7 +53,7 @@ function CheckIcon({ className }: { className: string }) {
 export function WhatYouGetSection({
   sectionId = "what-you-get",
   showResultBlock = false,
-  title = "Два продукта — одна система",
+  title = "Два продукта. Одна система",
 }: {
   sectionId?: string
   showResultBlock?: boolean
@@ -79,7 +79,7 @@ export function WhatYouGetSection({
         <div className="grid gap-6 md:grid-cols-2" data-testid="products-grid">
           <motion.article
             {...fadeUp()}
-            className="flex flex-col border-2 border-[#1A1A1A] bg-white p-8"
+            className="flex flex-col border-2 border-[#1A1A1A] bg-white p-8 rounded-2xl"
             data-testid="product-course"
           >
             <div className="mb-8 flex items-end justify-between gap-4">
@@ -116,7 +116,7 @@ export function WhatYouGetSection({
 
             <a
               href={coursePaymentLink}
-              className="block w-full rounded-none bg-[#1A1A1A] py-4 text-center font-sans text-sm font-semibold text-white transition-colors hover:bg-[#333]"
+              className="block w-full rounded-md bg-[#1A1A1A] py-4 text-center font-sans text-sm font-semibold text-white transition-colors hover:bg-[#333]"
               data-testid="button-course"
             >
               Получить полный доступ
@@ -125,7 +125,7 @@ export function WhatYouGetSection({
 
           <motion.article
             {...fadeUp(0.08)}
-            className="flex flex-col border border-[#E0DCD6] bg-white p-8"
+            className="flex flex-col border border-[#E0DCD6] bg-white p-8 rounded-2xl"
             data-testid="product-guide"
           >
             <div className="mb-8 flex items-end justify-between gap-4">
@@ -156,7 +156,7 @@ export function WhatYouGetSection({
 
             <a
               href={guidePaymentLink}
-              className="block w-full rounded-none border border-[#1A1A1A] py-4 text-center font-sans text-sm font-semibold text-[#1A1A1A] transition-colors hover:bg-[#1A1A1A] hover:text-white"
+              className="block w-full rounded-md border border-[#1A1A1A] py-4 text-center font-sans text-sm font-semibold text-[#1A1A1A] transition-colors hover:bg-[#1A1A1A] hover:text-white"
               data-testid="button-guide"
             >
               Получить методичку

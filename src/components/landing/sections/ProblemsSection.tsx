@@ -60,31 +60,12 @@ export function ProblemsSection() {
   return (
     <section className="bg-[#F5F0EB] py-20 md:py-24">
       <div className="mx-auto max-w-6xl">
-        <motion.div {...fadeUp()} className="mx-auto mb-8 max-w-3xl px-6 text-center md:mb-10">
+        <motion.div {...fadeUp()} className="mx-auto mb-12 max-w-3xl px-6 text-center md:mb-14">
           <p className="mb-4 font-sans text-sm font-medium text-[#D29B9B]">Узнаёшь себя?</p>
           <h2 className="font-display text-3xl leading-tight text-[#1A1A1A] md:text-4xl">
             7 проблем, которые решает курс
           </h2>
         </motion.div>
-
-        <div className="mb-4 hidden items-center justify-end gap-2 px-6 md:flex">
-          <button
-            type="button"
-            onClick={() => scrollCards("prev")}
-            className="grid h-10 w-10 place-items-center border border-[#D9D1C8] bg-white text-[#5A524A] transition-colors hover:border-[#BEB2A5]"
-            aria-label="Прокрутить карточки влево"
-          >
-            ←
-          </button>
-          <button
-            type="button"
-            onClick={() => scrollCards("next")}
-            className="grid h-10 w-10 place-items-center border border-[#D9D1C8] bg-white text-[#5A524A] transition-colors hover:border-[#BEB2A5]"
-            aria-label="Прокрутить карточки вправо"
-          >
-            →
-          </button>
-        </div>
 
         <div
           ref={scrollerRef}
@@ -94,15 +75,15 @@ export function ProblemsSection() {
             <motion.article
               key={card.title}
               {...fadeUp((index % 4) * 0.05)}
-              className="group w-56 shrink-0 snap-start overflow-hidden rounded-md border border-[#E0DCD6] bg-white shadow-sm"
+              className="group w-64 shrink-0 snap-start overflow-hidden rounded-lg border border-[#E0DCD6] bg-white shadow-sm"
             >
-              <div className="relative h-[200px] overflow-hidden bg-[#E8E1DA]">
+              <div className="relative h-[220px] overflow-hidden bg-[#E8E1DA]">
                 <Image
                   alt={card.title}
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                   fill
                   quality={88}
-                  sizes="224px"
+                  sizes="256px"
                   src={card.image}
                 />
                 <span className="absolute left-3 top-5 bg-white/90 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.22em] text-[#1A1A1A]">
@@ -117,12 +98,29 @@ export function ProblemsSection() {
           ))}
         </div>
 
-        <div className="mt-3 flex justify-center px-6 md:mt-2">
-          <span className="inline-flex items-center gap-2 rounded-md border border-[#E0DCD6] bg-white/75 px-3 py-1.5 font-sans text-xs font-medium uppercase tracking-[0.14em] text-[#8A8177]">
-            <span className="md:hidden">Листай</span>
-            <span className="hidden md:inline">Кликни</span>
-            <span aria-hidden="true">→</span>
-          </span>
+        <div className="mt-3 hidden justify-center px-6 md:mt-2 md:flex">
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => scrollCards("prev")}
+              className="grid h-10 w-10 place-items-center rounded-full border border-[#D9D1C8] bg-white text-[#5A524A] transition-all hover:border-[#BEB2A5] hover:bg-[#F8F5F1] hover:shadow-md"
+              aria-label="Прокрутить карточки влево"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M15 18l-6-6 6-6" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollCards("next")}
+              className="grid h-10 w-10 place-items-center rounded-full border border-[#D9D1C8] bg-white text-[#5A524A] transition-all hover:border-[#BEB2A5] hover:bg-[#F8F5F1] hover:shadow-md"
+              aria-label="Прокрутить карточки вправо"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </section>
