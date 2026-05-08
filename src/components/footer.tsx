@@ -9,7 +9,7 @@ export function Footer() {
   const isInView = useInView(ref, { once: true, margin: "-50px" })
 
   return (
-    <footer ref={ref} className="py-12 md:py-16 px-5 bg-bg-dark">
+    <footer ref={ref} className="py-12 md:py-16 px-5 bg-[#1A1A1A]">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -18,28 +18,28 @@ export function Footer() {
       >
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
           <div>
-            <p className="text-lg font-bold tracking-tight text-text-on-dark mb-2">
+            <p className="text-lg font-bold tracking-tight text-white mb-2">
               HAIRLAB
             </p>
-            <p className="text-text-on-dark/60 text-sm">Keratin Madrid</p>
+            <p className="text-white/60 text-sm">Keratin Madrid</p>
           </div>
 
           <div className="flex flex-wrap gap-6 text-sm font-medium">
             <a
               href="#about"
-              className="text-text-on-dark/60 hover:text-text-on-dark transition-colors"
+              className="text-white/60 hover:text-white transition-colors"
             >
               О проекте
             </a>
             <a
               href="#terms"
-              className="text-text-on-dark/60 hover:text-text-on-dark transition-colors"
+              className="text-white/60 hover:text-white transition-colors"
             >
               Условия
             </a>
             <a
               href="#privacy"
-              className="text-text-on-dark/60 hover:text-text-on-dark transition-colors"
+              className="text-white/60 hover:text-white transition-colors"
             >
               Политика конфиденциальности
             </a>
@@ -49,14 +49,14 @@ export function Footer() {
             href="https://instagram.com/keratinmadrid"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-text-on-dark/60 hover:text-text-on-dark transition-colors text-sm font-medium"
+            className="text-white/60 hover:text-white transition-colors text-sm font-medium"
           >
             Instagram: @keratinmadrid
           </a>
         </div>
 
-        <div className="mt-10 pt-8 border-t border-text-on-dark/10">
-          <p className="text-text-on-dark/40 text-xs text-center">
+        <div className="mt-10 pt-8 border-t border-white/10">
+          <p className="text-white/40 text-xs text-center">
             © {new Date().getFullYear()} HAIRLAB. Все права защищены.
           </p>
         </div>

@@ -74,13 +74,21 @@ export default function ResultPage() {
           </p>
         </div>
 
-        <div className="text-center">
+        <div className="space-y-4 text-center">
           <Link
             href="/lesson"
             className="inline-block rounded-none bg-[var(--color-accent)] px-8 py-4 text-sm font-semibold text-white transition-colors hover:bg-[var(--color-accent-hover)]"
           >
             Посмотреть бесплатный урок
           </Link>
+          <div>
+            <Link
+              href="/"
+              className="inline-block text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors underline underline-offset-2"
+            >
+              Узнать больше о курсе
+            </Link>
+          </div>
         </div>
       </div>
     </main>

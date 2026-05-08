@@ -98,7 +98,7 @@ export function ResultsSection() {
   }, [updateCarouselState])
 
   return (
-    <section id="results" className="bg-[#FAF7F4] px-4 py-12 sm:px-6 sm:py-16 md:py-20 lg:py-24">
+    <section id="results" className="bg-white px-4 py-12 sm:px-6 sm:py-16 md:py-20 lg:py-24">
       <div className="mx-auto max-w-6xl">
         <div className="grid gap-6 sm:gap-8 md:gap-10">
           <motion.div {...fadeUp()}>

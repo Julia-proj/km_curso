@@ -180,11 +180,12 @@ export function LandingHeroSection() {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.08, duration: 0.55 }}
-              className="font-display text-[1.64rem] font-medium leading-[1.04] text-white drop-shadow-[0_2px_18px_rgba(20,12,8,0.32)] min-[360px]:text-[2.22rem] min-[390px]:text-[2.72rem]"
+              className="font-display text-[1.5rem] font-medium leading-[1.04] text-white drop-shadow-[0_2px_18px_rgba(20,12,8,0.32)] min-[360px]:text-[2rem] min-[390px]:text-[2.5rem]"
             >
               Салонное
               <br />
-              <span className="block text-[0.86em]">восстановление</span>
+              восстановление
+              <br />
               волос
             </motion.h1>
 

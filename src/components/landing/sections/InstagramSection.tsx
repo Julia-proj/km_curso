@@ -1,5 +1,7 @@
 ﻿"use client"
 
+import { instagramReels } from "@/config/landing-content"
+
 // Иконка Instagram
 const InstagramIcon = ({ className = "h-4 w-4" }: { className?: string }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24">
@@ -22,44 +24,6 @@ const ArrowIcon = () => (
   </svg>
 )
 
-const instagramPosts = [
-  {
-    id: 1,
-    badge: "ОТЗЫВ",
-    title: "Отзыв из Instagram",
-    description: "Скрин из Reels: реальный результат и живой формат доказательства.",
-    image: "/images/rev1.png"
-  },
-  {
-    id: 2,
-    badge: "REEL",
-    title: "Результат клиентки",
-    description: "Видео в Instagram с результатом и состоянием волос после ухода.",
-    image: "/images/rev2.png"
-  },
-  {
-    id: 3,
-    badge: "ОТЗЫВ",
-    title: "История ученицы",
-    description: "Живой отзыв о подходе, результате и понятной системе восстановления.",
-    image: "/images/rev3.png"
-  },
-  {
-    id: 4,
-    badge: "БЛОНД",
-    title: "Работа с длиной",
-    description: "Кейс про блонд без сухости и результат после правильно подобранного протокола.",
-    image: "/images/rev4.png"
-  },
-  {
-    id: 5,
-    badge: "СТУДИЯ",
-    title: "Процесс и доверие",
-    description: "Видео из Instagram, где видно подход студии и реальные материалы курса.",
-    image: "/images/rev5.png"
-  }
-]
-
 export function InstagramSection() {
   return (
     <section className="w-full bg-[#f3e6df] py-10 px-5 md:px-12 lg:px-24 xl:py-[70px]">
@@ -74,16 +38,16 @@ export function InstagramSection() {
 
         {/* Сетка карточек */}
         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-          {instagramPosts.map((post) => (
+          {instagramReels.map((reel) => (
             <article 
-              key={post.id}
+              key={reel.id}
               className="flex flex-col overflow-hidden rounded-2xl bg-[#fbf8f4] shadow-sm md:min-h-[640px]"
             >
               {/* Верхняя часть с изображением */}
               <div className="relative overflow-hidden h-[320px] sm:h-[280px] md:h-[400px] lg:h-[400px]">
                 <img
-                  src={post.image}
-                  alt={post.title}
+                  src={reel.image}
+                  alt={reel.alt}
                   className="w-full h-full object-cover"
                 />
                 
@@ -91,7 +55,7 @@ export function InstagramSection() {
                 <div className="absolute left-4 top-4 flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5">
                   <InstagramIcon className="h-3 w-3" />
                   <span className="font-semibold uppercase text-[11px] tracking-[0.15em] text-[#3d3d3d]">
-                    {post.badge}
+                    {reel.tag}
                   </span>
                 </div>
 
@@ -112,17 +76,19 @@ export function InstagramSection() {
 
                 {/* Заголовок */}
                 <h3 className="mb-2 font-serif text-xl leading-[1.1] text-[#3d3d3d] md:text-2xl">
-                  {post.title}
+                  {reel.title}
                 </h3>
 
                 {/* Описание */}
                 <p className="mb-auto text-base leading-[1.5] text-[#5b514b]">
-                  {post.description}
+                  {reel.description}
                 </p>
 
                 {/* Ссылка внизу */}
                 <a 
-                  href="#"
+                  href={reel.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="mt-auto flex items-center gap-2 font-semibold uppercase text-[12px] tracking-[0.2em] text-[#3d3d3d]"
                 >
                   <span>СМОТРЕТЬ В INSTAGRAM</span>
