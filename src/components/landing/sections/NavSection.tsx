@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion"
 import { useEffect, useState } from "react"
 
-import { ease, fadeUp } from "@/lib/animations"
+import { ease } from "@/lib/animations"
 
 export function NavSection() {
   const [visible, setVisible] = useState(false)
