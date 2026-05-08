@@ -1,5 +1,7 @@
+/* Tailwind imports */
 @import "tailwindcss";
 
+/* CSS variables / design tokens */
 @theme inline {
   --font-display: var(--font-display-face), Georgia, serif;
   --font-sans: var(--font-body-face), Inter, system-ui, sans-serif;
@@ -55,6 +57,7 @@
   --shadow-lg: 0 8px 24px rgba(26, 22, 19, 0.08);
 }
 
+/* Base styles */
 :root {
   --radius: 1rem;
   --page-x: 1.25rem;
@@ -156,6 +159,7 @@ h4 {
 }
 
 @layer components {
+  /* Layout utilities */
   .km-container {
     width: 100%;
     max-width: calc(var(--container-default) + var(--page-x) + var(--page-x));
@@ -183,6 +187,7 @@ h4 {
     padding-block: var(--section-y-large);
   }
 
+  /* Section-specific styles */
   .km-principles-bg {
     position: relative;
     isolation: isolate;
@@ -316,6 +321,7 @@ h4 {
     overflow-wrap: anywhere;
   }
 
+  /* Typography utilities */
   .km-eyebrow {
     font-size: 0.625rem;
     font-weight: 500;
@@ -415,6 +421,7 @@ h4 {
     line-height: 1.05;
   }
 
+  /* Reusable components */
   .km-card {
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
@@ -574,6 +581,7 @@ h4 {
     color: var(--muted-foreground);
   }
 
+  /* Responsive overrides */
   @media (min-width: 640px) {
     .km-hero-stats {
       max-width: 32rem;
@@ -735,10 +743,12 @@ h4 {
 }
 
 @layer utilities {
+  /* Typography utilities */
   .text-balance {
     text-wrap: balance;
   }
 
+  /* Layout utilities */
   .grain {
     position: relative;
   }
@@ -761,6 +771,7 @@ h4 {
     display: none;
   }
 
+  /* Reusable components */
   .btn-luxury {
     position: relative;
     overflow: hidden;
@@ -843,6 +854,7 @@ h4 {
     box-shadow: 0 2px 0 oklch(0.80 0.020 55);
   }
 
+  /* Animations / keyframes */
   @keyframes btn-shimmer {
     0%        { transform: translateX(-150%); }
     50%, 100% { transform: translateX(250%); }
@@ -879,13 +891,6 @@ h4 {
     }
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .km-cta,
-    .km-cta::before {
-      animation: none;
-    }
-  }
-
   .marquee {
     animation: marquee 18s linear infinite;
   }
@@ -897,6 +902,14 @@ h4 {
 
     to {
       transform: translateX(-50%);
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .km-cta,
+    .km-cta::before {
+      animation: none;
     }
   }
 }
