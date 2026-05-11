@@ -80,7 +80,6 @@ export function ProblemsSection() {
         <div
           ref={scrollerRef}
           className="no-scrollbar flex snap-x snap-mandatory gap-3 overflow-x-auto overflow-y-hidden px-5 pb-4 [scroll-padding-inline:1.25rem] sm:gap-4 sm:px-6 sm:pb-3 touch-pan-x overscroll-x-contain overscroll-y-none"
-          style={{ touchAction: 'pan-x' }}
         >
           {problemCards.map((card, index) => (
             <motion.article

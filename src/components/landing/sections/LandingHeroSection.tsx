@@ -180,7 +180,7 @@ export function LandingHeroSection() {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.08, duration: 0.55 }}
-              className="font-display text-[1.5rem] font-medium leading-[1.04] text-white drop-shadow-[0_2px_18px_rgba(20,12,8,0.32)] min-[360px]:text-[2rem] min-[390px]:text-[2.5rem]"
+              className="font-display text-[1.35rem] font-normal leading-[1.08] text-white drop-shadow-[0_2px_18px_rgba(20,12,8,0.32)] min-[360px]:text-[1.8rem] min-[360px]:font-medium min-[390px]:text-[2.5rem]"
             >
               Салонное
               <br />
@@ -193,7 +193,7 @@ export function LandingHeroSection() {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.16, duration: 0.55 }}
-              className="mt-2 font-display text-[1.12rem] italic leading-none text-[#E8B7B1] drop-shadow-[0_2px_14px_rgba(20,12,8,0.22)] min-[360px]:text-[1.58rem] min-[390px]:text-[2rem]"
+              className="mt-2 font-display text-[1rem] italic leading-none text-[#E8B7B1] drop-shadow-[0_2px_14px_rgba(20,12,8,0.22)] min-[360px]:text-[1.4rem] min-[390px]:text-[2rem]"
             >
               в домашних
               <br />
@@ -204,7 +204,7 @@ export function LandingHeroSection() {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.22, duration: 0.55 }}
-              className="mt-5 font-sans text-base font-medium text-white/84 drop-shadow-[0_2px_14px_rgba(20,12,8,0.24)] min-[390px]:mt-7 min-[390px]:text-lg"
+              className="mt-5 font-sans text-sm font-normal text-white/84 drop-shadow-[0_2px_14px_rgba(20,12,8,0.24)] min-[390px]:mt-7 min-[390px]:text-base min-[390px]:font-medium"
             >
               + составы для волос.
             </motion.p>

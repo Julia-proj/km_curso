@@ -144,7 +144,6 @@ export function ResultsSection() {
           ref={scrollerRef}
           onScroll={updateCarouselState}
           className="no-scrollbar -mx-4 mt-4 flex snap-x snap-mandatory gap-2 overflow-x-auto overflow-y-hidden px-4 pb-4 touch-pan-x overscroll-x-contain overscroll-y-none sm:-mx-6 sm:gap-3 sm:px-6 sm:pb-4 md:mt-5 md:gap-4 lg:mx-0 lg:grid lg:grid-cols-3 xl:grid-cols-5 lg:overflow-visible lg:px-0 lg:pb-0"
-          style={{ touchAction: 'pan-x' }}
         >
           {instagramReels.map((reel, index) => (
             <motion.a
