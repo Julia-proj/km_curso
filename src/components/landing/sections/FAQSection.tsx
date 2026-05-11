@@ -15,7 +15,7 @@ export function FAQSection() {
       <div className="mx-auto max-w-2xl">
         <motion.div {...fadeUp()} className="mb-10 text-center md:mb-12">
           <p className="mb-4 font-sans text-sm font-medium text-[#D29B9B] sm:text-sm">Вопросы</p>
-          <h2 className="font-display text-3xl leading-tight text-[#1A1A1A] md:text-4xl">
+          <h2 className="font-hero-face text-3xl leading-tight text-[#1A1A1A] md:text-4xl">
             Часто спрашивают
           </h2>
         </motion.div>

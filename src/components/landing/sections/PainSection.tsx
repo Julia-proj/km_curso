@@ -17,7 +17,7 @@ export function PainSection() {
 
         <motion.h2
           {...fadeUp(0.08)}
-          className="font-display text-3xl leading-[1.2] tracking-tight text-[#1A1A1A] md:text-5xl"
+          className="font-hero-face text-3xl leading-[1.2] tracking-tight text-[#1A1A1A] md:text-5xl"
         >
           Перестань сливать деньги на дорогие процедуры и уход, который тебе не подходит.
         </motion.h2>

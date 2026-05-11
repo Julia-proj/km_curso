@@ -12,7 +12,7 @@ export function ForYouSection() {
       <div className="mx-auto max-w-5xl">
         <motion.div {...fadeUp()} className="mb-10 text-center sm:mb-12 md:mb-14">
           <p className="mb-3 font-sans text-sm font-medium text-[#D29B9B] sm:text-sm">Для тебя, если</p>
-          <h2 className="font-display text-2xl leading-tight text-[#1A1A1A] sm:text-3xl md:text-4xl">
+          <h2 className="font-hero-face text-2xl leading-tight text-[#1A1A1A] sm:text-3xl md:text-4xl">
             Этот курс для тебя, если...
           </h2>
         </motion.div>

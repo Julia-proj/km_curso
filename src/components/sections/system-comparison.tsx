@@ -82,7 +82,7 @@ export function SystemComparisonSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="font-display text-2xl md:text-4xl font-medium text-text-on-dark text-center mb-10 md:mb-14 text-balance"
+          className="font-hero-face text-2xl md:text-4xl font-medium text-text-on-dark text-center mb-10 md:mb-14 text-balance"
         >
           Что меняется, когда появляется система
         </motion.h2>

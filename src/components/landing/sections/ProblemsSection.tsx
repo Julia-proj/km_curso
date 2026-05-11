@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import Image from "next/image"
-import { useRef } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 import { fadeUp } from "@/lib/animations"
 
@@ -46,11 +46,39 @@ const problemCards = [
 
 export function ProblemsSection() {
   const scrollerRef = useRef<HTMLDivElement>(null)
+  const [activeIndex, setActiveIndex] = useState(0)
+
+  const updateCarouselState = useCallback(() => {
+    const scroller = scrollerRef.current
+    if (!scroller) return
+
+    const cards = Array.from(scroller.querySelectorAll<HTMLElement>("[data-carousel-card]"))
+    if (!cards.length) return
+
+    const center = scroller.scrollLeft + scroller.clientWidth / 2
+    const closest = cards.reduce(
+      (best, card, index) => {
+        const cardCenter = card.offsetLeft + card.offsetWidth / 2
+        const distance = Math.abs(center - cardCenter)
+        return distance < best.distance ? { distance, index } : best
+      },
+      { distance: Number.POSITIVE_INFINITY, index: 0 }
+    )
+
+    setActiveIndex(closest.index)
+  }, [])
+
+  useEffect(() => {
+    updateCarouselState()
+    window.addEventListener("resize", updateCarouselState)
+
+    return () => window.removeEventListener("resize", updateCarouselState)
+  }, [updateCarouselState])
 
   const scrollCards = (direction: "prev" | "next") => {
     const scroller = scrollerRef.current
     if (!scroller) return
-    
+
     const cards = Array.from(scroller.querySelectorAll<HTMLElement>("[data-carousel-card]"))
     if (!cards.length) return
 
@@ -60,7 +88,7 @@ export function ProblemsSection() {
       return Math.abs(cardCenter - scrollerCenter) < card.offsetWidth / 2
     })
 
-    const targetIndex = direction === "next" 
+    const targetIndex = direction === "next"
       ? Math.min(currentIndex + 1, cards.length - 1)
       : Math.max(currentIndex - 1, 0)
 
@@ -72,13 +100,14 @@ export function ProblemsSection() {
       <div className="mx-auto max-w-6xl">
         <motion.div {...fadeUp()} className="mx-auto mb-12 max-w-3xl px-6 text-center md:mb-14">
           <p className="mb-4 font-sans text-sm font-medium text-[#D29B9B] sm:text-sm">Узнаёшь себя?</p>
-          <h2 className="font-display text-3xl leading-tight text-[#1A1A1A] md:text-4xl">
+          <h2 className="font-hero-face text-3xl leading-tight text-[#1A1A1A] md:text-4xl">
             7 проблем, которые решает курс
           </h2>
         </motion.div>
 
         <div
           ref={scrollerRef}
+          onScroll={updateCarouselState}
           className="no-scrollbar flex snap-x snap-mandatory gap-3 overflow-x-auto overflow-y-hidden px-5 pb-4 [scroll-padding-inline:1.25rem] sm:gap-4 sm:px-6 sm:pb-3"
         >
           {problemCards.map((card, index) => (
@@ -102,7 +131,7 @@ export function ProblemsSection() {
                 </span>
               </div>
               <div className="p-4">
-                <h3 className="font-display text-base leading-tight text-[#1A1A1A]">{card.title}</h3>
+                <h3 className="font-hero-face text-base leading-tight text-[#1A1A1A]">{card.title}</h3>
                 <p className="mt-1.5 font-sans text-sm leading-relaxed text-[#666] sm:text-base">{card.description}</p>
               </div>
             </motion.article>
@@ -114,6 +143,7 @@ export function ProblemsSection() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.6, duration: 0.6 }}
           className="mt-4 flex items-center justify-center gap-1.5 md:hidden"
+          style={{ opacity: activeIndex === problemCards.length - 1 ? 0 : 1 }}
         >
           <span className="font-sans text-xs font-medium text-[#D29B9B]">Листай</span>
           <motion.div

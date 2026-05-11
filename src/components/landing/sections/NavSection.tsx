@@ -29,7 +29,7 @@ export function NavSection() {
           className="fixed inset-x-0 top-0 z-50 border-b border-gray-200/60 bg-white/90 backdrop-blur-xl"
         >
           <div className="mx-auto flex max-w-[1200px] items-center justify-between px-5 py-3 md:px-10">
-            <a href="#" className="font-display text-lg tracking-tight text-foreground">
+            <a href="#" className="font-hero-face text-lg tracking-tight text-foreground">
               HAIRLAB
             </a>
             <nav className="hidden gap-8 text-sm font-medium text-muted-foreground md:flex">

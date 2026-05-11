@@ -75,7 +75,7 @@ export function ComparisonTableSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="font-display text-2xl md:text-4xl font-medium text-text text-center mb-10 md:mb-12"
+          className="font-hero-face text-2xl md:text-4xl font-medium text-text text-center mb-10 md:mb-12"
         >
           Что входит в каждый формат
         </motion.h2>
@@ -93,13 +93,13 @@ export function ComparisonTableSection() {
               <p className="text-text-soft text-xs md:text-sm font-medium">
                 KM Guide
               </p>
-              <p className="text-text font-display font-medium">13€</p>
+              <p className="text-text font-hero-face font-medium">13€</p>
             </div>
             <div className="p-4 md:p-6 text-center border-l border-border bg-accent/5">
               <p className="text-text-soft text-xs md:text-sm font-medium">
                 Full Course
               </p>
-              <p className="text-text font-display font-medium">39€</p>
+              <p className="text-text font-hero-face font-medium">39€</p>
             </div>
           </div>
 

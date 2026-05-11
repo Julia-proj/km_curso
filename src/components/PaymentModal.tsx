@@ -42,7 +42,7 @@ export function PaymentModal({ isOpen, onClose, product, stripeLink }: PaymentMo
           >
             <div className="relative w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-2xl sm:max-w-lg">
               <div className="p-6 sm:p-8">
-                <h3 className="mb-2 font-display text-xl text-[#1A1A1A] sm:text-2xl">
+                <h3 className="mb-2 font-hero-face text-xl text-[#1A1A1A] sm:text-2xl">
                   Способ оплаты
                 </h3>
                 <p className="mb-6 font-sans text-sm text-[#666]">

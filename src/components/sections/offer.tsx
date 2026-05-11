@@ -85,7 +85,7 @@ export function OfferSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="font-display text-2xl md:text-4xl font-medium text-text text-center mb-4 text-balance"
+          className="font-hero-face text-2xl md:text-4xl font-medium text-text text-center mb-4 text-balance"
         >
           Два формата. Одна система.
         </motion.h2>
@@ -110,7 +110,7 @@ export function OfferSection() {
           <p className="text-text-muted text-[11px] font-medium tracking-[3px] uppercase mb-3">
             р е з у л ь т а т
           </p>
-          <h3 className="font-display text-xl md:text-2xl font-medium text-text mb-4">
+          <h3 className="font-hero-face text-xl md:text-2xl font-medium text-text mb-4">
             Гладкие, плотные волосы - это не генетика, а система.
           </h3>
           <p className="text-text-soft text-sm md:text-base leading-relaxed">
@@ -133,7 +133,7 @@ export function OfferSection() {
           <p className="text-text-muted text-[11px] font-medium tracking-[3px] uppercase mb-3">
             д о с т у п н о с т ь
           </p>
-          <h3 className="font-display text-xl md:text-2xl font-medium text-text mb-4 text-balance">
+          <h3 className="font-hero-face text-xl md:text-2xl font-medium text-text mb-4 text-balance">
             Салонное восстановление работает. Но не у всех есть на него 200€ в
             месяц.
           </h3>
@@ -161,10 +161,10 @@ export function OfferSection() {
               <span className="inline-block px-3 py-1 bg-accent-soft text-accent text-xs font-medium rounded-full mb-4">
                 Полный формат
               </span>
-              <h3 className="font-display text-xl md:text-2xl font-medium text-text mb-2">
+              <h3 className="font-hero-face text-xl md:text-2xl font-medium text-text mb-2">
                 Система восстановления с Еленой
               </h3>
-              <p className="font-display text-3xl md:text-4xl font-medium text-text mb-4">
+              <p className="font-hero-face text-3xl md:text-4xl font-medium text-text mb-4">
                 39€
               </p>
               <p className="text-text-soft text-sm mb-6">
@@ -213,10 +213,10 @@ export function OfferSection() {
             <span className="inline-block px-3 py-1 bg-bg-warm text-text-soft text-xs font-medium rounded-full mb-4">
               Лёгкий старт
             </span>
-            <h3 className="font-display text-lg md:text-xl font-medium text-text mb-2">
+            <h3 className="font-hero-face text-lg md:text-xl font-medium text-text mb-2">
               KM Guide: Карта восстановления
             </h3>
-            <p className="font-display text-2xl md:text-3xl font-medium text-text mb-4">
+            <p className="font-hero-face text-2xl md:text-3xl font-medium text-text mb-4">
               13€
             </p>
             <p className="text-text-soft text-sm mb-6">

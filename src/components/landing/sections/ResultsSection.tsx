@@ -103,7 +103,7 @@ export function ResultsSection() {
         <div className="grid gap-6 sm:gap-8 md:gap-10">
           <motion.div {...fadeUp()}>
             <p className="mb-3 font-sans text-sm font-medium text-[#D29B9B] sm:mb-4 sm:text-sm">Доказательства</p>
-            <h2 className="font-display text-2xl leading-tight text-[#1A1A1A] sm:text-3xl md:text-5xl">
+            <h2 className="font-hero-face text-2xl leading-tight text-[#1A1A1A] sm:text-3xl md:text-5xl">
               <span className="italic">5000+</span> клиентов студии восстановили и отрастили свои волосы.
             </h2>
             <p className="mt-3 max-w-xl font-sans text-sm leading-relaxed text-[#666] sm:mt-5 sm:text-base md:mt-6 md:text-lg">

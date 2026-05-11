@@ -49,7 +49,7 @@ export function FormatSection() {
       <div className="mx-auto max-w-5xl">
         <motion.div {...fadeUp()} className="mb-14 text-center">
           <p className="mb-4 font-sans text-sm font-medium text-[#D29B9B] sm:text-sm">Формат</p>
-          <h2 className="mx-auto max-w-2xl font-display text-3xl leading-tight text-[#1A1A1A] md:text-4xl">
+          <h2 className="mx-auto max-w-2xl font-hero-face text-3xl leading-tight text-[#1A1A1A] md:text-4xl">
             Доступ к курсу, видео-урокам, гайдам и методичкам навсегда.
           </h2>
         </motion.div>
@@ -65,7 +65,7 @@ export function FormatSection() {
               <div className="mb-3 inline-flex h-10 w-10 items-center justify-center text-[#B8878F] opacity-60 group-hover:opacity-80 transition-colors sm:h-12 sm:w-12 sm:mb-4">
                 {card.icon}
               </div>
-              <h3 className="mb-1.5 font-display text-base leading-tight text-[#1A1A1A] sm:text-lg sm:mb-2 md:text-xl">{card.title}</h3>
+              <h3 className="mb-1.5 font-hero-face text-base leading-tight text-[#1A1A1A] sm:text-lg sm:mb-2 md:text-xl">{card.title}</h3>
               <p className="font-sans text-xs text-[#999] sm:text-xs sm:text-sm">
                 {card.subtitle}
               </p>

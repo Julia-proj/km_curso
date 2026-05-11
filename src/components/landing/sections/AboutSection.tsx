@@ -12,7 +12,7 @@ export function AboutSection() {
       <div className="mx-auto grid max-w-6xl items-start gap-10 md:grid-cols-2 md:gap-16">
         <motion.div {...fadeUp()} className="order-2 md:order-1">
           <p className="mb-4 font-sans text-sm font-medium text-[#D29B9B] sm:text-sm">Об Елене</p>
-          <h2 className="mb-6 font-display text-3xl leading-tight text-[#1A1A1A] md:text-4xl">
+          <h2 className="mb-6 font-hero-face text-3xl leading-tight text-[#1A1A1A] md:text-4xl">
             Система, основанная на практике
           </h2>
           <p className="mb-8 font-sans leading-relaxed text-[#666]">

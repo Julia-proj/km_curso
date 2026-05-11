@@ -1,26 +1,22 @@
 import type { Metadata, Viewport } from 'next'
-import { Playfair_Display, Inter, Manrope } from 'next/font/google'
+import { Inter, Manrope } from 'next/font/google'
 import './globals.css'
 import { LoadingScreen } from '@/components/LoadingScreen'
-const playfair = Playfair_Display({
-  subsets: ['cyrillic', 'latin'],
-  weight: ['400', '500', '600'],
-  variable: '--font-display-face',
-  display: 'swap',
-})
 
 const inter = Inter({
   subsets: ['cyrillic', 'latin'],
-  weight: ['300', '400', '500', '600'],
+  weight: ['400', '500', '600'],
   variable: '--font-body-face',
   display: 'swap',
+  preload: true,
 })
 
 const manrope = Manrope({
   subsets: ['cyrillic', 'latin'],
-  weight: ['400', '500', '600', '700'],
+  weight: ['400', '500', '600'],
   variable: '--font-hero-face',
   display: 'swap',
+  preload: true,
 })
 
 export const metadata: Metadata = {
@@ -49,7 +45,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="ru" className={`${playfair.variable} ${inter.variable} ${manrope.variable}`}>
+    <html lang="ru" className={`${inter.variable} ${manrope.variable}`}>
       <body>
         <LoadingScreen />
         {children}

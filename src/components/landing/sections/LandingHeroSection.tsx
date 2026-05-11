@@ -155,10 +155,12 @@ export function LandingHeroSection() {
             className="h-full w-full translate-x-[-1rem] translate-y-6 scale-[1.08] object-cover"
             fill
             priority
-            quality={92}
+            quality={85}
             sizes="100vw"
             src={mobileHeroImage}
             style={{ objectPosition: "45% 50%" }}
+            placeholder="blur"
+            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwC3ABHx//Z"
           />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(54,45,39,0.42)_0%,rgba(54,45,39,0.22)_43%,rgba(54,45,39,0.02)_100%)]" />
           <div className="absolute inset-x-0 bottom-0 h-[35%] bg-[linear-gradient(180deg,rgba(55,45,39,0)_0%,rgba(44,35,30,0.54)_44%,rgba(39,31,27,0.9)_100%)]" />
@@ -180,7 +182,7 @@ export function LandingHeroSection() {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.08, duration: 0.55 }}
-              className="font-display text-[1.35rem] font-normal leading-[1.08] text-white drop-shadow-[0_2px_18px_rgba(20,12,8,0.32)] min-[360px]:text-[1.8rem] min-[360px]:font-medium min-[390px]:text-[2.5rem]"
+              className="font-hero-face text-[1.35rem] font-normal leading-[0.95] tracking-tight text-white drop-shadow-[0_2px_18px_rgba(20,12,8,0.32)] min-[360px]:text-[1.8rem] min-[390px]:text-[2.5rem] min-[390px]:font-medium"
             >
               Салонное
               <br />
@@ -193,7 +195,7 @@ export function LandingHeroSection() {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.16, duration: 0.55 }}
-              className="mt-2 font-display text-[1rem] italic leading-none text-[#E8B7B1] drop-shadow-[0_2px_14px_rgba(20,12,8,0.22)] min-[360px]:text-[1.4rem] min-[390px]:text-[2rem]"
+              className="mt-2 font-hero-face text-[1rem] italic leading-none text-[#E8B7B1] drop-shadow-[0_2px_14px_rgba(20,12,8,0.22)] min-[360px]:text-[1.4rem] min-[390px]:text-[2rem]"
             >
               в домашних
               <br />
@@ -258,7 +260,7 @@ export function LandingHeroSection() {
                     initial={{ opacity: 0, y: 22 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.08, duration: 0.55 }}
-                    className="font-display text-5xl leading-[1.08] tracking-tight text-[#1A1A1A] xl:text-6xl font-medium"
+                    className="font-hero-face text-5xl leading-[1.08] tracking-tight text-[#1A1A1A] xl:text-6xl font-medium"
                   >
                     Салонное восстановление волос дома
                   </motion.h1>
@@ -335,9 +337,11 @@ export function LandingHeroSection() {
                         className="object-cover object-bottom"
                         fill
                         priority
-                        quality={92}
+                        quality={85}
                         sizes="(min-width: 1280px) 448px, 48vw"
                         src={desktopHeroImage}
+                        placeholder="blur"
+                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwC3ABHx//Z"
                       />
                     </div>
                   </div>

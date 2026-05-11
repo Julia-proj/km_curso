@@ -29,7 +29,7 @@ export function LoadingScreen() {
           initial={{ scale: 0.95, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="font-display text-4xl font-medium tracking-tight text-[#1A1A1A] sm:text-5xl"
+          className="font-hero-face text-4xl font-medium tracking-tight text-[#1A1A1A] sm:text-5xl"
         >
           HAIRLAB
         </motion.h1>

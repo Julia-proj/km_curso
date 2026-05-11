@@ -14,7 +14,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="font-display text-3xl md:text-5xl lg:text-6xl font-medium text-text leading-tight text-balance"
+            className="font-hero-face text-3xl md:text-5xl lg:text-6xl font-medium text-text leading-tight text-balance"
           >
             Твои волосы не плохие.
             <br />

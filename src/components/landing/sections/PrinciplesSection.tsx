@@ -11,7 +11,7 @@ export function PrinciplesSection() {
       <div className="mx-auto max-w-6xl">
         <motion.div {...fadeUp()} className="mb-10 max-w-2xl sm:mb-12 md:mb-14">
           <p className="mb-3 font-sans text-sm font-medium text-[#D29B9B] sm:text-sm">Что важно понимать</p>
-          <h2 className="font-display text-2xl leading-tight sm:text-3xl md:text-5xl">
+          <h2 className="font-hero-face text-2xl leading-tight sm:text-3xl md:text-5xl">
             Три принципа, на которых построена вся система.
           </h2>
         </motion.div>
@@ -23,8 +23,8 @@ export function PrinciplesSection() {
               {...fadeUp(index * 0.1)}
               className="flex min-h-full flex-col rounded-xl border border-white/5 bg-white/[0.02] p-5 transition-colors hover:border-[#D29B9B]/55 sm:p-6 md:p-8"
             >
-              <div className="font-display text-3xl text-[#D29B9B] sm:text-4xl md:text-5xl">{card.number}</div>
-              <h3 className="mt-4 font-display text-lg leading-tight sm:text-xl md:text-2xl">{card.title}</h3>
+              <div className="font-hero-face text-3xl text-[#D29B9B] sm:text-4xl md:text-5xl">{card.number}</div>
+              <h3 className="mt-4 font-hero-face text-lg leading-tight sm:text-xl md:text-2xl">{card.title}</h3>
               <p className="mt-3 font-sans text-sm leading-relaxed text-white/65 sm:text-base md:text-base">{card.body}</p>
             </motion.article>
           ))}

@@ -82,7 +82,7 @@ export function WhatYouGetSection({
       <div className="mx-auto max-w-5xl">
         <motion.div {...fadeUp()} className="mb-10 text-center sm:mb-14">
           <p className="mb-3 font-sans text-sm font-medium text-[#D29B9B] sm:text-sm">Что внутри</p>
-          <h2 className="font-display text-2xl leading-tight text-[#1A1A1A] sm:text-3xl md:text-4xl">
+          <h2 className="font-hero-face text-2xl leading-tight text-[#1A1A1A] sm:text-3xl md:text-4xl">
             {title}
           </h2>
         </motion.div>
@@ -100,7 +100,7 @@ export function WhatYouGetSection({
                 </p>
                 <div className="flex items-baseline gap-2">
                   <span className="font-sans text-sm text-[#999] line-through decoration-[#D29B9B]">138€</span>
-                  <div className="font-display text-4xl text-[#1A1A1A] sm:text-5xl">38€</div>
+                  <div className="font-hero-face text-4xl text-[#1A1A1A] sm:text-5xl">38€</div>
                 </div>
               </div>
               <span className="border border-[#D29B9B] px-2 py-1 font-sans text-xs font-semibold text-[#D29B9B]">
@@ -149,7 +149,7 @@ export function WhatYouGetSection({
                 </p>
                 <div className="flex items-baseline gap-2">
                   <span className="font-sans text-sm text-[#999] line-through decoration-[#D29B9B]">39€</span>
-                  <div className="font-display text-4xl text-[#1A1A1A] sm:text-5xl">12€</div>
+                  <div className="font-hero-face text-4xl text-[#1A1A1A] sm:text-5xl">12€</div>
                 </div>
               </div>
               <span className="border border-[#E0DCD6] px-2 py-1 font-sans text-xs font-semibold text-[#999]">
@@ -204,7 +204,7 @@ export function WhatYouGetSection({
                   <p className="mb-2 font-sans text-xs font-semibold uppercase tracking-[0.48em] text-[#D29B9B] sm:mb-3 sm:text-xs">
                     р е з у л ь т а т
                   </p>
-                  <h2 className="mb-3 font-display text-lg font-medium leading-tight tracking-normal text-[#1A1A1A] text-balance sm:text-xl md:text-2xl">
+                  <h2 className="mb-3 font-hero-face text-lg font-medium leading-tight tracking-normal text-[#1A1A1A] text-balance sm:text-xl md:text-2xl">
                     Гладкие, плотные волосы - это не генетика, а система.
                   </h2>
                   <div className="space-y-2 font-sans text-sm leading-relaxed text-[#5E554C] sm:text-sm md:text-base">
