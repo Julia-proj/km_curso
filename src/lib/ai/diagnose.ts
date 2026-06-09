@@ -2,18 +2,20 @@ import { z } from 'zod';
 import OpenAI from 'openai';
 import { zodResponseFormat } from 'openai/helpers/zod';
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+function getOpenAI() {
+  if (!process.env.OPENAI_API_KEY) {
+    throw new Error('OPENAI_API_KEY is not configured');
+  }
+  return new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+}
 
 export const DiagnosticSchema = z.object({
-  // базовый уровень повреждения
   damage_level: z.number().int().min(1).max(5)
     .describe('Общий уровень повреждения волос, 1 это здоровые, 5 это критические'),
   
-  // что видит AI
   visible_signs: z.array(z.string()).min(1).max(8)
     .describe('Видимые признаки состояния волос на фото'),
   
-  // классификация волос
   hair_classification: z.object({
     apparent_type: z.enum(['natural', 'colored', 'bleached', 'highlighted', 'unknown'])
       .describe('Тип волос виден ли на фото'),
@@ -23,32 +25,27 @@ export const DiagnosticSchema = z.object({
       .describe('Видимая плотность волос')
   }),
   
-  // основные проблемы (упорядочены по приоритету)
   main_issues: z.array(z.enum([
-    'dryness',         // сухость
-    'breakage',        // ломкость
-    'split_ends',      // секущиеся кончики
-    'dullness',        // тусклость
-    'color_fade',      // потеря цвета
-    'frizz',           // пушистость
-    'oily_scalp',      // жирность корней
-    'volume_loss',     // потеря объёма
-    'thinning'         // истончение
+    'dryness',
+    'breakage',
+    'split_ends',
+    'dullness',
+    'color_fade',
+    'frizz',
+    'oily_scalp',
+    'volume_loss',
+    'thinning'
   ])).min(1).max(5),
   
-  // рекомендованная категория Limba
   recommended_limba_category: z.enum(['color', 'volume', 'detox', 'hydration'])
     .describe('Какая линия Limba больше всего подходит'),
   
-  // если нужен mix двух категорий
   secondary_limba_category: z.enum(['color', 'volume', 'detox', 'hydration']).optional()
     .describe('Опциональная вторая категория если волосам нужен микс'),
   
-  // рекомендации для самостоятельного подбора (для тех кто не в Мадриде)
   self_care_priorities: z.array(z.string()).min(2).max(5)
     .describe('Приоритетные направления ухода своими словами'),
   
-  // краткое резюме на русском (не более 500 символов)
   summary: z.string().min(50).max(500)
     .describe('Тёплое резюме для пользователя, поддерживающее, без диагнозов')
 });
@@ -69,7 +66,6 @@ export async function analyzePhoto(
   quizContext?: QuizContext
 ): Promise<{ result: Diagnostic; usage: any } | { error: string }> {
   
-  // Формируем контекст из квиза если есть
   const contextBlock = quizContext ? `
 Пользователь до этого прошла короткий тест. Вот её ответы:
 - Тип волос: ${quizContext.hair_type || 'не указан'}
@@ -114,6 +110,7 @@ JSON-ответ согласно схеме.
 ${contextBlock}`;
 
   try {
+    const openai = getOpenAI();
     const completion = await openai.chat.completions.parse({
       model: 'gpt-4o-mini',
       messages: [
@@ -150,10 +147,9 @@ ${contextBlock}`;
 }
 
 export function calcCost(usage: any): number {
-  // gpt-4o-mini pricing (на момент написания)
-  const inputCostPer1M = 0.15;  // $0.15 per 1M input tokens
-  const outputCostPer1M = 0.60; // $0.60 per 1M output tokens
-  const imageCost = 0.001; // примерно
+  const inputCostPer1M = 0.15;
+  const outputCostPer1M = 0.60;
+  const imageCost = 0.001;
   
   const inputTokens = usage?.prompt_tokens || 0;
   const outputTokens = usage?.completion_tokens || 0;

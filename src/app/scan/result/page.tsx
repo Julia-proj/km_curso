@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 import { ResultHero } from "@/components/scan/ResultHero"
 import { SelfCarePath } from "@/components/scan/SelfCarePath"
@@ -37,7 +37,7 @@ interface ScanResult {
   had_quiz: boolean
 }
 
-export default function ScanResultPage() {
+function ScanResultContent() {
   const searchParams = useSearchParams()
   const [data, setData] = useState<ScanResult | null>(null)
   const [loading, setLoading] = useState(true)
@@ -137,5 +137,20 @@ export default function ScanResultPage() {
         </div>
       </div>
     </main>
+  )
+}
+
+export default function ScanResultPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex min-h-screen items-center justify-center bg-[#FAF7F4]">
+        <div className="text-center">
+          <div className="mb-4 h-8 w-8 animate-spin rounded-full border-2 border-[#D9A19D] border-t-transparent" />
+          <p className="font-body text-[#666]">Загрузка...</p>
+        </div>
+      </div>
+    }>
+      <ScanResultContent />
+    </Suspense>
   )
 }

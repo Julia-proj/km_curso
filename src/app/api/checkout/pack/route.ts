@@ -2,11 +2,22 @@ import Stripe from 'stripe';
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+function getStripe() {
+  if (!process.env.STRIPE_SECRET_KEY) {
+    throw new Error('STRIPE_SECRET_KEY is not configured');
+  }
+  return new Stripe(process.env.STRIPE_SECRET_KEY);
+}
+
+function getSupabase() {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    throw new Error('Supabase credentials are not configured');
+  }
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY
+  );
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -16,6 +27,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Не все обязательные поля заполнены' }, { status: 400 });
     }
     
+    const supabase = getSupabase();
     const { data: rec } = await supabase
       .from('recommendations')
       .select('*')
@@ -35,7 +47,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Нет продуктов' }, { status: 400 });
     }
     
-    const lineItems = products.map(p => ({
+    const lineItems = products.map((p: any) => ({
       price_data: {
         currency: 'eur',
         product_data: {
@@ -47,6 +59,7 @@ export async function POST(req: NextRequest) {
       quantity: 1
     }));
     
+    const stripe = getStripe();
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
       payment_method_types: ['card'],

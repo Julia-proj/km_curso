@@ -3,11 +3,22 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { headers } from 'next/headers';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+function getStripe() {
+  if (!process.env.STRIPE_SECRET_KEY) {
+    throw new Error('STRIPE_SECRET_KEY is not configured');
+  }
+  return new Stripe(process.env.STRIPE_SECRET_KEY);
+}
+
+function getSupabase() {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    throw new Error('Supabase credentials are not configured');
+  }
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY
+  );
+}
 
 export async function POST(req: NextRequest) {
   const body = await req.text();
@@ -16,6 +27,7 @@ export async function POST(req: NextRequest) {
   let event: Stripe.Event;
   
   try {
+    const stripe = getStripe();
     event = stripe.webhooks.constructEvent(
       body, 
       sig!, 
@@ -31,6 +43,7 @@ export async function POST(req: NextRequest) {
     const metadata = session.metadata || {};
     
     if (metadata.type === 'limba_pack') {
+      const supabase = getSupabase();
       await supabase.from('orders').insert({
         stripe_session_id: session.id,
         stripe_payment_intent: session.payment_intent as string,
@@ -51,6 +64,7 @@ export async function POST(req: NextRequest) {
     } else if (metadata.type === 'course' || session.amount_total === 3900) {
       const email = session.customer_email;
       if (email) {
+        const supabase = getSupabase();
         await supabase.from('profiles').upsert({
           email,
           has_full_course: true,
@@ -61,6 +75,7 @@ export async function POST(req: NextRequest) {
     } else if (metadata.type === 'guide' || session.amount_total === 1500) {
       const email = session.customer_email;
       if (email) {
+        const supabase = getSupabase();
         await supabase.from('profiles').upsert({
           email,
           has_methodichka: true,

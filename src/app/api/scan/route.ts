@@ -3,20 +3,25 @@ import { createClient } from '@supabase/supabase-js';
 import { analyzePhoto, calcCost } from '@/lib/ai/diagnose';
 import { calculateRecommendation } from '@/lib/recommendations/engine';
 
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!,
-  { auth: { autoRefreshToken: false, persistSession: false } }
-);
+function getSupabase() {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    throw new Error('Supabase credentials are not configured');
+  }
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY,
+    { auth: { autoRefreshToken: false, persistSession: false } }
+  );
+}
 
 export async function POST(req: NextRequest) {
   try {
+    const supabaseAdmin = getSupabase();
     const formData = await req.formData();
     const email = formData.get('email') as string;
     const photo = formData.get('photo') as File;
-    const sessionId = formData.get('session_id') as string; // для анонимных
+    const sessionId = formData.get('session_id') as string;
     
-    // Валидация
     if (!email || !email.includes('@')) {
       return NextResponse.json({ error: 'Невалидный email' }, { status: 400 });
     }
@@ -24,14 +29,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Фото нужно, максимум 5MB' }, { status: 400 });
     }
     
-    // Простая защита от disposable email (расширенная версия позже)
     const disposableDomains = ['mailinator.com', '10minutemail.com', 'tempmail.com', 'guerrillamail.com'];
     const emailDomain = email.split('@')[1].toLowerCase();
     if (disposableDomains.includes(emailDomain)) {
       return NextResponse.json({ error: 'Используй основной email' }, { status: 400 });
     }
     
-    // Rate-limit базовый: 1 анализ на email (через БД)
     const { data: existingScans } = await supabaseAdmin
       .from('diagnostics')
       .select('id')
@@ -44,7 +47,6 @@ export async function POST(req: NextRequest) {
       }, { status: 429 });
     }
     
-    // Получаем IP для второго уровня rate-limit
     const ip = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown';
     
     const { data: ipScans } = await supabaseAdmin
@@ -59,7 +61,6 @@ export async function POST(req: NextRequest) {
       }, { status: 429 });
     }
     
-    // Загружаем фото в Supabase Storage
     const fileExt = photo.name.split('.').pop();
     const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
     
@@ -75,7 +76,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Не удалось загрузить фото' }, { status: 500 });
     }
     
-    // Создаём signed URL на 10 минут для AI
     const { data: signedUrlData } = await supabaseAdmin.storage
       .from('hair-photos')
       .createSignedUrl(uploadData.path, 600);
@@ -84,7 +84,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Не удалось обработать фото' }, { status: 500 });
     }
     
-    // Получаем quiz responses если есть
     let quizData = null;
     if (email || sessionId) {
       const { data: quizResponses } = await supabaseAdmin
@@ -99,7 +98,6 @@ export async function POST(req: NextRequest) {
       }
     }
     
-    // Вызываем AI
     const aiResult = await analyzePhoto(signedUrlData.signedUrl, quizData);
     
     if ('error' in aiResult) {
@@ -108,7 +106,6 @@ export async function POST(req: NextRequest) {
     
     const cost = calcCost(aiResult.usage);
     
-    // Сохраняем diagnostic
     const { data: savedDiagnostic, error: diagError } = await supabaseAdmin
       .from('diagnostics')
       .insert({
@@ -131,20 +128,17 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Не удалось сохранить' }, { status: 500 });
     }
     
-    // Получаем каталог продуктов для recommendation engine
     const { data: products } = await supabaseAdmin
       .from('products')
       .select('*')
       .order('order_index');
     
-    // Вычисляем рекомендацию
     const recommendation = await calculateRecommendation(
       aiResult.result,
       quizData,
       products || []
     );
     
-    // Сохраняем recommendation
     const { data: savedRec, error: recError } = await supabaseAdmin
       .from('recommendations')
       .insert({
@@ -161,7 +155,6 @@ export async function POST(req: NextRequest) {
       .select()
       .single();
     
-    // Сохраняем lead (для будущих email-кампаний когда подключим)
     await supabaseAdmin
       .from('leads')
       .upsert({ 
@@ -169,7 +162,6 @@ export async function POST(req: NextRequest) {
         source: 'ai_scanner' 
       }, { onConflict: 'email' });
     
-    // Возвращаем результат
     return NextResponse.json({
       success: true,
       diagnostic: {
@@ -182,8 +174,8 @@ export async function POST(req: NextRequest) {
       recommendation: {
         ...recommendation,
         recommendation_id: savedRec?.id,
-        products: products?.filter(p => recommendation.product_ids.includes(p.id)),
-        gifts: products?.filter(p => recommendation.gift_ids.includes(p.id))
+        products: products?.filter((p: any) => recommendation.product_ids.includes(p.id)),
+        gifts: products?.filter((p: any) => recommendation.gift_ids.includes(p.id))
       },
       had_quiz: !!quizData
     });

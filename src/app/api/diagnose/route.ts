@@ -3,16 +3,22 @@ import { createClient } from '@supabase/supabase-js';
 import OpenAI from 'openai';
 import { z } from 'zod';
 
-// Environment variables
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-const openaiApiKey = process.env.OPENAI_API_KEY!;
+function getSupabase() {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    throw new Error('Supabase credentials are not configured');
+  }
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY
+  );
+}
 
-// Initialize Supabase client with service role key
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
-
-// Initialize OpenAI client
-const openai = new OpenAI({ apiKey: openaiApiKey });
+function getOpenAI() {
+  if (!process.env.OPENAI_API_KEY) {
+    throw new Error('OPENAI_API_KEY is not configured');
+  }
+  return new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+}
 
 // Zod schema for validation
 const DiagnosisResponseSchema = z.object({
@@ -75,6 +81,7 @@ async function uploadImageToSupabase(
   const arrayBuffer = await file.arrayBuffer();
   const buffer = Buffer.from(arrayBuffer);
   
+  const supabase = getSupabase();
   const { data, error } = await supabase.storage
     .from('hair-photos')
     .upload(fileName, buffer, {
@@ -113,6 +120,7 @@ async function analyzeImageWithOpenAI(imageUrl: string): Promise<{
   recommendations: string[];
   summary: string;
 }> {
+  const openai = getOpenAI();
   const response = await openai.chat.completions.create({
     model: 'gpt-4o-mini',
     messages: [
@@ -199,6 +207,7 @@ async function saveDiagnosisToSupabase(
   tokensUsed: number,
   cost: number
 ): Promise<void> {
+  const supabase = getSupabase();
   const { error } = await supabase.from('diagnostics').insert({
     ip_address: ip,
     image_path: imagePath,

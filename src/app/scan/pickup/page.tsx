@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, Suspense } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { ProductCard } from "@/components/scan/ProductCard"
 
@@ -21,7 +21,7 @@ interface RecommendationData {
   pack_total_eur?: number
 }
 
-export default function PickupPage() {
+function PickupContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const recommendationId = searchParams.get("recommendation_id")
@@ -232,5 +232,20 @@ export default function PickupPage() {
         </div>
       </div>
     </main>
+  )
+}
+
+export default function PickupPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex min-h-screen items-center justify-center bg-[#FAF7F4]">
+        <div className="text-center">
+          <div className="mb-4 h-8 w-8 animate-spin rounded-full border-2 border-[#D9A19D] border-t-transparent" />
+          <p className="font-body text-[#666]">Загрузка...</p>
+        </div>
+      </div>
+    }>
+      <PickupContent />
+    </Suspense>
   )
 }

@@ -1,10 +1,10 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 import { QRCodeSVG } from "qrcode.react"
 
-export default function PickupSuccessPage() {
+function PickupSuccessContent() {
   const searchParams = useSearchParams()
   const sessionId = searchParams.get("session_id")
   
@@ -146,5 +146,20 @@ export default function PickupSuccessPage() {
         </div>
       </div>
     </main>
+  )
+}
+
+export default function PickupSuccessPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex min-h-screen items-center justify-center bg-[#FAF7F4]">
+        <div className="text-center">
+          <div className="mb-4 h-8 w-8 animate-spin rounded-full border-2 border-[#D9A19D] border-t-transparent" />
+          <p className="font-body text-[#666]">Загрузка...</p>
+        </div>
+      </div>
+    }>
+      <PickupSuccessContent />
+    </Suspense>
   )
 }
