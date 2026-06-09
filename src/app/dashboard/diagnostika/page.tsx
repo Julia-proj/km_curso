@@ -1,0 +1,361 @@
+"use client"
+
+import { useEffect, useState, useRef } from "react"
+import { useRouter } from "next/navigation"
+import imageCompression from "browser-image-compression"
+
+interface DiagnosisResult {
+  damageLevel: number
+  signs: string[]
+  recommendations: string[]
+  summary: string
+}
+
+export default function DiagnostikaPage() {
+  const router = useRouter()
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null)
+  const [hasPaidCourse, setHasPaidCourse] = useState<boolean | null>(null)
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
+  const [isAnalyzing, setIsAnalyzing] = useState(false)
+  const [result, setResult] = useState<DiagnosisResult | null>(null)
+  const [error, setError] = useState<string | null>(null)
+
+  // Auth and course check (placeholder - replace with actual auth implementation)
+  useEffect(() => {
+    // TODO: Replace with actual auth check (next-auth or Supabase Auth)
+    const checkAuth = async () => {
+      // Placeholder: check localStorage or session
+      const session = localStorage.getItem("session")
+      if (!session) {
+        router.push("/login")
+        return
+      }
+      setIsAuthenticated(true)
+
+      // TODO: Replace with actual course check from database
+      const hasCourse = localStorage.getItem("hasPaidCourse") === "true"
+      if (!hasCourse) {
+        router.push("/offer")
+        return
+      }
+      setHasPaidCourse(true)
+    }
+
+    checkAuth()
+  }, [router])
+
+  const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    if (!file.type.startsWith("image/")) {
+      setError("Пожалуйста, выберите изображение")
+      return
+    }
+
+    try {
+      // Compress image to max 1024px
+      const options = {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1024,
+        useWebWorker: true,
+      }
+      
+      const compressedFile = await imageCompression(file, options)
+      setSelectedFile(compressedFile)
+      
+      // Create preview
+      const url = URL.createObjectURL(compressedFile)
+      setPreviewUrl(url)
+      setError(null)
+    } catch (err) {
+      setError("Ошибка при обработке изображения")
+      console.error(err)
+    }
+  }
+
+  const handleUploadClick = () => {
+    fileInputRef.current?.click()
+  }
+
+  const handleAnalyze = async () => {
+    if (!selectedFile) return
+
+    setIsAnalyzing(true)
+    setError(null)
+
+    try {
+      const formData = new FormData()
+      formData.append("photo", selectedFile)
+
+      const response = await fetch("/api/diagnose", {
+        method: "POST",
+        body: formData,
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || "Ошибка анализа")
+      }
+
+      const data: DiagnosisResult = await response.json()
+      setResult(data)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Произошла ошибка")
+    } finally {
+      setIsAnalyzing(false)
+    }
+  }
+
+  const handleReset = () => {
+    setSelectedFile(null)
+    setPreviewUrl(null)
+    setResult(null)
+    setError(null)
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ""
+    }
+  }
+
+  const handleStartLesson = () => {
+    // Navigate to lessons page with first recommended lesson
+    router.push("/dashboard/lessons")
+  }
+
+  // Loading state while checking auth
+  if (isAuthenticated === null || hasPaidCourse === null) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[var(--background)]">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--primary)]"></div>
+          <p className="mt-4 text-[var(--muted-foreground)]">Загрузка...</p>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="min-h-screen bg-[var(--background)]">
+      {/* Header */}
+      <header className="border-b border-[var(--border)] bg-[var(--card)]">
+        <div className="km-container py-4">
+          <div className="flex items-center justify-between">
+            <h1 className="text-xl font-semibold text-[var(--foreground)]">
+              HAIRLAB
+            </h1>
+            <button
+              onClick={() => router.push("/dashboard")}
+              className="text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
+            >
+              Назад в кабинет
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main className="km-container py-12">
+        {/* Initial State */}
+        {!result && !isAnalyzing && (
+          <div className="max-w-2xl mx-auto">
+            <div className="mb-8">
+              <h2 className="text-3xl md:text-4xl font-semibold text-[var(--foreground)] mb-4">
+                Твоя AI-диагностика
+              </h2>
+              <p className="text-lg text-[var(--muted-foreground)]">
+                Загрузи фото своих волос, и я проанализирую их состояние, дам персональные рекомендации и подберу подходящие уроки курса.
+              </p>
+            </div>
+
+            {!previewUrl ? (
+              <div className="border-2 border-dashed border-[var(--border)] rounded-2xl p-12 text-center hover:border-[var(--accent)] transition-colors cursor-pointer bg-[var(--card)]">
+                <div className="mb-4">
+                  <svg
+                    className="mx-auto h-12 w-12 text-[var(--muted-foreground)]"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.5}
+                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    />
+                  </svg>
+                </div>
+                <p className="text-[var(--foreground)] mb-2">Нажмите чтобы загрузить фото</p>
+                <p className="text-sm text-[var(--muted-foreground)]">
+                  JPG, PNG до 5MB
+                </p>
+                <button
+                  onClick={handleUploadClick}
+                  className="mt-6 km-cta km-cta--dark"
+                >
+                  <span>Загрузить фото</span>
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-6">
+                {/* Preview */}
+                <div className="relative rounded-2xl overflow-hidden bg-[var(--card)] border border-[var(--border)]">
+                  <img
+                    src={previewUrl}
+                    alt="Preview"
+                    className="w-full h-auto"
+                  />
+                </div>
+
+                {/* Action Button */}
+                <button
+                  onClick={handleAnalyze}
+                  className="km-cta km-cta--dark"
+                >
+                  <span>Получить диагностику</span>
+                </button>
+
+                {/* Reset Button */}
+                <button
+                  onClick={handleReset}
+                  className="w-full text-center text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] underline-offset-2 hover:underline"
+                >
+                  Выбрать другое фото
+                </button>
+              </div>
+            )}
+
+            {error && (
+              <div className="mt-6 p-4 bg-[var(--rose)]/10 border border-[var(--rose)]/20 rounded-xl text-[var(--foreground)]">
+                {error}
+              </div>
+            )}
+
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              onChange={handleFileSelect}
+              className="hidden"
+            />
+          </div>
+        )}
+
+        {/* Loading State */}
+        {isAnalyzing && (
+          <div className="max-w-2xl mx-auto text-center">
+            <div className="mb-8">
+              <div className="inline-block animate-spin rounded-full h-16 w-16 border-b-2 border-[var(--primary)]"></div>
+            </div>
+            <h2 className="text-2xl font-semibold text-[var(--foreground)] mb-4">
+              Анализирую твои волосы...
+            </h2>
+            <p className="text-lg text-[var(--muted-foreground)]">
+              Это займёт около 15 секунд
+            </p>
+          </div>
+        )}
+
+        {/* Results State */}
+        {result && !isAnalyzing && (
+          <div className="max-w-3xl mx-auto">
+            <div className="mb-8">
+              <h2 className="text-3xl md:text-4xl font-semibold text-[var(--foreground)] mb-4">
+                Результат диагностики
+              </h2>
+            </div>
+
+            {/* Damage Level */}
+            <div className="bg-[var(--card)] rounded-2xl p-8 border border-[var(--border)] mb-6">
+              <div className="text-center">
+                <p className="text-sm uppercase tracking-wider text-[var(--muted-foreground)] mb-4">
+                  Уровень повреждения
+                </p>
+                <div className="text-7xl md:text-8xl font-semibold text-[var(--accent)] mb-2">
+                  {result.damageLevel}
+                </div>
+                <p className="text-[var(--muted-foreground)]">
+                  из 5
+                </p>
+              </div>
+            </div>
+
+            {/* What I See */}
+            <div className="bg-[var(--card)] rounded-2xl p-8 border border-[var(--border)] mb-6">
+              <h3 className="text-xl font-semibold text-[var(--foreground)] mb-4">
+                Что я вижу
+              </h3>
+              <ul className="space-y-3">
+                {result.signs.map((sign, index) => (
+                  <li key={index} className="flex items-start gap-3">
+                    <svg
+                      className="h-5 w-5 text-[var(--success)] mt-0.5 flex-shrink-0"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                    <span className="text-[var(--foreground)]">{sign}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Recommendations */}
+            <div className="bg-[var(--card)] rounded-2xl p-8 border border-[var(--border)] mb-6">
+              <h3 className="text-xl font-semibold text-[var(--foreground)] mb-4">
+                Рекомендации
+              </h3>
+              <ul className="space-y-3">
+                {result.recommendations.map((rec, index) => (
+                  <li key={index} className="flex items-start gap-3">
+                    <div className="h-5 w-5 rounded-full bg-[var(--accent)]/10 flex items-center justify-center mt-0.5 flex-shrink-0">
+                      <span className="text-xs font-semibold text-[var(--accent)]">
+                        {index + 1}
+                      </span>
+                    </div>
+                    <span className="text-[var(--foreground)]">{rec}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Summary */}
+            <div className="bg-[var(--sand)] rounded-2xl p-8 mb-6">
+              <h3 className="text-xl font-semibold text-[var(--foreground)] mb-4">
+                Итог
+              </h3>
+              <p className="text-[var(--foreground)] leading-relaxed">
+                {result.summary}
+              </p>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="space-y-4">
+              <button
+                onClick={handleStartLesson}
+                className="km-cta km-cta--dark w-full"
+              >
+                <span>Начать первый рекомендованный урок</span>
+              </button>
+              
+              <button
+                onClick={handleReset}
+                className="w-full text-center text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] underline-offset-2 hover:underline py-2"
+              >
+                Загрузить другое фото
+              </button>
+            </div>
+          </div>
+        )}
+      </main>
+    </div>
+  )
+}
