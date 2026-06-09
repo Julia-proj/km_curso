@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from 'next'
 import { Inter, Manrope } from 'next/font/google'
 import './globals.css'
 import { LoadingScreen } from '@/components/LoadingScreen'
+import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/react'
 
 const inter = Inter({
   subsets: ['cyrillic', 'latin'],
@@ -62,6 +64,8 @@ export default function RootLayout({
       </head>
       <body>
         <LoadingScreen />
+        <Analytics />
+        <SpeedInsights />
         {children}
       </body>
     </html>
