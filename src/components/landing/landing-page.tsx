@@ -1,18 +1,23 @@
+import dynamic from "next/dynamic"
 import { WelcomePopup } from "@/components/WelcomePopup"
-import { AboutSection } from "@/components/landing/sections/AboutSection"
-import { FAQSection } from "@/components/landing/sections/FAQSection"
-import { FinalCTASection } from "@/components/landing/sections/FinalCTASection"
-import { FooterSection } from "@/components/landing/sections/FooterSection"
-import { ForYouSection } from "@/components/landing/sections/ForYouSection"
-import { FormatSection } from "@/components/landing/sections/FormatSection"
 import { LandingHeroSection } from "@/components/landing/sections/LandingHeroSection"
-import { MarqueeSection } from "@/components/landing/sections/MarqueeSection"
 import { NavSection } from "@/components/landing/sections/NavSection"
-import { PainSection } from "@/components/landing/sections/PainSection"
-import { PrinciplesSection } from "@/components/landing/sections/PrinciplesSection"
-import { ProblemsSection } from "@/components/landing/sections/ProblemsSection"
-import { ResultsSection } from "@/components/landing/sections/ResultsSection"
-import { WhatYouGetSection } from "@/components/landing/sections/WhatYouGetSection"
+import { MarqueeSection } from "@/components/landing/sections/MarqueeSection"
+
+// Lazy load below-the-fold sections
+const AboutSection = dynamic(() => import("@/components/landing/sections/AboutSection").then(mod => ({ default: mod.AboutSection })), {
+  loading: () => <div className="h-screen" />
+})
+const FAQSection = dynamic(() => import("@/components/landing/sections/FAQSection").then(mod => ({ default: mod.FAQSection })))
+const FinalCTASection = dynamic(() => import("@/components/landing/sections/FinalCTASection").then(mod => ({ default: mod.FinalCTASection })))
+const FooterSection = dynamic(() => import("@/components/landing/sections/FooterSection").then(mod => ({ default: mod.FooterSection })))
+const ForYouSection = dynamic(() => import("@/components/landing/sections/ForYouSection").then(mod => ({ default: mod.ForYouSection })))
+const FormatSection = dynamic(() => import("@/components/landing/sections/FormatSection").then(mod => ({ default: mod.FormatSection })))
+const PainSection = dynamic(() => import("@/components/landing/sections/PainSection").then(mod => ({ default: mod.PainSection })))
+const PrinciplesSection = dynamic(() => import("@/components/landing/sections/PrinciplesSection").then(mod => ({ default: mod.PrinciplesSection })))
+const ProblemsSection = dynamic(() => import("@/components/landing/sections/ProblemsSection").then(mod => ({ default: mod.ProblemsSection })))
+const ResultsSection = dynamic(() => import("@/components/landing/sections/ResultsSection").then(mod => ({ default: mod.ResultsSection })))
+const WhatYouGetSection = dynamic(() => import("@/components/landing/sections/WhatYouGetSection").then(mod => ({ default: mod.WhatYouGetSection })))
 
 export function LandingPage() {
   return (

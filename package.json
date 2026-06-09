@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "analyze": "ANALYZE=true next build",
+    "check-images": "node scripts/optimize-images.js",
+    "perf": "npm run check-images && echo '\n📊 Run: npm run build && npm start\n🌐 Then test at: https://pagespeed.web.dev/'"
   },
   "dependencies": {
     "@paper-design/shaders-react": "^0.0.76",
