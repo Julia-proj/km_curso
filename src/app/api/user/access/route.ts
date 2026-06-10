@@ -1,0 +1,35 @@
+import { NextRequest, NextResponse } from 'next/server'
+import { createClient } from '@supabase/supabase-js'
+
+function getSupabase() {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    throw new Error('Supabase credentials are not configured')
+  }
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY
+  )
+}
+
+export async function GET(req: NextRequest) {
+  const email = req.nextUrl.searchParams.get('email')
+  if (!email) {
+    return NextResponse.json({ error: 'Email required' }, { status: 400 })
+  }
+
+  const supabase = getSupabase()
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('has_methodichka, has_full_course')
+    .eq('email', email)
+    .single()
+
+  if (error || !data) {
+    return NextResponse.json({ has_methodichka: false, has_full_course: false })
+  }
+
+  return NextResponse.json({
+    has_methodichka: !!data.has_methodichka,
+    has_full_course: !!data.has_full_course,
+  })
+}

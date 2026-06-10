@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, Manrope } from 'next/font/google'
+import { Inter, Manrope, Fraunces } from 'next/font/google'
 import './globals.css'
 import { LoadingScreen } from '@/components/LoadingScreen'
 import { Analytics } from '@vercel/analytics/react'
@@ -21,6 +21,15 @@ const manrope = Manrope({
   display: 'swap',
   preload: true,
   fallback: ['system-ui', 'sans-serif'],
+})
+
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  style: ['normal', 'italic'],
+  axes: ['SOFT', 'WONK'],
+  variable: '--font-fraunces',
+  display: 'swap',
+  fallback: ['Georgia', 'serif'],
 })
 
 export const metadata: Metadata = {
@@ -56,7 +65,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="ru" className={`${inter.variable} ${manrope.variable}`}>
+    <html lang="ru" className={`${inter.variable} ${manrope.variable} ${fraunces.variable}`}>
       <head>
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />

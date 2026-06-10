@@ -111,10 +111,12 @@ function ScanResultContent() {
         damageLevel={data.diagnostic.damage_level}
         visibleSigns={data.diagnostic.visible_signs}
         mainIssues={data.diagnostic.main_issues}
+        selfCarePriorities={data.diagnostic.self_care_priorities}
+        primaryCategory={data.recommendation.primary_category}
       />
 
       <div className="km-container">
-        <div className="mb-8">
+        <div className="mb-8 pt-14">
           <h2 className="font-hero-face text-2xl font-semibold text-[#1A1A1A] md:text-3xl">
             У тебя есть выбор.
           </h2>
