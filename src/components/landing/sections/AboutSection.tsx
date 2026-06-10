@@ -19,14 +19,14 @@ export function AboutSection() {
             Уже более 6 лет я и моя команда ежедневно восстанавливаем даже самые повреждённые волосы. Система HairLab построена на:
           </p>
 
-          <ul className="space-y-3">
+          <ul className="space-y-4">
             {authorPoints.map((point, index) => (
               <motion.li
                 key={point}
                 {...fadeUp(index * 0.04)}
-                className="flex items-start gap-3 font-sans text-sm leading-relaxed text-[#444] sm:text-base"
+                className="flex items-start gap-4 font-sans text-sm leading-relaxed text-[#444] sm:text-base"
               >
-                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-lg border border-[#D29B9B] font-mono text-xs text-[#D29B9B]">
+                <span className="shrink-0 w-10 font-hero-face text-4xl font-light leading-none text-[#D29B9B]/40 select-none translate-y-[-4px]">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <span>{point}</span>

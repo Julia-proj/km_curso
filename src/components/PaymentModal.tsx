@@ -1,21 +1,58 @@
 "use client"
 
+import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 
 interface PaymentModalProps {
   isOpen: boolean
   onClose: () => void
   product: "course" | "guide"
-  stripeLink: string
+  stripeLink?: string
 }
 
 export function PaymentModal({ isOpen, onClose, product, stripeLink }: PaymentModalProps) {
+  const [error, setError] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
+
   const whatsappMessage = encodeURIComponent("Здравствуйте! Я хочу оплатить курс.")
   const whatsappLink = `https://wa.me/34641261559?text=${whatsappMessage}`
 
-  const handleStripePayment = () => {
-    window.open(stripeLink, "_blank")
-    onClose()
+  const isValidStripeLink = stripeLink && stripeLink.trim().length > 0 && stripeLink.startsWith("http")
+
+  const handleStripePayment = async () => {
+    setError(null)
+
+    if (isValidStripeLink) {
+      window.open(stripeLink, "_blank")
+      onClose()
+      return
+    }
+
+    setIsLoading(true)
+    try {
+      const response = await fetch(`/api/checkout/${product}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: "", name: "" })
+      })
+
+      if (!response.ok) {
+        const data = await response.json()
+        throw new Error(data.error || "Ошибка создания сессии оплаты")
+      }
+
+      const { url } = await response.json()
+      if (url) {
+        window.location.href = url
+      } else {
+        throw new Error("Не удалось получить ссылку на оплату")
+      }
+    } catch (err: any) {
+      console.error("Payment error:", err)
+      setError("Не удалось открыть оплату, попробуй ещё раз")
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleWhatsAppPayment = () => {
@@ -49,14 +86,21 @@ export function PaymentModal({ isOpen, onClose, product, stripeLink }: PaymentMo
                   Выберите удобный вариант
                 </p>
 
+                {error && (
+                  <div className="mb-4 rounded-lg bg-red-50 p-3">
+                    <p className="font-sans text-sm text-red-600">{error}</p>
+                  </div>
+                )}
+
                 <div className="space-y-3">
                   <button
                     onClick={handleStripePayment}
-                    className="flex w-full items-center justify-between rounded-xl border-2 border-[#1A1A1A] bg-[#1A1A1A] px-5 py-3.5 text-left transition-colors hover:bg-[#333] sm:px-6 sm:py-4"
+                    disabled={isLoading}
+                    className="flex w-full items-center justify-between rounded-xl border-2 border-[#1A1A1A] bg-[#1A1A1A] px-5 py-3.5 text-left transition-colors hover:bg-[#333] disabled:opacity-50 disabled:cursor-not-allowed sm:px-6 sm:py-4"
                   >
                     <div>
                       <p className="font-sans text-sm font-semibold text-white sm:text-base">
-                        Карта любой страны
+                        {isLoading ? "Загрузка..." : "Карта любой страны"}
                       </p>
                       <p className="mt-1 font-sans text-[11px] text-white/70 sm:text-xs">
                         Stripe

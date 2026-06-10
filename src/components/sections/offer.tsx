@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion"
 import { useInView } from "framer-motion"
-import { useRef } from "react"
+import { useRef, useState } from "react"
+import { PaymentModal } from "@/components/PaymentModal"
 
 function CheckIcon({ className }: { className?: string }) {
   return (
@@ -68,6 +69,13 @@ const guideFeatures = [
 export function OfferSection() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedProduct, setSelectedProduct] = useState<"course" | "guide">("course")
+
+  const handlePaymentClick = (product: "course" | "guide") => {
+    setSelectedProduct(product)
+    setIsModalOpen(true)
+  }
 
   return (
     <section id="offer" ref={ref} className="py-16 md:py-24 px-5">
@@ -194,12 +202,12 @@ export function OfferSection() {
                 Одна покупка - полный доступ. Без подписок, без доплат.
               </p>
 
-              <a
-                href="#buy"
+              <button
+                onClick={() => handlePaymentClick("course")}
                 className="w-full inline-flex items-center justify-center px-8 py-4 bg-accent text-white font-medium text-sm rounded-full hover:bg-accent-hover transition-colors duration-200"
               >
                 Получить полный доступ - 39€
-              </a>
+              </button>
             </div>
           </motion.div>
 
@@ -233,12 +241,12 @@ export function OfferSection() {
               ))}
             </ul>
 
-            <a
-              href="#buy-guide"
+            <button
+              onClick={() => handlePaymentClick("guide")}
               className="w-full inline-flex items-center justify-center px-6 py-3 bg-transparent border border-border text-text font-medium text-sm rounded-full hover:bg-bg-warm transition-colors duration-200"
             >
               Начать с KM Guide - 13€
-            </a>
+            </button>
           </motion.div>
         </div>
 
@@ -254,6 +262,12 @@ export function OfferSection() {
           полный курс, стоимость гайда учтётся.
         </motion.p>
       </div>
+
+      <PaymentModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        product={selectedProduct}
+      />
     </section>
   )
 }
