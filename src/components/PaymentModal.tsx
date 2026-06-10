@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 
 interface PaymentModalProps {
@@ -13,13 +13,28 @@ interface PaymentModalProps {
 export function PaymentModal({ isOpen, onClose, product, stripeLink }: PaymentModalProps) {
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [email, setEmail] = useState("")
+  const [showEmailInput, setShowEmailInput] = useState(false)
+
+  useEffect(() => {
+    if (!isOpen) {
+      setEmail("")
+      setShowEmailInput(false)
+      setError(null)
+      setIsLoading(false)
+    }
+  }, [isOpen])
 
   const whatsappMessage = encodeURIComponent("Здравствуйте! Я хочу оплатить курс.")
   const whatsappLink = `https://wa.me/34641261559?text=${whatsappMessage}`
 
   const isValidStripeLink = stripeLink && stripeLink.trim().length > 0 && stripeLink.startsWith("http")
 
-  const handleStripePayment = async () => {
+  const validateEmail = (email: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+  }
+
+  const handleStripeClick = () => {
     setError(null)
 
     if (isValidStripeLink) {
@@ -28,12 +43,28 @@ export function PaymentModal({ isOpen, onClose, product, stripeLink }: PaymentMo
       return
     }
 
+    setShowEmailInput(true)
+  }
+
+  const handleStripePayment = async () => {
+    setError(null)
+
+    if (!email.trim()) {
+      setError("Введите email")
+      return
+    }
+
+    if (!validateEmail(email)) {
+      setError("Введите корректный email")
+      return
+    }
+
     setIsLoading(true)
     try {
       const response = await fetch(`/api/checkout/${product}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: "", name: "" })
+        body: JSON.stringify({ email: email.trim(), name: "" })
       })
 
       if (!response.ok) {
@@ -92,15 +123,31 @@ export function PaymentModal({ isOpen, onClose, product, stripeLink }: PaymentMo
                   </div>
                 )}
 
+                {showEmailInput && !isValidStripeLink && (
+                  <div className="mb-4">
+                    <label className="mb-1.5 block font-sans text-xs font-medium text-[#1A1A1A] sm:text-sm">
+                      Email для чека
+                    </label>
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="your@email.com"
+                      className="w-full rounded-xl border border-[#E0DCD6] px-4 py-3 font-sans text-sm text-[#1A1A1A] placeholder:text-[#999] focus:border-[#1A1A1A] focus:outline-none sm:px-5 sm:py-3.5"
+                      onKeyDown={(e) => e.key === "Enter" && handleStripePayment()}
+                    />
+                  </div>
+                )}
+
                 <div className="space-y-3">
                   <button
-                    onClick={handleStripePayment}
+                    onClick={showEmailInput && !isValidStripeLink ? handleStripePayment : handleStripeClick}
                     disabled={isLoading}
                     className="flex w-full items-center justify-between rounded-xl border-2 border-[#1A1A1A] bg-[#1A1A1A] px-5 py-3.5 text-left transition-colors hover:bg-[#333] disabled:opacity-50 disabled:cursor-not-allowed sm:px-6 sm:py-4"
                   >
                     <div>
                       <p className="font-sans text-sm font-semibold text-white sm:text-base">
-                        {isLoading ? "Загрузка..." : "Карта любой страны"}
+                        {isLoading ? "Загрузка..." : showEmailInput && !isValidStripeLink ? "Перейти к оплате" : "Карта любой страны"}
                       </p>
                       <p className="mt-1 font-sans text-[11px] text-white/70 sm:text-xs">
                         Stripe
