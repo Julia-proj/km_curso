@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Header } from '@/components/header'
 import { BackButton } from '@/components/BackButton'
+import { FREE_LESSON_YOUTUBE_ID } from '@/config/lessons'
 
 export const metadata: Metadata = {
   title: 'Бесплатный урок - HAIRLAB',
@@ -39,7 +40,7 @@ export default function LessonPage() {
             style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}
           >
             <iframe
-              src="https://www.youtube.com/embed/0OYmg4DoXPk?rel=0&vq=hd1080"
+              src={`https://www.youtube.com/embed/${FREE_LESSON_YOUTUBE_ID}?rel=0&vq=hd1080`}
               style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen

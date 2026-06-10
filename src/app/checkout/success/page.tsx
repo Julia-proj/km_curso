@@ -2,17 +2,29 @@
 
 import { Suspense } from "react"
 import { useSearchParams } from "next/navigation"
-import { TelegramAccessCard } from "@/components/dashboard/TelegramAccessCard"
+import { useRouter } from "next/navigation"
+import { SuccessActionCard } from "@/components/checkout/SuccessActionCard"
+import { TELEGRAM_PRIVATE_INVITE } from "@/lib/constants"
 
 function CheckoutSuccessContent() {
   const searchParams = useSearchParams()
+  const router = useRouter()
   const product = searchParams.get("product")
   const isCourse = product === "course"
+  const isGuide = product === "guide"
 
   return (
     <main className="min-h-screen bg-[#FAF7F4] py-16">
       <div className="km-container">
-        <div className="mx-auto max-w-lg">
+        <div className="mx-auto max-w-2xl">
+          {/* Back button */}
+          <button
+            onClick={() => router.back()}
+            className="inline-flex items-center gap-2 text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors mb-8"
+          >
+            ← Назад
+          </button>
+
           {/* Check mark */}
           <div
             style={{
@@ -77,21 +89,117 @@ function CheckoutSuccessContent() {
             }}
           >
             {isCourse
-              ? "Доступ к курсу откроется в течение нескольких минут. Мы пришлём письмо с инструкцией на твой email."
-              : "Методичка будет отправлена на твой email в течение нескольких минут."}
+              ? "Доступ к курсу откроется в течение нескольких минут. Выбери, куда хочешь перейти:"
+              : "Методичка будет отправлена на твой email в течение нескольких минут. А пока можешь:"}
           </p>
 
+          {/* Action cards */}
           <div
             style={{
-              width: "100%",
-              height: "1px",
-              background: "rgba(160, 132, 92, 0.2)",
+              display: "flex",
+              flexDirection: "column",
+              gap: "1rem",
               marginBottom: "2.5rem",
             }}
-          />
+          >
+            {/* Video lessons - only for course */}
+            {isCourse && (
+              <SuccessActionCard
+                icon={
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#A0845C"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <polygon points="5 3 19 12 5 21 5 3" />
+                  </svg>
+                }
+                label="Видео уроки"
+                description="Продолжить смотреть уроки курса"
+                href="/dashboard/lessons"
+              />
+            )}
 
-          {/* Telegram card — only for course */}
-          <TelegramAccessCard hasCourse={isCourse} />
+            {/* AI diagnostics - only for course */}
+            {isCourse && (
+              <SuccessActionCard
+                icon={
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#A0845C"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                    <line x1="12" y1="22.08" x2="12" y2="12" />
+                  </svg>
+                }
+                label="AI диагностика"
+                description="Загрузи фото и получи персональный анализ"
+                href="/dashboard/diagnostika"
+              />
+            )}
+
+            {/* Downloads - for both course and guide */}
+            <SuccessActionCard
+              icon={
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#A0845C"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17" />
+                </svg>
+              }
+              label="Методички"
+              description={isCourse ? "Скачать PDF-файлы с материалами курса" : "Скачать методичку"}
+              href="/dashboard/downloads"
+            />
+
+            {/* Telegram - only for course */}
+            {isCourse && (
+              <SuccessActionCard
+                icon={
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#A0845C"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M22 2L11 13" />
+                    <path d="M22 2L15 22L11 13L2 9L22 2Z" />
+                  </svg>
+                }
+                label="Telegram канал"
+                description="Присоединяйся к закрытому каналу с дополнительными материалами"
+                href={TELEGRAM_PRIVATE_INVITE}
+                external
+              />
+            )}
+          </div>
 
           <div style={{ marginTop: "2.5rem" }}>
             <a
@@ -118,7 +226,7 @@ export default function CheckoutSuccessPage() {
     <Suspense
       fallback={
         <div className="flex min-h-screen items-center justify-center bg-[#FAF7F4]">
-          <div className="mb-4 h-8 w-8 animate-spin rounded-full border-2 border-[#D9A19D] border-t-transparent" />
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#D9A19D] border-t-transparent" />
         </div>
       }
     >

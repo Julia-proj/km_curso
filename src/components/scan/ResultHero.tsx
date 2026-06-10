@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { motion } from "framer-motion"
 
 const SIGN_LABELS: Record<string, string> = {
   dryness: "сухость",
@@ -34,16 +33,6 @@ const CATEGORY_INFO: Record<string, { label: string; description: string }> = {
   },
 }
 
-const FR = "var(--font-fraunces, 'Georgia', serif)"
-const BRONZE = "#A0845C"
-const HAIRLINE = "1px solid rgba(160, 132, 92, 0.22)"
-
-const fade = (delay: number) => ({
-  initial: { opacity: 0, y: 14 },
-  animate: { opacity: 1, y: 0 },
-  transition: { delay, duration: 0.5, ease: "easeOut" as const },
-})
-
 interface ResultHeroProps {
   summary: string
   damageLevel: number
@@ -51,6 +40,16 @@ interface ResultHeroProps {
   mainIssues: string[]
   selfCarePriorities: string[]
   primaryCategory: string
+}
+
+const eyebrowStyle: React.CSSProperties = {
+  fontFamily: "var(--font-body-face), Inter, sans-serif",
+  fontSize: "0.6875rem",
+  fontWeight: 500,
+  letterSpacing: "0.18em",
+  textTransform: "uppercase",
+  color: "var(--color-bronze)",
+  marginBottom: "1.5rem",
 }
 
 export function ResultHero({
@@ -61,11 +60,10 @@ export function ResultHero({
   selfCarePriorities,
   primaryCategory,
 }: ResultHeroProps) {
-  const [scaleActive, setScaleActive] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    const id = setTimeout(() => setScaleActive(true), 180)
-    return () => clearTimeout(id)
+    setMounted(true)
   }, [])
 
   const allSigns = [...new Set([...visibleSigns, ...mainIssues])]
@@ -73,29 +71,45 @@ export function ResultHero({
   const priorities = selfCarePriorities.slice(0, 5)
 
   return (
-    <section style={{ background: "#FAF7F4", padding: "3rem 0 0" }}>
+    <section
+      style={{
+        background: "var(--color-cream)",
+        padding: "3rem 0 0",
+        opacity: mounted ? 1 : 0,
+        transition: "opacity 0.5s ease",
+      }}
+    >
       <div
         className="km-container"
         style={{ maxWidth: "calc(760px + var(--page-x) * 2)" }}
       >
-        {/* ── 1. Шкала повреждения ── */}
-        <motion.div
-          {...fade(0)}
-          style={{ borderBottom: HAIRLINE, paddingBottom: "2.75rem", marginBottom: "2.75rem" }}
+        {/* ── 1. ШКАЛА ПОВРЕЖДЕНИЯ ── */}
+        <div
+          style={{
+            borderBottom: "1px solid var(--color-line)",
+            paddingBottom: "2.75rem",
+            marginBottom: "2.75rem",
+          }}
         >
-          <p style={eyebrow}>Уровень повреждения</p>
+          <p style={eyebrowStyle}>Уровень повреждения</p>
 
-          <div style={{ display: "flex", alignItems: "flex-start", gap: "clamp(1.5rem, 5vw, 3.5rem)" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "flex-start",
+              gap: "clamp(1.5rem, 5vw, 3.5rem)",
+            }}
+          >
             <div style={{ flexShrink: 0 }}>
               <span
                 style={{
                   display: "block",
-                  fontFamily: FR,
+                  fontFamily: "var(--font-fraunces), Georgia, serif",
                   fontSize: "clamp(5rem, 12vw, 8rem)",
                   fontWeight: 300,
                   lineHeight: 0.88,
                   letterSpacing: "-0.02em",
-                  color: "#1A1A1A",
+                  color: "var(--color-ink)",
                 }}
               >
                 {damageLevel}
@@ -103,10 +117,10 @@ export function ResultHero({
               <span
                 style={{
                   display: "block",
-                  fontFamily: FR,
+                  fontFamily: "var(--font-fraunces), Georgia, serif",
                   fontStyle: "italic",
                   fontSize: "0.8125rem",
-                  color: BRONZE,
+                  color: "var(--color-bronze)",
                   marginTop: "0.5rem",
                   letterSpacing: "0.02em",
                 }}
@@ -116,31 +130,47 @@ export function ResultHero({
             </div>
 
             <div style={{ flex: 1, paddingTop: "0.625rem" }}>
-              <div style={{ width: "100%", height: "1px", background: "rgba(160,132,92,0.18)", marginBottom: "1.25rem" }} />
+              <div
+                style={{
+                  width: "100%",
+                  height: "1px",
+                  background: "var(--color-line)",
+                  marginBottom: "1.25rem",
+                }}
+              />
               <div style={{ display: "flex", gap: "6px" }}>
                 {[1, 2, 3, 4, 5].map((seg) => (
                   <div
                     key={seg}
+                    className="damage-segment"
                     style={{
+                      "--index": seg,
                       flex: 1,
                       height: "5px",
-                      border: `1px solid ${BRONZE}`,
-                      backgroundColor: scaleActive && seg <= damageLevel ? BRONZE : "transparent",
-                      transition: `background-color 0.3s ease ${(seg - 1) * 80}ms`,
-                    }}
+                      border: "1px solid var(--color-bronze)",
+                      backgroundColor:
+                        mounted && seg <= damageLevel
+                          ? "var(--color-bronze)"
+                          : "transparent",
+                      borderRadius: "2px",
+                      transition: "background-color 0.4s ease",
+                    } as React.CSSProperties}
                   />
                 ))}
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        {/* ── 2. Признаки как чипы ── */}
-        <motion.div
-          {...fade(0.15)}
-          style={{ borderBottom: HAIRLINE, paddingBottom: "2.75rem", marginBottom: "2.75rem" }}
+        {/* ── 2. ПРИЗНАКИ КАК ЧИПЫ ── */}
+        <div
+          style={{
+            borderBottom: "1px solid var(--color-line)",
+            paddingBottom: "2.75rem",
+            marginBottom: "2.75rem",
+          }}
         >
-          <p style={eyebrow}>Видимые признаки</p>
+          <p style={eyebrowStyle}>Видимые признаки</p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
             {allSigns.map((sign) => (
               <span
@@ -150,11 +180,11 @@ export function ResultHero({
                   alignItems: "center",
                   gap: "8px",
                   padding: "8px 14px",
-                  border: "1px solid rgba(160,132,92,0.38)",
+                  border: "1px solid var(--color-bronze)",
                   borderRadius: "2px",
                   fontFamily: "var(--font-body-face), Inter, sans-serif",
                   fontSize: "0.875rem",
-                  color: "#1A1A1A",
+                  color: "var(--color-ink)",
                   background: "transparent",
                 }}
               >
@@ -163,7 +193,7 @@ export function ResultHero({
                     width: "5px",
                     height: "5px",
                     borderRadius: "50%",
-                    backgroundColor: BRONZE,
+                    backgroundColor: "var(--color-bronze)",
                     flexShrink: 0,
                   }}
                 />
@@ -171,29 +201,32 @@ export function ResultHero({
               </span>
             ))}
           </div>
-        </motion.div>
+        </div>
 
-        {/* ── 3. Карточка категории Limba ── */}
-        <motion.div
-          {...fade(0.25)}
-          style={{ borderBottom: HAIRLINE, paddingBottom: "2.75rem", marginBottom: "2.75rem" }}
+        {/* ── 3. КАРТОЧКА КАТЕГОРИИ LIMBA ── */}
+        <div
+          style={{
+            borderBottom: "1px solid var(--color-line)",
+            paddingBottom: "2.75rem",
+            marginBottom: "2.75rem",
+          }}
         >
           <div
             style={{
-              background: "#F2EDE6",
-              border: "1px solid rgba(160,132,92,0.28)",
+              background: "var(--color-paper)",
+              border: "1px solid var(--color-line)",
               padding: "clamp(1.5rem, 4vw, 2.25rem) clamp(1.5rem, 4vw, 2.5rem)",
             }}
           >
-            <p style={eyebrow}>Твоё направление</p>
+            <p style={eyebrowStyle}>ТВОЁ НАПРАВЛЕНИЕ</p>
             <p
               style={{
-                fontFamily: FR,
+                fontFamily: "var(--font-fraunces), Georgia, serif",
                 fontSize: "clamp(2.25rem, 7vw, 3.75rem)",
                 fontWeight: 300,
                 lineHeight: 1,
                 letterSpacing: "-0.015em",
-                color: "#1A1A1A",
+                color: "var(--color-ink)",
                 margin: "0.875rem 0",
               }}
             >
@@ -203,52 +236,75 @@ export function ResultHero({
               style={{
                 fontFamily: "var(--font-body-face), Inter, sans-serif",
                 fontSize: "0.9375rem",
-                color: "#666",
+                color: "var(--color-ink-soft)",
                 lineHeight: 1.55,
               }}
             >
               {category.description}
             </p>
           </div>
-        </motion.div>
+        </div>
 
-        {/* ── 4. Summary-цитата ── */}
-        <motion.div
-          {...fade(0.35)}
-          style={{ borderBottom: HAIRLINE, paddingBottom: "2.75rem", marginBottom: "2.75rem" }}
+        {/* ── 4. SUMMARY ОТ AI КАК ЦИТАТА ── */}
+        <div
+          style={{
+            borderBottom: "1px solid var(--color-line)",
+            paddingBottom: "2.75rem",
+            marginBottom: "2.75rem",
+          }}
         >
-          <div style={{ paddingLeft: "1.375rem", borderLeft: `2px solid ${BRONZE}` }}>
+          <div
+            style={{
+              paddingLeft: "1.375rem",
+              borderLeft: "2px solid var(--color-bronze)",
+            }}
+          >
             <p
               style={{
-                fontFamily: FR,
+                fontFamily: "var(--font-fraunces), Georgia, serif",
                 fontStyle: "italic",
-                fontSize: "clamp(1.0625rem, 2.5vw, 1.1875rem)",
+                fontSize: "clamp(1.125rem, 2.5vw, 1.25rem)",
                 lineHeight: 1.7,
-                color: "#1A1A1A",
+                color: "var(--color-ink)",
               }}
             >
               {summary}
             </p>
           </div>
-        </motion.div>
+        </div>
 
-        {/* ── 5. Self-care priorities ── */}
+        {/* ── 5. SELF_CARE_PRIORITIES КАК НУМЕРОВАННЫЙ СПИСОК ── */}
         {priorities.length > 0 && (
-          <motion.div
-            {...fade(0.45)}
-            style={{ borderBottom: HAIRLINE, paddingBottom: "3rem", marginBottom: "0" }}
+          <div
+            style={{
+              borderBottom: "1px solid var(--color-line)",
+              paddingBottom: "3rem",
+              marginBottom: "0",
+            }}
           >
-            <p style={eyebrow}>Приоритеты ухода</p>
-            <ol style={{ listStyle: "none", padding: 0, margin: "0", display: "flex", flexDirection: "column", gap: "1.75rem" }}>
+            <p style={eyebrowStyle}>Приоритеты ухода</p>
+            <ol
+              style={{
+                listStyle: "none",
+                padding: 0,
+                margin: "0",
+                display: "flex",
+                flexDirection: "column",
+                gap: "1.75rem",
+              }}
+            >
               {priorities.map((item, i) => (
-                <li key={i} style={{ display: "flex", gap: "1.5rem", alignItems: "flex-start" }}>
+                <li
+                  key={i}
+                  style={{ display: "flex", gap: "1.5rem", alignItems: "flex-start" }}
+                >
                   <span
                     style={{
-                      fontFamily: FR,
+                      fontFamily: "var(--font-fraunces), Georgia, serif",
                       fontSize: "clamp(2rem, 5vw, 3rem)",
                       fontWeight: 300,
                       lineHeight: 1,
-                      color: BRONZE,
+                      color: "var(--color-bronze)",
                       minWidth: "3.5rem",
                       flexShrink: 0,
                     }}
@@ -260,7 +316,7 @@ export function ResultHero({
                       fontFamily: "var(--font-body-face), Inter, sans-serif",
                       fontSize: "0.9375rem",
                       lineHeight: 1.65,
-                      color: "#1A1A1A",
+                      color: "var(--color-ink)",
                       paddingTop: "0.3rem",
                     }}
                   >
@@ -269,19 +325,28 @@ export function ResultHero({
                 </li>
               ))}
             </ol>
-          </motion.div>
+          </div>
         )}
       </div>
+
+      <style>{`
+        .damage-segment {
+          animation: fillSegment 0.4s ease forwards;
+          animation-delay: calc((var(--index) - 1) * 80ms);
+          opacity: 0;
+        }
+
+        @keyframes fillSegment {
+          from {
+            opacity: 0;
+            transform: scaleX(0.8);
+          }
+          to {
+            opacity: 1;
+            transform: scaleX(1);
+          }
+        }
+      `}</style>
     </section>
   )
-}
-
-const eyebrow: React.CSSProperties = {
-  fontFamily: "var(--font-body-face), Inter, sans-serif",
-  fontSize: "0.6875rem",
-  fontWeight: 500,
-  letterSpacing: "0.18em",
-  textTransform: "uppercase",
-  color: BRONZE,
-  marginBottom: "1.5rem",
 }

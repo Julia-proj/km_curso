@@ -26,7 +26,7 @@ export function AboutSection() {
                 {...fadeUp(index * 0.04)}
                 className="flex items-start gap-4 font-sans text-sm leading-relaxed text-[#444] sm:text-base"
               >
-                <span className="shrink-0 w-10 font-hero-face text-4xl font-light leading-none text-[#D29B9B]/40 select-none translate-y-[-4px]">
+                <span className="shrink-0 w-10 font-hero-face text-3xl font-light leading-none text-[#D29B9B]/40 select-none">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <span>{point}</span>

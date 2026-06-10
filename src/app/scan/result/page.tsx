@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState, Suspense } from "react"
-import { useSearchParams } from "next/navigation"
+import { useSearchParams, useRouter } from "next/navigation"
 import { ResultHero } from "@/components/scan/ResultHero"
 import { SelfCarePath } from "@/components/scan/SelfCarePath"
 import { MadridPackPath } from "@/components/scan/MadridPackPath"
@@ -39,6 +39,7 @@ interface ScanResult {
 
 function ScanResultContent() {
   const searchParams = useSearchParams()
+  const router = useRouter()
   const [data, setData] = useState<ScanResult | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -79,7 +80,7 @@ function ScanResultContent() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#FAF7F4]">
+      <div className="flex min-h-screen items-center justify-center" style={{ background: "var(--color-cream)" }}>
         <div className="text-center">
           <div className="mb-4 h-8 w-8 animate-spin rounded-full border-2 border-[#D9A19D] border-t-transparent" />
           <p className="font-body text-[#666]">Загрузка...</p>
@@ -90,7 +91,7 @@ function ScanResultContent() {
 
   if (error || !data) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#FAF7F4]">
+      <div className="flex min-h-screen items-center justify-center" style={{ background: "var(--color-cream)" }}>
         <div className="max-w-md text-center">
           <p className="font-body text-lg text-[#666]">{error || "Что-то пошло не так"}</p>
           <a
@@ -105,7 +106,16 @@ function ScanResultContent() {
   }
 
   return (
-    <main className="min-h-screen bg-[#FAF7F4]">
+    <main className="min-h-screen" style={{ background: "var(--color-cream)" }}>
+      <div className="km-container" style={{ paddingTop: "2rem" }}>
+        <button
+          onClick={() => router.back()}
+          className="inline-flex items-center gap-2 text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors mb-6"
+        >
+          ← Назад
+        </button>
+      </div>
+
       <ResultHero
         summary={data.diagnostic.summary}
         damageLevel={data.diagnostic.damage_level}
@@ -145,7 +155,7 @@ function ScanResultContent() {
 export default function ScanResultPage() {
   return (
     <Suspense fallback={
-      <div className="flex min-h-screen items-center justify-center bg-[#FAF7F4]">
+      <div className="flex min-h-screen items-center justify-center" style={{ background: "var(--color-cream)" }}>
         <div className="text-center">
           <div className="mb-4 h-8 w-8 animate-spin rounded-full border-2 border-[#D9A19D] border-t-transparent" />
           <p className="font-body text-[#666]">Загрузка...</p>

@@ -10,7 +10,7 @@ export function PainSection() {
       <div className="mx-auto max-w-4xl text-center">
         <motion.p
           {...fadeUp()}
-          className="mb-6 font-sans text-sm font-medium text-[#D29B9B] sm:text-sm"
+          className="mb-6 font-sans text-base font-medium uppercase tracking-[0.18em] text-[#D29B9B] sm:text-base"
         >
           Почему уход не работает
         </motion.p>

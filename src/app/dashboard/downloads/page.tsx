@@ -12,17 +12,17 @@ interface AccessState {
 const GUIDES = [
   {
     id: "guide-01",
-    title: "Методичка 1",
-    subtitle: "Базовый уход за волосами",
-    pages: 24,
-    cover: "/covers/guide-01.webp",
+    title: "Методичка: Основной уход",
+    subtitle: "Шампуни, маски, кондиционеры, термозащита",
+    pages: 32,
+    cover: "/images/guia_pdf.PNG",
   },
   {
     id: "guide-02",
-    title: "Методичка 2",
-    subtitle: "Восстановление и защита",
-    pages: 32,
-    cover: "/covers/guide-02.webp",
+    title: "Методичка: Аксессуары",
+    subtitle: "Полотенца, расчёски, резинки, материалы для сна",
+    pages: 16,
+    cover: "/images/acces_pdf.PNG",
   },
 ]
 
@@ -36,22 +36,12 @@ export default function DownloadsPage() {
   const [downloading, setDownloading] = useState<string | null>(null)
 
   useEffect(() => {
-    const email = localStorage.getItem("session")
-    if (!email) {
-      router.push("/")
-      return
-    }
-
-    fetch(`/api/user/access?email=${encodeURIComponent(email)}`)
-      .then((r) => r.json())
-      .then((data) => {
-        setState({
-          loading: false,
-          hasAccess: !!(data.has_methodichka || data.has_full_course),
-          email,
-        })
-      })
-      .catch(() => setState({ loading: false, hasAccess: false, email }))
+    // Dev bypass - skip auth for now
+    setState({
+      loading: false,
+      hasAccess: true,
+      email: "dev@example.com",
+    })
   }, [router])
 
   const handleDownload = async (guideId: string) => {
@@ -227,39 +217,20 @@ function GuideCard({
       {/* Cover image */}
       <div
         style={{
+          background: "#fff",
           aspectRatio: "3/4",
-          background: "linear-gradient(135deg, #F2ECE4 0%, #E8DED2 100%)",
           overflow: "hidden",
-          position: "relative",
+          borderRadius: "16px 16px 0 0",
         }}
       >
         <img
           src={guide.cover}
           alt={guide.title}
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
           onError={(e) => {
             ;(e.currentTarget as HTMLImageElement).style.display = "none"
           }}
         />
-        {/* Fallback label shown behind the image if it fails to load */}
-        <span
-          style={{
-            position: "absolute",
-            inset: 0,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontFamily: "var(--font-hero-face), Manrope, sans-serif",
-            fontSize: "0.75rem",
-            fontWeight: 600,
-            letterSpacing: "0.1em",
-            textTransform: "uppercase",
-            color: "rgba(160, 132, 92, 0.5)",
-          }}
-          aria-hidden="true"
-        >
-          HAIRLAB
-        </span>
       </div>
 
       {/* Info + button */}

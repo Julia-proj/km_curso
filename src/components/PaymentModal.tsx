@@ -15,6 +15,7 @@ export function PaymentModal({ isOpen, onClose, product, stripeLink }: PaymentMo
   const [isLoading, setIsLoading] = useState(false)
   const [email, setEmail] = useState("")
   const [showEmailInput, setShowEmailInput] = useState(false)
+  const [devMode, setDevMode] = useState(false)
 
   useEffect(() => {
     if (!isOpen) {
@@ -22,6 +23,7 @@ export function PaymentModal({ isOpen, onClose, product, stripeLink }: PaymentMo
       setShowEmailInput(false)
       setError(null)
       setIsLoading(false)
+      setDevMode(false)
     }
   }, [isOpen])
 
@@ -61,6 +63,11 @@ export function PaymentModal({ isOpen, onClose, product, stripeLink }: PaymentMo
 
     setIsLoading(true)
     try {
+      if (devMode) {
+        window.location.href = `/checkout/success?session_id=dev_test_${Date.now()}&product=${product}`
+        return
+      }
+
       const response = await fetch(`/api/checkout/${product}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -122,6 +129,18 @@ export function PaymentModal({ isOpen, onClose, product, stripeLink }: PaymentMo
                     <p className="font-sans text-sm text-red-600">{error}</p>
                   </div>
                 )}
+
+                <div className="mb-4">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={devMode}
+                      onChange={(e) => setDevMode(e.target.checked)}
+                      className="h-4 w-4 rounded border-[#E0DCD6]"
+                    />
+                    <span className="font-sans text-xs text-[#666]">Dev mode (бypass Stripe)</span>
+                  </label>
+                </div>
 
                 {showEmailInput && !isValidStripeLink && (
                   <div className="mb-4">

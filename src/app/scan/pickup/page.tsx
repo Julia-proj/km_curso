@@ -121,6 +121,13 @@ function PickupContent() {
     <main className="min-h-screen bg-[#FAF7F4] py-12">
       <div className="km-container">
         <div className="mx-auto max-w-2xl">
+          <button
+            onClick={() => router.back()}
+            className="inline-flex items-center gap-2 text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors mb-6"
+          >
+            ← Назад
+          </button>
+
           <h1 className="font-hero-face text-3xl font-semibold text-[#1A1A1A] md:text-4xl">
             Оформление заказа
           </h1>

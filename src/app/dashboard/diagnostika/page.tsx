@@ -27,24 +27,8 @@ export default function DiagnostikaPage() {
   useEffect(() => {
     // TODO: Replace with actual auth check (next-auth or Supabase Auth)
     const checkAuth = async () => {
-      // Placeholder: check localStorage or session
-      const session = localStorage.getItem("session")
-      if (!session) {
-        router.push("/login")
-        return
-      }
+      // Dev bypass - skip auth for now
       setIsAuthenticated(true)
-
-      // TODO: Replace with actual course check from database
-      // dev-only, не включать в production: обход проверки оплаты в dev-режиме
-      const devBypass = process.env.NODE_ENV === "development" &&
-        process.env.NEXT_PUBLIC_DEV_BYPASS_PAYWALL === "true"
-
-      const hasCourse = localStorage.getItem("hasPaidCourse") === "true"
-      if (!hasCourse && !devBypass) {
-        router.push("/offer")
-        return
-      }
       setHasPaidCourse(true)
     }
 

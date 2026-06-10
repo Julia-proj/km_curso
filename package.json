@@ -12,9 +12,7 @@
     "perf": "npm run check-images && echo '\n📊 Run: npm run build && npm start\n🌐 Then test at: https://pagespeed.web.dev/'"
   },
   "dependencies": {
-    "@paper-design/shaders-react": "^0.0.76",
     "@pdf-lib/fontkit": "^1.1.1",
-    "@stripe/stripe-js": "^9.8.0",
     "@supabase/supabase-js": "^2.108.0",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
@@ -26,7 +24,6 @@
     "qrcode.react": "^4.2.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "resend": "^6.12.2",
     "stripe": "^22.2.0",
     "zod": "^4.4.3",
     "zustand": "^5.0.13"

@@ -107,6 +107,15 @@
   --shadow-soft: 0 30px 80px -40px oklch(0.4 0.05 30 / 0.3);
   --principles-bg: oklch(0.14 0.026 42);
   --principles-bg-soft: oklch(0.215 0.038 45);
+
+  /* HAIRLAB Design Tokens */
+  --color-cream: #F4EFE6;
+  --color-paper: #FBF8F2;
+  --color-ink: #1C1A17;
+  --color-ink-soft: #57524B;
+  --color-bronze: #A98A5B;
+  --color-accent: #C9885B;
+  --color-line: rgba(28, 26, 23, 0.14);
 }
 
 /* ======================================== */

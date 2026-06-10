@@ -34,24 +34,47 @@ export default function ResultPage() {
   if (!hasAnswers) return null
 
   return (
-    <main className="min-h-screen bg-[#F8F5F1] flex flex-col items-center justify-center px-4 py-16">
+    <main
+      className="min-h-screen flex flex-col items-center justify-center px-4 py-16"
+      style={{ background: "var(--color-cream)" }}
+    >
       <div className="absolute top-4 left-4">
         <BackButton />
       </div>
       <div className="absolute top-4 right-4">
         <Link
           href="/lesson"
-          className="inline-flex items-center gap-2 text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
+          className="inline-flex items-center gap-2 text-sm hover:text-[var(--color-text)] transition-colors"
+          style={{ color: "var(--color-ink-soft)" }}
         >
           Бесплатный урок →
         </Link>
       </div>
       <div className="w-full max-w-lg pt-12">
-        <p className="text-[11px] font-semibold tracking-[3px] uppercase text-[var(--color-text-muted)] mb-3 text-center">
+        <p
+          className="text-center mb-3"
+          style={{
+            fontSize: "0.6875rem",
+            fontWeight: 500,
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+            color: "var(--color-bronze)",
+          }}
+        >
           KM · Результат опроса
         </p>
 
-        <h1 className="text-2xl md:text-3xl font-semibold text-[var(--color-text)] mb-10 text-center text-balance tracking-tight">
+        <h1
+          className="text-center text-balance mb-10"
+          style={{
+            fontFamily: "var(--font-fraunces), Georgia, serif",
+            fontSize: "clamp(1.75rem, 5vw, 2.5rem)",
+            fontWeight: 300,
+            lineHeight: 1.1,
+            letterSpacing: "-0.02em",
+            color: "var(--color-ink)",
+          }}
+        >
           Твой персональный анализ
         </h1>
 
@@ -64,12 +87,33 @@ export default function ResultPage() {
             return (
               <div
                 key={id}
-                className="border border-[var(--color-border)] rounded-[var(--radius-lg)] px-6 py-5 bg-[var(--color-card)]"
+                style={{
+                  border: "1px solid var(--color-line)",
+                  borderRadius: "2px",
+                  padding: "1.25rem 1.5rem",
+                  background: "var(--color-paper)",
+                }}
               >
-                <p className="text-[10px] font-semibold tracking-[2px] uppercase text-[var(--color-text-muted)] mb-2">
+                <p
+                  style={{
+                    fontSize: "0.6875rem",
+                    fontWeight: 500,
+                    letterSpacing: "0.18em",
+                    textTransform: "uppercase",
+                    color: "var(--color-bronze)",
+                    marginBottom: "0.5rem",
+                  }}
+                >
                   {label}
                 </p>
-                <p className="text-sm text-[var(--color-text)] leading-relaxed">
+                <p
+                  style={{
+                    fontFamily: "var(--font-body-face), Inter, sans-serif",
+                    fontSize: "0.875rem",
+                    lineHeight: 1.6,
+                    color: "var(--color-ink)",
+                  }}
+                >
                   {feedback}
                 </p>
               </div>
@@ -77,8 +121,23 @@ export default function ResultPage() {
           })}
         </div>
 
-        <div className="bg-[var(--color-accent-soft)] border border-[var(--color-border)] rounded-[var(--radius-lg)] px-6 py-6 mb-8 text-center">
-          <p className="text-sm text-[var(--color-text)] leading-relaxed">
+        <div
+          className="mb-8 text-center"
+          style={{
+            border: "1px solid var(--color-line)",
+            borderRadius: "2px",
+            padding: "1.5rem",
+            background: "var(--color-paper)",
+          }}
+        >
+          <p
+            style={{
+              fontFamily: "var(--font-body-face), Inter, sans-serif",
+              fontSize: "0.875rem",
+              lineHeight: 1.6,
+              color: "var(--color-ink)",
+            }}
+          >
             Посмотри бесплатный урок, где я подробно разобрала, что именно поможет
             тебе восстановить волосы в домашних условиях и получить реальный результат.
           </p>
@@ -87,7 +146,18 @@ export default function ResultPage() {
         <div className="text-center">
           <Link
             href="/lesson"
-            className="inline-block rounded-none bg-[var(--color-accent)] px-8 py-4 text-sm font-semibold text-white transition-colors hover:bg-[var(--color-accent-hover)]"
+            className="inline-block"
+            style={{
+              background: "var(--color-accent)",
+              padding: "1rem 2rem",
+              fontSize: "0.875rem",
+              fontWeight: 600,
+              letterSpacing: "0.11em",
+              textTransform: "uppercase",
+              color: "white",
+              borderRadius: "2px",
+              transition: "background-color 0.2s",
+            }}
           >
             Посмотреть бесплатный урок
           </Link>
