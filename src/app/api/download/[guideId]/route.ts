@@ -118,11 +118,13 @@ export async function GET(
   const safeSuffix = email.replace(/[^a-zA-Z0-9]/g, '-')
   const filename = `hairlab-${guideId}-${safeSuffix}.pdf`
 
-  return new NextResponse(modifiedPdfBytes, {
+  const body = Buffer.from(modifiedPdfBytes)
+
+  return new NextResponse(body, {
     headers: {
       'Content-Type': 'application/pdf',
       'Content-Disposition': `attachment; filename="${filename}"`,
-      'Content-Length': modifiedPdfBytes.byteLength.toString(),
+      'Content-Length': body.byteLength.toString(),
     },
   })
 }
