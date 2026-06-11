@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
     }
     
     const fileExt = photo.name.split('.').pop();
-    const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+    const fileName = `scans/${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
     
     const { data: uploadData, error: uploadError } = await supabaseAdmin.storage
       .from('hair-photos')

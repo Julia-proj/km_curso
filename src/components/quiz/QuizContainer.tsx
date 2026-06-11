@@ -51,7 +51,7 @@ export function QuizContainer() {
       </div>
 
       <div className="flex justify-between items-center mt-8">
-        {currentStep > 0 && (
+        {currentStep > 0 ? (
           <button
             type="button"
             onClick={prevStep}
@@ -62,8 +62,19 @@ export function QuizContainer() {
             </svg>
             Назад
           </button>
+        ) : (
+          <button
+            type="button"
+            onClick={() => router.push('/')}
+            className="text-sm font-medium text-[#666] hover:text-[#1A1A1A] transition-colors flex items-center gap-2"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+            На главную
+          </button>
         )}
-        {currentStep > 0 && <div />} {/* Spacer for centering when back button is shown */}
+        <div />
       </div>
     </div>
   )

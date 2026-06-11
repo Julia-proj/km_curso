@@ -63,7 +63,7 @@ export default function ResultPage() {
           className="inline-flex items-center gap-2 text-sm hover:text-[var(--color-text)] transition-colors"
           style={{ color: "var(--color-ink-soft)" }}
         >
-          Бесплатный урок →
+          Урок в подарок →
         </Link>
       </div>
       <div className="w-full max-w-lg pt-12">
@@ -190,7 +190,7 @@ export default function ResultPage() {
               transition: "background-color 0.2s",
             }}
           >
-            Посмотреть бесплатный урок
+            Урок в подарок
           </Link>
         </div>
       </div>

@@ -287,11 +287,11 @@ export async function POST(request: NextRequest) {
       );
     }
     
-    // Generate unique filename
+    // Generate unique filename with path prefix
     const timestamp = Date.now();
     const randomString = Math.random().toString(36).substring(2, 15);
     const fileExtension = file.name.split('.').pop();
-    const fileName = `diagnosis_${timestamp}_${randomString}.${fileExtension}`;
+    const fileName = `diagnoses/${timestamp}_${randomString}.${fileExtension}`;
     
     // Upload to Supabase Storage
     console.log('[DIAGNOSIS] Uploading to Supabase...');

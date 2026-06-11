@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, Manrope, Fraunces } from 'next/font/google'
+import { Inter, Manrope, Fraunces, Playfair_Display } from 'next/font/google'
 import './globals.css'
 import { LoadingScreen } from '@/components/LoadingScreen'
 import { Analytics } from '@vercel/analytics/react'
@@ -28,6 +28,15 @@ const fraunces = Fraunces({
   style: ['normal', 'italic'],
   axes: ['SOFT', 'WONK'],
   variable: '--font-fraunces',
+  display: 'swap',
+  fallback: ['Georgia', 'serif'],
+})
+
+const playfair = Playfair_Display({
+  subsets: ['cyrillic', 'latin'],
+  style: ['normal', 'italic'],
+  weight: ['400', '500', '600'],
+  variable: '--font-serif-face',
   display: 'swap',
   fallback: ['Georgia', 'serif'],
 })
@@ -65,7 +74,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="ru" className={`${inter.variable} ${manrope.variable} ${fraunces.variable}`}>
+    <html lang="ru" className={`${inter.variable} ${manrope.variable} ${fraunces.variable} ${playfair.variable}`}>
       <head>
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />

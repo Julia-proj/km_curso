@@ -108,6 +108,24 @@ export function WhatYouGetSection({
               </span>
             </div>
 
+            <div className="mb-6 overflow-hidden rounded-xl border border-[#E8E0D9] bg-[#FAF7F4]">
+              <div className="flex w-full justify-center px-4 pt-4">
+                <Image
+                  alt="Меню курса: видео-уроки, AI-диагностика, методички и закрытый Telegram"
+                  src="/images/hero_screen_menu.jpg"
+                  width={560}
+                  height={1024}
+                  loading="lazy"
+                  quality={90}
+                  className="h-auto w-auto max-h-[380px] rounded-lg shadow-sm sm:max-h-[460px]"
+                  sizes="(max-width: 768px) 70vw, 280px"
+                />
+              </div>
+              <p className="px-4 py-2.5 font-sans text-xs leading-snug text-[#666]">
+                Так выглядит курс внутри: видео-уроки, AI-диагностика, методички и закрытый Telegram
+              </p>
+            </div>
+
             <p className="mb-2 font-sans text-xs font-semibold text-[#999] sm:mb-3">Видео-уроки</p>
             <ul className="mb-4 space-y-2 sm:mb-6">
               {videoLessons.map((lesson) => (
