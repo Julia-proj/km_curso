@@ -174,7 +174,7 @@ export function LandingHeroSection() {
               href={guideLink}
               className="inline-flex min-h-[3.35rem] w-full items-center justify-center rounded-full border border-[#D9A19D]/58 bg-[#2B231F]/34 px-5 py-3.5 font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-white/94 backdrop-blur-[2px] transition-all hover:border-[#D7A29D] hover:bg-white/8 min-[390px]:min-h-[3.75rem] min-[390px]:px-6 min-[390px]:text-[13px] min-[390px]:tracking-[0.24em]"
             >
-              <span className="flex-1 text-center">Методичка за 12€</span>
+              <span className="flex-1 text-center">Методичка ��а 12€</span>
               <ArrowRightIcon size={19} />
             </a>
             <p className="pt-1 text-center font-sans text-[9px] tracking-[0.07em] text-white/38">
@@ -222,7 +222,9 @@ export function LandingHeroSection() {
               >
                 Салонное
                 <br />
-                восстановление
+                <span className="italic font-normal text-[#B07B4A]">
+                  восстановление
+                </span>
                 <br />
                 волос дома
               </motion.h1>
@@ -280,16 +282,15 @@ export function LandingHeroSection() {
         </div>
 
         {/* Right: photo column — extends to screen edge */}
-        <div className="relative flex-none overflow-hidden" style={{ width: "44%" }}>
+        <div className="relative flex-none overflow-hidden lg:w-[42%] xl:w-[44%] 2xl:w-[46%]">
           <Image
             alt="Елена - основатель HairLab"
-            className="object-cover"
+            className="object-cover object-[72%_top] xl:object-[right_top]"
             fill
             priority
-            quality={85}
-            sizes="44vw"
+            quality={90}
+            sizes="(min-width: 1536px) 46vw, 44vw"
             src={desktopHeroImage}
-            style={{ objectPosition: "right top" }}
             placeholder="blur"
             blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwC3ABHx//Z"
           />
