@@ -39,6 +39,28 @@ function PlayIcon({ size = 18 }: { size?: number }) {
   )
 }
 
+function GiftIcon({ size = 18 }: { size?: number }) {
+  return (
+    <svg
+      aria-hidden="true"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.3"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect x="3" y="8" width="18" height="4" rx="1" />
+      <path d="M12 8v13" />
+      <path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7" />
+      <path d="M12 8C12 8 11 4 8.5 4a2.5 2.5 0 0 0 0 5H12Z" />
+      <path d="M12 8C12 8 13 4 15.5 4a2.5 2.5 0 0 1 0 5H12Z" />
+    </svg>
+  )
+}
+
 /**
  * 3D-mockup двух методичек: одна слегка поверх другой,
  * рядом — превью видео-урока. Два визуала вместо трёх.
@@ -58,53 +80,57 @@ function HeroVisuals({
       initial={{ opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3, duration: 0.55 }}
-      className="relative flex items-end gap-4"
+      className="relative flex items-start gap-4"
     >
       {/* 3D mockup методичек */}
-      <div className="relative">
-        {/* задняя методичка (аксессуары) — выглядывает сверху-справа */}
-        <div
-          className={`absolute -right-5 -top-6 h-[5.5rem] w-[4.25rem] overflow-hidden rounded-md border ${cardBorder} bg-white shadow-[0_10px_28px_rgba(20,12,8,0.28)] rotate-[7deg]`}
-        >
-          <img
-            alt="Методичка: аксессуары и инструменты"
-            className="h-full w-full object-cover object-top"
-            src={guideMockupBack}
-          />
-        </div>
-        {/* передняя методичка (домашний уход) — на переднем плане */}
-        <div
-          className={`relative z-10 h-[5.5rem] w-[4.25rem] overflow-hidden rounded-md border ${cardBorder} bg-white shadow-[0_16px_36px_rgba(20,12,8,0.38)] -rotate-[5deg]`}
-        >
-          <img
-            alt="Методичка по домашнему уходу за волосами"
-            className="h-full w-full object-cover object-top"
-            src={guideMockupFront}
-          />
+      <div>
+        <div className="relative w-[4.25rem]">
+          {/* задняя методичка (аксессуары) — выглядывает сверху-справа */}
+          <div
+            className={`absolute -right-5 -top-6 h-[5.5rem] w-[4.25rem] overflow-hidden rounded-md border ${cardBorder} bg-white shadow-[0_10px_28px_rgba(20,12,8,0.28)] rotate-[7deg]`}
+          >
+            <img
+              alt="Методичка: аксессуары и инструменты"
+              className="h-full w-full object-cover object-top"
+              src={guideMockupBack}
+            />
+          </div>
+          {/* передняя методичка (домашний уход) — на переднем плане */}
+          <div
+            className={`relative z-10 h-[5.5rem] w-[4.25rem] overflow-hidden rounded-md border ${cardBorder} bg-white shadow-[0_16px_36px_rgba(20,12,8,0.38)] -rotate-[5deg]`}
+          >
+            <img
+              alt="Методичка по домашнему уходу за волосами"
+              className="h-full w-full object-cover object-top"
+              src={guideMockupFront}
+            />
+          </div>
         </div>
         {showLabels && (
-          <span className={`mt-3 block pl-1 font-sans text-[10px] uppercase tracking-[0.18em] ${labelColor}`}>
+          <span className={`mt-3 block font-sans text-[10px] uppercase tracking-[0.18em] ${labelColor}`}>
             2 методички
           </span>
         )}
       </div>
 
       {/* превью видео-урока */}
-      <div className="relative pl-1">
-        <div
-          className={`relative h-[5.5rem] w-[4.25rem] overflow-hidden rounded-md border ${cardBorder} bg-white shadow-[0_12px_30px_rgba(20,12,8,0.32)] rotate-[2deg]`}
-        >
-          <img
-            alt="Видео-урок из курса HAIRLAB"
-            className="h-full w-full object-cover"
-            src={lessonScreen}
-            style={{ objectPosition: "50% 30%" }}
-          />
-          <span className="absolute inset-0 flex items-center justify-center">
-            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/85 pl-0.5 text-[#1A1A1A] shadow-md">
-              <PlayIcon size={12} />
+      <div className="pl-1">
+        <div className="relative w-[4.25rem]">
+          <div
+            className={`relative h-[5.5rem] w-[4.25rem] overflow-hidden rounded-md border ${cardBorder} bg-white shadow-[0_12px_30px_rgba(20,12,8,0.32)] rotate-[2deg]`}
+          >
+            <img
+              alt="Видео-урок из курса HAIRLAB"
+              className="h-full w-full object-cover"
+              src={lessonScreen}
+              style={{ objectPosition: "50% 30%" }}
+            />
+            <span className="absolute inset-0 flex items-center justify-center">
+              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/85 pl-0.5 text-[#1A1A1A] shadow-md">
+                <PlayIcon size={12} />
+              </span>
             </span>
-          </span>
+          </div>
         </div>
         {showLabels && (
           <span className={`mt-3 block pl-1 font-sans text-[10px] uppercase tracking-[0.18em] ${labelColor}`}>
@@ -116,72 +142,62 @@ function HeroVisuals({
   )
 }
 
-const featureChips = [
-  { label: "Подбор составов", icon: "list" },
-  { label: "Видео-уроки", icon: "play" },
-  { label: "2 методички", icon: "book" },
-  { label: "Протоколы", icon: "check" },
-  { label: "AI-диагностика", icon: "sparkle" },
-  { label: "Закрытый Telegram", icon: "send" },
-] as const
-
-function ChipIcon({ name, size = 13 }: { name: string; size?: number }) {
-  const common = {
-    width: size,
-    height: size,
-    viewBox: "0 0 24 24",
-    "aria-hidden": true as const,
-  }
-  if (name === "play") {
-    return <svg {...common} fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
-  }
-  if (name === "sparkle") {
-    return (
-      <svg {...common} fill="currentColor">
-        <path d="M12 2.75 14.45 9.55 21.25 12 14.45 14.45 12 21.25 9.55 14.45 2.75 12 9.55 9.55 12 2.75Z" />
-      </svg>
-    )
-  }
-  const stroke = {
-    fill: "none",
-    stroke: "currentColor",
-    strokeWidth: 2,
-    strokeLinecap: "round" as const,
-    strokeLinejoin: "round" as const,
-  }
-  if (name === "book") {
-    return <svg {...common} {...stroke}><path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z" /><path d="M18 3v16" /></svg>
-  }
-  if (name === "list") {
-    return <svg {...common} {...stroke}><path d="M8 6h12M8 12h12M8 18h12" /><path d="M3 6h.01M3 12h.01M3 18h.01" /></svg>
-  }
-  if (name === "check") {
-    return <svg {...common} {...stroke}><path d="M9 11l3 3L22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></svg>
-  }
-  // send / telegram
-  return <svg {...common} {...stroke}><path d="M22 2 11 13" /><path d="M22 2 15 22l-4-9-9-4z" /></svg>
-}
-
-function FeatureChips() {
+/**
+ * Десктоп-превью продукта: портретный ряд из реальных ассетов —
+ * скрин видео-урока (вертикальный) + пара методичек (обложки А4).
+ * Все карточки одной высоты, без насильного кропа в 16:9.
+ */
+function HeroProductPreview() {
   return (
-    <motion.ul
-      initial={{ opacity: 0, y: 18 }}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.26, duration: 0.55 }}
-      className="mt-8 flex max-w-[30rem] flex-wrap gap-x-3 gap-y-3"
+      transition={{ delay: 0.32, duration: 0.55 }}
+      className="flex items-end gap-5"
     >
-      {featureChips.map((chip) => (
-        <li
-          key={chip.label}
-          className="inline-flex items-center gap-2.5 rounded-lg bg-white/50 px-4 py-2.5 font-sans text-[13px] font-medium tracking-[0.02em] text-[#5A5046] shadow-[0_1px_3px_rgba(20,12,8,0.06)] backdrop-blur-sm transition-all hover:bg-white/70 hover:shadow-[0_2px_8px_rgba(20,12,8,0.1)]"
-        >
-          <span className="text-[#C4956A]">
-            <ChipIcon name={chip.icon} />
+      {/* видео-урок — портретное превью страницы урока */}
+      <figure className="m-0 shrink-0">
+        <div className="relative h-[11rem] w-[8rem] overflow-hidden rounded-2xl border border-black/5 bg-white shadow-[0_28px_56px_-18px_rgba(20,12,8,0.55)] ring-1 ring-white/60">
+          <img
+            alt="Видео-урок из курса HAIRLAB"
+            className="h-full w-full object-cover"
+            src={lessonScreen}
+            style={{ objectPosition: "50% 46%" }}
+          />
+          <span className="absolute inset-0 flex items-center justify-center">
+            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/90 pl-0.5 text-[#1A1A1A] shadow-lg">
+              <PlayIcon size={22} />
+            </span>
           </span>
-          {chip.label}
-        </li>
-      ))}
-    </motion.ul>
+        </div>
+        <figcaption className="mt-3 font-sans text-[11px] font-medium uppercase tracking-[0.2em] text-[#4A4038] drop-shadow-[0_1px_6px_rgba(250,247,244,0.9)]">
+          Видео-уроки
+        </figcaption>
+      </figure>
+
+      {/* 2 методички — 3D-пара обложек */}
+      <figure className="m-0 shrink-0 pl-1 pr-4 pt-4">
+        <div className="relative h-[11rem] w-[8.25rem]">
+          <div className="absolute -right-3 -top-3 h-[11rem] w-[8.25rem] overflow-hidden rounded-xl border border-black/5 bg-white shadow-[0_18px_40px_rgba(20,12,8,0.32)] rotate-[6deg]">
+            <img
+              alt="Методичка: аксессуары и инструменты"
+              className="h-full w-full object-cover object-top"
+              src={guideMockupBack}
+            />
+          </div>
+          <div className="relative z-10 h-[11rem] w-[8.25rem] overflow-hidden rounded-xl border border-black/5 bg-white shadow-[0_28px_56px_-16px_rgba(20,12,8,0.55)] ring-1 ring-white/60 -rotate-[4deg]">
+            <img
+              alt="Методичка по домашнему уходу за волосами"
+              className="h-full w-full object-cover object-top"
+              src={guideMockupFront}
+            />
+          </div>
+        </div>
+        <figcaption className="mt-3 font-sans text-[11px] font-medium uppercase tracking-[0.2em] text-[#4A4038] drop-shadow-[0_1px_6px_rgba(250,247,244,0.9)]">
+          2 методички
+        </figcaption>
+      </figure>
+    </motion.div>
   )
 }
 
@@ -196,13 +212,13 @@ export function LandingHeroSection() {
         <div className="absolute inset-0">
           <Image
             alt="Елена - основатель HairLab"
-            className="h-full w-full translate-x-[-1rem] translate-y-6 scale-[1.08] object-cover"
+            className="h-full w-full translate-y-6 scale-[1.08] object-cover"
             fill
             priority
             quality={85}
             sizes="100vw"
             src={mobileHeroImage}
-            style={{ objectPosition: "45% 50%" }}
+            style={{ objectPosition: "55% 45%" }}
             placeholder="blur"
             blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwC3ABHx//Z"
           />
@@ -211,7 +227,7 @@ export function LandingHeroSection() {
           <div className="absolute inset-x-0 bottom-0 h-[18%] bg-[#332923]/55" />
         </div>
 
-        <div className="relative z-10 flex min-h-[100svh] flex-col justify-start px-5 pb-4 pt-9 min-[390px]:px-6 min-[390px]:pb-5 min-[390px]:pt-10">
+        <div className="relative z-10 flex min-h-[100svh] flex-col justify-start px-5 pb-[11.5rem] pt-9 min-[390px]:px-6 min-[390px]:pb-[12rem] min-[390px]:pt-10">
           <div className="w-full max-w-[23rem] pb-4 min-[390px]:pb-5">
             <motion.p
               initial={{ opacity: 0, y: 14 }}
@@ -258,43 +274,54 @@ export function LandingHeroSection() {
           </div>
 
           <div className="mt-4 min-[390px]:mt-5">
-            <HeroVisuals tone="dark" showLabels={false} />
+            <HeroVisuals tone="dark" showLabels />
           </div>
 
-          <div className="absolute inset-x-5 bottom-5 z-20 flex flex-col gap-2 min-[390px]:inset-x-6 min-[390px]:bottom-6">
+          <div className="absolute inset-x-5 bottom-5 z-20 flex flex-col gap-2.5 min-[390px]:inset-x-6 min-[390px]:bottom-6">
             <a
               href="/quiz"
-              className="inline-flex min-h-[3.35rem] w-full flex-col items-center justify-center rounded-full bg-[#FAF7F4] border-2 border-[#E0DCD6] px-5 py-3 font-sans text-[11px] font-semibold uppercase tracking-[0.1em] text-[#1A1A1A] shadow-[0_22px_48px_rgba(34,25,21,0.28)] transition-all hover:bg-white hover:border-[#C4956A] min-[390px]:min-h-[3.75rem] min-[390px]:px-6 min-[390px]:text-[13px] min-[390px]:tracking-[0.15em]"
+              className="inline-flex min-h-[3.35rem] w-full items-center justify-center gap-2.5 rounded-full bg-[#FAF7F4] border-2 border-[#E0DCD6] px-5 py-2 shadow-[0_22px_48px_rgba(34,25,21,0.28)] transition-all hover:bg-white hover:border-[#C4956A] min-[390px]:min-h-[3.75rem] min-[390px]:px-6"
             >
-              <span>Пройти бесплатный тест</span>
-              <span className="mt-0.5 text-[9px] font-medium normal-case tracking-[0.04em] text-[#C4956A] min-[390px]:text-[10px]">+ урок в подарок</span>
+              <span className="text-[#C4956A]">
+                <GiftIcon size={22} />
+              </span>
+              <span className="flex flex-col text-left">
+                <span className="font-sans text-[11px] font-semibold uppercase tracking-[0.1em] text-[#1A1A1A] min-[390px]:text-[13px] min-[390px]:tracking-[0.15em]">
+                  Пройти бесплатный тест
+                </span>
+                <span className="font-sans text-[9px] font-medium tracking-[0.04em] text-[#B07C6E] min-[390px]:text-[10px]">
+                  первый урок в подарок
+                </span>
+              </span>
             </a>
             <a
               href={guideLink}
-              className="inline-flex min-h-[3.35rem] w-full items-center justify-center rounded-full bg-[#D9A19D] px-5 py-3.5 font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-white shadow-[0_22px_48px_rgba(34,25,21,0.28)] transition-all hover:bg-[#C9918C] min-[390px]:min-h-[3.75rem] min-[390px]:px-6 min-[390px]:text-[13px] min-[390px]:tracking-[0.24em]"
+              className="inline-flex min-h-[3.35rem] w-full items-center justify-center rounded-full bg-[#D9A19D] px-5 py-2.5 shadow-[0_22px_48px_rgba(34,25,21,0.28)] transition-all hover:bg-[#C9918C] min-[390px]:min-h-[3.75rem] min-[390px]:px-6"
             >
-              <span className="flex-1 text-center">Методичка за 12€</span>
-              <ArrowRightIcon size={19} />
+              <span className="inline-flex items-center gap-2 font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-white min-[390px]:text-[13px] min-[390px]:tracking-[0.24em]">
+                Методичка за 12€
+                <ArrowRightIcon size={18} />
+              </span>
             </a>
-            <p className="pt-1 text-center font-sans text-[10px] tracking-[0.07em] text-white/38 min-[390px]:text-[11px]">
-              12€ методичка · 38€ полный курс с AI · доступ навсегда
+            <p className="text-center font-sans text-[10px] font-medium tracking-[0.06em] text-white/80 min-[390px]:text-[11px]">
+              38€ полный курс с AI-диагностикой · доступ навсегда
             </p>
           </div>
         </div>
       </div>
 
       {/* ── DESKTOP (lg+): editorial magazine split ── */}
-      <div className="hidden min-h-screen lg:grid lg:grid-cols-[1fr_minmax(420px,42%)]">
+      <div className="hidden min-h-screen lg:grid lg:grid-cols-[1fr_minmax(440px,46%)]">
 
         {/* Left: text column on cream background */}
-        <div className="flex flex-col justify-center bg-[#FAF7F4] px-12 py-16 xl:px-20 xl:pr-12">
-          <div className="max-w-[34rem]">
+        <div className="flex flex-col items-center justify-center bg-[#FAF7F4] px-12 py-10 xl:px-16 xl:py-12">
+          <div className="w-full max-w-[36rem]">
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="mb-6 flex items-center gap-3"
+              className="mb-5 flex items-center gap-3"
             >
               <span className="block h-px w-8 shrink-0 bg-[#C4956A]" aria-hidden="true" />
               <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.32em] text-[#C4956A]">
@@ -306,7 +333,7 @@ export function LandingHeroSection() {
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.08, duration: 0.55 }}
-              className="font-serif font-normal leading-[1.08] tracking-[-0.01em] text-[#1A1A1A] text-[clamp(2.75rem,4.2vw,4.75rem)]"
+              className="font-serif font-normal leading-[1.05] tracking-[-0.015em] text-[#1A1A1A] text-[clamp(3rem,4vw,4.5rem)]"
             >
               Салонное
               <br />
@@ -319,7 +346,7 @@ export function LandingHeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.16, duration: 0.55 }}
-              className="mt-6 font-sans text-xl font-medium text-[#1A1A1A]"
+              className="mt-5 font-sans text-2xl font-medium text-[#1A1A1A]"
             >
               Теперь у тебя дома.
             </motion.p>
@@ -328,33 +355,42 @@ export function LandingHeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.55 }}
-              className="mt-4 max-w-[30rem] font-sans text-base leading-relaxed text-[#5A5046]"
+              className="mt-4 max-w-[32rem] font-sans text-lg leading-relaxed text-[#4A4038]"
             >
-              База, которую мы передаём ученицам школы HAIRLAB в Мадриде.
+              База, которую мы передаём ученицам школы HAIRLAB.
               <span className="mt-2 block font-medium text-[#C4956A]">+ составы и AI-диагностика</span>
             </motion.p>
-
-            <FeatureChips />
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.23, duration: 0.55 }}
-              className="mt-9 flex flex-wrap items-stretch gap-3"
+              className="mt-8 flex flex-wrap items-stretch gap-3"
             >
               <a
                 href="/quiz"
-                className="inline-flex flex-col items-center justify-center rounded-2xl border-2 border-[#E0DCD6] bg-white px-8 py-3.5 text-center font-sans text-sm font-semibold text-[#1A1A1A] transition-all hover:border-[#C4956A]"
+                className="group inline-flex items-center gap-3 rounded-2xl border-2 border-[#E0DCD6] bg-white px-7 py-3 transition-all hover:border-[#C4956A]"
               >
-                <span>Пройти бесплатный тест</span>
-                <span className="mt-0.5 text-[11px] font-medium text-[#C4956A]">+ урок в подарок</span>
+                <span className="text-[#C4956A] transition-colors group-hover:text-[#B07C6E]">
+                  <GiftIcon size={22} />
+                </span>
+                <span className="flex flex-col text-left">
+                  <span className="font-sans text-sm font-semibold text-[#1A1A1A]">
+                    Пройти бесплатный тест
+                  </span>
+                  <span className="font-sans text-[11px] font-medium tracking-[0.01em] text-[#C4956A]">
+                    первый урок в подарок
+                  </span>
+                </span>
               </a>
               <a
                 href={guideLink}
-                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#D9A19D] px-8 font-sans text-sm font-semibold text-white shadow-[0_14px_30px_-12px_rgba(210,145,140,0.75)] transition-all hover:bg-[#C9918C]"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#D9A19D] px-8 py-3 text-white shadow-[0_14px_30px_-12px_rgba(210,145,140,0.75)] transition-all hover:bg-[#C9918C]"
               >
-                Методичка за 12€
-                <ArrowRightIcon size={16} />
+                <span className="inline-flex items-center gap-2 font-sans text-sm font-semibold">
+                  Методичка за 12€
+                  <ArrowRightIcon size={16} />
+                </span>
               </a>
             </motion.div>
 
@@ -362,9 +398,9 @@ export function LandingHeroSection() {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.55 }}
-              className="mt-8 font-sans text-sm tracking-[0.04em] text-[#9C9287]"
+              className="mt-6 font-sans text-sm tracking-[0.04em] text-[#9C9287]"
             >
-              12€ методичка · 38€ полный курс с AI · доступ навсегда
+              12€ методичка · 38€ полный курс с AI-диагностикой · доступ навсегда
             </motion.p>
 
           </div>
@@ -393,6 +429,11 @@ export function LandingHeroSection() {
               </p>
             </figcaption>
           </figure>
+
+          {/* превью продукта — плавающая накладка на шве колонок, заходит на фото */}
+          <div className="pointer-events-none absolute left-0 top-[59%] z-20 -translate-x-[18%] -translate-y-1/2">
+            <HeroProductPreview />
+          </div>
         </div>
       </div>
 
