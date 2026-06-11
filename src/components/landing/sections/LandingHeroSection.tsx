@@ -168,12 +168,12 @@ function FeatureChips() {
       initial={{ opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.26, duration: 0.55 }}
-      className="mt-8 flex max-w-[30rem] flex-wrap gap-x-2.5 gap-y-2.5"
+      className="mt-8 flex max-w-[30rem] flex-wrap gap-x-3 gap-y-3"
     >
       {featureChips.map((chip) => (
         <li
           key={chip.label}
-          className="inline-flex items-center gap-2 rounded-full border border-[#E6DFD5] bg-white/70 px-3.5 py-2 font-sans text-[12px] font-medium tracking-[0.01em] text-[#5A5046]"
+          className="inline-flex items-center gap-2.5 rounded-lg bg-white/50 px-4 py-2.5 font-sans text-[13px] font-medium tracking-[0.02em] text-[#5A5046] shadow-[0_1px_3px_rgba(20,12,8,0.06)] backdrop-blur-sm transition-all hover:bg-white/70 hover:shadow-[0_2px_8px_rgba(20,12,8,0.1)]"
         >
           <span className="text-[#C4956A]">
             <ChipIcon name={chip.icon} />
@@ -250,11 +250,10 @@ export function LandingHeroSection() {
               transition={{ delay: 0.22, duration: 0.55 }}
               className="mt-5 font-sans text-xs font-normal text-white/84 drop-shadow-[0_2px_14px_rgba(20,12,8,0.24)] min-[390px]:mt-7 min-[390px]:text-sm"
             >
-              + составы, видео-уроки, гайды, протоколы и AI-диагностика.
+              База, которую мы передаём ученицам
               <br />
-              База, которую мы передаём ученицам школы
-              <br />
-              HAIRLAB в Мадриде.
+              школы HAIRLAB в Мадриде.
+              <span className="mt-1.5 block font-medium text-[#EBC5BE]">+ составы и AI-диагностика</span>
             </motion.p>
           </div>
 
@@ -285,11 +284,11 @@ export function LandingHeroSection() {
       </div>
 
       {/* ── DESKTOP (lg+): editorial magazine split ── */}
-      <div className="hidden lg:flex min-h-screen">
+      <div className="hidden min-h-screen lg:grid lg:grid-cols-[1fr_minmax(420px,42%)]">
 
         {/* Left: text column on cream background */}
-        <div className="flex flex-1 flex-col justify-center bg-[#FAF7F4] px-12 py-12 xl:px-16 xl:py-16 xl:pr-10">
-          <div className="max-w-[32rem] xl:max-w-[36rem]">
+        <div className="flex flex-col justify-center bg-[#FAF7F4] px-12 py-16 xl:px-20 xl:pr-12">
+          <div className="max-w-[34rem]">
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -320,7 +319,7 @@ export function LandingHeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.16, duration: 0.55 }}
-              className="mt-7 font-sans text-base leading-relaxed text-[#1A1A1A] xl:text-lg"
+              className="mt-6 font-sans text-xl font-medium text-[#1A1A1A]"
             >
               Теперь у тебя дома.
             </motion.p>
@@ -329,9 +328,10 @@ export function LandingHeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.55 }}
-              className="mt-5 font-sans text-base leading-relaxed text-[#666] xl:text-lg"
+              className="mt-4 max-w-[30rem] font-sans text-base leading-relaxed text-[#5A5046]"
             >
-              + составы, видео-уроки, гайды, протоколы и AI-диагностика. База, которую мы передаём ученицам школы HAIRLAB в Мадриде.
+              База, которую мы передаём ученицам школы HAIRLAB в Мадриде.
+              <span className="mt-2 block font-medium text-[#C4956A]">+ составы и AI-диагностика</span>
             </motion.p>
 
             <FeatureChips />
@@ -340,20 +340,21 @@ export function LandingHeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.23, duration: 0.55 }}
-              className="mt-10 flex flex-wrap gap-3"
+              className="mt-9 flex flex-wrap items-stretch gap-3"
             >
               <a
                 href="/quiz"
-                className="inline-flex flex-col items-center rounded-xl bg-[#FAF7F4] border-2 border-[#E0DCD6] px-7 py-3.5 font-sans text-sm font-semibold text-[#1A1A1A] transition-all hover:border-[#C4956A] hover:bg-white xl:px-8"
+                className="inline-flex flex-col items-center justify-center rounded-2xl border-2 border-[#E0DCD6] bg-white px-8 py-3.5 text-center font-sans text-sm font-semibold text-[#1A1A1A] transition-all hover:border-[#C4956A]"
               >
                 <span>Пройти бесплатный тест</span>
                 <span className="mt-0.5 text-[11px] font-medium text-[#C4956A]">+ урок в подарок</span>
               </a>
               <a
                 href={guideLink}
-                className="inline-flex items-center gap-2 rounded-xl bg-[#D9A19D] px-7 py-4 font-sans text-sm font-semibold text-white transition-all hover:bg-[#C9918C] xl:px-8"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#D9A19D] px-8 font-sans text-sm font-semibold text-white shadow-[0_14px_30px_-12px_rgba(210,145,140,0.75)] transition-all hover:bg-[#C9918C]"
               >
                 Методичка за 12€
+                <ArrowRightIcon size={16} />
               </a>
             </motion.div>
 
@@ -369,27 +370,29 @@ export function LandingHeroSection() {
           </div>
         </div>
 
-        {/* Right: photo column — smaller, rounded, with breathing room */}
-        <div className="relative hidden lg:flex w-[37%] items-center justify-center bg-[#FAF7F4] py-12 pr-10 xl:py-16 xl:pr-14">
-          <div className="relative h-full w-full overflow-hidden rounded-[1.75rem] shadow-[0_30px_70px_-30px_rgba(40,28,22,0.45)]">
+        {/* Right: photo column */}
+        <div className="relative bg-[#FAF7F4] py-12 pr-12 xl:py-16 xl:pr-16">
+          <figure className="relative h-full w-full overflow-hidden rounded-[1.75rem] shadow-[0_30px_70px_-30px_rgba(40,28,22,0.45)]">
           <Image
             alt="Елена - основатель HairLab"
             className="object-cover"
             fill
             priority
             quality={85}
-            sizes="37vw"
+            sizes="42vw"
             src={desktopHeroImage}
             style={{ objectPosition: "center" }}
             placeholder="blur"
             blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCгоKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwC3ABHx//Z"
           />
-          </div>
-
-          {/* Floating 3D-mockup методичек + видео-урок, overlapping photo */}
-          <div className="absolute -left-12 bottom-12 z-20 rounded-2xl bg-white/85 px-6 py-5 shadow-[0_24px_60px_-24px_rgba(40,28,22,0.5)] backdrop-blur-md xl:-left-16">
-            <HeroVisuals tone="light" showLabels={false} />
-          </div>
+            <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-[#241712]/75 via-[#241712]/20 to-transparent" />
+            <figcaption className="absolute inset-x-7 bottom-6 text-white">
+              <p className="font-serif text-2xl italic leading-none">Елена</p>
+              <p className="mt-2 font-sans text-[11px] font-medium uppercase tracking-[0.22em] text-white/75">
+                Основатель HAIRLAB · Мадрид
+              </p>
+            </figcaption>
+          </figure>
         </div>
       </div>
 
