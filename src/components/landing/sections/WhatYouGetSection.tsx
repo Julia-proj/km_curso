@@ -119,7 +119,7 @@ export function WhatYouGetSection({
             </ul>
 
             <p className="mb-2 font-sans text-xs font-semibold text-[#999] sm:mb-3">Дополнительно</p>
-            <ul className="mb-6 flex-1 space-y-2 sm:mb-8">
+            <ul className="mb-5 space-y-2 sm:mb-6">
               {extras.map((item) => (
                 <li key={item} className="flex items-start gap-2.5 font-sans text-sm text-[#666] sm:text-base">
                   <CheckIcon className="mt-0.5 shrink-0 text-[#D29B9B]" />
@@ -127,6 +127,32 @@ export function WhatYouGetSection({
                 </li>
               ))}
             </ul>
+
+            <div className="mb-6 flex items-center gap-3 rounded-xl border border-[#E8E0D9] bg-[#FAF7F4] p-3 sm:mb-8">
+              <div className="flex shrink-0 gap-3">
+                {[
+                  { src: "/images/guia_pdf.PNG", alt: "Методичка", objPos: "50% 10%" },
+                  { src: "/images/acces_pdf.PNG", alt: "Аксессуары", objPos: "50% 0%" },
+                ].map((img) => (
+                  <div key={img.src} className="relative">
+                    <div className="absolute inset-0 translate-x-1 translate-y-1 rounded-[4px] bg-[#DDD5CB]" />
+                    <div className="relative h-14 w-10 overflow-hidden rounded-[4px] border border-[#D0C8BE] shadow-sm">
+                      <Image
+                        alt={img.alt}
+                        src={img.src}
+                        fill
+                        className="object-cover"
+                        style={{ objectPosition: img.objPos }}
+                        sizes="40px"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <p className="font-sans text-xs leading-snug text-[#666]">
+                <span className="font-semibold text-[#444]">Методичка по уходу + Гайд по аксессуарам</span> включены в курс
+              </p>
+            </div>
 
             <button
               onClick={() => handlePaymentClick("course")}
@@ -142,7 +168,7 @@ export function WhatYouGetSection({
             className="flex flex-col border border-[#E0DCD6] bg-white p-5 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl"
             data-testid="product-guide"
           >
-            <div className="mb-6 flex items-end justify-between gap-4 sm:mb-8">
+            <div className="mb-5 flex items-end justify-between gap-4 sm:mb-6">
               <div>
                 <p className="mb-1 font-sans text-xs uppercase tracking-[0.2em] text-[#999] sm:text-xs">
                   Hairlab Guide
@@ -155,6 +181,32 @@ export function WhatYouGetSection({
               <span className="border border-[#E0DCD6] px-2 py-1 font-sans text-xs font-semibold text-[#999]">
                 Методичка
               </span>
+            </div>
+
+            <div className="mb-5 flex gap-5 sm:mb-6">
+              {[
+                { src: "/images/guia_pdf.PNG", alt: "Методичка по уходу", label: "Домашний уход", objPos: "50% 10%" },
+                { src: "/images/acces_pdf.PNG", alt: "Гайд по аксессуарам", label: "Аксессуары", objPos: "50% 0%" },
+              ].map((img) => (
+                <div key={img.src} className="flex flex-col items-center gap-2">
+                  <div className="relative">
+                    <div className="absolute inset-0 translate-x-1.5 translate-y-1.5 rounded-lg bg-[#EAE2DA]" />
+                    <div className="relative h-[108px] w-[76px] overflow-hidden rounded-lg border border-[#D9CFC6] shadow-md sm:h-[124px] sm:w-[88px]">
+                      <Image
+                        alt={img.alt}
+                        src={img.src}
+                        fill
+                        className="object-cover"
+                        style={{ objectPosition: img.objPos }}
+                        sizes="88px"
+                      />
+                    </div>
+                  </div>
+                  <span className="font-sans text-[10px] font-semibold uppercase tracking-widest text-[#B8A89A]">
+                    {img.label}
+                  </span>
+                </div>
+              ))}
             </div>
 
             <ol className="mb-6 flex-1 space-y-3 sm:mb-8 sm:space-y-4">

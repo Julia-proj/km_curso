@@ -14,6 +14,13 @@ function getFeedback(questionId: string, optionId: string): string {
   return option?.feedback ?? ''
 }
 
+function getOptionLabel(questionId: string, optionId: string): string {
+  const question = quizQuestions.find((q) => q.id === questionId)
+  if (!question) return ''
+  const option = question.options.find((o) => o.id === optionId)
+  return option?.label ?? ''
+}
+
 const INSIGHT_QUESTIONS = [
   { id: 'q1', label: 'Тип волос' },
   { id: 'q3', label: 'Основная проблема' },
@@ -84,6 +91,7 @@ export default function ResultPage() {
             if (!optionId) return null
             const feedback = getFeedback(id, optionId)
             if (!feedback) return null
+            const answerLabel = getOptionLabel(id, optionId)
             return (
               <div
                 key={id}
@@ -101,17 +109,31 @@ export default function ResultPage() {
                     letterSpacing: "0.18em",
                     textTransform: "uppercase",
                     color: "var(--color-bronze)",
-                    marginBottom: "0.5rem",
+                    marginBottom: "0.4rem",
                   }}
                 >
                   {label}
                 </p>
+                {answerLabel && (
+                  <p
+                    style={{
+                      fontFamily: "var(--font-body-face), Inter, sans-serif",
+                      fontSize: "1rem",
+                      fontWeight: 600,
+                      lineHeight: 1.3,
+                      color: "var(--color-ink)",
+                      marginBottom: "0.6rem",
+                    }}
+                  >
+                    {answerLabel}
+                  </p>
+                )}
                 <p
                   style={{
                     fontFamily: "var(--font-body-face), Inter, sans-serif",
                     fontSize: "0.875rem",
                     lineHeight: 1.6,
-                    color: "var(--color-ink)",
+                    color: "var(--color-ink-soft)",
                   }}
                 >
                   {feedback}

@@ -24,7 +24,7 @@ export function ForYouSection() {
               {...fadeUp((index % 3) * 0.06)}
               className="flex min-h-full items-start gap-3 rounded-xl border border-[#E6DED7] bg-white p-4 shadow-sm transition-colors hover:border-[#D29B9B]/70 sm:gap-4 sm:p-5 md:p-6"
             >
-              <CheckIcon className="mt-0.5 shrink-0 text-[#D29B9B]" size={16} />
+              <CheckIcon className="mt-0.5 shrink-0 text-[#D29B9B]" size={22} />
               <p className="font-sans text-sm leading-relaxed text-[#444] sm:text-base">{item}</p>
             </motion.div>
           ))}

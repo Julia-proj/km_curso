@@ -3,7 +3,6 @@
 import { AnimatePresence, motion } from "framer-motion"
 import { useEffect, useState } from "react"
 
-import { ArrowUpRightIcon } from "@/components/landing/icons"
 import { ease } from "@/lib/animations"
 import { getPaymentLink } from "@/config/payments"
 
@@ -37,44 +36,60 @@ export function WelcomePopup() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.96 }}
             transition={{ duration: 0.4, ease }}
-            className="relative w-full max-w-[min(24rem,calc(100vw-2rem))] rounded-3xl border border-border bg-cream p-6 shadow-[0_40px_100px_-20px_rgba(50,25,15,0.5)]"
+            className="relative w-full max-w-[min(22rem,calc(100vw-2rem))] rounded-2xl border border-border bg-cream p-6 shadow-[0_40px_100px_-20px_rgba(50,25,15,0.5)]"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => setOpen(false)}
-              className="absolute right-5 top-5 flex h-7 w-7 items-center justify-center rounded-full border border-border/60 text-muted-foreground transition-colors hover:text-foreground"
+              className="absolute right-4 top-4 h-7 w-7 flex items-center justify-center text-muted-foreground/50 transition-colors hover:text-foreground"
               aria-label="Закрыть"
             >
               ✕
             </button>
-            <div className="km-eyebrow mb-3 text-accent-foreground/60">Уже готова?</div>
-            <h3 className="text-2xl font-semibold leading-tight tracking-tight">
-              Выбери свой<br />формат обучения
-            </h3>
-            <p className="mt-3 text-sm text-muted-foreground">
-              Для тех, кто уже знает что хочет, сразу к делу.
+
+            <p
+              className="mb-2 font-sans font-medium uppercase"
+              style={{ fontSize: "0.6875rem", letterSpacing: "0.18em", color: "#C4956A" }}
+            >
+              Уже готова?
             </p>
-            <div className="mt-6 flex flex-col gap-3">
+            <h3 className="font-hero-face text-[1.625rem] font-semibold leading-[1.15] tracking-[-0.025em] text-foreground">
+              Выбери свой<br />формат
+            </h3>
+
+            <div className="mt-5 flex flex-col gap-2">
               <a
                 href={courseLink}
                 onClick={() => setOpen(false)}
-                className="flex items-center justify-between rounded-2xl bg-primary px-5 py-4 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-80"
+                className="group flex items-center justify-between rounded-xl bg-[#1A1A1A] px-5 py-[1.1rem] transition-opacity hover:opacity-80"
               >
-                <span>Полный курс</span>
-                <ArrowUpRightIcon size={14} />
+                <div>
+                  <p className="mb-1 font-sans font-semibold uppercase text-white/40" style={{ fontSize: "0.625rem", letterSpacing: "0.16em" }}>
+                    Полный курс
+                  </p>
+                  <p className="font-hero-face text-[1.375rem] font-semibold leading-none text-white">38€</p>
+                </div>
+                <span className="font-sans text-base text-white/30 transition-colors group-hover:text-white/70">↗</span>
               </a>
+
               <a
                 href={guideLink}
                 onClick={() => setOpen(false)}
-                className="flex items-center justify-between rounded-2xl border border-border px-5 py-4 text-sm font-semibold text-foreground transition-colors hover:bg-sand/60"
+                className="group flex items-center justify-between rounded-xl border border-border px-5 py-[1.1rem] transition-colors hover:bg-sand/50"
               >
-                <span>Купить методичку</span>
-                <ArrowUpRightIcon size={14} />
+                <div>
+                  <p className="mb-1 font-sans font-semibold uppercase text-muted-foreground/60" style={{ fontSize: "0.625rem", letterSpacing: "0.16em" }}>
+                    Методичка
+                  </p>
+                  <p className="font-hero-face text-[1.375rem] font-semibold leading-none text-foreground">12€</p>
+                </div>
+                <span className="font-sans text-base text-muted-foreground/30 transition-colors group-hover:text-muted-foreground">↗</span>
               </a>
             </div>
+
             <button
               onClick={() => setOpen(false)}
-              className="mt-4 w-full text-center text-xs text-muted-foreground underline-offset-2 hover:underline"
+              className="mt-4 w-full text-center font-sans text-xs text-muted-foreground underline-offset-2 hover:underline"
             >
               Сначала посмотрю
             </button>
