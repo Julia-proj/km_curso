@@ -46,7 +46,16 @@ export default function ResultPage() {
       style={{ background: "var(--color-cream)" }}
     >
       <div className="absolute top-4 left-4">
-        <BackButton />
+        <Link
+          href="/quiz"
+          className="inline-flex items-center gap-2 text-sm hover:text-[var(--color-text)] transition-colors"
+          style={{ color: "var(--color-ink-soft)" }}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M15 18l-6-6 6-6" />
+          </svg>
+          Вернуться к тесту
+        </Link>
       </div>
       <div className="absolute top-4 right-4">
         <Link

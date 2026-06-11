@@ -10,19 +10,19 @@ const desktopHeroImage = "/images/heronew.PNG"
 
 const mobilePreviewCards = [
   {
-    alt: "Результат восстановления светлых волос",
+    alt: "Видео-урок из курса HAIRLAB",
     objectPosition: "50% 50%",
-    src: "/images/beforeafter11.png",
+    src: "/images/hero_screen_lesson.png",
   },
   {
-    alt: "Результат восстановления темных волос",
+    alt: "Меню курса HAIRLAB",
     objectPosition: "50% 50%",
-    src: "/images/beforeandafter33.png",
+    src: "/images/hero_screen_menu.jpg",
   },
   {
-    alt: "Проверенные составы для ухода за волосами",
+    alt: "Методички HAIRLAB",
     objectPosition: "50% 50%",
-    src: "/images/prodx.JPEG",
+    src: "/images/guia_pdf.PNG",
   },
 ] as const
 
@@ -68,18 +68,21 @@ function MobilePreviewStrip() {
       transition={{ delay: 0.28, duration: 0.55 }}
       className="relative flex justify-start gap-3"
     >
-      {mobilePreviewCards.map((card) => (
+      {mobilePreviewCards.map((card, index) => (
         <div
           key={card.src}
-          className="relative h-14 w-12 overflow-hidden rounded-[15px] border border-[#E5C8BF]/42 bg-white/10 shadow-[0_14px_30px_rgba(25,18,15,0.24)] backdrop-blur-sm sm:h-16 sm:w-14"
+          className="relative h-[5.5rem] w-[4.5rem] overflow-hidden rounded-sm border border-white/20 bg-white/8 shadow-[0_8px_24px_rgba(20,12,8,0.38)] backdrop-blur-[2px] sm:h-[6.5rem] sm:w-[5.25rem]"
+          style={{
+            transform: index === 2 ? "rotate(-0.8deg)" : index === 1 ? "rotate(0.5deg)" : "rotate(-0.3deg)",
+          }}
         >
           <Image
             alt={card.alt}
             className="object-cover"
             fill
             loading="lazy"
-            quality={95}
-            sizes="76px"
+            quality={92}
+            sizes="88px"
             src={card.src}
             style={{ objectPosition: card.objectPosition }}
           />

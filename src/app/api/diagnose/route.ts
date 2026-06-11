@@ -260,7 +260,9 @@ export async function POST(request: NextRequest) {
     // Parse multipart form data
     const formData = await request.formData();
     const file = formData.get('photo') as File;
-    
+
+    console.log('[DIAGNOSIS] File received:', file?.name, file?.size, file?.type);
+
     if (!file) {
       return NextResponse.json(
         { error: 'No photo file provided' },
@@ -292,24 +294,28 @@ export async function POST(request: NextRequest) {
     const fileName = `diagnosis_${timestamp}_${randomString}.${fileExtension}`;
     
     // Upload to Supabase Storage
+    console.log('[DIAGNOSIS] Uploading to Supabase...');
     const { signedUrl, path } = await uploadImageToSupabase(file, fileName);
-    
+    console.log('[DIAGNOSIS] Upload successful, signed URL generated');
+
     // Analyze with OpenAI (with retry)
     let diagnosis: z.infer<typeof DiagnosisResponseSchema> | null = null;
     let tokensUsed = 0;
     let retryCount = 0;
-    
+
     while (retryCount <= 1) {
       try {
+        console.log('[DIAGNOSIS] Calling OpenAI API...');
         const result = await analyzeImageWithOpenAI(signedUrl);
-        
+        console.log('[DIAGNOSIS] OpenAI response received');
+
         // Validate with Zod
         const validated = DiagnosisResponseSchema.parse(result);
         diagnosis = validated;
-        
+
         // Estimate tokens (rough approximation)
         tokensUsed = 1000; // This should come from OpenAI response
-        
+
         break;
       } catch (error) {
         retryCount++;
@@ -345,9 +351,9 @@ export async function POST(request: NextRequest) {
     });
     
   } catch (error) {
-    console.error('Diagnosis error:', error);
+    console.error('[DIAGNOSIS] Error:', error);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: error instanceof Error ? error.message : 'Internal server error' },
       { status: 500 }
     );
   }
