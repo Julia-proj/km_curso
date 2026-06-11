@@ -257,11 +257,11 @@ export function LandingHeroSection() {
             </motion.p>
           </div>
 
-          <div className="mt-8">
+          <div className="mt-6">
             <HeroVisuals tone="dark" />
           </div>
 
-          <div className="absolute inset-x-5 bottom-5 z-20 flex flex-col gap-2 min-[390px]:inset-x-6 min-[390px]:bottom-6">
+          <div className="absolute inset-x-5 bottom-4 z-20 flex flex-col gap-2 min-[390px]:inset-x-6 min-[390px]:bottom-5">
             <a
               href="/quiz"
               className="inline-flex min-h-[3.35rem] w-full flex-col items-center justify-center rounded-full bg-[#FAF7F4] border-2 border-[#E0DCD6] px-5 py-3 font-sans text-[11px] font-semibold uppercase tracking-[0.1em] text-[#1A1A1A] shadow-[0_22px_48px_rgba(34,25,21,0.28)] transition-all hover:bg-white hover:border-[#C4956A] min-[390px]:min-h-[3.75rem] min-[390px]:px-6 min-[390px]:text-[13px] min-[390px]:tracking-[0.15em]"
