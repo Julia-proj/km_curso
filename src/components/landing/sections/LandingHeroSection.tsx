@@ -58,13 +58,13 @@ function HeroVisuals({
       initial={{ opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3, duration: 0.55 }}
-      className="relative flex items-end gap-6"
+      className="relative flex items-end gap-4"
     >
       {/* 3D mockup методичек */}
       <div className="relative">
         {/* задняя методичка (аксессуары) — выглядывает сверху-справа */}
         <div
-          className={`absolute -right-6 -top-7 h-[7.5rem] w-[5.6rem] overflow-hidden rounded-md border ${cardBorder} bg-white shadow-[0_10px_28px_rgba(20,12,8,0.28)] rotate-[7deg]`}
+          className={`absolute -right-5 -top-6 h-[5.5rem] w-[4.25rem] overflow-hidden rounded-md border ${cardBorder} bg-white shadow-[0_10px_28px_rgba(20,12,8,0.28)] rotate-[7deg]`}
         >
           <img
             alt="Методичка: аксессуары и инструменты"
@@ -74,7 +74,7 @@ function HeroVisuals({
         </div>
         {/* передняя методичка (домашний уход) — на переднем плане */}
         <div
-          className={`relative z-10 h-[7.5rem] w-[5.6rem] overflow-hidden rounded-md border ${cardBorder} bg-white shadow-[0_16px_36px_rgba(20,12,8,0.38)] -rotate-[5deg]`}
+          className={`relative z-10 h-[5.5rem] w-[4.25rem] overflow-hidden rounded-md border ${cardBorder} bg-white shadow-[0_16px_36px_rgba(20,12,8,0.38)] -rotate-[5deg]`}
         >
           <img
             alt="Методичка по домашнему уходу за волосами"
@@ -83,16 +83,16 @@ function HeroVisuals({
           />
         </div>
         {showLabels && (
-          <span className={`mt-4 block pl-1 font-sans text-[10px] uppercase tracking-[0.18em] ${labelColor}`}>
+          <span className={`mt-3 block pl-1 font-sans text-[10px] uppercase tracking-[0.18em] ${labelColor}`}>
             2 методички
           </span>
         )}
       </div>
 
       {/* превью видео-урока */}
-      <div className="relative pl-2">
+      <div className="relative pl-1">
         <div
-          className={`relative h-[7.5rem] w-[5.6rem] overflow-hidden rounded-md border ${cardBorder} bg-white shadow-[0_12px_30px_rgba(20,12,8,0.32)] rotate-[2deg]`}
+          className={`relative h-[5.5rem] w-[4.25rem] overflow-hidden rounded-md border ${cardBorder} bg-white shadow-[0_12px_30px_rgba(20,12,8,0.32)] rotate-[2deg]`}
         >
           <img
             alt="Видео-урок из курса HAIRLAB"
@@ -101,13 +101,13 @@ function HeroVisuals({
             style={{ objectPosition: "50% 30%" }}
           />
           <span className="absolute inset-0 flex items-center justify-center">
-            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/85 pl-0.5 text-[#1A1A1A] shadow-md">
-              <PlayIcon size={13} />
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/85 pl-0.5 text-[#1A1A1A] shadow-md">
+              <PlayIcon size={12} />
             </span>
           </span>
         </div>
         {showLabels && (
-          <span className={`mt-4 block pl-1 font-sans text-[10px] uppercase tracking-[0.18em] ${labelColor}`}>
+          <span className={`mt-3 block pl-1 font-sans text-[10px] uppercase tracking-[0.18em] ${labelColor}`}>
             Видео-уроки
           </span>
         )}
@@ -257,11 +257,11 @@ export function LandingHeroSection() {
             </motion.p>
           </div>
 
-          <div className="mt-6">
-            <HeroVisuals tone="dark" />
+          <div className="mt-4 min-[390px]:mt-5">
+            <HeroVisuals tone="dark" showLabels={false} />
           </div>
 
-          <div className="absolute inset-x-5 bottom-4 z-20 flex flex-col gap-2 min-[390px]:inset-x-6 min-[390px]:bottom-5">
+          <div className="absolute inset-x-5 bottom-5 z-20 flex flex-col gap-2 min-[390px]:inset-x-6 min-[390px]:bottom-6">
             <a
               href="/quiz"
               className="inline-flex min-h-[3.35rem] w-full flex-col items-center justify-center rounded-full bg-[#FAF7F4] border-2 border-[#E0DCD6] px-5 py-3 font-sans text-[11px] font-semibold uppercase tracking-[0.1em] text-[#1A1A1A] shadow-[0_22px_48px_rgba(34,25,21,0.28)] transition-all hover:bg-white hover:border-[#C4956A] min-[390px]:min-h-[3.75rem] min-[390px]:px-6 min-[390px]:text-[13px] min-[390px]:tracking-[0.15em]"

@@ -10,7 +10,8 @@ function getSupabase() {
   }
   return createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_ROLE_KEY
+    process.env.SUPABASE_SERVICE_ROLE_KEY,
+    { auth: { autoRefreshToken: false, persistSession: false } }
   );
 }
 
@@ -75,41 +76,40 @@ async function checkRateLimit(ip: string): Promise<boolean> {
   return true;
 }
 
+const MIME_TO_EXT: Record<string, string> = {
+  'image/jpeg': 'jpg',
+  'image/jpg': 'jpg',
+  'image/png': 'png',
+  'image/webp': 'webp',
+};
+
+const ALLOWED_MIME_TYPES = new Set(Object.keys(MIME_TO_EXT));
+
 async function uploadImageToSupabase(
   file: File,
   fileName: string
-): Promise<{ publicUrl: string; signedUrl: string; path: string }> {
-  const arrayBuffer = await file.arrayBuffer();
-  const buffer = Buffer.from(arrayBuffer);
-  
+): Promise<{ signedUrl: string; path: string }> {
   const supabase = getSupabase();
   const { data, error } = await supabase.storage
     .from('hair-photos')
-    .upload(fileName, buffer, {
+    .upload(fileName, file, {
       contentType: file.type,
       upsert: false,
     });
-  
+
   if (error) {
     throw new Error(`Failed to upload image: ${error.message}`);
   }
-  
-  // Get signed URL (valid for 1 hour)
+
   const { data: signedUrlData, error: signedUrlError } = await supabase.storage
     .from('hair-photos')
     .createSignedUrl(data.path, 3600);
-  
+
   if (signedUrlError) {
     throw new Error(`Failed to create signed URL: ${signedUrlError.message}`);
   }
-  
-  // Get public URL
-  const { data: publicUrlData } = supabase.storage
-    .from('hair-photos')
-    .getPublicUrl(data.path);
-  
+
   return {
-    publicUrl: publicUrlData.publicUrl,
     signedUrl: signedUrlData.signedUrl,
     path: data.path,
   };
@@ -271,26 +271,26 @@ export async function POST(request: NextRequest) {
     }
     
     // Validate file type
-    if (!file.type.startsWith('image/')) {
+    if (!ALLOWED_MIME_TYPES.has(file.type)) {
       return NextResponse.json(
-        { error: 'Invalid file type. Only images are allowed.' },
+        { error: 'Неподдерживаемый формат. Используйте JPG, PNG или WebP.' },
         { status: 400 }
       );
     }
-    
+
     // Validate file size (max 5MB)
-    const maxSize = 5 * 1024 * 1024; // 5MB
+    const maxSize = 5 * 1024 * 1024;
     if (file.size > maxSize) {
       return NextResponse.json(
         { error: 'File too large. Maximum size is 5MB.' },
         { status: 400 }
       );
     }
-    
-    // Generate unique filename with path prefix
+
+    // Generate unique filename — use MIME type for extension, not filename
     const timestamp = Date.now();
     const randomString = Math.random().toString(36).substring(2, 15);
-    const fileExtension = file.name.split('.').pop();
+    const fileExtension = MIME_TO_EXT[file.type] ?? 'jpg';
     const fileName = `diagnoses/${timestamp}_${randomString}.${fileExtension}`;
     
     // Upload to Supabase Storage
