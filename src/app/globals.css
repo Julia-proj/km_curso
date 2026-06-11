@@ -395,14 +395,14 @@ h4 {
   /* MARQUEE ANIMATION                       */
   /* ======================================== */
   .marquee {
-    animation: marquee 10s linear infinite;
+    animation: marquee 60s linear infinite;
     will-change: transform;
-    contain: layout style paint;
+    width: max-content;
   }
 
   @media (min-width: 768px) {
     .marquee {
-      animation: marquee 14s linear infinite;
+      animation: marquee 80s linear infinite;
     }
   }
 

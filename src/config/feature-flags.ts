@@ -9,7 +9,7 @@ interface FeatureFlags {
 
 export const featureFlags: FeatureFlags = {
   courseStatus: (process.env.COURSE_STATUS as CourseStatus) || 'prelaunch',
-  aiDiagnostics: false,
+  aiDiagnostics: true,
   emailNotifications: false,
   dashboard: false,
 }

@@ -6,7 +6,7 @@ import Image from "next/image"
 import { getPaymentLink } from "@/config/payments"
 
 const mobileHeroImage = "/images/newhero.PNG"
-const desktopHeroImage = "/images/hero.PNG"
+const desktopHeroImage = "/images/heronew.PNG"
 
 const mobilePreviewCards = [
   {
@@ -134,29 +134,31 @@ export function LandingHeroSection() {
             >
               Салонное
               <br />
-              восстановление
+              <span className="text-[#D9A19D] italic">восстановление</span>
               <br />
-              волос
+              волос.
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.16, duration: 0.55 }}
-              className="mt-2 font-hero-face text-[1rem] italic leading-none text-[#E8B7B1] drop-shadow-[0_2px_14px_rgba(20,12,8,0.22)] min-[360px]:text-[1.4rem] min-[390px]:text-[2rem]"
+              className="mt-4 font-sans text-base leading-none text-white drop-shadow-[0_2px_14px_rgba(20,12,8,0.22)] min-[390px]:text-lg"
             >
-              в домашних
-              <br />
-              условиях
+              Теперь у тебя дома.
             </motion.p>
 
             <motion.p
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.22, duration: 0.55 }}
-              className="mt-5 font-sans text-sm font-normal text-white/84 drop-shadow-[0_2px_14px_rgba(20,12,8,0.24)] min-[390px]:mt-7 min-[390px]:text-base min-[390px]:font-medium"
+              className="mt-5 font-sans text-xs font-normal text-white/84 drop-shadow-[0_2px_14px_rgba(20,12,8,0.24)] min-[390px]:mt-7 min-[390px]:text-sm"
             >
-              + составы для волос.
+              + подбор составов, гайды, видео-уроки
+              <br />
+              и протоколы. База, которую мы передаём
+              <br />
+              ученицам школы HAIRLAB в Мадриде.
             </motion.p>
           </div>
 
@@ -165,19 +167,18 @@ export function LandingHeroSection() {
           <div className="absolute inset-x-5 bottom-5 z-20 flex flex-col gap-2 min-[390px]:inset-x-6 min-[390px]:bottom-6">
             <a
               href="/quiz"
-              className="inline-flex min-h-[3.35rem] w-full items-center justify-center rounded-full bg-[#D9A19D] px-5 py-3.5 font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-white shadow-[0_22px_48px_rgba(34,25,21,0.28)] transition-all hover:bg-[#C9918C] min-[390px]:min-h-[3.75rem] min-[390px]:px-6 min-[390px]:text-[13px] min-[390px]:tracking-[0.26em]"
+              className="inline-flex min-h-[3.35rem] w-full items-center justify-center rounded-full bg-[#FAF7F4] border-2 border-[#E0DCD6] px-5 py-3.5 font-sans text-[11px] font-semibold uppercase tracking-[0.1em] text-[#1A1A1A] shadow-[0_22px_48px_rgba(34,25,21,0.28)] transition-all hover:bg-white hover:border-[#C4956A] min-[390px]:min-h-[3.75rem] min-[390px]:px-6 min-[390px]:text-[13px] min-[390px]:tracking-[0.15em]"
             >
-              <span className="flex-1 text-center">Пройти тест</span>
-              <SparkleIcon size={19} />
+              <span className="flex-1 text-center">Пройти тест за 2 минуты</span>
             </a>
             <a
               href={guideLink}
-              className="inline-flex min-h-[3.35rem] w-full items-center justify-center rounded-full border border-[#D9A19D]/58 bg-[#2B231F]/34 px-5 py-3.5 font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-white/94 backdrop-blur-[2px] transition-all hover:border-[#D7A29D] hover:bg-white/8 min-[390px]:min-h-[3.75rem] min-[390px]:px-6 min-[390px]:text-[13px] min-[390px]:tracking-[0.24em]"
+              className="inline-flex min-h-[3.35rem] w-full items-center justify-center rounded-full bg-[#D9A19D] px-5 py-3.5 font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-white shadow-[0_22px_48px_rgba(34,25,21,0.28)] transition-all hover:bg-[#C9918C] min-[390px]:min-h-[3.75rem] min-[390px]:px-6 min-[390px]:text-[13px] min-[390px]:tracking-[0.24em]"
             >
               <span className="flex-1 text-center">Методичка за 12€</span>
               <ArrowRightIcon size={19} />
             </a>
-            <p className="pt-1 text-center font-sans text-[9px] tracking-[0.07em] text-white/38">
+            <p className="pt-1 text-center font-sans text-[10px] tracking-[0.07em] text-white/38 min-[390px]:text-[11px]">
               12€ методичка · 38€ полный курс с AI · доступ навсегда
             </p>
           </div>
@@ -185,113 +186,100 @@ export function LandingHeroSection() {
       </div>
 
       {/* ── DESKTOP (lg+): editorial magazine split ── */}
-      <div className="hidden lg:flex" style={{ minHeight: "100svh" }}>
+      <div className="hidden lg:flex min-h-screen">
 
         {/* Left: text column on cream background */}
-        <div className="flex flex-1 flex-col bg-[#FAF7F4]">
+        <div className="flex flex-1 flex-col justify-center bg-[#FAF7F4] px-12 py-12 xl:px-16 xl:py-16 xl:pr-8">
+          <div className="max-w-[30rem] xl:max-w-[34rem]">
 
-          <nav className="flex items-center gap-6 border-b border-[#E5DDD5] px-12 py-5 font-sans text-xs font-medium uppercase tracking-[0.16em] text-[#7A7066] xl:gap-8 xl:px-16">
-            <a href="#about" className="transition-colors hover:text-[#1A1A1A] hover:tracking-[0.18em]">Об авторе</a>
-            <a href="#program" className="transition-colors hover:text-[#1A1A1A] hover:tracking-[0.18em]">Программа</a>
-            <a href="#what-you-get" className="transition-colors hover:text-[#1A1A1A] hover:tracking-[0.18em]">Что внутри</a>
-            <a href="#faq" className="transition-colors hover:text-[#1A1A1A] hover:tracking-[0.18em]">FAQ</a>
-          </nav>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="mb-6 flex items-center gap-3"
+            >
+              <span className="block h-px w-8 shrink-0 bg-[#C4956A]" aria-hidden="true" />
+              <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.32em] text-[#C4956A]">
+                Авторский курс
+              </p>
+            </motion.div>
 
-          {/* Vertically centered content */}
-          <div className="flex flex-1 flex-col justify-center px-12 py-12 xl:px-16 xl:py-16">
-            <div className="max-w-[30rem] xl:max-w-[34rem]">
+            <motion.h1
+              initial={{ opacity: 0, y: 22 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.08, duration: 0.55 }}
+              className="font-hero-face font-medium leading-[1.15] tracking-[-0.02em] text-[#1A1A1A] text-[clamp(2.75rem,4.5vw,5.25rem)]"
+            >
+              Салонное
+              <br />
+              <span className="text-[#D9A19D] italic">восстановление</span>
+              <br />
+              волос.
+            </motion.h1>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="mb-6 flex items-center gap-3"
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.16, duration: 0.55 }}
+              className="mt-8 font-sans text-base leading-relaxed text-[#1A1A1A] xl:text-lg"
+            >
+              Теперь у тебя дома.
+            </motion.p>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.55 }}
+              className="mt-8 font-sans text-base leading-relaxed text-[#666] xl:text-lg"
+            >
+              + подбор составов, гайды, видео-уроки и протоколы. Всё, что мы передаём ученицам школы HAIRLAB в Мадриде.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.23, duration: 0.55 }}
+              className="mt-10 flex flex-wrap gap-3"
+            >
+              <a
+                href="/quiz"
+                className="inline-flex items-center gap-2.5 rounded-xl bg-[#FAF7F4] border-2 border-[#E0DCD6] px-7 py-4 font-sans text-sm font-semibold text-[#1A1A1A] transition-all hover:border-[#C4956A] hover:bg-white xl:px-8"
               >
-                <span className="block h-px w-8 shrink-0 bg-[#C4956A]" aria-hidden="true" />
-                <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.32em] text-[#C4956A]">
-                  Авторский курс
-                </p>
-              </motion.div>
-
-              <motion.h1
-                initial={{ opacity: 0, y: 22 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.08, duration: 0.55 }}
-                className="font-hero-face font-medium leading-[1.04] tracking-[-0.02em] text-[#1A1A1A]"
-                style={{ fontSize: "clamp(2.75rem, 4.5vw, 5.25rem)" }}
+                Пройти тест за 2 минуты
+              </a>
+              <a
+                href={guideLink}
+                className="inline-flex items-center gap-2 rounded-xl bg-[#D9A19D] px-7 py-4 font-sans text-sm font-semibold text-white transition-all hover:bg-[#C9918C] xl:px-8"
               >
-                Салонное
-                <br />
-                восстановление
-                <br />
-                волос дома
-              </motion.h1>
+                Методичка за 12€
+              </a>
+            </motion.div>
 
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.16, duration: 0.55 }}
-                className="mt-5 font-sans text-base leading-relaxed text-[#666] xl:text-lg"
-              >
-                + составы для волос.
-              </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.55 }}
+              className="mt-8 font-sans text-sm tracking-[0.04em] text-[#9C9287]"
+            >
+              12€ методичка · 38€ полный курс с AI · доступ навсегда
+            </motion.p>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.23, duration: 0.55 }}
-                className="mt-8 flex flex-wrap gap-3"
-              >
-                <a
-                  href="/quiz"
-                  className="inline-flex items-center gap-2.5 rounded-xl bg-[#1A1A1A] px-7 py-4 font-sans text-sm font-semibold text-white transition-all hover:bg-[#333] xl:px-8"
-                >
-                  Пройти тест
-                  <SparkleIcon size={15} />
-                </a>
-                <a
-                  href={guideLink}
-                  className="inline-flex items-center gap-2 rounded-xl border-2 border-[#E0DCD6] px-7 py-4 font-sans text-sm font-semibold text-[#1A1A1A] transition-all hover:border-[#C4956A]/50 hover:bg-[#1A1A1A]/4 xl:px-8"
-                >
-                  Методичка за 12€
-                </a>
-              </motion.div>
-
-              <motion.p
-                initial={{ opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.55 }}
-                className="mt-3 font-sans text-xs tracking-[0.04em] text-[#9C9287]"
-              >
-                12€ методичка · 38€ полный курс с AI · доступ навсегда
-              </motion.p>
-
-              <motion.p
-                initial={{ opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.38, duration: 0.55 }}
-                className="mt-10 font-sans text-[11px] font-medium uppercase tracking-[0.22em] text-[#B0A89F]"
-              >
-                5000+ клиенток · 6 лет практики · Студия в Мадриде
-              </motion.p>
-
-            </div>
           </div>
         </div>
 
-        {/* Right: photo column — extends to screen edge */}
-        <div className="relative flex-none overflow-hidden" style={{ width: "44%" }}>
+        {/* Right: photo column — with breathing room */}
+        <div className="relative hidden lg:block w-[45%] overflow-hidden pl-4 xl:pl-6">
           <Image
             alt="Елена - основатель HairLab"
             className="object-cover"
             fill
             priority
             quality={85}
-            sizes="44vw"
+            sizes="45vw"
             src={desktopHeroImage}
-            style={{ objectPosition: "right top" }}
+            style={{ objectPosition: "center" }}
             placeholder="blur"
-            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwC3ABHx//Z"
+            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCгоKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwC3ABHx//Z"
           />
         </div>
       </div>

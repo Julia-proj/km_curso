@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import OpenAI from 'openai';
 import { z } from 'zod';
+import { featureFlags } from '@/config/feature-flags';
 
 function getSupabase() {
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
@@ -235,6 +236,14 @@ function calculateCost(tokensUsed: number): number {
 }
 
 export async function POST(request: NextRequest) {
+  // Check if AI diagnostics is enabled
+  if (!featureFlags.aiDiagnostics) {
+    return NextResponse.json(
+      { error: 'AI diagnostics is currently disabled' },
+      { status: 503 }
+    );
+  }
+
   try {
     // Get client IP
     const ip = getClientIp(request);

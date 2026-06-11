@@ -15,7 +15,7 @@ function getSupabase() {
 }
 
 const GUIDE_MAP: Record<string, string> = {
-  'guide-01': 'hairlab-guide-01.pdf',
+  'guide-01': '.hairlab-guide-01.pdf',
   'guide-02': 'hairlab-guide-02.pdf',
 }
 
