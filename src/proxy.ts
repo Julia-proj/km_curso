@@ -1,8 +1,11 @@
-import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { updateSession } from '@/lib/supabase/middleware'
 
-export function proxy(request: NextRequest) {
-  const response = NextResponse.next()
+export async function proxy(request: NextRequest) {
+  // Refresh Supabase auth cookies and guard /dashboard (redirects to
+  // /auth/login when there is no session). Returns a pass-through response with
+  // refreshed cookies, or a redirect. In dev-bypass it's a plain pass-through.
+  const response = await updateSession(request)
 
   // Security headers
   response.headers.set('X-Frame-Options', 'DENY')

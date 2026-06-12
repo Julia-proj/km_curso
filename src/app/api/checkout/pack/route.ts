@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { getStripe } from '@/lib/stripe';
 import { getSupabase } from '@/lib/supabase';
+import { getSiteUrl } from '@/lib/site-url';
 import type { StripeProduct } from '@/types/api';
 
 export async function POST(req: NextRequest) {
@@ -59,8 +60,8 @@ export async function POST(req: NextRequest) {
         type: 'limba_pack',
         pickup_location: 'studio_madrid'
       },
-      success_url: `${process.env.NEXT_PUBLIC_URL}/scan/pickup/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_URL}/scan/result?recommendation_id=${rec.id}`
+      success_url: `${getSiteUrl()}/scan/pickup/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${getSiteUrl()}/scan/result?recommendation_id=${rec.id}`
     });
     
     return NextResponse.json({ url: session.url });

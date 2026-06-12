@@ -1,6 +1,7 @@
 import Stripe from 'stripe';
 import { NextRequest, NextResponse } from 'next/server';
 import { getStripe } from '@/lib/stripe';
+import { getSiteUrl } from '@/lib/site-url';
 
 export async function POST(req: NextRequest) {
   try {
@@ -31,8 +32,8 @@ export async function POST(req: NextRequest) {
         product_name: 'HAIRLAB KM Guide',
         customer_name: name || ''
       },
-      success_url: `${process.env.NEXT_PUBLIC_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}&product=guide`,
-      cancel_url: `${process.env.NEXT_PUBLIC_URL}/#offer`
+      success_url: `${getSiteUrl()}/checkout/success?session_id={CHECKOUT_SESSION_ID}&product=guide`,
+      cancel_url: `${getSiteUrl()}/#offer`
     });
     
     return NextResponse.json({ url: session.url });

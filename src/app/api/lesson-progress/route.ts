@@ -5,19 +5,24 @@ import { isDevBypass } from '@/lib/dev-bypass'
 function getSupabase() {
   // Dev bypass - return mock client
   if (isDevBypass()) {
-    // Return a mock Supabase client for dev mode
+    // Mock client for dev mode. Shape supports both chains the route uses:
+    //  - profiles/lesson_progress reads: .select(..).eq(..).single()
+    //  - progress writes:                .upsert(..).select().single()
+    // Stateless: returns a valid empty-progress row so the UI works locally.
+    const row = { id: 'dev-profile', completed: [], last_viewed: 1 };
     return {
       from: () => ({
-        upsert: async () => ({ data: {}, error: null }),
         select: () => ({
           eq: () => ({
-            single: async () => ({ 
-              data: { lesson_1: true, lesson_2: false, lesson_3: false }, 
-              error: null 
-            })
-          })
-        })
-      })
+            single: async () => ({ data: row, error: null }),
+          }),
+        }),
+        upsert: () => ({
+          select: () => ({
+            single: async () => ({ data: row, error: null }),
+          }),
+        }),
+      }),
     } as any;
   }
   

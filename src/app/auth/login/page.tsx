@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { createClient } from "@/lib/supabase/client"
+import { getSiteUrl } from "@/lib/site-url"
 import { AnimatedBackground } from "@/components/AnimatedBackground"
 import { PrePaymentNav } from "@/components/Navigation"
 
@@ -13,6 +14,7 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
+    if (!supabase) return
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession()
       if (session) {
@@ -23,13 +25,18 @@ export default function LoginPage() {
   }, [router, supabase])
 
   const handleGoogleLogin = async () => {
+    if (!supabase) {
+      setError("Авторизация временно недоступна. Попробуйте позже.")
+      return
+    }
+
     setLoading(true)
     setError(null)
-    
+
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
+        redirectTo: `${getSiteUrl()}/auth/callback`,
       },
     })
 
