@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import OpenAI from 'openai';
 import { zodResponseFormat } from 'openai/helpers/zod';
+import { quizQuestions } from '@/config/quiz-data';
 
 function getOpenAI() {
   if (!process.env.OPENAI_API_KEY) {
@@ -52,13 +53,57 @@ export const DiagnosticSchema = z.object({
 
 export type Diagnostic = z.infer<typeof DiagnosticSchema>;
 
-interface QuizContext {
+export interface QuizContext {
   hair_type?: string;
   scalp_type?: string;
   main_concern?: string;
   wash_frequency?: string;
   heat_styling?: string;
   recent_treatments?: string[];
+}
+
+/** Human-readable label for a selected quiz option (q-code -> label). */
+function quizLabel(
+  questionId: string,
+  answers: Record<string, string>
+): string | undefined {
+  const optionId = answers[questionId];
+  if (!optionId) return undefined;
+  const question = quizQuestions.find((q) => q.id === questionId);
+  return question?.options.find((o) => o.id === optionId)?.label;
+}
+
+/**
+ * Map raw quiz answers (questionId -> optionId, from the Zustand store) into the
+ * semantic QuizContext that analyzePhoto feeds to the model. Returns undefined
+ * when the quiz hasn't been answered so the prompt falls back to "photo only".
+ */
+export function quizAnswersToContext(
+  answers: Record<string, string> | null | undefined
+): QuizContext | undefined {
+  if (!answers || Object.keys(answers).length === 0) return undefined;
+
+  // Heat styling is spread across q4 (flat iron), q5 (blow dryer), q6 (styler).
+  const heavyIron = answers['q4'] === 'q4_a' || answers['q4'] === 'q4_b';
+  const styler = answers['q6'] === 'q6_a';
+  const blowDries = answers['q5'] === 'q5_b';
+  const heat_styling = heavyIron || styler
+    ? 'часто (утюжок/стайлер)'
+    : blowDries
+      ? 'регулярно сушит феном'
+      : 'редко';
+
+  const recent_treatments = [quizLabel('q9', answers)].filter(
+    (v): v is string => Boolean(v)
+  );
+
+  return {
+    hair_type: quizLabel('q1', answers),
+    main_concern: quizLabel('q3', answers),
+    wash_frequency: quizLabel('q2', answers),
+    heat_styling,
+    recent_treatments,
+  };
 }
 
 export async function analyzePhoto(

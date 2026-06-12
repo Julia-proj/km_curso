@@ -1,23 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import OpenAI from 'openai';
-import { z } from 'zod';
 import { featureFlags } from '@/config/feature-flags';
+import { isDevBypass } from '@/lib/dev-bypass';
+import {
+  analyzePhoto,
+  calcCost,
+  quizAnswersToContext,
+  type Diagnostic,
+} from '@/lib/ai/diagnose';
 
 function getSupabase() {
   // Dev bypass - return mock client
-  const isDevBypass = process.env.NEXT_PUBLIC_DEV_BYPASS_PAYWALL === 'true' || 
-                     process.env.VERCEL_ENV === 'preview';
-  
-  if (isDevBypass) {
+  if (isDevBypass()) {
     // Return a mock Supabase client for dev mode
     return {
       storage: {
         from: () => ({
           upload: async () => ({ data: { path: 'dev/mock.jpg' }, error: null }),
-          createSignedUrl: async () => ({ 
-            data: { signedUrl: 'https://placeholder.com/mock.jpg' }, 
-            error: null 
+          createSignedUrl: async () => ({
+            data: { signedUrl: 'https://placeholder.com/mock.jpg' },
+            error: null
           })
         })
       },
@@ -26,7 +28,7 @@ function getSupabase() {
       })
     } as any;
   }
-  
+
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
     throw new Error('Supabase credentials are not configured');
   }
@@ -41,65 +43,39 @@ function getSupabase() {
   );
 }
 
-function getOpenAI() {
-  if (!process.env.OPENAI_API_KEY) {
-    throw new Error('OPENAI_API_KEY is not configured');
-  }
-  return new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-}
-
-// Zod schema for validation
-const DiagnosisResponseSchema = z.object({
-  damageLevel: z.number().min(1).max(5),
-  signs: z.array(z.string()).min(1).max(8),
-  recommendations: z.array(z.string()).min(1).max(8),
-  summary: z.string().min(20).max(500),
-});
-
-// System prompt
-const SYSTEM_PROMPT = `Ты эксперт-трихолог из студии HAIRLAB в Мадриде.
-Анализируй фото волос и давай структурированный, тёплый, профессиональный ответ.
-Тон: поддерживающий, без запугивания, без жёстких диагнозов.
-Не ставь медицинские диагнозы (алопеция и т.п.).
-Фокусируйся на видимых признаках состояния волос и стандартных рекомендациях по уходу.
-Если по фото есть любые признаки горячей укладки (сухость, ломкость, пушистость, секущиеся кончики), ОБЯЗАТЕЛЬНО добавь в recommendations пункт про термозащиту перед феном, утюжком и стайлером — это универсальный совет.
-Уровень повреждения и выводы подавай как предварительные, а не как окончательный диагноз.
-Используй простой человеческий язык.
-Не используй длинные тире.`;
-
 // Rate limiting store (in-memory - for production use Redis or similar)
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
 
 function getClientIp(request: NextRequest): string {
   const forwarded = request.headers.get('x-forwarded-for');
   const realIp = request.headers.get('x-real-ip');
-  
+
   if (forwarded) {
     return forwarded.split(',')[0].trim();
   }
-  
+
   if (realIp) {
     return realIp;
   }
-  
+
   return 'unknown';
 }
 
 async function checkRateLimit(ip: string): Promise<boolean> {
   const now = Date.now();
   const hourInMs = 60 * 60 * 1000;
-  
+
   const record = rateLimitStore.get(ip);
-  
+
   if (!record || now > record.resetTime) {
     rateLimitStore.set(ip, { count: 1, resetTime: now + hourInMs });
     return true;
   }
-  
+
   if (record.count >= 3) {
     return false;
   }
-  
+
   record.count++;
   return true;
 }
@@ -120,22 +96,19 @@ async function uploadImageToSupabase(
   fileName: string
 ): Promise<{ signedUrl: string; path: string }> {
   // Dev bypass - convert to base64 data URL for OpenAI
-  const isDevBypass = process.env.NEXT_PUBLIC_DEV_BYPASS_PAYWALL === 'true' || 
-                     process.env.VERCEL_ENV === 'preview';
-  
-  if (isDevBypass) {
+  if (isDevBypass()) {
     const buffer = Buffer.from(await file.arrayBuffer());
     const base64 = buffer.toString('base64');
     const dataUrl = `data:${file.type};base64,${base64}`;
-    
+
     console.log('[uploadImageToSupabase] Dev mode: using base64 data URL');
-    
+
     return {
       signedUrl: dataUrl,
       path: `dev/${fileName}`
     };
   }
-  
+
   const buffer = Buffer.from(await file.arrayBuffer());
   const supabase = getSupabase();
   const { data, error } = await supabase.storage
@@ -163,135 +136,28 @@ async function uploadImageToSupabase(
   };
 }
 
-async function analyzeImageWithOpenAI(imageUrl: string): Promise<{
-  damageLevel: number;
-  signs: string[];
-  recommendations: string[];
-  summary: string;
-}> {
-  console.log('[analyzeImageWithOpenAI] Starting analysis...');
-  console.log('[analyzeImageWithOpenAI] Image URL type:', imageUrl.startsWith('data:') ? 'base64 data URL' : 'external URL');
-  
-  const openai = getOpenAI();
-  const response = await openai.chat.completions.create({
-    model: 'gpt-4o-mini',
-    messages: [
-      {
-        role: 'system',
-        content: SYSTEM_PROMPT,
-      },
-      {
-        role: 'user',
-        content: [
-          {
-            type: 'text',
-            text: 'Проанализируй это фото волос и верни результат в указанном JSON формате.',
-          },
-          {
-            type: 'image_url',
-            image_url: {
-              url: imageUrl,
-            },
-          },
-        ],
-      },
-    ],
-    response_format: {
-      type: 'json_schema',
-      json_schema: {
-        name: 'hair_diagnosis',
-        strict: true,
-        schema: {
-          type: 'object',
-          properties: {
-            damageLevel: {
-              type: 'number',
-              minimum: 1,
-              maximum: 5,
-              description: 'Уровень повреждения волос от 1 (минимальный) до 5 (сильный)',
-            },
-            signs: {
-              type: 'array',
-              items: {
-                type: 'string',
-              },
-              minItems: 1,
-              maxItems: 8,
-              description: 'Видимые признаки состояния волос',
-            },
-            recommendations: {
-              type: 'array',
-              items: {
-                type: 'string',
-              },
-              minItems: 1,
-              maxItems: 8,
-              description: 'Рекомендации по уходу',
-            },
-            summary: {
-              type: 'string',
-              minLength: 20,
-              maxLength: 500,
-              description: 'Краткое резюме состояния волос',
-            },
-          },
-          required: ['damageLevel', 'signs', 'recommendations', 'summary'],
-          additionalProperties: false,
-        },
-      },
-    },
-    max_tokens: 1000,
-  });
-  
-  console.log('[analyzeImageWithOpenAI] OpenAI response received');
-  
-  const content = response.choices[0].message.content;
-  if (!content) {
-    throw new Error('No content returned from OpenAI');
-  }
-  
-  const parsed = JSON.parse(content);
-  console.log('[analyzeImageWithOpenAI] Analysis complete:', {
-    damageLevel: parsed.damageLevel,
-    signsCount: parsed.signs?.length,
-    recommendationsCount: parsed.recommendations?.length
-  });
-  
-  return parsed;
-}
-
 async function saveDiagnosisToSupabase(
   ip: string,
   imagePath: string,
-  diagnosis: z.infer<typeof DiagnosisResponseSchema>,
-  tokensUsed: number,
+  diagnosis: Diagnostic,
   cost: number
 ): Promise<void> {
   const supabase = getSupabase();
   const { error } = await supabase.from('diagnostics').insert({
     ip_address: ip,
     image_path: imagePath,
-    damage_level: diagnosis.damageLevel,
-    signs: diagnosis.signs,
-    recommendations: diagnosis.recommendations,
+    damage_level: diagnosis.damage_level,
+    signs: diagnosis.visible_signs,
+    recommendations: diagnosis.self_care_priorities,
     summary: diagnosis.summary,
-    tokens_used: tokensUsed,
     cost: cost,
     created_at: new Date().toISOString(),
   });
-  
+
   if (error) {
     console.error('Failed to save diagnosis to Supabase:', error);
     // Don't throw error here - we still want to return the diagnosis to the user
   }
-}
-
-function calculateCost(tokensUsed: number): number {
-  // GPT-4o-mini pricing: $0.15 per 1M input tokens, $0.60 per 1M output tokens
-  // Assuming 50/50 split for simplicity
-  const inputCost = (tokensUsed * 0.5) * 0.15 / 1_000_000;
-  const outputCost = (tokensUsed * 0.5) * 0.60 / 1_000_000;
-  return inputCost + outputCost;
 }
 
 export async function POST(request: NextRequest) {
@@ -306,7 +172,7 @@ export async function POST(request: NextRequest) {
   try {
     // Get client IP
     const ip = getClientIp(request);
-    
+
     // Check rate limit
     const isAllowed = await checkRateLimit(ip);
     if (!isAllowed) {
@@ -315,7 +181,7 @@ export async function POST(request: NextRequest) {
         { status: 429 }
       );
     }
-    
+
     // Parse multipart form data
     const formData = await request.formData();
     const file = formData.get('photo') as File;
@@ -326,7 +192,7 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-    
+
     // Validate file type
     if (!ALLOWED_MIME_TYPES.has(file.type)) {
       return NextResponse.json(
@@ -344,67 +210,69 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Optional quiz answers (questionId -> optionId) passed from the client so
+    // the model can combine the test with the photo.
+    let quizContext;
+    const quizRaw = formData.get('quiz');
+    if (typeof quizRaw === 'string' && quizRaw.length > 0) {
+      try {
+        quizContext = quizAnswersToContext(JSON.parse(quizRaw));
+      } catch {
+        // Malformed quiz payload — fall back to photo-only analysis.
+        quizContext = undefined;
+      }
+    }
+
     // Generate unique filename — use MIME type for extension, not filename
     const timestamp = Date.now();
     const randomString = Math.random().toString(36).substring(2, 15);
     const fileExtension = MIME_TO_EXT[file.type] ?? 'jpg';
     const fileName = `diagnoses/${timestamp}_${randomString}.${fileExtension}`;
-    
+
     // Upload to Supabase Storage
     const { signedUrl, path } = await uploadImageToSupabase(file, fileName);
 
-    // Analyze with OpenAI (with retry)
-    let diagnosis: z.infer<typeof DiagnosisResponseSchema> | null = null;
-    let tokensUsed = 0;
-    let retryCount = 0;
+    // Analyze with OpenAI (with one retry) — shared analyzePhoto returns the
+    // rich diagnostic incl. the recommended Limba category.
+    let diagnosis: Diagnostic | null = null;
+    let usage: any = null;
 
-    while (retryCount <= 1) {
-      try {
-        console.log(`[POST] Analysis attempt ${retryCount + 1}/2`);
-        const result = await analyzeImageWithOpenAI(signedUrl);
-
-        // Validate with Zod
-        const validated = DiagnosisResponseSchema.parse(result);
-        diagnosis = validated;
-
-        // Estimate tokens (rough approximation)
-        tokensUsed = 1000; // This should come from OpenAI response
-
-        break;
-      } catch (error) {
-        retryCount++;
-        console.error(`[POST] Analysis attempt ${retryCount} failed:`, error);
-        if (retryCount > 1) {
-          console.error('[POST] OpenAI validation failed after retry');
-          return NextResponse.json(
-            { error: 'Failed to analyze image. Please try again.' },
-            { status: 500 }
-          );
-        }
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      console.log(`[POST] Analysis attempt ${attempt}/2`);
+      const result = await analyzePhoto(signedUrl, quizContext);
+      if ('error' in result) {
+        console.error(`[POST] Analysis attempt ${attempt} failed:`, result.error);
+        continue;
       }
+      diagnosis = result.result;
+      usage = result.usage;
+      break;
     }
-    
+
     if (!diagnosis) {
       return NextResponse.json(
         { error: 'Failed to analyze image. Please try again.' },
         { status: 500 }
       );
     }
-    
+
     // Calculate cost
-    const cost = calculateCost(tokensUsed);
-    
-    // Save to Supabase
-    await saveDiagnosisToSupabase(ip, path, diagnosis, tokensUsed, cost);
-    
-    // Return result
+    const cost = calcCost(usage);
+
+    // Save to Supabase (best-effort)
+    await saveDiagnosisToSupabase(ip, path, diagnosis, cost);
+
+    // Return result in the shape the diagnostika page expects, plus the AI's
+    // Limba category so the care page can use it directly.
     return NextResponse.json({
-      damageLevel: diagnosis.damageLevel,
-      signs: diagnosis.signs,
-      recommendations: diagnosis.recommendations,
+      damageLevel: diagnosis.damage_level,
+      signs: diagnosis.visible_signs,
+      recommendations: diagnosis.self_care_priorities,
       summary: diagnosis.summary,
+      recommendedCategory: diagnosis.recommended_limba_category,
+      secondaryCategory: diagnosis.secondary_limba_category ?? null,
     });
-    
+
   } catch (error) {
     console.error('[DIAGNOSIS] Error:', error);
     return NextResponse.json(

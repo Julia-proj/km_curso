@@ -76,11 +76,11 @@ export function WhatYouGetSection({
   return (
     <section
       id={sectionId}
-      className="bg-[#FAF7F4] px-5 py-12 sm:px-6 md:py-20"
+      className="bg-[#FAF7F4] px-5 py-12 sm:px-6 md:py-14"
       data-testid="section-what-you-get"
     >
       <div className="mx-auto max-w-5xl">
-        <motion.div {...fadeUp()} className="mb-10 text-center sm:mb-14">
+        <motion.div {...fadeUp()} className="mb-8 text-center sm:mb-10 md:mb-12">
           <p className="mb-3 font-sans text-sm font-medium text-[#D29B9B] sm:text-sm">Что внутри</p>
           <h2 className="font-hero-face text-2xl leading-tight text-[#1A1A1A] sm:text-3xl md:text-4xl">
             {title}
@@ -90,10 +90,10 @@ export function WhatYouGetSection({
         <div className="grid gap-4 sm:gap-6 md:grid-cols-2" data-testid="products-grid">
           <motion.article
             {...fadeUp()}
-            className="flex flex-col border-2 border-[#1A1A1A] bg-white p-5 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl"
+            className="flex flex-col border-2 border-[#1A1A1A] bg-white p-5 sm:p-6 md:p-6 rounded-xl sm:rounded-2xl"
             data-testid="product-course"
           >
-            <div className="mb-6 flex items-end justify-between gap-4 sm:mb-8">
+            <div className="mb-5 flex items-end justify-between gap-4 sm:mb-6 md:mb-5">
               <div>
                 <p className="mb-1 font-sans text-xs uppercase tracking-[0.2em] text-[#999] sm:text-xs">
                   Полный курс
@@ -108,7 +108,7 @@ export function WhatYouGetSection({
               </span>
             </div>
 
-            <div className="mb-6 overflow-hidden rounded-xl border border-[#E8E0D9] bg-[#FAF7F4]">
+            <div className="mb-5 overflow-hidden rounded-xl border border-[#E8E0D9] bg-[#FAF7F4]">
               <div className="flex flex-col items-center gap-4 p-4 sm:flex-row sm:items-start sm:gap-5">
                 <div className="flex shrink-0 justify-center">
                   <Image
@@ -118,7 +118,7 @@ export function WhatYouGetSection({
                     height={1024}
                     loading="lazy"
                     quality={90}
-                    className="h-auto w-auto max-h-[280px] rounded-lg shadow-sm sm:max-h-[320px]"
+                    className="h-auto w-auto max-h-[240px] rounded-lg shadow-sm sm:max-h-[280px] md:max-h-[260px]"
                     sizes="(max-width: 768px) 50vw, 200px"
                   />
                 </div>
@@ -128,8 +128,8 @@ export function WhatYouGetSection({
               </div>
             </div>
 
-            <p className="mb-2 font-sans text-xs font-semibold text-[#999] sm:mb-3">Видео-уроки</p>
-            <ul className="mb-4 space-y-2 sm:mb-6">
+            <p className="mb-2 font-sans text-xs font-semibold text-[#999] sm:mb-2.5">Видео-уроки</p>
+            <ul className="mb-4 space-y-2 sm:mb-5 md:mb-4">
               {videoLessons.map((lesson) => (
                 <li key={lesson} className="flex items-start gap-2.5 font-sans text-sm text-[#444] sm:text-base">
                   <CheckIcon className="mt-0.5 shrink-0 text-[#1A1A1A]" />
@@ -138,8 +138,8 @@ export function WhatYouGetSection({
               ))}
             </ul>
 
-            <p className="mb-2 font-sans text-xs font-semibold text-[#999] sm:mb-3">Дополнительно</p>
-            <ul className="mb-5 space-y-2 sm:mb-6">
+            <p className="mb-2 font-sans text-xs font-semibold text-[#999] sm:mb-2.5">Дополнительно</p>
+            <ul className="mb-5 space-y-2 sm:mb-5 md:mb-4">
               {extras.map((item) => (
                 <li key={item} className="flex items-start gap-2.5 font-sans text-sm text-[#666] sm:text-base">
                   <CheckIcon className="mt-0.5 shrink-0 text-[#D29B9B]" />
@@ -148,7 +148,7 @@ export function WhatYouGetSection({
               ))}
             </ul>
 
-            <div className="mb-6 flex items-center gap-3 rounded-xl border border-[#E8E0D9] bg-[#FAF7F4] p-3 sm:mb-8">
+            <div className="mb-5 flex items-center gap-3 rounded-xl border border-[#E8E0D9] bg-[#FAF7F4] p-3 sm:mb-6 md:mb-5">
               <div className="flex shrink-0 gap-3">
                 {[
                   { src: "/images/guia_pdf.PNG", alt: "Методичка", objPos: "50% 10%" },
@@ -185,10 +185,10 @@ export function WhatYouGetSection({
 
           <motion.article
             {...fadeUp(0.08)}
-            className="flex flex-col border border-[#E0DCD6] bg-white p-5 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl"
+            className="flex flex-col border border-[#E0DCD6] bg-white p-5 sm:p-6 md:p-6 rounded-xl sm:rounded-2xl"
             data-testid="product-guide"
           >
-            <div className="mb-5 flex items-end justify-between gap-4 sm:mb-6">
+            <div className="mb-4 flex items-end justify-between gap-4 sm:mb-5 md:mb-4">
               <div>
                 <p className="mb-1 font-sans text-xs uppercase tracking-[0.2em] text-[#999] sm:text-xs">
                   Hairlab Guide
@@ -203,7 +203,7 @@ export function WhatYouGetSection({
               </span>
             </div>
 
-            <div className="mb-8 flex gap-5 sm:mb-10">
+            <div className="mb-8 mt-6 flex gap-5 sm:mb-10 sm:mt-8 md:mb-8 md:mt-7">
               {[
                 { src: "/images/guia_pdf.PNG", alt: "Методичка по уходу", label: "Домашний уход", objPos: "50% 10%" },
                 { src: "/images/acces_pdf.PNG", alt: "Гайд по аксессуарам", label: "Аксессуары", objPos: "50% 0%" },
@@ -211,14 +211,14 @@ export function WhatYouGetSection({
                 <div key={img.src} className="flex flex-col items-center gap-2">
                   <div className="relative">
                     <div className="absolute inset-0 translate-x-1.5 translate-y-1.5 rounded-lg bg-[#EAE2DA]" />
-                    <div className="relative h-[108px] w-[76px] overflow-hidden rounded-lg border border-[#D9CFC6] shadow-md sm:h-[124px] sm:w-[88px]">
+                    <div className="relative h-[108px] w-[76px] overflow-hidden rounded-lg border border-[#D9CFC6] shadow-md sm:h-[124px] sm:w-[88px] md:h-[160px] md:w-[112px]">
                       <Image
                         alt={img.alt}
                         src={img.src}
                         fill
                         className="object-cover"
                         style={{ objectPosition: img.objPos }}
-                        sizes="88px"
+                        sizes="(max-width: 640px) 76px, (max-width: 768px) 88px, 112px"
                       />
                     </div>
                   </div>
@@ -229,7 +229,7 @@ export function WhatYouGetSection({
               ))}
             </div>
 
-            <ol className="mb-6 flex-1 space-y-3 sm:mb-8 sm:space-y-4">
+            <ol className="mb-5 flex-1 space-y-3 sm:mb-6 sm:space-y-3.5 md:mb-5">
               {guideItems.map((item, index) => (
                 <li
                   key={item}
@@ -281,7 +281,7 @@ export function WhatYouGetSection({
                   </h2>
                   <div className="space-y-2 font-sans text-sm leading-relaxed text-[#5E554C] sm:text-sm md:text-base">
                     <p>
-                      Они всегда выглядят дорого: без сложной укладки, без идеального цвета, даже в обычном хвосте.
+                      Они всегда <span className="font-semibold text-[#1A1A1A]">выглядят дорого</span>: без сложной укладки, без идеального цвета, даже в обычном хвосте.
                     </p>
                     <p>
                       Плотность, блеск и гладкость создают тот самый ухоженный вид.

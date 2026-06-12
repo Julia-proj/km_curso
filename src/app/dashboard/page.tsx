@@ -6,6 +6,7 @@ import { PostPaymentNav } from "@/components/Navigation"
 import { SuccessActionCard } from "@/components/checkout/SuccessActionCard"
 import { TELEGRAM_PRIVATE_INVITE } from "@/lib/constants"
 import { createClient } from "@/lib/supabase/client"
+import { isDevBypass } from "@/lib/dev-bypass"
 
 export default function DashboardPage() {
   const router = useRouter()
@@ -23,10 +24,7 @@ export default function DashboardPage() {
       }
 
       // Dev bypass - allow access without payment
-      const isDevBypass = process.env.NEXT_PUBLIC_DEV_BYPASS_PAYWALL === 'true' || 
-                         process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview'
-      
-      if (isDevBypass) {
+      if (isDevBypass()) {
         setHasFullCourse(true)
         setHasMethodichka(true)
         setReady(true)

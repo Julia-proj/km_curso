@@ -1,12 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
+import { isDevBypass } from '@/lib/dev-bypass'
 
 function getSupabase() {
   // Dev bypass - return mock client
-  const isDevBypass = process.env.NEXT_PUBLIC_DEV_BYPASS_PAYWALL === 'true' || 
-                     process.env.VERCEL_ENV === 'preview';
-  
-  if (isDevBypass) {
+  if (isDevBypass()) {
     // Return a mock Supabase client for dev mode
     return {
       from: () => ({

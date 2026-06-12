@@ -1,12 +1,10 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
+import { isDevBypass } from '@/lib/dev-bypass'
 
 export async function updateSession(request: NextRequest) {
   // Dev bypass - skip auth check
-  const isDevBypass = process.env.NEXT_PUBLIC_DEV_BYPASS_PAYWALL === 'true' || 
-                     process.env.VERCEL_ENV === 'preview'
-  
-  if (isDevBypass) {
+  if (isDevBypass()) {
     return NextResponse.next({
       request,
     })

@@ -41,9 +41,27 @@ export default function CarePage() {
   const plan = useMemo(() => {
     if (!diagnosis) return null
 
-    const { primary, secondary } = inferCategory(answers)
+    // Quiz-based scoring is the fallback. The AI's recommended Limba line (from
+    // photo + quiz) takes priority when present. Detox is never a main line —
+    // it's a scalp add-on, so an AI "detox" only flips the add-on on.
+    const inferred = inferCategory(answers)
+    const aiPrimary = diagnosis.recommendedCategory
+    const aiSecondary = diagnosis.secondaryCategory
+
+    const primary =
+      aiPrimary && aiPrimary !== "detox" ? aiPrimary : inferred.primary
+    const secondary =
+      aiSecondary && aiSecondary !== "detox" && aiSecondary !== primary
+        ? aiSecondary
+        : inferred.secondary !== primary
+          ? inferred.secondary
+          : undefined
+
     const heat = needsHeatProtection(answers, diagnosis.damageLevel)
-    const scalpDetox = needsScalpDetox(answers, diagnosis.signs)
+    const scalpDetox =
+      needsScalpDetox(answers, diagnosis.signs) ||
+      aiPrimary === "detox" ||
+      aiSecondary === "detox"
 
     const coreIds = [
       `limba-${primary}-shampoo`,

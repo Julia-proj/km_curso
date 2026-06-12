@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation"
 import { SuccessActionCard } from "@/components/checkout/SuccessActionCard"
 import { TELEGRAM_PRIVATE_INVITE } from "@/lib/constants"
 import { createClient } from "@/lib/supabase/client"
+import { isDevBypass } from "@/lib/dev-bypass"
 
 function CheckoutSuccessContent() {
   const searchParams = useSearchParams()
@@ -18,10 +19,7 @@ function CheckoutSuccessContent() {
   useEffect(() => {
     const checkAuth = async () => {
       // Dev bypass - skip auth check
-      const isDevBypass = process.env.NEXT_PUBLIC_DEV_BYPASS_PAYWALL === 'true' || 
-                         process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview'
-      
-      if (isDevBypass) {
+      if (isDevBypass()) {
         return
       }
       

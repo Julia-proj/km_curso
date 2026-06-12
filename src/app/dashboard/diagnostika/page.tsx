@@ -8,12 +8,17 @@ import { useQuizStore } from "@/stores/quiz-store"
 import { saveDiagnosis } from "@/lib/progress"
 import { ensureHeatProtectionAdvice } from "@/lib/recommendations/pick-products"
 import { createClient } from "@/lib/supabase/client"
+import { isDevBypass } from "@/lib/dev-bypass"
+
+type LimbaCategory = 'color' | 'volume' | 'detox' | 'hydration'
 
 interface DiagnosisResult {
   damageLevel: number
   signs: string[]
   recommendations: string[]
   summary: string
+  recommendedCategory?: LimbaCategory | null
+  secondaryCategory?: LimbaCategory | null
 }
 
 export default function DiagnostikaPage() {
@@ -41,10 +46,7 @@ export default function DiagnostikaPage() {
       }
 
       // Dev bypass - allow access without payment
-      const isDevBypass = process.env.NEXT_PUBLIC_DEV_BYPASS_PAYWALL === 'true' || 
-                         process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview'
-      
-      if (isDevBypass) {
+      if (isDevBypass()) {
         setIsAuthenticated(true)
         setHasPaidCourse(true)
         return
@@ -118,6 +120,10 @@ export default function DiagnostikaPage() {
     try {
       const formData = new FormData()
       formData.append("photo", selectedFile)
+      // Send the quiz so the AI combines the test with the photo.
+      if (quizAnswers && Object.keys(quizAnswers).length > 0) {
+        formData.append("quiz", JSON.stringify(quizAnswers))
+      }
 
       const response = await fetch("/api/diagnose", {
         method: "POST",

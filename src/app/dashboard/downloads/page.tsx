@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { AnimatedBackground } from "@/components/AnimatedBackground"
 import { PostPaymentNav } from "@/components/Navigation"
 import { createClient } from "@/lib/supabase/client"
+import { isDevBypass } from "@/lib/dev-bypass"
 
 interface AccessState {
   loading: boolean
@@ -52,10 +53,7 @@ export default function DownloadsPage() {
       }
 
       // Dev bypass - allow access without payment
-      const isDevBypass = process.env.NEXT_PUBLIC_DEV_BYPASS_PAYWALL === 'true' || 
-                         process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview'
-      
-      if (isDevBypass) {
+      if (isDevBypass()) {
         setState({
           loading: false,
           hasAccess: true,

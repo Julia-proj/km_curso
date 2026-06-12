@@ -3,11 +3,16 @@
  * Keeps string keys in one place so screens don't hardcode them.
  */
 
+export type LimbaCategory = 'color' | 'volume' | 'detox' | 'hydration'
+
 export interface SavedDiagnosis {
   damageLevel: number
   signs: string[]
   recommendations: string[]
   summary: string
+  /** Limba line the AI recommends from the photo + quiz (care page uses it). */
+  recommendedCategory?: LimbaCategory | null
+  secondaryCategory?: LimbaCategory | null
   savedAt: string
 }
 

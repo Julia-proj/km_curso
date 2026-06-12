@@ -114,6 +114,7 @@ export function ProblemsSection() {
             <motion.article
               key={card.title}
               {...fadeUp((index % 4) * 0.05)}
+              data-carousel-card
               className="group w-[85vw] max-w-[320px] shrink-0 snap-start overflow-hidden rounded-lg border border-[#E0DCD6] bg-white shadow-sm sm:w-72"
             >
               <div className="relative h-[240px] overflow-hidden bg-[#E8E1DA] sm:h-[280px]">
