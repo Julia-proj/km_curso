@@ -7,6 +7,9 @@ import { getSiteUrl } from "@/lib/site-url"
 import { AnimatedBackground } from "@/components/AnimatedBackground"
 import { PrePaymentNav } from "@/components/Navigation"
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default function LoginPage() {
   const router = useRouter()
   const supabase = createClient()
