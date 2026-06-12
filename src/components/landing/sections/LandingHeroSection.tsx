@@ -74,10 +74,10 @@ function HeroVisuals({ tone = "light" }: { tone?: "light" | "dark" }) {
       initial={{ opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3, duration: 0.55 }}
-      className="flex items-end gap-5 pt-0 min-[390px]:gap-6 min-[390px]:pt-0"
+      className="flex items-end gap-4 pt-0 sm:gap-5 min-[390px]:gap-6 md:gap-7"
     >
       {/* Стопка методичек — w/h точно под соотношение 1147:1672 = 0.686 */}
-      <div className="relative h-[9.5rem] w-[6.5rem] shrink-0 min-[390px]:h-[11rem] min-[390px]:w-[7.5rem]">
+      <div className="relative h-[8.5rem] w-[6rem] shrink-0 sm:h-[9.5rem] sm:w-[6.5rem] min-[390px]:h-[11rem] min-[390px]:w-[7.5rem] md:h-[12rem] md:w-[8rem]">
         {/* задняя */}
         <div
           className={`absolute inset-0 overflow-hidden rounded-[0.75rem] border ${cardBorder} ${cardBg} shadow-[4px_6px_18px_rgba(20,12,8,0.22)]`}
@@ -104,7 +104,7 @@ function HeroVisuals({ tone = "light" }: { tone?: "light" | "dark" }) {
 
       {/* Видео — точное соотношение 1181:2046, без кропа */}
       <div
-        className={`w-[6rem] overflow-hidden rounded-[0.75rem] border ${cardBorder} ${cardBg} shadow-[0_12px_28px_rgba(20,12,8,0.3)] min-[390px]:w-[7rem]`}
+        className={`w-[5.5rem] overflow-hidden rounded-[0.75rem] border ${cardBorder} ${cardBg} shadow-[0_12px_28px_rgba(20,12,8,0.3)] sm:w-[6rem] min-[390px]:w-[7rem] md:w-[8rem]`}
         style={{ transform: "rotate(2deg)" }}
       >
         <div className="relative" style={{ aspectRatio: "1181 / 2046" }}>
@@ -114,8 +114,8 @@ function HeroVisuals({ tone = "light" }: { tone?: "light" | "dark" }) {
             src={lessonScreen}
           />
           <span className="absolute inset-0 flex items-center justify-center">
-            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/88 pl-0.5 text-[#1A1A1A] shadow-md">
-              <PlayIcon size={14} />
+            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/88 pl-0.5 text-[#1A1A1A] shadow-md sm:h-8 sm:w-8 md:h-9 md:w-9">
+              <PlayIcon size={12} />
             </span>
           </span>
         </div>
@@ -208,13 +208,13 @@ export function LandingHeroSection() {
           <div className="absolute inset-x-0 bottom-0 h-[18%] bg-[#332923]/55" />
         </div>
 
-        <div className="relative z-10 flex min-h-[100svh] flex-col justify-start px-5 pb-[11.5rem] pt-9 min-[390px]:px-6 min-[390px]:pb-[12rem] min-[390px]:pt-10">
-          <div className="w-full max-w-[23rem] pb-4 min-[390px]:pb-5">
+        <div className="relative z-10 flex min-h-[100svh] flex-col justify-start px-4 pb-[10rem] pt-8 sm:px-5 sm:pb-[11.5rem] sm:pt-9 min-[390px]:px-6 min-[390px]:pb-[12rem] min-[390px]:pt-10 md:px-8 md:pb-[13rem]">
+          <div className="w-full max-w-[23rem] pb-3 min-[390px]:pb-5 md:pb-6 md:max-w-[26rem]">
             <motion.p
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="mb-4 font-sans text-[10px] font-semibold uppercase tracking-[0.42em] text-[#EBC5BE] min-[390px]:mb-6"
+              className="mb-3 font-sans text-[10px] font-semibold uppercase tracking-[0.42em] text-[#EBC5BE] min-[390px]:mb-6 md:text-[11px]"
             >
               Авторский курс
             </motion.p>
@@ -223,7 +223,7 @@ export function LandingHeroSection() {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.08, duration: 0.55 }}
-              className="font-serif text-[1.9rem] font-normal leading-[1.02] tracking-[-0.01em] text-white drop-shadow-[0_2px_18px_rgba(20,12,8,0.32)] min-[360px]:text-[2.25rem] min-[390px]:text-[2.85rem]"
+              className="font-serif text-[1.75rem] font-normal leading-[1.02] tracking-[-0.01em] text-white drop-shadow-[0_2px_18px_rgba(20,12,8,0.32)] min-[360px]:text-[2rem] min-[390px]:text-[2.5rem] md:text-[2.75rem]"
             >
               Салонное
               <br />
@@ -236,7 +236,7 @@ export function LandingHeroSection() {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.16, duration: 0.55 }}
-              className="mt-4 font-sans text-base leading-snug text-white drop-shadow-[0_2px_14px_rgba(20,12,8,0.22)] min-[390px]:text-lg"
+              className="mt-3 font-sans text-sm leading-snug text-white drop-shadow-[0_2px_14px_rgba(20,12,8,0.22)] min-[390px]:text-base md:text-lg"
             >
               Теперь у тебя дома.
             </motion.p>
@@ -245,7 +245,7 @@ export function LandingHeroSection() {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.22, duration: 0.55 }}
-              className="mt-5 font-sans text-xs font-normal text-white/84 drop-shadow-[0_2px_14px_rgba(20,12,8,0.24)] min-[390px]:mt-7 min-[390px]:text-sm"
+              className="mt-4 font-sans text-xs font-normal text-white/84 drop-shadow-[0_2px_14px_rgba(20,12,8,0.24)] min-[390px]:mt-6 min-[390px]:text-sm md:text-sm md:max-w-[28rem]"
             >
               База, которую мы передаём ученицам
               <br />
@@ -254,34 +254,34 @@ export function LandingHeroSection() {
             </motion.p>
           </div>
 
-          <div className="mt-2 min-[390px]:mt-4">
+          <div className="mt-1 min-[390px]:mt-4 md:mt-6">
             <HeroVisuals tone="dark" />
           </div>
 
-          <div className="absolute inset-x-5 bottom-5 z-20 flex flex-col gap-2.5 min-[390px]:inset-x-6 min-[390px]:bottom-6">
+          <div className="absolute inset-x-4 bottom-4 z-20 flex flex-col gap-2 sm:inset-x-5 sm:bottom-5 min-[390px]:inset-x-6 min-[390px]:bottom-6 md:inset-x-8 md:bottom-8">
             <a
               href="/quiz"
-              className="inline-flex min-h-[3.35rem] w-full items-center justify-center gap-2.5 rounded-full bg-[#FAF7F4] border-2 border-[#E0DCD6] px-5 py-2 shadow-[0_22px_48px_rgba(34,25,21,0.28)] transition-all hover:bg-white hover:border-[#C4956A] min-[390px]:min-h-[3.75rem] min-[390px]:px-6"
+              className="inline-flex min-h-[3.1rem] w-full items-center justify-center gap-2.5 rounded-full bg-[#FAF7F4] border-2 border-[#E0DCD6] px-4 py-2 shadow-[0_22px_48px_rgba(34,25,21,0.28)] transition-all hover:bg-white hover:border-[#C4956A] sm:min-h-[3.35rem] sm:px-5 min-[390px]:min-h-[3.75rem] min-[390px]:px-6 md:min-h-[4rem] md:px-8"
             >
               <span className="text-[#C4956A]">
-                <GiftIcon size={22} />
+                <GiftIcon size={20} />
               </span>
               <span className="flex flex-col text-left">
-                <span className="font-sans text-[11px] font-semibold uppercase tracking-[0.1em] text-[#1A1A1A] min-[390px]:text-[13px] min-[390px]:tracking-[0.15em]">
+                <span className="font-sans text-[10px] font-semibold uppercase tracking-[0.1em] text-[#1A1A1A] min-[390px]:text-[11px] min-[390px]:tracking-[0.15em] md:text-[12px] md:tracking-[0.18em]">
                   Пройти бесплатный тест
                 </span>
               </span>
             </a>
             <a
               href={guideLink}
-              className="inline-flex min-h-[3.35rem] w-full items-center justify-center rounded-full bg-[#D9A19D] px-5 py-2.5 shadow-[0_22px_48px_rgba(34,25,21,0.28)] transition-all hover:bg-[#C9918C] min-[390px]:min-h-[3.75rem] min-[390px]:px-6"
+              className="inline-flex min-h-[3.1rem] w-full items-center justify-center rounded-full bg-[#D9A19D] px-4 py-2.5 shadow-[0_22px_48px_rgba(34,25,21,0.28)] transition-all hover:bg-[#C9918C] sm:min-h-[3.35rem] sm:px-5 min-[390px]:min-h-[3.75rem] min-[390px]:px-6 md:min-h-[4rem] md:px-8"
             >
-              <span className="inline-flex items-center gap-2 font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-white min-[390px]:text-[13px] min-[390px]:tracking-[0.24em]">
+              <span className="inline-flex items-center gap-2 font-sans text-[10px] font-semibold uppercase tracking-[0.18em] text-white min-[390px]:text-[11px] min-[390px]:tracking-[0.24em] md:text-[12px] md:tracking-[0.28em]">
                 Методичка за 12€
-                <ArrowRightIcon size={18} />
+                <ArrowRightIcon size={16} />
               </span>
             </a>
-            <p className="text-center font-sans text-[10px] font-medium tracking-[0.06em] text-white/80 min-[390px]:text-[11px]">
+            <p className="text-center font-sans text-[9px] font-medium tracking-[0.06em] text-white/80 min-[390px]:text-[10px] md:text-[11px]">
               38€ полный курс с AI-диагностикой · доступ навсегда
             </p>
           </div>
@@ -289,11 +289,11 @@ export function LandingHeroSection() {
       </div>
 
       {/* ── DESKTOP (lg+): editorial magazine split ── */}
-      <div className="hidden min-h-screen lg:grid lg:grid-cols-[1fr_minmax(440px,46%)]">
+      <div className="hidden min-h-screen lg:grid lg:grid-cols-[1fr_minmax(400px,45%)] xl:grid-cols-[1fr_minmax(440px,46%)] 2xl:grid-cols-[1fr_minmax(480px,48%)]">
 
         {/* Left: text column on cream background */}
-        <div className="flex flex-col items-center justify-center bg-[#FAF7F4] px-10 py-6 xl:px-14 xl:py-8">
-          <div className="w-full max-w-[36rem]">
+        <div className="flex flex-col items-center justify-center bg-[#FAF7F4] px-8 py-6 lg:px-10 xl:px-14 xl:py-8 2xl:px-16 2xl:py-10">
+          <div className="w-full max-w-[32rem] lg:max-w-[36rem] xl:max-w-[40rem]">
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -311,7 +311,7 @@ export function LandingHeroSection() {
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.08, duration: 0.55 }}
-              className="font-serif font-normal leading-[1.05] tracking-[-0.015em] text-[#1A1A1A] text-[clamp(3rem,4vw,4.5rem)]"
+              className="font-serif font-normal leading-[1.05] tracking-[-0.015em] text-[#1A1A1A] text-[clamp(2.5rem,4vw,4rem)] lg:text-[clamp(3rem,4vw,4.5rem)]"
             >
               Салонное
               <br />
@@ -387,7 +387,7 @@ export function LandingHeroSection() {
         </div>
 
         {/* Right: photo column */}
-        <div className="relative bg-[#FAF7F4] py-12 pr-12 xl:py-16 xl:pr-16">
+        <div className="relative bg-[#FAF7F4] py-10 pr-8 lg:py-12 lg:pr-12 xl:py-16 xl:pr-16 2xl:py-20 2xl:pr-20">
           <figure className="relative h-full w-full overflow-hidden rounded-[1.35rem] shadow-[0_24px_52px_-30px_rgba(40,28,22,0.42)]">
           <Image
             alt="Елена - основатель HairLab"
@@ -403,7 +403,7 @@ export function LandingHeroSection() {
             blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCгоKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwC3ABHx//Z"
           />
             <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-[#241712]/75 via-[#241712]/20 to-transparent" />
-            <figcaption className="absolute inset-x-7 bottom-6 text-white">
+            <figcaption className="absolute inset-x-6 bottom-5 text-white lg:inset-x-7 lg:bottom-6 xl:inset-x-8 xl:bottom-8">
               <p className="font-serif text-2xl italic leading-none">Елена</p>
               <p className="mt-2 font-sans text-[11px] font-medium uppercase tracking-[0.22em] text-white/75">
                 Основатель HAIRLAB · Мадрид

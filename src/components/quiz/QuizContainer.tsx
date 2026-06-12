@@ -55,7 +55,7 @@ export function QuizContainer() {
           <button
             type="button"
             onClick={prevStep}
-            className="text-sm font-medium text-[#666] hover:text-[#1A1A1A] transition-colors flex items-center gap-2"
+            className="text-sm font-semibold text-[#C4956A] hover:text-[#1A1A1A] transition-colors flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-[#FAF7F4]"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M15 18l-6-6 6-6" />
@@ -66,7 +66,7 @@ export function QuizContainer() {
           <button
             type="button"
             onClick={() => router.push('/')}
-            className="text-sm font-medium text-[#666] hover:text-[#1A1A1A] transition-colors flex items-center gap-2"
+            className="text-sm font-semibold text-[#C4956A] hover:text-[#1A1A1A] transition-colors flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-[#FAF7F4]"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M15 18l-6-6 6-6" />

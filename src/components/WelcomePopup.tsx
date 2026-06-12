@@ -57,33 +57,31 @@ export function WelcomePopup() {
               Выбери свой<br />формат
             </h3>
 
-            <div className="mt-5 flex flex-col gap-2">
+            <div className="mt-5 flex flex-row gap-2">
               <a
                 href={courseLink}
                 onClick={() => setOpen(false)}
-                className="group flex items-center justify-between rounded-xl bg-[#1A1A1A] px-5 py-[1.1rem] transition-opacity hover:opacity-80"
+                className="group flex flex-1 items-center justify-center rounded-xl bg-[#D9A19D] px-4 py-3 transition-all hover:bg-[#C9918C]"
               >
-                <div>
-                  <p className="mb-1 font-sans font-semibold uppercase text-white/40" style={{ fontSize: "0.625rem", letterSpacing: "0.16em" }}>
+                <div className="text-center">
+                  <p className="mb-1 font-sans font-semibold uppercase text-white/70" style={{ fontSize: "0.625rem", letterSpacing: "0.16em" }}>
                     Полный курс
                   </p>
-                  <p className="font-hero-face text-[1.375rem] font-semibold leading-none text-white">38€</p>
+                  <p className="font-hero-face text-[1.125rem] font-semibold leading-none text-white">38€</p>
                 </div>
-                <span className="font-sans text-base text-white/30 transition-colors group-hover:text-white/70">↗</span>
               </a>
 
               <a
                 href={guideLink}
                 onClick={() => setOpen(false)}
-                className="group flex items-center justify-between rounded-xl border border-border px-5 py-[1.1rem] transition-colors hover:bg-sand/50"
+                className="group flex flex-1 items-center justify-center rounded-xl border-2 border-[#D9A19D] bg-white px-4 py-3 transition-all hover:bg-[#FAF7F4]"
               >
-                <div>
-                  <p className="mb-1 font-sans font-semibold uppercase text-muted-foreground/60" style={{ fontSize: "0.625rem", letterSpacing: "0.16em" }}>
+                <div className="text-center">
+                  <p className="mb-1 font-sans font-semibold uppercase text-[#A0845C]" style={{ fontSize: "0.625rem", letterSpacing: "0.16em" }}>
                     Методичка
                   </p>
-                  <p className="font-hero-face text-[1.375rem] font-semibold leading-none text-foreground">12€</p>
+                  <p className="font-hero-face text-[1.125rem] font-semibold leading-none text-[#1A1A1A]">12€</p>
                 </div>
-                <span className="font-sans text-base text-muted-foreground/30 transition-colors group-hover:text-muted-foreground">↗</span>
               </a>
             </div>
 
