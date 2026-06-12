@@ -236,11 +236,13 @@ export async function POST(request: NextRequest) {
     // rich diagnostic incl. the recommended Limba category.
     let diagnosis: Diagnostic | null = null;
     let usage: any = null;
+    let lastError: string | null = null;
 
     for (let attempt = 1; attempt <= 2; attempt++) {
-      console.log(`[POST] Analysis attempt ${attempt}/2`);
+      console.log(`[POST] Analysis attempt ${attempt}/2 for file: ${fileName}`);
       const result = await analyzePhoto(signedUrl, quizContext);
       if ('error' in result) {
+        lastError = result.error;
         console.error(`[POST] Analysis attempt ${attempt} failed:`, result.error);
         continue;
       }
@@ -250,8 +252,9 @@ export async function POST(request: NextRequest) {
     }
 
     if (!diagnosis) {
+      console.error('[POST] All analysis attempts failed. Last error:', lastError);
       return NextResponse.json(
-        { error: 'Failed to analyze image. Please try again.' },
+        { error: lastError || 'Failed to analyze image. Please try again with a different photo.' },
         { status: 500 }
       );
     }

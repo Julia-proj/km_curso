@@ -156,6 +156,7 @@ ${contextBlock}`;
 
   try {
     const openai = getOpenAI();
+    console.log('[analyzePhoto] Starting analysis with OpenAI...');
     const completion = await openai.chat.completions.parse({
       model: 'gpt-4o-mini',
       messages: [
@@ -163,13 +164,13 @@ ${contextBlock}`;
         {
           role: 'user',
           content: [
-            { 
-              type: 'text', 
-              text: 'Проанализируй это фото волос и верни структурированный JSON-ответ.' 
+            {
+              type: 'text',
+              text: 'Проанализируй это фото волос и верни структурированный JSON-ответ.'
             },
-            { 
-              type: 'image_url', 
-              image_url: { url: photoUrl, detail: 'low' } 
+            {
+              type: 'image_url',
+              image_url: { url: photoUrl, detail: 'low' }
             }
           ]
         }
@@ -179,15 +180,37 @@ ${contextBlock}`;
     });
 
     const result = completion.choices[0].message.parsed;
-    if (!result) return { error: 'AI вернул пустой ответ' };
+    if (!result) {
+      console.error('[analyzePhoto] AI returned empty parsed result');
+      return { error: 'AI вернул пустой ответ' };
+    }
 
-    return { 
-      result, 
-      usage: completion.usage 
+    console.log('[analyzePhoto] Analysis successful');
+    return {
+      result,
+      usage: completion.usage
     };
   } catch (error: any) {
-    console.error('OpenAI error:', error);
-    return { error: error.message || 'AI временно недоступен' };
+    console.error('[analyzePhoto] OpenAI error:', error);
+    console.error('[analyzePhoto] Error details:', {
+      message: error?.message,
+      status: error?.status,
+      code: error?.code,
+      type: error?.type
+    });
+
+    // Provide more specific error messages based on error type
+    if (error?.status === 429) {
+      return { error: 'Превышен лимит запросов к AI. Попробуйте через минуту.' };
+    }
+    if (error?.status === 400) {
+      return { error: 'Некорректное изображение. Попробуйте другое фото.' };
+    }
+    if (error?.code === 'invalid_image_format') {
+      return { error: 'Неподдерживаемый формат изображения. Используйте JPG или PNG.' };
+    }
+
+    return { error: error.message || 'AI временно недоступен. Попробуйте позже.' };
   }
 }
 
