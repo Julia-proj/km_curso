@@ -19,13 +19,22 @@ export async function getCurrentUser(): Promise<CurrentUser | null> {
   if (supabase) {
     const { data: { user } } = await supabase.auth.getUser()
     if (user) {
+      // Try to get name from profiles table first (saved by auth callback)
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('full_name')
+        .eq('id', user.id)
+        .single()
+
+      const name = profile?.full_name ||
+        user.user_metadata?.full_name ||
+        user.user_metadata?.name ||
+        user.email ||
+        'Вы'
+
       return {
         email: user.email ?? null,
-        name:
-          user.user_metadata?.full_name ||
-          user.user_metadata?.name ||
-          user.email ||
-          'Вы',
+        name,
       }
     }
   }
