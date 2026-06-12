@@ -7,6 +7,7 @@ import { SuccessActionCard } from "@/components/checkout/SuccessActionCard"
 import { TELEGRAM_PRIVATE_INVITE } from "@/lib/constants"
 import { createClient } from "@/lib/supabase/client"
 import { isDevBypass } from "@/lib/dev-bypass"
+import { getCurrentUser } from "@/lib/auth-user"
 
 export default function DashboardPage() {
   const router = useRouter()
@@ -25,29 +26,25 @@ export default function DashboardPage() {
         return
       }
 
-      // Dev bypass - allow access without payment
-      if (isDevBypass()) {
-        setUserName("Dev-режим")
-        setHasFullCourse(true)
-        setHasMethodichka(true)
-        setReady(true)
-        return
-      }
-
-      const { data: { user } } = await supabase.auth.getUser()
+      // Always resolve the real signed-in user first, so the Google name/email
+      // show up even when the local dev paywall bypass is enabled.
+      const user = await getCurrentUser()
 
       if (!user) {
         router.push("/auth/login")
         return
       }
 
-      setUserName(
-        user.user_metadata?.full_name ||
-        user.user_metadata?.name ||
-        user.email ||
-        "Вы"
-      )
-      setUserEmail(user.email ?? null)
+      setUserName(user.name)
+      setUserEmail(user.email)
+
+      // Dev bypass - grant access without payment (name above is still real)
+      if (isDevBypass()) {
+        setHasFullCourse(true)
+        setHasMethodichka(true)
+        setReady(true)
+        return
+      }
 
       // Check if user has paid access
       const { data: profile } = await supabase

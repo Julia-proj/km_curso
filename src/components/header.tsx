@@ -3,9 +3,11 @@
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { createClient } from "@/lib/supabase/client"
+import { getCurrentUser } from "@/lib/auth-user"
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false)
+  const [userName, setUserName] = useState<string | null>(null)
   const router = useRouter()
 
   const handleLogout = async () => {
@@ -24,6 +26,10 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  useEffect(() => {
+    getCurrentUser().then((user) => setUserName(user?.name ?? null))
+  }, [])
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 h-16 md:h-[72px] transition-all duration-300 ${
@@ -39,12 +45,24 @@ export function Header() {
         >
           HAIRLAB
         </button>
-        <button
-          onClick={handleLogout}
-          className="text-sm font-medium text-text-muted hover:text-text transition-colors"
-        >
-          Выйти
-        </button>
+        <div className="flex items-center gap-4 md:gap-5">
+          <button
+            onClick={() => router.push("/dashboard")}
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-text-muted hover:text-text transition-colors"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+            <span className="hidden sm:inline">{userName ? userName : "Личный кабинет"}</span>
+          </button>
+          <button
+            onClick={handleLogout}
+            className="text-sm font-medium text-text-muted hover:text-text transition-colors"
+          >
+            Выйти
+          </button>
+        </div>
       </div>
     </header>
   )

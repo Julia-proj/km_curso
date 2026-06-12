@@ -129,7 +129,10 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Upsert progress
+    // Upsert progress. The conflict target MUST be user_id (the table's UNIQUE
+    // column) — otherwise the upsert defaults to the `id` primary key, always
+    // INSERTs a new row, and every save after the first violates UNIQUE(user_id)
+    // and fails silently, so progress never updates.
     const { data: progress, error } = await supabase
       .from('lesson_progress')
       .upsert({
@@ -137,7 +140,7 @@ export async function POST(req: NextRequest) {
         completed: updatedCompleted,
         last_viewed: lessonId,
         updated_at: new Date().toISOString(),
-      })
+      }, { onConflict: 'user_id' })
       .select()
       .single()
 

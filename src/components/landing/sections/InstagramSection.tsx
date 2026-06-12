@@ -1,5 +1,6 @@
 ﻿"use client"
 
+import Image from "next/image"
 import { instagramReels } from "@/config/landing-content"
 
 // Иконка Instagram
@@ -45,10 +46,13 @@ export function InstagramSection() {
             >
               {/* Верхняя часть с изображением */}
               <div className="relative overflow-hidden h-[320px] sm:h-[280px] md:h-[400px] lg:h-[400px]">
-                <img
+                <Image
                   src={reel.image}
                   alt={reel.alt}
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
+                  sizes="(min-width: 1280px) 20vw, (min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
+                  loading="lazy"
                 />
                 
                 {/* Badge с иконкой Instagram */}

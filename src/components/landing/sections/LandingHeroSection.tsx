@@ -88,10 +88,12 @@ function HeroVisuals({ tone = "light" }: { tone?: "light" | "dark" }) {
           className={`absolute inset-0 overflow-hidden rounded-[0.75rem] border ${cardBorder} ${cardBg} shadow-[4px_6px_18px_rgba(20,12,8,0.22)]`}
           style={{ transform: "rotate(7deg) translate(11px, -9px)" }}
         >
-          <img
+          <Image
             alt="Методичка: аксессуары и инструменты"
-            className="h-full w-full object-cover object-top"
+            className="object-cover object-top"
             src={guideMockupBack}
+            fill
+            sizes="160px"
           />
         </div>
         {/* передняя */}
@@ -99,10 +101,12 @@ function HeroVisuals({ tone = "light" }: { tone?: "light" | "dark" }) {
           className={`absolute inset-0 overflow-hidden rounded-[0.75rem] border ${cardBorder} ${cardBg} shadow-[0_16px_38px_rgba(20,12,8,0.38)]`}
           style={{ transform: "rotate(-5deg)" }}
         >
-          <img
+          <Image
             alt="Методичка по домашнему уходу за волосами"
-            className="h-full w-full object-cover object-top"
+            className="object-cover object-top"
             src={guideMockupFront}
+            fill
+            sizes="160px"
           />
         </div>
       </div>
@@ -113,10 +117,12 @@ function HeroVisuals({ tone = "light" }: { tone?: "light" | "dark" }) {
         style={{ transform: "rotate(2deg)" }}
       >
         <div className="relative" style={{ aspectRatio: "1181 / 2046" }}>
-          <img
+          <Image
             alt="Видео-урок из курса HAIRLAB"
-            className="h-full w-full object-cover"
+            className="object-cover"
             src={lessonScreen}
+            fill
+            sizes="160px"
           />
           <span className="absolute inset-0 flex items-center justify-center">
             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/88 pl-0.5 text-[#1A1A1A] shadow-md sm:h-8 sm:w-8 md:h-9 md:w-9">
@@ -145,10 +151,12 @@ function HeroProductPreview() {
           className="absolute inset-0 overflow-hidden rounded-[0.9rem] border border-white/48 bg-[#F7F0EA] shadow-[4px_10px_24px_rgba(28,18,13,0.18)] xl:rounded-[1rem]"
           style={{ transform: "rotate(7deg) translate(13px, -10px)" }}
         >
-          <img
+          <Image
             alt="Методичка: аксессуары и инструменты"
-            className="h-full w-full object-cover object-top"
+            className="object-cover object-top"
             src={guideMockupBack}
+            fill
+            sizes="160px"
           />
         </div>
         {/* передняя методичка */}
@@ -156,10 +164,12 @@ function HeroProductPreview() {
           className="absolute inset-0 overflow-hidden rounded-[0.9rem] border border-white/55 bg-[#F7F0EA] shadow-[0_20px_48px_-10px_rgba(23,14,10,0.6)] xl:rounded-[1rem]"
           style={{ transform: "rotate(-4deg)" }}
         >
-          <img
+          <Image
             alt="Методичка по домашнему уходу за волосами"
-            className="h-full w-full object-cover object-top"
+            className="object-cover object-top"
             src={guideMockupFront}
+            fill
+            sizes="160px"
           />
         </div>
       </div>
@@ -170,10 +180,12 @@ function HeroProductPreview() {
         style={{ transform: "rotate(2deg)" }}
       >
         <div className="relative overflow-hidden rounded-xl" style={{ aspectRatio: "1181 / 2046" }}>
-          <img
+          <Image
             alt="Видео-урок из курса HAIRLAB"
-            className="h-full w-full object-cover"
+            className="object-cover"
             src={lessonScreen}
+            fill
+            sizes="160px"
           />
           <span className="absolute inset-0 flex items-center justify-center">
             <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/92 pl-0.5 text-[#1A1A1A] shadow-md xl:h-9 xl:w-9">
