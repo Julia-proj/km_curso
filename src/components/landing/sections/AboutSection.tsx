@@ -59,7 +59,7 @@ export function AboutSection() {
                   className="object-contain object-center p-1.5 md:p-2"
                   fill
                   loading="lazy"
-                  quality={92}
+                  quality={80}
                   sizes="(min-width: 1024px) 290px, (min-width: 768px) 250px, 45vw"
                   src="/images/salon1.webp"
                 />

@@ -122,7 +122,7 @@ function HeroVisuals({ tone = "light" }: { tone?: "light" | "dark" }) {
             className="object-cover"
             src={lessonScreen}
             fill
-            sizes="160px"
+            sizes="(min-width: 768px) 144px, 112px"
           />
           <span className="absolute inset-0 flex items-center justify-center">
             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/88 pl-0.5 text-[#1A1A1A] shadow-md sm:h-8 sm:w-8 md:h-9 md:w-9">
@@ -185,7 +185,7 @@ function HeroProductPreview() {
             className="object-cover"
             src={lessonScreen}
             fill
-            sizes="160px"
+            sizes="(min-width: 768px) 144px, 112px"
           />
           <span className="absolute inset-0 flex items-center justify-center">
             <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/92 pl-0.5 text-[#1A1A1A] shadow-md xl:h-9 xl:w-9">

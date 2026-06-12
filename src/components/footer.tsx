@@ -32,7 +32,7 @@ export function Footer() {
               О проекте
             </a>
             <a
-              href="#terms"
+              href="/terms"
               className="text-white/60 hover:text-white transition-colors"
             >
               Условия

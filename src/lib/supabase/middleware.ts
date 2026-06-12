@@ -17,6 +17,22 @@ export async function updateSession(request: NextRequest) {
     })
   }
 
+  // Anonymous visitors carry no Supabase auth cookie — skip the network
+  // round-trip to Supabase entirely (it added ~0.5s TTFB to every page).
+  const hasAuthCookie = request.cookies
+    .getAll()
+    .some((c) => c.name.startsWith('sb-') && c.name.includes('auth-token'))
+  if (!hasAuthCookie) {
+    if (request.nextUrl.pathname.startsWith('/dashboard')) {
+      const url = request.nextUrl.clone()
+      url.pathname = '/auth/login'
+      return NextResponse.redirect(url)
+    }
+    return NextResponse.next({
+      request,
+    })
+  }
+
   let supabaseResponse = NextResponse.next({
     request,
   })
