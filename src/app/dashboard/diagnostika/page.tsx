@@ -40,8 +40,15 @@ export default function DiagnostikaPage() {
         return
       }
 
+      // Dev bypass - allow access without payment
+      if (process.env.NEXT_PUBLIC_DEV_BYPASS_PAYWALL === 'true') {
+        setIsAuthenticated(true)
+        setHasPaidCourse(true)
+        return
+      }
+
       const { data: { user } } = await supabase.auth.getUser()
-      
+
       if (!user) {
         router.push("/auth/login")
         return

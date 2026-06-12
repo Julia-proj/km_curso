@@ -17,6 +17,14 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Email required' }, { status: 400 })
   }
 
+  // Dev bypass - allow access without payment
+  if (process.env.NEXT_PUBLIC_DEV_BYPASS_PAYWALL === 'true') {
+    return NextResponse.json({
+      has_methodichka: true,
+      has_full_course: true,
+    })
+  }
+
   const supabase = getSupabase()
   const { data, error } = await supabase
     .from('profiles')
