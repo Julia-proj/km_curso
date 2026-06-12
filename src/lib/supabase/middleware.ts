@@ -2,6 +2,13 @@ import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function updateSession(request: NextRequest) {
+  // Dev bypass - skip auth check
+  if (process.env.NEXT_PUBLIC_DEV_BYPASS_PAYWALL === 'true') {
+    return NextResponse.next({
+      request,
+    })
+  }
+
   // Skip auth if env vars not configured yet
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
     return NextResponse.next({

@@ -11,7 +11,7 @@ export const featureFlags: FeatureFlags = {
   courseStatus: (process.env.COURSE_STATUS as CourseStatus) || 'prelaunch',
   aiDiagnostics: true,
   emailNotifications: false,
-  dashboard: false,
+  dashboard: true,
 }
 
 export function isCourseActive(): boolean {
