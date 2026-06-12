@@ -47,15 +47,30 @@ export async function calculateRecommendation(
     baseProductIds.push(`limba-${secondary}-mask`);
   }
   
-  // 4. Термозащита если есть термоукладка часто
+  // 4. Термозащита почти всегда (кроме редких случаев)
   const needsHeatProtection = 
-    quiz?.heat_styling === 'daily' || 
-    quiz?.heat_styling === 'often' ||
+    quiz?.heat_styling !== 'never' || 
     diagnostic.main_issues.includes('breakage') ||
-    diagnostic.main_issues.includes('split_ends');
+    diagnostic.main_issues.includes('split_ends') ||
+    diagnostic.hair_classification.apparent_type === 'bleached';
     
   if (needsHeatProtection) {
     baseProductIds.push('limba-heat-protection');
+  }
+  
+  // 5. Пилинг кожи головы и детокс-шампунь если моют каждый день
+  const needsDetox = 
+    quiz?.wash_frequency === 'daily' ||
+    diagnostic.main_issues.includes('oily_scalp') ||
+    primary === 'detox';
+  
+  if (needsDetox) {
+    // Добавляем детокс-шампунь если его ещё нет
+    if (!baseProductIds.includes('limba-detox-shampoo')) {
+      baseProductIds.push('limba-detox-shampoo');
+    }
+    // Добавляем пилинг кожи головы (если есть в каталоге)
+    baseProductIds.push('limba-scalp-peel');
   }
   
   // 5. Подарки на основе issues

@@ -50,12 +50,12 @@ export default function LessonsPage() {
       <Header />
       <main className="min-h-screen bg-[#F8F5F1] pt-20 pb-16 px-5 md:pt-24">
         <div className="max-w-6xl mx-auto">
-          <button
-            onClick={() => router.back()}
+          <a
+            href="/dashboard"
             className="inline-flex items-center gap-2 text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors mb-8"
           >
-            ← Назад в личный кабинет
-          </button>
+            ← В кабинет
+          </a>
           
           <div className="grid lg:grid-cols-[300px_1fr] gap-8 mt-6">
             {/* Sidebar - Lesson list */}

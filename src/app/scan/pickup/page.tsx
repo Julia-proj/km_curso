@@ -121,12 +121,12 @@ function PickupContent() {
     <main className="min-h-screen bg-[#FAF7F4] py-12">
       <div className="km-container">
         <div className="mx-auto max-w-2xl">
-          <button
-            onClick={() => router.back()}
+          <a
+            href="/dashboard"
             className="inline-flex items-center gap-2 text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors mb-6"
           >
-            ← Назад
-          </button>
+            ← В кабинет
+          </a>
 
           <h1 className="font-hero-face text-3xl font-semibold text-[#1A1A1A] md:text-4xl">
             Оформление заказа
@@ -218,7 +218,7 @@ function PickupContent() {
                 Pickup в студии HAIRLAB Madrid
               </p>
               <p className="mt-1 font-body text-sm font-semibold text-[#1A1A1A]">
-                Calle Velazquez 45, Madrid
+                Altamirano 33, Мадрид
               </p>
             </div>
 

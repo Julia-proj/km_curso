@@ -292,52 +292,8 @@ export function LandingHeroSection() {
       <div className="hidden min-h-screen lg:grid lg:grid-cols-[1fr_minmax(380px,42%)] xl:grid-cols-[1fr_minmax(420px,44%)] 2xl:grid-cols-[1fr_minmax(460px,46%)]">
 
         {/* Left: text column on cream background */}
-        <div className="relative flex flex-col items-center justify-center overflow-hidden bg-[#FAF7F4] px-6 py-5 lg:px-8 xl:px-10 xl:py-6 2xl:px-12 2xl:py-7">
-          {/* Animated background blobs */}
-          <motion.div
-            className="absolute -top-20 -left-20 h-96 w-96 rounded-full"
-            style={{ background: "radial-gradient(circle, rgba(212,145,140,0.15) 0%, transparent 70%)" }}
-            animate={{
-              x: [0, 30, 0],
-              y: [0, -30, 0],
-              scale: [1, 1.1, 1],
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-          <motion.div
-            className="absolute -bottom-32 -right-32 h-[30rem] w-[30rem] rounded-full"
-            style={{ background: "radial-gradient(circle, rgba(196,149,106,0.12) 0%, transparent 70%)" }}
-            animate={{
-              x: [0, -40, 0],
-              y: [0, 40, 0],
-              scale: [1, 1.15, 1],
-            }}
-            transition={{
-              duration: 25,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 2,
-            }}
-          />
-          <motion.div
-            className="absolute top-1/4 right-1/4 h-64 w-64 rounded-full"
-            style={{ background: "radial-gradient(circle, rgba(217,161,157,0.08) 0%, transparent 70%)" }}
-            animate={{
-              x: [0, 20, 0],
-              y: [0, 25, 0],
-            }}
-            transition={{
-              duration: 18,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 4,
-            }}
-          />
-          <div className="relative z-10 w-full max-w-[28rem] lg:max-w-[32rem] xl:max-w-[36rem]">
+        <div className="flex flex-col items-center justify-center bg-[#FAF7F4] px-6 py-5 lg:px-8 xl:px-10 xl:py-6 2xl:px-12 2xl:py-7">
+          <div className="w-full max-w-[28rem] lg:max-w-[32rem] xl:max-w-[36rem]">
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}

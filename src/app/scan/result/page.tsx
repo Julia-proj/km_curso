@@ -108,12 +108,12 @@ function ScanResultContent() {
   return (
     <main className="min-h-screen" style={{ background: "var(--color-cream)" }}>
       <div className="km-container" style={{ paddingTop: "2rem" }}>
-        <button
-          onClick={() => router.back()}
+        <a
+          href="/dashboard"
           className="inline-flex items-center gap-2 text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors mb-6"
         >
-          ← Назад
-        </button>
+          ← В кабинет
+        </a>
       </div>
 
       <ResultHero
@@ -124,6 +124,43 @@ function ScanResultContent() {
         selfCarePriorities={data.diagnostic.self_care_priorities}
         primaryCategory={data.recommendation.primary_category}
       />
+
+      <div className="km-container" style={{ paddingBottom: "3rem" }}>
+        <div
+          style={{
+            maxWidth: "760px",
+            margin: "0 auto",
+            padding: "1.5rem",
+            background: "var(--color-paper)",
+            border: "1px solid var(--color-line)",
+            borderRadius: "8px",
+          }}
+        >
+          <p
+            style={{
+              fontFamily: "var(--font-body-face), Inter, sans-serif",
+              fontSize: "0.9375rem",
+              lineHeight: 1.6,
+              color: "var(--color-ink)",
+            }}
+          >
+            Это краткая выжимка. Все детальные рекомендации и техники — в видео-модулях и методичках вашего курса.
+          </p>
+          <a
+            href="/dashboard"
+            style={{
+              display: "inline-block",
+              marginTop: "0.75rem",
+              fontFamily: "var(--font-body-face), Inter, sans-serif",
+              fontSize: "0.875rem",
+              color: "var(--color-bronze)",
+              textDecoration: "underline",
+            }}
+          >
+            Перейти в личный кабинет →
+          </a>
+        </div>
+      </div>
 
       <div className="km-container">
         <div className="mb-8 pt-14">
@@ -146,6 +183,46 @@ function ScanResultContent() {
           )}
 
           <TalkToElenaPath />
+
+          <div
+            style={{
+              marginTop: "4rem",
+              padding: "2rem",
+              background: "var(--color-paper)",
+              border: "1px solid var(--color-line)",
+              borderRadius: "8px",
+            }}
+          >
+            <p
+              style={{
+                fontFamily: "var(--font-body-face), Inter, sans-serif",
+                fontSize: "0.875rem",
+                lineHeight: 1.6,
+                color: "var(--color-ink-soft)",
+                marginBottom: "1rem",
+              }}
+            >
+              Все рекомендации являются предварительными и основаны на ваших ответах и AI-анализе фотографии. Для точного подбора рекомендуется изучение методичек, видео-уроков или консультация специалиста.
+            </p>
+            <p
+              style={{
+                fontFamily: "var(--font-body-face), Inter, sans-serif",
+                fontSize: "0.875rem",
+                lineHeight: 1.6,
+                color: "var(--color-ink-soft)",
+              }}
+            >
+              Набор можно забрать в салоне по адресу:{" "}
+              <a
+                href="https://wa.me/34641261559"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "var(--color-bronze)", textDecoration: "underline" }}
+              >
+                Altamirano 33, Мадрид (написать в WhatsApp)
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </main>

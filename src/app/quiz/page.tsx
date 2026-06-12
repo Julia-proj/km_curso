@@ -11,10 +11,10 @@ export default function QuizPage() {
   return (
     <main className="min-h-screen bg-[#FAF7F4] flex flex-col items-center justify-center px-4 py-16">
       <Link
-        href="/"
+        href="/dashboard"
         className="absolute top-6 left-6 text-sm font-medium text-[#666] hover:text-[#1A1A1A] transition-colors"
       >
-        ← На главную
+        ← В кабинет
       </Link>
       <div className="w-full max-w-lg text-center mb-10">
         <span className="text-base font-semibold text-[#D29B9B] tracking-wide">

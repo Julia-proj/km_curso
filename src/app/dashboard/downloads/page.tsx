@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import { AnimatedBackground } from "@/components/AnimatedBackground"
 
 interface AccessState {
   loading: boolean
@@ -74,7 +75,9 @@ export default function DownloadsPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#FAF7F4]">
+    <>
+      <AnimatedBackground />
+      <main className="min-h-screen bg-transparent">
       <header
         style={{
           borderBottom: "1px solid rgba(160, 132, 92, 0.2)",
@@ -191,6 +194,7 @@ export default function DownloadsPage() {
         )}
       </div>
     </main>
+    </>
   )
 }
 

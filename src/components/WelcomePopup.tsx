@@ -37,7 +37,7 @@ export function WelcomePopup() {
             exit={{ opacity: 0, y: 16, scale: 0.95 }}
             transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
             className="relative w-full max-w-[20rem] overflow-hidden rounded-3xl"
-            style={{ background: "#FAF7F4", boxShadow: "0_25px_80px_-12px_rgba(26,26,26,0.35)" }}
+            style={{ background: "#F5F0EB", boxShadow: "0_25px_80px_-12px_rgba(26,26,26,0.35)" }}
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -62,7 +62,7 @@ export function WelcomePopup() {
                 className="mt-2 font-hero-face font-semibold tracking-tight"
                 style={{ fontSize: "1.35rem", color: "#1A1A1A", lineHeight: 1.2 }}
               >
-                Выбери формат
+                Что хочешь изучить?
               </h3>
             </div>
 
@@ -85,6 +85,12 @@ export function WelcomePopup() {
                     style={{ fontSize: "1.5rem", color: "#1A1A1A", lineHeight: 1 }}
                   >
                     38€
+                  </p>
+                  <p
+                    className="mt-1 font-sans text-xs"
+                    style={{ color: "#888" }}
+                  >
+                    Все уроки + методички
                   </p>
                 </div>
                 <div
@@ -115,6 +121,12 @@ export function WelcomePopup() {
                   >
                     12€
                   </p>
+                  <p
+                    className="mt-1 font-sans text-xs"
+                    style={{ color: "#888" }}
+                  >
+                    Только PDF-гайды
+                  </p>
                 </div>
                 <div
                   className="flex h-10 w-10 items-center justify-center rounded-full border-2 transition-transform group-hover:scale-110 group-hover:border-[#D9A19D]"
@@ -132,7 +144,7 @@ export function WelcomePopup() {
               className="w-full py-4 text-center font-sans text-xs transition-colors hover:bg-black/[0.02]"
               style={{ color: "#A0845C", letterSpacing: "0.02em" }}
             >
-              Сначала посмотрю
+              Сначала изучу программу
             </button>
           </motion.div>
         </motion.div>

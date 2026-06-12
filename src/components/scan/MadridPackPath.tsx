@@ -95,9 +95,14 @@ export function MadridPackPath({ category, products, gifts, packTotal, savings }
           Полный pack: {packTotal}€ · экономия {savings}€ от поштучных цен
         </p>
 
-        <button className="inline-flex items-center justify-center rounded-sm bg-[#1A1A1A] px-6 py-3 font-sans text-sm font-semibold uppercase tracking-[0.08em] text-white transition-all hover:bg-[#333]">
-          Забрать в студии Мадрид
-        </button>
+        <a
+          href="https://wa.me/34641261559?text=Здравствуйте! Я прошла диагностику волос и хочу забрать готовый набор в студии Мадрид. Результат диагностики: "
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center rounded-sm bg-[#25D366] px-6 py-3 font-sans text-sm font-semibold uppercase tracking-[0.08em] text-white transition-all hover:bg-[#128C7E]"
+        >
+          Написать в WhatsApp для заказа
+        </a>
 
         <button
           onClick={() => setShowShippingInfo(!showShippingInfo)}

@@ -2,11 +2,9 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { TelegramAccessCard } from "@/components/dashboard/TelegramAccessCard"
 
 export default function DashboardPage() {
   const router = useRouter()
-  const [hasCourse, setHasCourse] = useState(false)
   const [ready, setReady] = useState(false)
 
   useEffect(() => {
@@ -15,8 +13,6 @@ export default function DashboardPage() {
       router.push("/")
       return
     }
-    const paid = localStorage.getItem("hasPaidCourse") === "true"
-    setHasCourse(paid)
     setReady(true)
   }, [router])
 
@@ -54,18 +50,21 @@ export default function DashboardPage() {
       </header>
 
       <div className="km-container" style={{ maxWidth: "calc(640px + var(--page-x) * 2)", padding: "3rem var(--page-x)" }}>
-        {/* ── «Продолжить» widget placeholder ── */}
-        {/* TODO: вставить виджет Продолжить здесь */}
+        <h1
+          style={{
+            fontFamily: "var(--font-hero-face), Manrope, sans-serif",
+            fontSize: "clamp(1.5rem, 4vw, 2rem)",
+            fontWeight: 600,
+            color: "#1A1A1A",
+            marginBottom: "2rem",
+          }}
+        >
+          Добро пожаловать
+        </h1>
 
-        {/* ── Telegram access card ── */}
-        <div style={{ marginTop: "1.5rem" }}>
-          <TelegramAccessCard hasCourse={hasCourse} />
-        </div>
-
-        {/* Quick links */}
+        {/* Menu */}
         <nav
           style={{
-            marginTop: "2.5rem",
             display: "flex",
             flexDirection: "column",
             gap: "0",
@@ -73,7 +72,8 @@ export default function DashboardPage() {
           }}
         >
           {[
-            { label: "AI-диагностика", href: "/dashboard/diagnostika" },
+            { label: "Видео уроки", href: "/dashboard/lessons" },
+            { label: "AI-диагностика", href: "/scan" },
             { label: "Методички", href: "/dashboard/downloads" },
           ].map(({ label, href }) => (
             <a
