@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import { PostPaymentNav } from "@/components/Navigation"
 import { SuccessActionCard } from "@/components/checkout/SuccessActionCard"
 import { TELEGRAM_PRIVATE_INVITE } from "@/lib/constants"
 import { createClient } from "@/lib/supabase/client"
@@ -17,6 +18,14 @@ export default function DashboardPage() {
       const supabase = createClient()
       if (!supabase) {
         // Auth not configured, allow access for now
+        setReady(true)
+        return
+      }
+
+      // Dev bypass - allow access without payment
+      if (process.env.NEXT_PUBLIC_DEV_BYPASS_PAYWALL === 'true') {
+        setHasFullCourse(true)
+        setHasMethodichka(true)
         setReady(true)
         return
       }
@@ -60,6 +69,7 @@ export default function DashboardPage() {
     <main className="min-h-screen bg-[#FAF7F4] py-16">
       <div className="km-container">
         <div className="mx-auto max-w-2xl">
+          <PostPaymentNav showBack={false} />
           {/* Action cards */}
           <div
             style={{

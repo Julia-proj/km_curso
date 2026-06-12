@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react"
 import { useRouter } from "next/navigation"
 import imageCompression from "browser-image-compression"
+import { PostPaymentNav } from "@/components/Navigation"
 import { useQuizStore } from "@/stores/quiz-store"
 import { saveDiagnosis } from "@/lib/progress"
 import { ensureHeatProtectionAdvice } from "@/lib/recommendations/pick-products"
@@ -162,17 +163,7 @@ export default function DiagnostikaPage() {
       {/* Header */}
       <header className="border-b border-[var(--border)] bg-[var(--card)]">
         <div className="km-container py-4">
-          <div className="flex items-center justify-between">
-            <h1 className="text-xl font-semibold text-[var(--foreground)]">
-              HAIRLAB
-            </h1>
-            <button
-              onClick={() => router.push("/dashboard")}
-              className="text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
-            >
-              В кабинет
-            </button>
-          </div>
+          <PostPaymentNav showBack={false} />
         </div>
       </header>
 

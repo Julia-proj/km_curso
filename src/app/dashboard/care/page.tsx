@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
+import { PostPaymentNav } from "@/components/Navigation"
 import { useQuizStore } from "@/stores/quiz-store"
 import { getDiagnosis, type SavedDiagnosis } from "@/lib/progress"
 import {
@@ -109,12 +110,7 @@ export default function CarePage() {
   return (
     <main className="min-h-screen bg-[#FAF7F4] pb-20">
       <div className="mx-auto w-full max-w-3xl px-4 pt-8 sm:px-6">
-        <button
-          onClick={() => router.push("/dashboard")}
-          className="mb-8 inline-flex items-center gap-2 text-sm text-[#666] transition-colors hover:text-[#1A1A1A]"
-        >
-          ← В кабинет
-        </button>
+        <PostPaymentNav showBack={true} />
 
         {/* Header */}
         <p className="font-sans text-xs font-semibold uppercase tracking-[0.18em] text-[#C4956A]">

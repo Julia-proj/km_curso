@@ -1,13 +1,9 @@
-import type { Metadata } from 'next'
+"use client"
+
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
-import { BackButton } from '@/components/BackButton'
+import { PrePaymentNav } from '@/components/Navigation'
 import { WhatYouGetSection } from '@/components/landing/sections/WhatYouGetSection'
-
-export const metadata: Metadata = {
-  title: 'Выбери формат - HAIRLAB',
-  description: 'Два формата восстановления волос: Full Course (39€) и HAIRLAB Guide (13€).',
-}
 
 export default function OfferPage() {
   return (
@@ -16,7 +12,7 @@ export default function OfferPage() {
       <main className="bg-[#F8F5F1] pt-20 pb-10 md:pt-24">
         <div className="max-w-5xl mx-auto">
           <div className="px-5">
-            <BackButton />
+            <PrePaymentNav showBack={true} />
           </div>
           <WhatYouGetSection
             sectionId={undefined}

@@ -203,7 +203,7 @@ export function WhatYouGetSection({
               </span>
             </div>
 
-            <div className="mb-5 flex gap-5 sm:mb-6">
+            <div className="mb-8 flex gap-5 sm:mb-10">
               {[
                 { src: "/images/guia_pdf.PNG", alt: "Методичка по уходу", label: "Домашний уход", objPos: "50% 10%" },
                 { src: "/images/acces_pdf.PNG", alt: "Гайд по аксессуарам", label: "Аксессуары", objPos: "50% 0%" },

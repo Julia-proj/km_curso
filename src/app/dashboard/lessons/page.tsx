@@ -2,6 +2,7 @@
 
 import { useSearchParams, useRouter } from "next/navigation"
 import { Header } from "@/components/header"
+import { PostPaymentNav } from "@/components/Navigation"
 import { PAID_LESSONS } from "@/config/lessons"
 
 export const dynamic = 'force-dynamic'
@@ -50,12 +51,7 @@ export default function LessonsPage() {
       <Header />
       <main className="min-h-screen bg-[#F8F5F1] pt-20 pb-16 px-5 md:pt-24">
         <div className="max-w-6xl mx-auto">
-          <a
-            href="/dashboard"
-            className="inline-flex items-center gap-2 text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors mb-8"
-          >
-            ← В кабинет
-          </a>
+          <PostPaymentNav showBack={true} />
           
           <div className="grid lg:grid-cols-[300px_1fr] gap-8 mt-6">
             {/* Sidebar - Lesson list */}

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { AnimatedBackground } from "@/components/AnimatedBackground"
+import { PostPaymentNav } from "@/components/Navigation"
 import { createClient } from "@/lib/supabase/client"
 
 interface AccessState {
@@ -46,6 +47,16 @@ export default function DownloadsPage() {
           loading: false,
           hasAccess: false,
           email: "",
+        })
+        return
+      }
+
+      // Dev bypass - allow access without payment
+      if (process.env.NEXT_PUBLIC_DEV_BYPASS_PAYWALL === 'true') {
+        setState({
+          loading: false,
+          hasAccess: true,
+          email: "dev@example.com",
         })
         return
       }
@@ -125,50 +136,8 @@ export default function DownloadsPage() {
           padding: "1rem 0",
         }}
       >
-        <div className="km-container" style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-          <button
-            onClick={() => router.push("/dashboard")}
-            aria-label="Назад"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "0.375rem",
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-              color: "#A0845C",
-              fontSize: "0.875rem",
-              fontFamily: "var(--font-body-face), Inter, sans-serif",
-              padding: 0,
-            }}
-          >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M15 18L9 12L15 6" />
-            </svg>
-            Кабинет
-          </button>
-          <span
-            style={{
-              fontFamily: "var(--font-hero-face), Manrope, sans-serif",
-              fontSize: "0.875rem",
-              fontWeight: 600,
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-              color: "#1A1A1A",
-            }}
-          >
-            HAIRLAB
-          </span>
+        <div className="km-container" style={{ padding: "0 var(--page-x)" }}>
+          <PostPaymentNav showBack={true} />
         </div>
       </header>
 

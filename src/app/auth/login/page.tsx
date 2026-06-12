@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { createClient } from "@/lib/supabase/client"
 import { AnimatedBackground } from "@/components/AnimatedBackground"
+import { PrePaymentNav } from "@/components/Navigation"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -43,6 +44,7 @@ export default function LoginPage() {
       <AnimatedBackground />
       <main className="min-h-screen bg-transparent flex items-center justify-center px-5 py-12">
         <div className="w-full max-w-md">
+          <PrePaymentNav showBack={true} />
           <div className="bg-white rounded-2xl border border-[#E0DCD6] p-8 shadow-lg">
             <div className="text-center mb-8">
               <h1 className="font-hero-face text-2xl font-semibold text-[#1A1A1A] mb-2">
@@ -86,15 +88,6 @@ export default function LoginPage() {
                 {loading ? "Вход..." : "Войти через Google"}
               </span>
             </button>
-
-            <div className="mt-6 text-center">
-              <a
-                href="/"
-                className="font-sans text-sm text-[#A0845C] hover:text-[#1A1A1A] transition-colors"
-              >
-                ← Вернуться на главную
-              </a>
-            </div>
           </div>
         </div>
       </main>

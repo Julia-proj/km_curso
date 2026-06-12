@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { PrePaymentNav } from '@/components/Navigation'
 import { useQuizStore } from '@/stores/quiz-store'
 import { quizQuestions } from '@/config/quiz-data'
 import { hasDiagnosis } from '@/lib/progress'
@@ -54,32 +55,9 @@ export default function ResultPage() {
       className="min-h-screen flex flex-col items-center justify-center px-4 py-16"
       style={{ background: "var(--color-cream)" }}
     >
-      <div className="absolute top-4 left-4">
-        <Link
-          href="/quiz"
-          className="inline-flex items-center gap-2 text-sm hover:text-[var(--color-text)] transition-colors"
-          style={{ color: "var(--color-ink-soft)" }}
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M15 18l-6-6 6-6" />
-          </svg>
-          Вернуться к тесту
-        </Link>
-      </div>
-      <div className="absolute top-4 right-4">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-sm hover:text-[var(--color-text)] transition-colors"
-          style={{ color: "var(--color-ink-soft)" }}
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M3 12l9-9 9 9" />
-            <path d="M5 10v10a1 1 0 001 1h12a1 1 0 001-1V10" />
-          </svg>
-          На главную
-        </Link>
-      </div>
-      <div className="w-full max-w-lg pt-12">
+      <div className="w-full max-w-lg">
+        <PrePaymentNav showBack={true} />
+        <div className="pt-4">
         <p
           className="text-center mb-3"
           style={{
@@ -212,6 +190,7 @@ export default function ResultPage() {
           >
             Сначала бесплатный урок в подарок →
           </Link>
+        </div>
         </div>
       </div>
     </main>
