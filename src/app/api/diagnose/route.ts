@@ -8,8 +8,9 @@ function getSupabase() {
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
     throw new Error('Supabase credentials are not configured');
   }
+  const url = (process.env.NEXT_PUBLIC_SUPABASE_URL || '').trim().replace(/\/+$/, '');
   return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    url,
     process.env.SUPABASE_SERVICE_ROLE_KEY,
     { auth: { autoRefreshToken: false, persistSession: false } }
   );
@@ -90,6 +91,12 @@ async function uploadImageToSupabase(
   fileName: string
 ): Promise<{ signedUrl: string; path: string }> {
   const supabase = getSupabase();
+  console.log('[DIAGNOSIS] upload debug', {
+    url: process.env.NEXT_PUBLIC_SUPABASE_URL,
+    fileName,
+    fileType: file.type,
+    fileNameOriginal: file.name,
+  });
   const { data, error } = await supabase.storage
     .from('hair-photos')
     .upload(fileName, file, {

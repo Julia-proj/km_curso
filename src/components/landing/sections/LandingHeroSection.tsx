@@ -74,10 +74,10 @@ function HeroVisuals({ tone = "light" }: { tone?: "light" | "dark" }) {
       initial={{ opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3, duration: 0.55 }}
-      className="flex items-end gap-5 pt-8 min-[390px]:gap-6 min-[390px]:pt-9"
+      className="flex items-end gap-5 pt-0 min-[390px]:gap-6 min-[390px]:pt-0"
     >
       {/* Стопка методичек — w/h точно под соотношение 1147:1672 = 0.686 */}
-      <div className="relative h-[11rem] w-[7.5rem] shrink-0 min-[390px]:h-[12.5rem] min-[390px]:w-[8.6rem]">
+      <div className="relative h-[9.5rem] w-[6.5rem] shrink-0 min-[390px]:h-[11rem] min-[390px]:w-[7.5rem]">
         {/* задняя */}
         <div
           className={`absolute inset-0 overflow-hidden rounded-[0.75rem] border ${cardBorder} ${cardBg} shadow-[4px_6px_18px_rgba(20,12,8,0.22)]`}
@@ -104,7 +104,7 @@ function HeroVisuals({ tone = "light" }: { tone?: "light" | "dark" }) {
 
       {/* Видео — точное соотношение 1181:2046, без кропа */}
       <div
-        className={`w-[7rem] overflow-hidden rounded-[0.75rem] border ${cardBorder} ${cardBg} shadow-[0_12px_28px_rgba(20,12,8,0.3)] min-[390px]:w-[8rem]`}
+        className={`w-[6rem] overflow-hidden rounded-[0.75rem] border ${cardBorder} ${cardBg} shadow-[0_12px_28px_rgba(20,12,8,0.3)] min-[390px]:w-[7rem]`}
         style={{ transform: "rotate(2deg)" }}
       >
         <div className="relative" style={{ aspectRatio: "1181 / 2046" }}>
@@ -164,10 +164,6 @@ function HeroProductPreview() {
         className="w-[7.5rem] overflow-hidden rounded-2xl border border-white/60 bg-[#F9F3EF] p-2 shadow-[0_16px_36px_-16px_rgba(25,15,10,0.52)] ring-1 ring-[#3B2A22]/10 xl:w-[9rem] xl:rounded-[1rem] xl:p-2"
         style={{ transform: "rotate(2deg)" }}
       >
-        <p className="mb-1.5 font-sans text-[9px] font-semibold leading-tight text-[#2F2925] xl:text-[10px]">
-          Видеоуроки
-          <span className="block font-medium text-[#6F6259]">с пошаговыми техниками</span>
-        </p>
         <div className="relative overflow-hidden rounded-xl" style={{ aspectRatio: "1181 / 2046" }}>
           <img
             alt="Видео-урок из курса HAIRLAB"
@@ -258,7 +254,7 @@ export function LandingHeroSection() {
             </motion.p>
           </div>
 
-          <div className="mt-4 min-[390px]:mt-5">
+          <div className="mt-2 min-[390px]:mt-4">
             <HeroVisuals tone="dark" />
           </div>
 

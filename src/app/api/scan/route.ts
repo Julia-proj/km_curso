@@ -3,12 +3,22 @@ import { createClient } from '@supabase/supabase-js';
 import { analyzePhoto, calcCost } from '@/lib/ai/diagnose';
 import { calculateRecommendation } from '@/lib/recommendations/engine';
 
+const MIME_TO_EXT: Record<string, string> = {
+  'image/jpeg': 'jpg',
+  'image/jpg': 'jpg',
+  'image/png': 'png',
+  'image/webp': 'webp',
+  'image/heic': 'jpg',
+  'image/heif': 'jpg',
+};
+
 function getSupabase() {
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
     throw new Error('Supabase credentials are not configured');
   }
+  const url = (process.env.NEXT_PUBLIC_SUPABASE_URL || '').trim().replace(/\/+$/, '');
   return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    url,
     process.env.SUPABASE_SERVICE_ROLE_KEY,
     { auth: { autoRefreshToken: false, persistSession: false } }
   );
@@ -61,8 +71,8 @@ export async function POST(req: NextRequest) {
       }, { status: 429 });
     }
     
-    const fileExt = photo.name.split('.').pop();
-    const fileName = `scans/${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+    const ext = MIME_TO_EXT[photo.type] || 'jpg';
+    const fileName = `scans/${Date.now()}-${Math.random().toString(36).substring(2, 10)}.${ext}`;
     
     const { data: uploadData, error: uploadError } = await supabaseAdmin.storage
       .from('hair-photos')
