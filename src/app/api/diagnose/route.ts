@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { featureFlags } from '@/config/feature-flags';
 import { isDevBypass } from '@/lib/dev-bypass';
+import { SIGN_LABELS } from '@/config/limba-products';
 import {
   analyzePhoto,
   calcCost,
@@ -265,11 +266,16 @@ export async function POST(request: NextRequest) {
     // Save to Supabase (best-effort)
     await saveDiagnosisToSupabase(ip, path, diagnosis, cost);
 
+    // Build the visible-signs list from the controlled main_issues enum (clean
+    // Russian via SIGN_LABELS), not the model's free-text visible_signs which can
+    // come back as broken/transliterated Russian ("фризз", "тупость").
+    const signs = diagnosis.main_issues.map((issue) => SIGN_LABELS[issue] ?? issue);
+
     // Return result in the shape the diagnostika page expects, plus the AI's
     // Limba category so the care page can use it directly.
     return NextResponse.json({
       damageLevel: diagnosis.damage_level,
-      signs: diagnosis.visible_signs,
+      signs,
       recommendations: diagnosis.self_care_priorities,
       summary: diagnosis.summary,
       recommendedCategory: diagnosis.recommended_limba_category,
