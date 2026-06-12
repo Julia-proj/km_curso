@@ -61,7 +61,7 @@ export function AboutSection() {
                   loading="lazy"
                   quality={92}
                   sizes="(min-width: 1024px) 290px, (min-width: 768px) 250px, 45vw"
-                  src="/images/salon1.JPG"
+                  src="/images/salon1.webp"
                 />
               </div>
             </div>

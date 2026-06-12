@@ -11,7 +11,7 @@ const desktopHeroImage = "/images/heronew.PNG"
 
 const guideMockupBack = "/images/acces_pdf.PNG"
 const guideMockupFront = "/images/guia_pdf.PNG"
-const lessonScreen = "/images/hero_screen_lesson.png"
+const lessonScreen = "/images/hero_screen_lesson.webp"
 
 // Shared 1x1 blur placeholder for the hero photos (valid base64, single source).
 const HERO_BLUR =
