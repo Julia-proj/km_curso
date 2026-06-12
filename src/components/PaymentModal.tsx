@@ -16,6 +16,12 @@ export function PaymentModal({ isOpen, onClose, product, stripeLink }: PaymentMo
   const [email, setEmail] = useState("")
   const [showEmailInput, setShowEmailInput] = useState(false)
   const [devMode, setDevMode] = useState(false)
+  const [isLocalhost, setIsLocalhost] = useState(false)
+
+  // Detect localhost after mount to avoid SSR/hydration mismatch.
+  useEffect(() => {
+    setIsLocalhost(["localhost", "127.0.0.1"].includes(window.location.hostname))
+  }, [])
 
   useEffect(() => {
     if (!isOpen) {
@@ -63,7 +69,8 @@ export function PaymentModal({ isOpen, onClose, product, stripeLink }: PaymentMo
 
     setIsLoading(true)
     try {
-      if (devMode) {
+      // Dev bypass only works locally — never on Vercel/production.
+      if (devMode && isLocalhost) {
         window.location.href = `/checkout/success?session_id=dev_test_${Date.now()}&product=${product}`
         return
       }
@@ -130,17 +137,19 @@ export function PaymentModal({ isOpen, onClose, product, stripeLink }: PaymentMo
                   </div>
                 )}
 
-                <div className="mb-4">
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={devMode}
-                      onChange={(e) => setDevMode(e.target.checked)}
-                      className="h-4 w-4 rounded border-[#E0DCD6]"
-                    />
-                    <span className="font-sans text-xs text-[#666]">Dev mode (бypass Stripe)</span>
-                  </label>
-                </div>
+                {isLocalhost && (
+                  <div className="mb-4">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={devMode}
+                        onChange={(e) => setDevMode(e.target.checked)}
+                        className="h-4 w-4 rounded border-[#E0DCD6]"
+                      />
+                      <span className="font-sans text-xs text-[#666]">Dev mode (bypass Stripe, только localhost)</span>
+                    </label>
+                  </div>
+                )}
 
                 {showEmailInput && !isValidStripeLink && (
                   <div className="mb-4">

@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import { SESSION_KEY } from "@/lib/progress"
 
 export default function DashboardPage() {
   const router = useRouter()
   const [ready, setReady] = useState(false)
 
   useEffect(() => {
-    const session = localStorage.getItem("session")
+    const session = localStorage.getItem(SESSION_KEY)
     if (!session) {
       router.push("/")
       return
@@ -59,7 +60,7 @@ export default function DashboardPage() {
             marginBottom: "2rem",
           }}
         >
-          Добро пожаловать
+          Твой кабинет
         </h1>
 
         {/* Menu */}
@@ -72,8 +73,8 @@ export default function DashboardPage() {
           }}
         >
           {[
-            { label: "Видео уроки", href: "/dashboard/lessons" },
-            { label: "AI-диагностика", href: "/scan" },
+            { label: "Видеоуроки", href: "/dashboard/lessons" },
+            { label: "AI-анализ волос", href: "/dashboard/diagnostika" },
             { label: "Методички", href: "/dashboard/downloads" },
           ].map(({ label, href }) => (
             <a

@@ -1,12 +1,6 @@
 import Stripe from 'stripe';
 import { NextRequest, NextResponse } from 'next/server';
-
-function getStripe() {
-  if (!process.env.STRIPE_SECRET_KEY) {
-    throw new Error('STRIPE_SECRET_KEY is not configured');
-  }
-  return new Stripe(process.env.STRIPE_SECRET_KEY);
-}
+import { getStripe } from '@/lib/stripe';
 
 export async function POST(req: NextRequest) {
   try {
@@ -37,13 +31,13 @@ export async function POST(req: NextRequest) {
         product_name: 'HAIRLAB KM Guide',
         customer_name: name || ''
       },
-      success_url: `${process.env.NEXT_PUBLIC_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}&product=guide`,
-      cancel_url: `${process.env.NEXT_PUBLIC_URL}/#offer`
+      success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}&product=guide`,
+      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/#offer`
     });
     
     return NextResponse.json({ url: session.url });
-  } catch (error: any) {
-    console.error('Guide checkout error:', error);
-    return NextResponse.json({ error: error.message || 'Ошибка оформления заказа' }, { status: 500 });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Ошибка оформления заказа';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

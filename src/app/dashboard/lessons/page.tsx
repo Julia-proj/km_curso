@@ -148,7 +148,7 @@ export default function LessonsPage() {
               {/* Mobile lesson selector */}
               <div className="lg:hidden mt-8">
                 <h3 className="font-hero-face text-lg font-semibold text-[var(--color-text)] mb-3">
-                  Все уроки
+                  Все видеоуроки
                 </h3>
                 <div className="space-y-2">
                   {PAID_LESSONS.map((lesson) => {

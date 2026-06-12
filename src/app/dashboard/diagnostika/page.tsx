@@ -3,6 +3,9 @@
 import { useEffect, useState, useRef } from "react"
 import { useRouter } from "next/navigation"
 import imageCompression from "browser-image-compression"
+import { useQuizStore } from "@/stores/quiz-store"
+import { saveDiagnosis, SESSION_KEY } from "@/lib/progress"
+import { ensureHeatProtectionAdvice } from "@/lib/recommendations/pick-products"
 
 interface DiagnosisResult {
   damageLevel: number
@@ -14,7 +17,8 @@ interface DiagnosisResult {
 export default function DiagnostikaPage() {
   const router = useRouter()
   const fileInputRef = useRef<HTMLInputElement>(null)
-  
+  const quizAnswers = useQuizStore((s) => s.answers)
+
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null)
   const [hasPaidCourse, setHasPaidCourse] = useState<boolean | null>(null)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
@@ -23,11 +27,14 @@ export default function DiagnostikaPage() {
   const [result, setResult] = useState<DiagnosisResult | null>(null)
   const [error, setError] = useState<string | null>(null)
 
-  // Auth and course check (placeholder - replace with actual auth implementation)
+  // Auth and course check - requires paid course access
   useEffect(() => {
-    // TODO: Replace with actual auth check (next-auth or Supabase Auth)
     const checkAuth = async () => {
-      // Dev bypass - skip auth for now
+      const session = localStorage.getItem(SESSION_KEY)
+      if (!session) {
+        router.push("/offer")
+        return
+      }
       setIsAuthenticated(true)
       setHasPaidCourse(true)
     }
@@ -61,7 +68,6 @@ export default function DiagnostikaPage() {
       setError(null)
     } catch (err) {
       setError("Ошибка при обработке изображения")
-      console.error(err)
     }
   }
 
@@ -90,7 +96,10 @@ export default function DiagnostikaPage() {
       }
 
       const data: DiagnosisResult = await response.json()
-      setResult(data)
+      const recommendations = ensureHeatProtectionAdvice(data.recommendations, quizAnswers)
+      const enriched = { ...data, recommendations }
+      setResult(enriched)
+      saveDiagnosis(enriched)
     } catch (err) {
       setError(err instanceof Error ? err.message : "Произошла ошибка")
     } finally {
@@ -108,9 +117,9 @@ export default function DiagnostikaPage() {
     }
   }
 
-  const handleStartLesson = () => {
-    // Navigate to lessons page with first recommended lesson
-    router.push("/dashboard/lessons")
+  const handleSelectCare = () => {
+    // Send the user to the personalised Limba care page (funnel-gated)
+    router.push("/dashboard/care")
   }
 
   // Loading state while checking auth
@@ -138,7 +147,7 @@ export default function DiagnostikaPage() {
               onClick={() => router.push("/dashboard")}
               className="text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
             >
-              Назад в кабинет
+              В кабинет
             </button>
           </div>
         </div>
@@ -150,11 +159,17 @@ export default function DiagnostikaPage() {
           <div className="max-w-2xl mx-auto">
             <div className="mb-8">
               <h2 className="text-3xl md:text-4xl font-semibold text-[var(--foreground)] mb-4">
-                Твоя AI-диагностика
+                AI-анализ волос
               </h2>
               <p className="text-lg text-[var(--muted-foreground)]">
-                Загрузи фото своих волос, и я проанализирую их состояние, дам персональные рекомендации и подберу подходящие уроки курса.
+                Загрузи фото своих волос, и я проанализирую их состояние, получи предварительный анализ и подберу подходящие уроки курса.
               </p>
+
+              <div className="mt-4 rounded-xl border border-[var(--border)] bg-[var(--sand)] p-4">
+                <p className="text-sm text-[var(--foreground)]">
+                  Чем лучше освещение и качество фото — тем точнее предварительный результат. Снимай при дневном свете, волосы сухие и распущенные.
+                </p>
+              </div>
             </div>
 
             {!previewUrl ? (
@@ -250,7 +265,7 @@ export default function DiagnostikaPage() {
           <div className="max-w-3xl mx-auto">
             <div className="mb-8">
               <h2 className="text-3xl md:text-4xl font-semibold text-[var(--foreground)] mb-4">
-                Результат диагностики
+                Результат анализа
               </h2>
             </div>
 
@@ -258,13 +273,13 @@ export default function DiagnostikaPage() {
             <div className="bg-[var(--card)] rounded-2xl p-8 border border-[var(--border)] mb-6">
               <div className="text-center">
                 <p className="text-sm uppercase tracking-wider text-[var(--muted-foreground)] mb-4">
-                  Уровень повреждения
+                  Предварительный уровень повреждения
                 </p>
                 <div className="text-7xl md:text-8xl font-semibold text-[var(--accent)] mb-2">
                   {result.damageLevel}
                 </div>
                 <p className="text-[var(--muted-foreground)]">
-                  из 5
+                  из 5 · предварительная оценка по фото и ответам
                 </p>
               </div>
             </div>
@@ -328,17 +343,17 @@ export default function DiagnostikaPage() {
             {/* Action Buttons */}
             <div className="space-y-4">
               <button
-                onClick={handleStartLesson}
+                onClick={handleSelectCare}
                 className="km-cta km-cta--dark w-full"
               >
-                <span>Начать первый рекомендованный урок</span>
+                <span>Подобрать индивидуальный уход от Елены</span>
               </button>
-              
+
               <button
-                onClick={handleReset}
+                onClick={() => router.push("/dashboard")}
                 className="w-full text-center text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] underline-offset-2 hover:underline py-2"
               >
-                Загрузить другое фото
+                В кабинет
               </button>
             </div>
           </div>

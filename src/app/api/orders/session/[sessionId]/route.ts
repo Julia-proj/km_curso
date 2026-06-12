@@ -1,23 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { createClient } from '@supabase/supabase-js'
-
-function getStripe() {
-  if (!process.env.STRIPE_SECRET_KEY) {
-    throw new Error('STRIPE_SECRET_KEY is not configured')
-  }
-  return new Stripe(process.env.STRIPE_SECRET_KEY)
-}
-
-function getSupabase() {
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-    throw new Error('Supabase credentials are not configured')
-  }
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_ROLE_KEY
-  )
-}
+import { getStripe } from '@/lib/stripe'
+import { getSupabase } from '@/lib/supabase'
+import type { OrderSessionResponse } from '@/types/api'
 
 export async function GET(
   req: NextRequest,
@@ -49,7 +35,7 @@ export async function GET(
     }
 
     // Build safe response with minimal data
-    const response: any = {
+    const response: OrderSessionResponse = {
       status: 'paid',
       customer_name: session.metadata?.customer_name || null,
       amount_total: session.amount_total,
@@ -84,10 +70,8 @@ export async function GET(
     }
 
     return NextResponse.json(response)
-  } catch (error: any) {
-    console.error('Error fetching order session:', error)
-    
-    if (error.type === 'StripeInvalidRequestError') {
+  } catch (error: unknown) {
+    if (error && typeof error === 'object' && 'type' in error && error.type === 'StripeInvalidRequestError') {
       return NextResponse.json(
         { error: 'Session not found' },
         { status: 404 }

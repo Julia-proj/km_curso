@@ -1,23 +1,9 @@
 import Stripe from 'stripe';
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-
-function getStripe() {
-  if (!process.env.STRIPE_SECRET_KEY) {
-    throw new Error('STRIPE_SECRET_KEY is not configured');
-  }
-  return new Stripe(process.env.STRIPE_SECRET_KEY);
-}
-
-function getSupabase() {
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-    throw new Error('Supabase credentials are not configured');
-  }
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_ROLE_KEY
-  );
-}
+import { getStripe } from '@/lib/stripe';
+import { getSupabase } from '@/lib/supabase';
+import type { StripeProduct } from '@/types/api';
 
 export async function POST(req: NextRequest) {
   try {
@@ -47,7 +33,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Нет продуктов' }, { status: 400 });
     }
     
-    const lineItems = products.map((p: any) => ({
+    const lineItems = products.map((p: StripeProduct) => ({
       price_data: {
         currency: 'eur',
         product_data: {
@@ -73,13 +59,13 @@ export async function POST(req: NextRequest) {
         type: 'limba_pack',
         pickup_location: 'studio_madrid'
       },
-      success_url: `${process.env.NEXT_PUBLIC_URL}/scan/pickup/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_URL}/scan/result?recommendation_id=${rec.id}`
+      success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/scan/pickup/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/scan/result?recommendation_id=${rec.id}`
     });
     
     return NextResponse.json({ url: session.url });
-  } catch (error: any) {
-    console.error('Checkout error:', error);
-    return NextResponse.json({ error: error.message || 'Ошибка оформления' }, { status: 500 });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Ошибка оформления';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

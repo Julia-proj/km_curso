@@ -1,11 +1,11 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useQuizStore } from '@/stores/quiz-store'
 import { quizQuestions } from '@/config/quiz-data'
-import { BackButton } from '@/components/BackButton'
+import { hasDiagnosis } from '@/lib/progress'
 
 function getFeedback(questionId: string, optionId: string): string {
   const question = quizQuestions.find((q) => q.id === questionId)
@@ -32,6 +32,12 @@ export default function ResultPage() {
   const { answers } = useQuizStore()
   const hasAnswers = Object.keys(answers).length > 0
 
+  // Detect an existing AI diagnosis after mount (localStorage is client-only).
+  const [aiDone, setAiDone] = useState(false)
+  useEffect(() => {
+    setAiDone(hasDiagnosis())
+  }, [])
+
   useEffect(() => {
     if (!hasAnswers) {
       router.replace('/quiz')
@@ -39,6 +45,9 @@ export default function ResultPage() {
   }, [hasAnswers, router])
 
   if (!hasAnswers) return null
+
+  const nextHref = '/offer'
+  const nextLabel = 'Выбрать тариф'
 
   return (
     <main
@@ -59,11 +68,15 @@ export default function ResultPage() {
       </div>
       <div className="absolute top-4 right-4">
         <Link
-          href="/lesson"
+          href="/"
           className="inline-flex items-center gap-2 text-sm hover:text-[var(--color-text)] transition-colors"
           style={{ color: "var(--color-ink-soft)" }}
         >
-          Урок в подарок →
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M3 12l9-9 9 9" />
+            <path d="M5 10v10a1 1 0 001 1h12a1 1 0 001-1V10" />
+          </svg>
+          На главную
         </Link>
       </div>
       <div className="w-full max-w-lg pt-12">
@@ -169,14 +182,14 @@ export default function ResultPage() {
               color: "var(--color-ink)",
             }}
           >
-            Посмотри бесплатный урок, где я подробно разобрала, что именно поможет
-            тебе восстановить волосы в домашних условиях и получить реальный результат.
+            Следующий шаг — загрузи фото волос для AI-анализа. Чем точнее данные теста и фото,
+            тем точнее предварительный подбор ухода.
           </p>
         </div>
 
-        <div className="text-center">
+        <div className="flex flex-col items-center gap-4">
           <Link
-            href="/lesson"
+            href={nextHref}
             className="inline-block"
             style={{
               background: "var(--color-accent)",
@@ -190,7 +203,14 @@ export default function ResultPage() {
               transition: "background-color 0.2s",
             }}
           >
-            Урок в подарок
+            {nextLabel}
+          </Link>
+          <Link
+            href="/lesson"
+            className="inline-flex items-center gap-1 text-sm transition-colors"
+            style={{ color: "var(--color-ink-soft)" }}
+          >
+            Сначала бесплатный урок в подарок →
           </Link>
         </div>
       </div>

@@ -21,7 +21,7 @@ export default function OfferPage() {
           <WhatYouGetSection
             sectionId={undefined}
             showResultBlock
-            title="Доступ к курсу, видео-урокам, гайдам и методичкам навсегда."
+            title="Выбери формат обучения"
           />
         </div>
       </main>

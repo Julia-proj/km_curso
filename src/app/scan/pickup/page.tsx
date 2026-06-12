@@ -129,7 +129,7 @@ function PickupContent() {
           </a>
 
           <h1 className="font-hero-face text-3xl font-semibold text-[#1A1A1A] md:text-4xl">
-            Оформление заказа
+            Оформление заказа в студии
           </h1>
 
           <div className="mt-6 rounded-lg border border-[#E5DDD5] bg-white p-6">

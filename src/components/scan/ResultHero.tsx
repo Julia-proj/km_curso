@@ -1,37 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-
-const SIGN_LABELS: Record<string, string> = {
-  dryness: "сухость",
-  breakage: "ломкость",
-  split_ends: "секущиеся кончики",
-  dullness: "тусклость",
-  color_fade: "потеря цвета",
-  frizz: "пушистость",
-  oily_scalp: "жирность корней",
-  volume_loss: "потеря объёма",
-  thinning: "истончение",
-}
-
-const CATEGORY_INFO: Record<string, { label: string; description: string }> = {
-  Hydration: {
-    label: "Hydration",
-    description: "Увлажнение и восстановление — для сухих, пористых и ломких волос",
-  },
-  Color: {
-    label: "Color",
-    description: "Защита цвета и яркость — для окрашенных и осветлённых волос",
-  },
-  Volume: {
-    label: "Volume",
-    description: "Объём и плотность — для тонких и ослабленных волос",
-  },
-  Detox: {
-    label: "Detox",
-    description: "Детокс кожи головы — глубокое очищение и баланс",
-  },
-}
+import { CATEGORY_INFO, SIGN_LABELS } from "@/config/limba-products"
 
 interface ResultHeroProps {
   summary: string
@@ -67,7 +37,7 @@ export function ResultHero({
   }, [])
 
   const allSigns = [...new Set([...visibleSigns, ...mainIssues])]
-  const category = CATEGORY_INFO[primaryCategory] ?? CATEGORY_INFO["Hydration"]
+  const category = CATEGORY_INFO[primaryCategory as keyof typeof CATEGORY_INFO] ?? CATEGORY_INFO["hydration"]
   const priorities = selfCarePriorities.slice(0, 5)
 
   return (
@@ -91,7 +61,7 @@ export function ResultHero({
             marginBottom: "2.75rem",
           }}
         >
-          <p style={eyebrowStyle}>Уровень повреждения</p>
+          <p style={eyebrowStyle}>Предварительный уровень повреждения</p>
 
           <div
             style={{

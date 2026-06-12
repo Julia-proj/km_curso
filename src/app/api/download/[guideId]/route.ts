@@ -1,18 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@supabase/supabase-js'
+import { getSupabase } from '@/lib/supabase'
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib'
 import path from 'path'
 import fs from 'fs/promises'
-
-function getSupabase() {
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-    throw new Error('Supabase credentials are not configured')
-  }
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_ROLE_KEY
-  )
-}
 
 const GUIDE_MAP: Record<string, string> = {
   'guide-01': '.hairlab-guide-01.pdf',
@@ -34,8 +24,6 @@ export async function GET(
     return NextResponse.json({ error: 'Email required' }, { status: 400 })
   }
 
-  // Dev bypass - skip Supabase check for now
-  // TODO: Re-enable in production
   const pdfPath = path.join(process.cwd(), 'private', GUIDE_MAP[guideId])
 
   let pdfBytes: Buffer

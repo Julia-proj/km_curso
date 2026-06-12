@@ -157,7 +157,7 @@ function ScanResultContent() {
               textDecoration: "underline",
             }}
           >
-            Перейти в личный кабинет →
+            Перейти в кабинет →
           </a>
         </div>
       </div>
@@ -165,7 +165,7 @@ function ScanResultContent() {
       <div className="km-container">
         <div className="mb-8 pt-14">
           <h2 className="font-hero-face text-2xl font-semibold text-[#1A1A1A] md:text-3xl">
-            У тебя есть выбор.
+            Твои варианты
           </h2>
         </div>
 

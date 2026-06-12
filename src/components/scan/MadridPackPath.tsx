@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import { useState } from "react"
 import { ProductCard } from "./ProductCard"
+import { CONTACT_INFO, WHATSAPP_MESSAGES } from "@/config/constants"
 
 interface Product {
   id: string
@@ -96,7 +97,7 @@ export function MadridPackPath({ category, products, gifts, packTotal, savings }
         </p>
 
         <a
-          href="https://wa.me/34641261559?text=Здравствуйте! Я прошла диагностику волос и хочу забрать готовый набор в студии Мадрид. Результат диагностики: "
+          href={`${CONTACT_INFO.whatsapp.url}?text=${encodeURIComponent(WHATSAPP_MESSAGES.scanResult)}`}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center justify-center rounded-sm bg-[#25D366] px-6 py-3 font-sans text-sm font-semibold uppercase tracking-[0.08em] text-white transition-all hover:bg-[#128C7E]"

@@ -36,19 +36,3 @@ export const resultsContent = {
     cta: 'Написать в Telegram'
   }
 };
-
-// Маппинг категорий на читаемые названия
-export const categoryNames: Record<string, string> = {
-  color: 'Color',
-  volume: 'Volume',
-  detox: 'Detox',
-  hydration: 'Hydration'
-};
-
-// Описания категорий для UI
-export const categoryDescriptions: Record<string, string> = {
-  color: 'для окрашенных волос. Защита пигмента и блеска.',
-  volume: 'для тонких волос. Объём без утяжеления.',
-  detox: 'глубокое очищение и обновление.',
-  hydration: 'для сухих волос. Восстановление водного баланса.'
-};

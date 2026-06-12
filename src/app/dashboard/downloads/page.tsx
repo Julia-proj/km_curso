@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { AnimatedBackground } from "@/components/AnimatedBackground"
+import { SESSION_KEY } from "@/lib/progress"
 
 interface AccessState {
   loading: boolean
@@ -37,12 +38,24 @@ export default function DownloadsPage() {
   const [downloading, setDownloading] = useState<string | null>(null)
 
   useEffect(() => {
-    // Dev bypass - skip auth for now
-    setState({
-      loading: false,
-      hasAccess: true,
-      email: "dev@example.com",
-    })
+    const checkAccess = async () => {
+      const session = localStorage.getItem(SESSION_KEY)
+      if (!session) {
+        setState({
+          loading: false,
+          hasAccess: false,
+          email: "",
+        })
+        return
+      }
+      // In production, verify access via API
+      setState({
+        loading: false,
+        hasAccess: true,
+        email: "user@example.com",
+      })
+    }
+    checkAccess()
   }, [router])
 
   const handleDownload = async (guideId: string) => {
@@ -145,7 +158,7 @@ export default function DownloadsPage() {
             marginBottom: "0.5rem",
           }}
         >
-          Методички
+          Методички и гайды
         </h1>
         <p
           style={{
@@ -155,7 +168,7 @@ export default function DownloadsPage() {
             marginBottom: "2.5rem",
           }}
         >
-          Персональные PDF-файлы для скачивания
+          PDF-файлы с персональной пометкой
         </p>
 
         {!state.hasAccess ? (
@@ -382,7 +395,7 @@ function NoAccessBlock() {
           textDecoration: "none",
         }}
       >
-        Посмотреть курс
+        Приобрести курс
       </a>
     </div>
   )

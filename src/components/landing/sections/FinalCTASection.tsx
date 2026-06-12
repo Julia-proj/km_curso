@@ -13,7 +13,7 @@ export function FinalCTASection() {
           Начни сейчас
         </motion.p>
         <motion.h2 {...fadeUp(0.08)} className="font-hero-face text-3xl leading-tight md:text-5xl">
-          Начни с бесплатного теста
+          Начни с теста по волосам
         </motion.h2>
         <motion.p {...fadeUp(0.16)} className="mx-auto mt-4 max-w-xl font-sans leading-relaxed text-white/50">
           Узнай, что именно нужно твоим волосам.
@@ -23,11 +23,11 @@ export function FinalCTASection() {
             href="/quiz"
             className="inline-flex min-h-11 items-center justify-center gap-3 bg-[#D29B9B] px-10 py-5 font-sans text-sm font-semibold text-white transition-colors hover:bg-[#C08B8B]"
           >
-            Пройти тест бесплатно
+            Пройти тест бесбаатнт
             <ArrowRightIcon size={16} />
           </a>
           <p className="mt-6 font-sans text-xs tracking-[0.18em] text-white/30">
-            2 минуты · без регистрации · персональные рекомендации
+            10 вопросов · без регистрации · персональные рекомендации
           </p>
         </motion.div>
       </div>

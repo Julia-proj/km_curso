@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 
 import { getPaymentLink } from "@/config/payments"
+import { HeroAnimatedBackground } from "@/components/HeroAnimatedBackground"
 
 const mobileHeroImage = "/images/newhero.PNG"
 const desktopHeroImage = "/images/heronew.PNG"
@@ -289,10 +290,11 @@ export function LandingHeroSection() {
       </div>
 
       {/* ── DESKTOP (lg+): editorial magazine split ── */}
-      <div className="hidden min-h-screen lg:grid lg:grid-cols-[1fr_minmax(380px,42%)] xl:grid-cols-[1fr_minmax(420px,44%)] 2xl:grid-cols-[1fr_minmax(460px,46%)]">
+      <div className="relative hidden min-h-screen lg:grid lg:grid-cols-[1fr_minmax(380px,42%)] xl:grid-cols-[1fr_minmax(420px,44%)] 2xl:grid-cols-[1fr_minmax(460px,46%)]">
+        <HeroAnimatedBackground />
 
-        {/* Left: text column on cream background */}
-        <div className="flex flex-col items-center justify-center bg-[#FAF7F4] px-6 py-5 lg:px-8 xl:px-10 xl:py-6 2xl:px-12 2xl:py-7">
+        {/* Left: text column */}
+        <div className="relative flex flex-col items-center justify-center bg-transparent px-6 py-5 lg:px-8 xl:px-10 xl:py-6 2xl:px-12 2xl:py-7">
           <div className="w-full max-w-[28rem] lg:max-w-[32rem] xl:max-w-[36rem]">
 
             <motion.div
@@ -387,7 +389,7 @@ export function LandingHeroSection() {
         </div>
 
         {/* Right: photo column */}
-        <div className="relative bg-[#FAF7F4] py-6 pr-5 lg:py-8 lg:pr-8 xl:py-10 xl:pr-10 2xl:py-12 2xl:pr-12">
+        <div className="relative bg-transparent py-6 pr-5 lg:py-8 lg:pr-8 xl:py-10 xl:pr-10 2xl:py-12 2xl:pr-12">
           <figure className="relative h-full w-full overflow-hidden rounded-[1.2rem] shadow-[0_24px_52px_-30px_rgba(40,28,22,0.42)]">
           <Image
             alt="Елена - основатель HairLab"

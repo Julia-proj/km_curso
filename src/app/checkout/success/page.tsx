@@ -1,10 +1,11 @@
 "use client"
 
-import { Suspense } from "react"
+import { Suspense, useEffect } from "react"
 import { useSearchParams } from "next/navigation"
 import { useRouter } from "next/navigation"
 import { SuccessActionCard } from "@/components/checkout/SuccessActionCard"
 import { TELEGRAM_PRIVATE_INVITE } from "@/lib/constants"
+import { SESSION_KEY } from "@/lib/progress"
 
 function CheckoutSuccessContent() {
   const searchParams = useSearchParams()
@@ -12,6 +13,13 @@ function CheckoutSuccessContent() {
   const product = searchParams.get("product")
   const isCourse = product === "course"
   const isGuide = product === "guide"
+
+  // Set session for course access
+  useEffect(() => {
+    if (isCourse) {
+      localStorage.setItem(SESSION_KEY, "true")
+    }
+  }, [isCourse])
 
   return (
     <main className="min-h-screen bg-[#FAF7F4] py-16">
@@ -76,7 +84,7 @@ function CheckoutSuccessContent() {
               marginBottom: "1rem",
             }}
           >
-            {isCourse ? "Добро пожаловать в курс" : "Методичка твоя"}
+            {isCourse ? "Доступ к курсу открыт" : "Методичка отправлена"}
           </h1>
 
           <p
@@ -89,7 +97,7 @@ function CheckoutSuccessContent() {
             }}
           >
             {isCourse
-              ? "Доступ к курсу откроется в течение нескольких минут. Выбери, куда хочешь перейти:"
+              ? "Доступ к курсу откроется в течение нескольких минут. Выбери, с чего начать:"
               : "Методичка будет отправлена на твой email в течение нескольких минут. А пока можешь:"}
           </p>
 
@@ -120,7 +128,7 @@ function CheckoutSuccessContent() {
                     <polygon points="5 3 19 12 5 21 5 3" />
                   </svg>
                 }
-                label="Видео уроки"
+                label="Видеоуроки"
                 description="Продолжить смотреть уроки курса"
                 href="/dashboard/lessons"
               />
@@ -146,7 +154,7 @@ function CheckoutSuccessContent() {
                     <line x1="12" y1="22.08" x2="12" y2="12" />
                   </svg>
                 }
-                label="AI диагностика"
+                label="AI-анализ волос"
                 description="Загрузи фото и получи персональный анализ"
                 href="/dashboard/diagnostika"
               />

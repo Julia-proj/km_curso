@@ -1,5 +1,6 @@
 import { Diagnostic } from '../ai/diagnose';
-// import type { Database } from '@/lib/supabase/types'; // если есть типы
+import { buildProductIds, HEAT_PROTECTION_ADVICE } from './pick-products';
+import { CATEGORY_INFO } from '@/config/limba-products';
 
 interface QuizData {
   hair_type?: string;
@@ -9,6 +10,12 @@ interface QuizData {
   heat_styling?: string;
   recent_treatments?: string[];
   budget_range?: string;
+}
+
+/** Minimal shape the engine needs from a catalog row. */
+interface CatalogProduct {
+  id: string;
+  price_eur: number | string;
 }
 
 interface RecommendationResult {
@@ -28,51 +35,32 @@ interface RecommendationResult {
 export async function calculateRecommendation(
   diagnostic: Diagnostic,
   quiz: QuizData | null,
-  productsCatalog: any[] // массив продуктов из БД
+  productsCatalog: CatalogProduct[]
 ): Promise<RecommendationResult> {
-  
+
   // 1. Определяем primary category
   const primary = diagnostic.recommended_limba_category;
   const secondary = diagnostic.secondary_limba_category;
-  
-  // 2. Базовый pack: шампунь + кондиционер + маска из primary категории
-  const baseProductIds: string[] = [
-    `limba-${primary}-shampoo`,
-    `limba-${primary}-conditioner`,
-    `limba-${primary}-mask` 
-  ];
-  
-  // 3. Если есть secondary, добавляем маску из secondary
-  if (secondary) {
-    baseProductIds.push(`limba-${secondary}-mask`);
-  }
-  
-  // 4. Термозащита почти всегда (кроме редких случаев)
-  const needsHeatProtection = 
-    quiz?.heat_styling !== 'never' || 
+
+  // 2. Термозащита почти всегда (кроме редких случаев)
+  const needsHeatProtection =
+    quiz?.heat_styling !== 'never' ||
     diagnostic.main_issues.includes('breakage') ||
     diagnostic.main_issues.includes('split_ends') ||
     diagnostic.hair_classification.apparent_type === 'bleached';
-    
-  if (needsHeatProtection) {
-    baseProductIds.push('limba-heat-protection');
-  }
-  
-  // 5. Пилинг кожи головы и детокс-шампунь если моют каждый день
-  const needsDetox = 
+
+  // 3. Пилинг кожи головы и детокс-шампунь если моют каждый день
+  const needsDetox =
     quiz?.wash_frequency === 'daily' ||
     diagnostic.main_issues.includes('oily_scalp') ||
     primary === 'detox';
-  
-  if (needsDetox) {
-    // Добавляем детокс-шампунь если его ещё нет
-    if (!baseProductIds.includes('limba-detox-shampoo')) {
-      baseProductIds.push('limba-detox-shampoo');
-    }
-    // Добавляем пилинг кожи головы (если есть в каталоге)
-    baseProductIds.push('limba-scalp-peel');
-  }
-  
+
+  // 4. Базовый pack (общая логика с care-страницей — pick-products.ts)
+  const baseProductIds = buildProductIds(primary, secondary, {
+    needsHeatProtection,
+    needsDetox,
+  });
+
   // 5. Подарки на основе issues
   const gifts: string[] = [];
   
@@ -103,16 +91,14 @@ export async function calculateRecommendation(
   const savings = Math.round(packTotal * 0.1);
   
   // 7. Формируем reasoning
-  const categoryNames = {
-    color: 'Color',
-    volume: 'Volume',
-    detox: 'Detox',
-    hydration: 'Hydration'
-  };
-  
   const whyPrimary = generateWhyPrimary(primary, diagnostic, quiz);
-  
-  const reasoningSummary = `На основе твоего фото и ответов теста подходит линия Limba ${categoryNames[primary]}. ${whyPrimary}`;
+
+  const reasoningSummary = [
+    `На основе твоего фото и ответов теста подходит линия Limba ${CATEGORY_INFO[primary].label}. ${whyPrimary}`,
+    needsHeatProtection ? HEAT_PROTECTION_ADVICE : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
   
   const whyProducts = baseProductIds.map(id => ({
     product_id: id,

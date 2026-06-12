@@ -40,6 +40,8 @@ const SYSTEM_PROMPT = `Ты эксперт-трихолог из студии HA
 Тон: поддерживающий, без запугивания, без жёстких диагнозов.
 Не ставь медицинские диагнозы (алопеция и т.п.).
 Фокусируйся на видимых признаках состояния волос и стандартных рекомендациях по уходу.
+Если по фото есть любые признаки горячей укладки (сухость, ломкость, пушистость, секущиеся кончики), ОБЯЗАТЕЛЬНО добавь в recommendations пункт про термозащиту перед феном, утюжком и стайлером — это универсальный совет.
+Уровень повреждения и выводы подавай как предварительные, а не как окончательный диагноз.
 Используй простой человеческий язык.
 Не используй длинные тире.`;
 
@@ -97,12 +99,6 @@ async function uploadImageToSupabase(
 ): Promise<{ signedUrl: string; path: string }> {
   const buffer = Buffer.from(await file.arrayBuffer());
   const supabase = getSupabase();
-  console.log('[DIAGNOSIS] upload debug', {
-    url: process.env.NEXT_PUBLIC_SUPABASE_URL,
-    fileName,
-    fileType: file.type,
-    fileNameOriginal: file.name,
-  });
   const { data, error } = await supabase.storage
     .from('hair-photos')
     .upload(fileName, buffer, {
@@ -274,8 +270,6 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
     const file = formData.get('photo') as File;
 
-    console.log('[DIAGNOSIS] File received:', file?.name, file?.size, file?.type);
-
     if (!file) {
       return NextResponse.json(
         { error: 'No photo file provided' },
@@ -307,9 +301,7 @@ export async function POST(request: NextRequest) {
     const fileName = `diagnoses/${timestamp}_${randomString}.${fileExtension}`;
     
     // Upload to Supabase Storage
-    console.log('[DIAGNOSIS] Uploading to Supabase...');
     const { signedUrl, path } = await uploadImageToSupabase(file, fileName);
-    console.log('[DIAGNOSIS] Upload successful, signed URL generated');
 
     // Analyze with OpenAI (with retry)
     let diagnosis: z.infer<typeof DiagnosisResponseSchema> | null = null;
@@ -318,9 +310,7 @@ export async function POST(request: NextRequest) {
 
     while (retryCount <= 1) {
       try {
-        console.log('[DIAGNOSIS] Calling OpenAI API...');
         const result = await analyzeImageWithOpenAI(signedUrl);
-        console.log('[DIAGNOSIS] OpenAI response received');
 
         // Validate with Zod
         const validated = DiagnosisResponseSchema.parse(result);
