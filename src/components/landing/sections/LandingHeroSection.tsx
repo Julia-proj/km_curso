@@ -65,138 +65,122 @@ function GiftIcon({ size = 18 }: { size?: number }) {
  * 3D-mockup двух методичек: одна слегка поверх другой,
  * рядом — превью видео-урока. Два визуала вместо трёх.
  */
-function HeroVisuals({
-  tone = "light",
-  showLabels = true,
-}: {
-  tone?: "light" | "dark"
-  showLabels?: boolean
-}) {
-  const cardBorder = tone === "dark" ? "border-white/25" : "border-black/5"
-  const labelColor = tone === "dark" ? "text-white/80" : "text-[#9C9287]"
+function HeroVisuals({ tone = "light" }: { tone?: "light" | "dark" }) {
+  const cardBorder = tone === "dark" ? "border-white/30" : "border-black/6"
+  const cardBg = tone === "dark" ? "bg-white/90" : "bg-white"
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3, duration: 0.55 }}
-      className="relative flex items-start gap-4"
+      className="flex items-end gap-5 pt-8 min-[390px]:gap-6 min-[390px]:pt-9"
     >
-      {/* 3D mockup методичек */}
-      <div>
-        <div className="relative w-[4.25rem]">
-          {/* задняя методичка (аксессуары) — выглядывает сверху-справа */}
-          <div
-            className={`absolute -right-5 -top-6 h-[5.5rem] w-[4.25rem] overflow-hidden rounded-md border ${cardBorder} bg-white shadow-[0_10px_28px_rgba(20,12,8,0.28)] rotate-[7deg]`}
-          >
-            <img
-              alt="Методичка: аксессуары и инструменты"
-              className="h-full w-full object-cover object-top"
-              src={guideMockupBack}
-            />
-          </div>
-          {/* передняя методичка (домашний уход) — на переднем плане */}
-          <div
-            className={`relative z-10 h-[5.5rem] w-[4.25rem] overflow-hidden rounded-md border ${cardBorder} bg-white shadow-[0_16px_36px_rgba(20,12,8,0.38)] -rotate-[5deg]`}
-          >
-            <img
-              alt="Методичка по домашнему уходу за волосами"
-              className="h-full w-full object-cover object-top"
-              src={guideMockupFront}
-            />
-          </div>
+      {/* Стопка методичек — w/h точно под соотношение 1147:1672 = 0.686 */}
+      <div className="relative h-[11rem] w-[7.5rem] shrink-0 min-[390px]:h-[12.5rem] min-[390px]:w-[8.6rem]">
+        {/* задняя */}
+        <div
+          className={`absolute inset-0 overflow-hidden rounded-[0.75rem] border ${cardBorder} ${cardBg} shadow-[4px_6px_18px_rgba(20,12,8,0.22)]`}
+          style={{ transform: "rotate(7deg) translate(11px, -9px)" }}
+        >
+          <img
+            alt="Методичка: аксессуары и инструменты"
+            className="h-full w-full object-cover object-top"
+            src={guideMockupBack}
+          />
         </div>
-        {showLabels && (
-          <span className={`mt-3 block font-sans text-[10px] uppercase tracking-[0.18em] ${labelColor}`}>
-            2 методички
-          </span>
-        )}
+        {/* передняя */}
+        <div
+          className={`absolute inset-0 overflow-hidden rounded-[0.75rem] border ${cardBorder} ${cardBg} shadow-[0_16px_38px_rgba(20,12,8,0.38)]`}
+          style={{ transform: "rotate(-5deg)" }}
+        >
+          <img
+            alt="Методичка по домашнему уходу за волосами"
+            className="h-full w-full object-cover object-top"
+            src={guideMockupFront}
+          />
+        </div>
       </div>
 
-      {/* превью видео-урока */}
-      <div className="pl-1">
-        <div className="relative w-[4.25rem]">
-          <div
-            className={`relative h-[5.5rem] w-[4.25rem] overflow-hidden rounded-md border ${cardBorder} bg-white shadow-[0_12px_30px_rgba(20,12,8,0.32)] rotate-[2deg]`}
-          >
-            <img
-              alt="Видео-урок из курса HAIRLAB"
-              className="h-full w-full object-cover"
-              src={lessonScreen}
-              style={{ objectPosition: "50% 30%" }}
-            />
-            <span className="absolute inset-0 flex items-center justify-center">
-              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/85 pl-0.5 text-[#1A1A1A] shadow-md">
-                <PlayIcon size={12} />
-              </span>
+      {/* Видео — точное соотношение 1181:2046, без кропа */}
+      <div
+        className={`w-[7rem] overflow-hidden rounded-[0.75rem] border ${cardBorder} ${cardBg} shadow-[0_12px_28px_rgba(20,12,8,0.3)] min-[390px]:w-[8rem]`}
+        style={{ transform: "rotate(2deg)" }}
+      >
+        <div className="relative" style={{ aspectRatio: "1181 / 2046" }}>
+          <img
+            alt="Видео-урок из курса HAIRLAB"
+            className="h-full w-full object-cover"
+            src={lessonScreen}
+          />
+          <span className="absolute inset-0 flex items-center justify-center">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/88 pl-0.5 text-[#1A1A1A] shadow-md">
+              <PlayIcon size={14} />
             </span>
-          </div>
-        </div>
-        {showLabels && (
-          <span className={`mt-3 block pl-1 font-sans text-[10px] uppercase tracking-[0.18em] ${labelColor}`}>
-            Видео-уроки
           </span>
-        )}
+        </div>
       </div>
     </motion.div>
   )
 }
 
-/**
- * Десктоп-превью продукта: портретный ряд из реальных ассетов —
- * скрин видео-урока (вертикальный) + пара методичек (обложки А4).
- * Все карточки одной высоты, без насильного кропа в 16:9.
- */
 function HeroProductPreview() {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.32, duration: 0.55 }}
-      className="flex items-end gap-5"
+      className="flex items-end gap-5 pt-5 xl:gap-6 xl:pt-6"
     >
-      {/* видео-урок — портретное превью страницы урока */}
-      <figure className="m-0 shrink-0">
-        <div className="relative h-[11rem] w-[8rem] overflow-hidden rounded-2xl border border-black/5 bg-white shadow-[0_28px_56px_-18px_rgba(20,12,8,0.55)] ring-1 ring-white/60">
+      {/* Стопка методичек — w/h точно под соотношение 1147:1672 = 0.686 */}
+      <div className="relative h-[12rem] w-[8.25rem] shrink-0 xl:h-[14rem] xl:w-[9.6rem]">
+        <div className="absolute -bottom-3 left-1/2 h-5 w-[7rem] -translate-x-1/2 rounded-full bg-[#2A1A14]/14 blur-xl xl:w-[8.5rem]" />
+        {/* задняя методичка */}
+        <div
+          className="absolute inset-0 overflow-hidden rounded-[0.9rem] border border-white/48 bg-[#F7F0EA] shadow-[4px_10px_24px_rgba(28,18,13,0.18)] xl:rounded-[1rem]"
+          style={{ transform: "rotate(7deg) translate(13px, -10px)" }}
+        >
+          <img
+            alt="Методичка: аксессуары и инструменты"
+            className="h-full w-full object-cover object-top"
+            src={guideMockupBack}
+          />
+        </div>
+        {/* передняя методичка */}
+        <div
+          className="absolute inset-0 overflow-hidden rounded-[0.9rem] border border-white/55 bg-[#F7F0EA] shadow-[0_20px_48px_-10px_rgba(23,14,10,0.6)] xl:rounded-[1rem]"
+          style={{ transform: "rotate(-4deg)" }}
+        >
+          <img
+            alt="Методичка по домашнему уходу за волосами"
+            className="h-full w-full object-cover object-top"
+            src={guideMockupFront}
+          />
+        </div>
+      </div>
+
+      {/* Видео — точное соотношение 1181:2046, без кропа */}
+      <div
+        className="w-[7.5rem] overflow-hidden rounded-2xl border border-white/60 bg-[#F9F3EF] p-2 shadow-[0_16px_36px_-16px_rgba(25,15,10,0.52)] ring-1 ring-[#3B2A22]/10 xl:w-[9rem] xl:rounded-[1rem] xl:p-2"
+        style={{ transform: "rotate(2deg)" }}
+      >
+        <p className="mb-1.5 font-sans text-[9px] font-semibold leading-tight text-[#2F2925] xl:text-[10px]">
+          Видеоуроки
+          <span className="block font-medium text-[#6F6259]">с пошаговыми техниками</span>
+        </p>
+        <div className="relative overflow-hidden rounded-xl" style={{ aspectRatio: "1181 / 2046" }}>
           <img
             alt="Видео-урок из курса HAIRLAB"
             className="h-full w-full object-cover"
             src={lessonScreen}
-            style={{ objectPosition: "50% 46%" }}
           />
           <span className="absolute inset-0 flex items-center justify-center">
-            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/90 pl-0.5 text-[#1A1A1A] shadow-lg">
-              <PlayIcon size={22} />
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/92 pl-0.5 text-[#1A1A1A] shadow-md xl:h-9 xl:w-9">
+              <PlayIcon size={16} />
             </span>
           </span>
         </div>
-        <figcaption className="mt-3 font-sans text-[11px] font-medium uppercase tracking-[0.2em] text-[#4A4038] drop-shadow-[0_1px_6px_rgba(250,247,244,0.9)]">
-          Видео-уроки
-        </figcaption>
-      </figure>
-
-      {/* 2 методички — 3D-пара обложек */}
-      <figure className="m-0 shrink-0 pl-1 pr-4 pt-4">
-        <div className="relative h-[11rem] w-[8.25rem]">
-          <div className="absolute -right-3 -top-3 h-[11rem] w-[8.25rem] overflow-hidden rounded-xl border border-black/5 bg-white shadow-[0_18px_40px_rgba(20,12,8,0.32)] rotate-[6deg]">
-            <img
-              alt="Методичка: аксессуары и инструменты"
-              className="h-full w-full object-cover object-top"
-              src={guideMockupBack}
-            />
-          </div>
-          <div className="relative z-10 h-[11rem] w-[8.25rem] overflow-hidden rounded-xl border border-black/5 bg-white shadow-[0_28px_56px_-16px_rgba(20,12,8,0.55)] ring-1 ring-white/60 -rotate-[4deg]">
-            <img
-              alt="Методичка по домашнему уходу за волосами"
-              className="h-full w-full object-cover object-top"
-              src={guideMockupFront}
-            />
-          </div>
-        </div>
-        <figcaption className="mt-3 font-sans text-[11px] font-medium uppercase tracking-[0.2em] text-[#4A4038] drop-shadow-[0_1px_6px_rgba(250,247,244,0.9)]">
-          2 методички
-        </figcaption>
-      </figure>
+      </div>
     </motion.div>
   )
 }
@@ -214,7 +198,8 @@ export function LandingHeroSection() {
             alt="Елена - основатель HairLab"
             className="h-full w-full translate-y-6 scale-[1.08] object-cover"
             fill
-            priority
+            fetchPriority="high"
+            loading="eager"
             quality={85}
             sizes="100vw"
             src={mobileHeroImage}
@@ -274,7 +259,7 @@ export function LandingHeroSection() {
           </div>
 
           <div className="mt-4 min-[390px]:mt-5">
-            <HeroVisuals tone="dark" showLabels />
+            <HeroVisuals tone="dark" />
           </div>
 
           <div className="absolute inset-x-5 bottom-5 z-20 flex flex-col gap-2.5 min-[390px]:inset-x-6 min-[390px]:bottom-6">
@@ -288,9 +273,6 @@ export function LandingHeroSection() {
               <span className="flex flex-col text-left">
                 <span className="font-sans text-[11px] font-semibold uppercase tracking-[0.1em] text-[#1A1A1A] min-[390px]:text-[13px] min-[390px]:tracking-[0.15em]">
                   Пройти бесплатный тест
-                </span>
-                <span className="font-sans text-[9px] font-medium tracking-[0.04em] text-[#B07C6E] min-[390px]:text-[10px]">
-                  первый урок в подарок
                 </span>
               </span>
             </a>
@@ -314,7 +296,7 @@ export function LandingHeroSection() {
       <div className="hidden min-h-screen lg:grid lg:grid-cols-[1fr_minmax(440px,46%)]">
 
         {/* Left: text column on cream background */}
-        <div className="flex flex-col items-center justify-center bg-[#FAF7F4] px-12 py-10 xl:px-16 xl:py-12">
+        <div className="flex flex-col items-center justify-center bg-[#FAF7F4] px-10 py-6 xl:px-14 xl:py-8">
           <div className="w-full max-w-[36rem]">
 
             <motion.div
@@ -355,21 +337,25 @@ export function LandingHeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.55 }}
-              className="mt-4 max-w-[32rem] font-sans text-lg leading-relaxed text-[#4A4038]"
+              className="mt-4 max-w-[31rem] font-sans text-base leading-7 text-[#4A4038]"
             >
               База, которую мы передаём ученицам школы HAIRLAB.
               <span className="mt-2 block font-medium text-[#C4956A]">+ составы и AI-диагностика</span>
             </motion.p>
 
+            <div className="pointer-events-none flex justify-center xl:justify-start xl:pl-3">
+              <HeroProductPreview />
+            </div>
+
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.23, duration: 0.55 }}
-              className="mt-8 flex flex-wrap items-stretch gap-3"
+              className="mt-7 flex flex-col items-stretch gap-3 xl:flex-row"
             >
               <a
                 href="/quiz"
-                className="group inline-flex items-center gap-3 rounded-2xl border-2 border-[#E0DCD6] bg-white px-7 py-3 transition-all hover:border-[#C4956A]"
+                className="group inline-flex items-center gap-3 rounded-2xl border-2 border-[#E0DCD6] bg-white px-7 py-3 transition-all hover:border-[#C4956A] xl:flex-1"
               >
                 <span className="text-[#C4956A] transition-colors group-hover:text-[#B07C6E]">
                   <GiftIcon size={22} />
@@ -378,14 +364,11 @@ export function LandingHeroSection() {
                   <span className="font-sans text-sm font-semibold text-[#1A1A1A]">
                     Пройти бесплатный тест
                   </span>
-                  <span className="font-sans text-[11px] font-medium tracking-[0.01em] text-[#C4956A]">
-                    первый урок в подарок
-                  </span>
                 </span>
               </a>
               <a
                 href={guideLink}
-                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#D9A19D] px-8 py-3 text-white shadow-[0_14px_30px_-12px_rgba(210,145,140,0.75)] transition-all hover:bg-[#C9918C]"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#D9A19D] px-8 py-3 text-white shadow-[0_14px_30px_-12px_rgba(210,145,140,0.75)] transition-all hover:bg-[#C9918C] xl:flex-1"
               >
                 <span className="inline-flex items-center gap-2 font-sans text-sm font-semibold">
                   Методичка за 12€
@@ -398,9 +381,10 @@ export function LandingHeroSection() {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.55 }}
-              className="mt-6 font-sans text-sm tracking-[0.04em] text-[#9C9287]"
+              className="mt-6 max-w-[28rem] font-sans text-sm leading-6 tracking-[0.02em] text-[#8F857B] xl:max-w-[34rem]"
             >
-              12€ методичка · 38€ полный курс с AI-диагностикой · доступ навсегда
+              12€ методичка · 38€ полный курс
+              <span className="block xl:inline"> с AI-диагностикой · доступ навсегда</span>
             </motion.p>
 
           </div>
@@ -408,12 +392,13 @@ export function LandingHeroSection() {
 
         {/* Right: photo column */}
         <div className="relative bg-[#FAF7F4] py-12 pr-12 xl:py-16 xl:pr-16">
-          <figure className="relative h-full w-full overflow-hidden rounded-[1.75rem] shadow-[0_30px_70px_-30px_rgba(40,28,22,0.45)]">
+          <figure className="relative h-full w-full overflow-hidden rounded-[1.35rem] shadow-[0_24px_52px_-30px_rgba(40,28,22,0.42)]">
           <Image
             alt="Елена - основатель HairLab"
             className="object-cover"
             fill
-            priority
+            fetchPriority="high"
+            loading="eager"
             quality={85}
             sizes="42vw"
             src={desktopHeroImage}
@@ -430,10 +415,6 @@ export function LandingHeroSection() {
             </figcaption>
           </figure>
 
-          {/* превью продукта — плавающая накладка на шве колонок, заходит на фото */}
-          <div className="pointer-events-none absolute left-0 top-[59%] z-20 -translate-x-[18%] -translate-y-1/2">
-            <HeroProductPreview />
-          </div>
         </div>
       </div>
 
