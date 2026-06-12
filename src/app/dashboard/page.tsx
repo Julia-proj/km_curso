@@ -1,13 +1,14 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { PostPaymentNav } from "@/components/Navigation"
 import { SuccessActionCard } from "@/components/checkout/SuccessActionCard"
 import { TELEGRAM_PRIVATE_INVITE } from "@/lib/constants"
 import { createClient } from "@/lib/supabase/client"
 import { isDevBypass } from "@/lib/dev-bypass"
-import { getCurrentUser } from "@/lib/auth-user"
+import { fetchProfileAccess } from "@/lib/profile-access"
 
 export default function DashboardPage() {
   const router = useRouter()
@@ -16,6 +17,7 @@ export default function DashboardPage() {
   const [hasMethodichka, setHasMethodichka] = useState(false)
   const [userName, setUserName] = useState<string | null>(null)
   const [userEmail, setUserEmail] = useState<string | null>(null)
+  const [refreshKey, setRefreshKey] = useState(0)
 
   useEffect(() => {
     const checkAccess = async () => {
@@ -47,25 +49,23 @@ export default function DashboardPage() {
         return
       }
 
-      // Check if user has paid access using user id
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('has_full_course, has_methodichka')
-        .eq('id', user.id)
-        .single()
-
-      if (profile && (profile.has_full_course || profile.has_methodichka)) {
-        setHasFullCourse(profile.has_full_course || false)
-        setHasMethodichka(profile.has_methodichka || false)
-      } else {
-        router.push("/")
-        return
-      }
+      // Check paid access (by user id, with email fallback for webhook-created rows)
+      const access = await fetchProfileAccess(supabase, user)
+      setHasFullCourse(access?.hasFullCourse ?? false)
+      setHasMethodichka(access?.hasMethodichka ?? false)
 
       setReady(true)
     }
     checkAccess()
-  }, [router])
+  }, [router, refreshKey])
+
+  const handleLogout = async () => {
+    const supabase = createClient()
+    if (supabase) {
+      await supabase.auth.signOut()
+    }
+    router.push("/")
+  }
 
   if (!ready) {
     return (
@@ -74,6 +74,8 @@ export default function DashboardPage() {
       </div>
     )
   }
+
+  const hasAnyAccess = hasFullCourse || hasMethodichka
 
   return (
     <main className="min-h-screen bg-[#FAF7F4] py-16">
@@ -89,9 +91,51 @@ export default function DashboardPage() {
               </p>
               <p className="mt-1 text-lg font-semibold text-[#1A1A1A]">{userName}</p>
               {userEmail && <p className="text-sm text-[#888]">{userEmail}</p>}
-              <span className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-[#8FBF9F]/20 px-3 py-1 text-xs font-semibold text-[#5A8F6E]">
-                ✓ Доступ открыт
-              </span>
+              {hasAnyAccess ? (
+                <span className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-[#8FBF9F]/20 px-3 py-1 text-xs font-semibold text-[#5A8F6E]">
+                  ✓ Доступ открыт
+                </span>
+              ) : (
+                <span className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-[#E8B4A0]/20 px-3 py-1 text-xs font-semibold text-[#B0734F]">
+                  Оплата не найдена
+                </span>
+              )}
+            </div>
+          )}
+
+          {/* No purchase yet — explain instead of silently bouncing to the landing */}
+          {!hasAnyAccess && (
+            <div className="mb-8 rounded-2xl border border-[#E5DDD5] bg-white p-6">
+              <h2 className="font-hero-face text-xl font-semibold text-[#1A1A1A] mb-2">
+                Доступ к курсу пока не открыт
+              </h2>
+              <p className="font-sans text-sm text-[#666] mb-1">
+                Мы не нашли оплату для аккаунта {userEmail || "этого аккаунта"}.
+              </p>
+              <p className="font-sans text-sm text-[#666] mb-5">
+                Если ты только что оплатила — подожди минуту и нажми «Проверить ещё раз».
+                Если платила с другого email — напиши нам, и мы перенесём доступ.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <Link
+                  href="/#offer"
+                  className="rounded-lg bg-black px-5 py-2.5 text-sm font-medium text-white transition-opacity hover:bg-gray-800"
+                >
+                  Купить курс
+                </Link>
+                <button
+                  onClick={() => { setReady(false); setRefreshKey((k) => k + 1) }}
+                  className="rounded-lg border border-[#D0C8BE] bg-white px-5 py-2.5 text-sm font-medium text-[#1A1A1A] transition-colors hover:bg-[#FAF7F4]"
+                >
+                  Проверить ещё раз
+                </button>
+                <button
+                  onClick={handleLogout}
+                  className="px-3 py-2.5 text-sm font-medium text-[#A0845C] underline underline-offset-4 transition-colors hover:text-[#1A1A1A]"
+                >
+                  Выйти
+                </button>
+              </div>
             </div>
           )}
 
@@ -206,7 +250,7 @@ export default function DashboardPage() {
           </div>
 
           <div style={{ marginTop: "2.5rem" }}>
-            <a
+            <Link
               href="/"
               style={{
                 fontFamily: "var(--font-body-face), Inter, sans-serif",
@@ -217,7 +261,7 @@ export default function DashboardPage() {
               }}
             >
               На главную
-            </a>
+            </Link>
           </div>
         </div>
       </div>

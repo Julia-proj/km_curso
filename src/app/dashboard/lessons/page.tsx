@@ -7,6 +7,7 @@ import { PostPaymentNav } from "@/components/Navigation"
 import { PAID_LESSONS } from "@/config/lessons"
 import { createClient } from "@/lib/supabase/client"
 import { isDevBypass } from "@/lib/dev-bypass"
+import { fetchProfileAccess } from "@/lib/profile-access"
 
 export const dynamic = 'force-dynamic'
 
@@ -46,6 +47,40 @@ export default function LessonsPage() {
   const [completed, setCompleted] = useState<number[]>([])
   // Guard so we only auto-resume to last-viewed once, on first load.
   const [resumed, setResumed] = useState(false)
+  // Paywall: only render lessons once the course purchase is confirmed.
+  const [accessGranted, setAccessGranted] = useState(false)
+
+  useEffect(() => {
+    const checkAccess = async () => {
+      if (isDevBypass()) {
+        setAccessGranted(true)
+        return
+      }
+
+      const supabase = createClient()
+      if (!supabase) {
+        // Auth not configured (local build without env) — don't block.
+        setAccessGranted(true)
+        return
+      }
+
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) {
+        router.replace("/auth/login")
+        return
+      }
+
+      const access = await fetchProfileAccess(supabase, user)
+      if (!access?.hasFullCourse) {
+        // Dashboard explains the missing purchase and offers to buy.
+        router.replace("/dashboard")
+        return
+      }
+
+      setAccessGranted(true)
+    }
+    checkAccess()
+  }, [router])
 
   // Simple parsing from the URL.
   let lessonIndex = 0
@@ -63,6 +98,7 @@ export default function LessonsPage() {
 
   // Load progress; auto-resume to last viewed lesson.
   useEffect(() => {
+    if (!accessGranted) return
     let active = true
     loadProgress().then(({ completed: done, lastViewed }) => {
       if (!active) return
@@ -75,12 +111,13 @@ export default function LessonsPage() {
       }
     })
     return () => { active = false }
-  }, [lessonParam, resumed, router])
+  }, [accessGranted, lessonParam, resumed, router])
 
   // Record the current lesson as "last viewed" each time it changes.
   useEffect(() => {
+    if (!accessGranted) return
     saveProgress(currentLesson.id, false)
-  }, [currentLesson.id])
+  }, [accessGranted, currentLesson.id])
 
   const markCompleted = useCallback((lessonId: number) => {
     setCompleted((prev) => (prev.includes(lessonId) ? prev : [...prev, lessonId]))
@@ -144,6 +181,14 @@ export default function LessonsPage() {
   }
 
   const completedCount = completed.filter((id) => PAID_LESSONS.some((l) => l.id === id)).length
+
+  if (!accessGranted) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#F8F5F1]">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#D9A19D] border-t-transparent" />
+      </div>
+    )
+  }
 
   return (
     <>

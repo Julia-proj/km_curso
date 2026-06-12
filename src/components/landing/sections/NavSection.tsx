@@ -4,9 +4,11 @@ import { AnimatePresence, motion } from "framer-motion"
 import { useEffect, useState } from "react"
 
 import { ease } from "@/lib/animations"
+import { getCurrentUser } from "@/lib/auth-user"
 
 export function NavSection() {
   const [visible, setVisible] = useState(false)
+  const [userName, setUserName] = useState<string | null>(null)
 
   useEffect(() => {
     const onScroll = () => {
@@ -16,6 +18,10 @@ export function NavSection() {
     }
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => window.removeEventListener("scroll", onScroll)
+  }, [])
+
+  useEffect(() => {
+    getCurrentUser().then((user) => setUserName(user?.name ?? null))
   }, [])
 
   return (
@@ -39,12 +45,22 @@ export function NavSection() {
               <a href="#faq" className="transition-colors hover:text-foreground">FAQ</a>
             </nav>
             <div className="flex items-center gap-2.5">
-              <a
-                href="/auth/login"
-                className="px-1.5 py-2 text-xs font-medium uppercase tracking-[0.1em] text-[var(--color-cocoa)] transition-colors hover:text-foreground sm:px-2"
-              >
-                Войти
-              </a>
+              {userName ? (
+                <a
+                  href="/dashboard"
+                  className="max-w-[120px] truncate px-1.5 py-2 text-xs font-medium uppercase tracking-[0.1em] text-[var(--color-cocoa)] transition-colors hover:text-foreground sm:px-2"
+                  title={userName}
+                >
+                  {userName.split(" ")[0]}
+                </a>
+              ) : (
+                <a
+                  href="/auth/login"
+                  className="px-1.5 py-2 text-xs font-medium uppercase tracking-[0.1em] text-[var(--color-cocoa)] transition-colors hover:text-foreground sm:px-2"
+                >
+                  Войти
+                </a>
+              )}
               <a
                 href="/quiz"
                 className="rounded-sm border border-zinc-300/50 bg-zinc-50/80 px-4 py-2 text-xs font-medium uppercase tracking-[0.12em] text-[var(--color-cocoa)] transition-colors hover:border-zinc-400/60 hover:bg-zinc-100/80"

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
-import { createBrowserClient } from '@supabase/ssr'
+import { createClient as createServerSupabase } from '@/lib/supabase/server'
 import { isDevBypass } from '@/lib/dev-bypass'
 
 function getSupabase() {
@@ -37,13 +37,19 @@ function getSupabase() {
 }
 
 // GET - retrieve lesson progress for authenticated user
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
-    // Create browser client to get auth session
-    const supabase = createBrowserClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    )
+    // Dev bypass has no real session — return empty progress so the UI works.
+    if (isDevBypass()) {
+      return NextResponse.json({ completed: [], lastViewed: 1 })
+    }
+
+    // Server client reads the session from request cookies. (A browser client
+    // here would always see no user and reply 401.)
+    const supabase = await createServerSupabase()
+    if (!supabase) {
+      return NextResponse.json({ error: 'Auth is not configured' }, { status: 503 })
+    }
 
     const { data: { user }, error: authError } = await supabase.auth.getUser()
 
@@ -90,11 +96,15 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    // Create browser client to get auth session
-    const supabase = createBrowserClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    )
+    // Dev bypass has no real session — pretend the write succeeded.
+    if (isDevBypass()) {
+      return NextResponse.json({ completed: completed ? [lessonId] : [], lastViewed: lessonId })
+    }
+
+    const supabase = await createServerSupabase()
+    if (!supabase) {
+      return NextResponse.json({ error: 'Auth is not configured' }, { status: 503 })
+    }
 
     const { data: { user }, error: authError } = await supabase.auth.getUser()
 
@@ -115,7 +125,7 @@ export async function POST(req: NextRequest) {
       .eq('user_id', user.id)
       .single()
 
-    let updatedCompleted: number[] = existingProgress?.completed || []
+    const updatedCompleted: number[] = existingProgress?.completed || []
 
     if (completed) {
       // Add lesson to completed if not already there
