@@ -3,6 +3,7 @@ import { Inter, Manrope, Fraunces, Playfair_Display } from 'next/font/google'
 import './globals.css'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/react'
+import { GoogleAnalytics } from '@/components/GoogleAnalytics'
 
 const inter = Inter({
   subsets: ['cyrillic', 'latin'],
@@ -84,6 +85,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body>
+        <GoogleAnalytics />
         <Analytics />
         <SpeedInsights />
         {children}

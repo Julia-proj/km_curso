@@ -28,11 +28,18 @@ export default function DiagnostikaPage() {
 
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null)
   const [hasPaidCourse, setHasPaidCourse] = useState<boolean | null>(null)
+  // True when the free quiz was never taken (checked after mount — the quiz
+  // lives in localStorage). Analysis still works by photo alone.
+  const [quizMissing, setQuizMissing] = useState(false)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [result, setResult] = useState<DiagnosisResult | null>(null)
   const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    setQuizMissing(Object.keys(useQuizStore.getState().answers).length === 0)
+  }, [])
 
   // Auth and course check - requires paid course access
   useEffect(() => {
@@ -200,6 +207,18 @@ export default function DiagnostikaPage() {
                   Чем лучше освещение и качество фото — тем точнее предварительный результат. Снимай при дневном свете, волосы сухие и распущенные.
                 </p>
               </div>
+
+              {quizMissing && (
+                <div className="mt-3 rounded-xl border border-[var(--border)] bg-[var(--card)] p-4">
+                  <p className="text-sm text-[var(--foreground)]">
+                    Анализ работает и по одному фото, но если пройти бесплатный тест —
+                    AI учтёт твои ответы, и результат будет точнее.{" "}
+                    <a href="/quiz" className="font-semibold underline underline-offset-2">
+                      Пройти тест (2 минуты) →
+                    </a>
+                  </p>
+                </div>
+              )}
             </div>
 
             {!previewUrl ? (

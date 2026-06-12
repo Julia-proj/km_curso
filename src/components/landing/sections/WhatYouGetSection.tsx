@@ -253,6 +253,21 @@ export function WhatYouGetSection({
           </motion.article>
         </div>
 
+        <p className="mt-5 text-center font-sans text-xs leading-relaxed text-[#6B6B6B] sm:mt-6 sm:text-sm">
+          Оплата картой через Stripe — Европа, США и другие страны.
+          <br className="sm:hidden" />{" "}
+          Для остальных стран —{" "}
+          <a
+            href={`https://wa.me/34641261559?text=${encodeURIComponent("Здравствуйте! Хочу оплатить курс, но оплата картой онлайн мне не подходит. Подскажите способ оплаты.")}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-[#1A1A1A] underline underline-offset-2"
+          >
+            напиши в WhatsApp
+          </a>
+          , подскажем способ оплаты.
+        </p>
+
         {showResultBlock && (
           <motion.div 
             {...fadeUp(0.15)} 

@@ -49,7 +49,11 @@ export function PaymentModal({ isOpen, onClose, product, stripeLink }: PaymentMo
   // preview/flagged deploy. Cosmetic on the client — the real gate is Stripe.
   const canBypass = devMode && (isLocalhost || envBypass)
 
-  const whatsappMessage = encodeURIComponent("Здравствуйте! Я хочу оплатить курс.")
+  const whatsappMessage = encodeURIComponent(
+    product === "guide"
+      ? "Здравствуйте! Хочу купить методичку, но оплата картой онлайн мне не подходит. Подскажите, как оплатить?"
+      : "Здравствуйте! Хочу купить полный курс, но оплата картой онлайн мне не подходит. Подскажите, как оплатить?"
+  )
   const whatsappLink = `https://wa.me/34641261559?text=${whatsappMessage}`
 
   const isValidStripeLink = stripeLink && stripeLink.trim().length > 0 && stripeLink.startsWith("http")
@@ -208,10 +212,10 @@ export function PaymentModal({ isOpen, onClose, product, stripeLink }: PaymentMo
                   >
                     <div>
                       <p className="font-sans text-sm font-semibold text-white sm:text-base">
-                        {isLoading ? "Загрузка..." : showEmailInput && !isValidStripeLink ? "Перейти к оплате" : "Карта любой страны"}
+                        {isLoading ? "Загрузка..." : showEmailInput && !isValidStripeLink ? "Перейти к оплате" : "Оплатить картой онлайн"}
                       </p>
                       <p className="mt-1 font-sans text-[11px] text-white/70 sm:text-xs">
-                        Stripe
+                        Visa / Mastercard / Apple Pay · Европа, США и другие страны
                       </p>
                     </div>
                     <svg
@@ -235,10 +239,10 @@ export function PaymentModal({ isOpen, onClose, product, stripeLink }: PaymentMo
                   >
                     <div>
                       <p className="font-sans text-sm font-semibold text-[#1A1A1A] sm:text-base">
-                        Связаться с нами
+                        Не получается оплатить картой?
                       </p>
                       <p className="mt-1 font-sans text-[11px] text-[#666] sm:text-xs">
-                        WhatsApp
+                        Напиши в WhatsApp — подберём способ для твоей страны
                       </p>
                     </div>
                     <svg

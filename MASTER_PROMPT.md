@@ -1,203 +1,164 @@
-# Master Prompt - HairLab Project Development
+# Master Prompt — HAIRLAB (km_curso)
 
-## Project Overview
-HairLab is a Next.js 15 landing page for a hair restoration course. Built with TypeScript, Tailwind CSS v4, and Framer Motion.
+Этот файл — контекст для AI-ассистентов и новых разработчиков. Здесь описано,
+что это за проект, как устроены потоки (воронка, авторизация, оплата, AI),
+правила кода, SEO и аналитика.
 
-## Tech Stack
-- **Framework**: Next.js 15 (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS v4 with custom design tokens
-- **Animations**: Framer Motion
-- **Fonts**: Manrope (primary), Inter (body), Playfair Display (display - unused, kept for legacy)
+## О проекте
 
-## Project Structure
-```
-src/
-├── app/                    # Next.js App Router
-│   ├── layout.tsx         # Root layout with fonts and LoadingScreen
-│   ├── page.tsx           # Landing page
-│   ├── globals.css        # Global styles with design tokens
-│   ├── offer/             # Offer page
-│   ├── lesson/            # Lesson page
-│   ├── quiz/              # Quiz page
-│   └── result/            # Quiz result page
-├── components/
-│   ├── LoadingScreen.tsx  # Loading screen with HAIRLAB logo
-│   ├── WelcomePopup.tsx   # Welcome popup for new users
-│   ├── PaymentModal.tsx   # Payment modal
-│   ├── shared/            # Shared components (CTA, etc.)
-│   ├── landing/           # Landing page components
-│   │   ├── landing-page.tsx    # Main landing page component
-│   │   ├── sections/           # Landing page sections
-│   │   └── icons.tsx           # Icon components
-│   ├── quiz/              # Quiz components
-│   ├── offer/             # Offer page components
-│   └── sections/          # General sections (hero, faq, etc.)
-├── config/
-│   ├── landing-content.ts # Centralized content for landing page
-│   ├── payments.ts        # Payment URL configuration
-│   └── feature-flags.ts  # Feature flags
-└── lib/
-    └── animations.ts      # Shared animation utilities (fadeUp, ease, viewport)
-```
+HAIRLAB — сайт-воронка авторского курса по восстановлению волос (Елена,
+Мадрид). Продаются два продукта через Stripe:
 
-## Design System
+- **Полный курс (38€)** — видеоуроки + методички + AI-анализ волос + Telegram-канал
+- **Методичка (12€)** — только PDF-гайды
 
-### Colors (OKLCH)
-- `--background`: oklch(0.965 0.012 70) - Cream background
-- `--foreground`: oklch(0.235 0.018 35) - Dark text
-- `--accent`: oklch(0.84 0.045 22) - Rose accent
-- `--cocoa`: oklch(0.32 0.025 35) - Dark brown
-- `--sand`: oklch(0.905 0.022 65) - Sand color
-- `--primary`: oklch(0.235 0.018 35) - Primary dark
+## Технологии
 
-### Typography
-- **Primary font**: Manrope (all text, including headings)
-- **Font weights**: 400, 500, 600, 700
-- **Letter spacing**: Negative for headings (-0.02em), normal for body
+- **Next.js 16 (App Router, Turbopack)** — ВАЖНО: версия с breaking changes,
+  перед написанием кода читай доки в `node_modules/next/dist/docs/`
+  (см. AGENTS.md). Middleware называется `src/proxy.ts` (не middleware.ts).
+- **TypeScript**, **Tailwind CSS v4** (+ дизайн-токены `km-` в globals.css), **Framer Motion**
+- **Supabase** — Google OAuth (PKCE) + Postgres (доступы, прогресс уроков) + Storage (фото)
+- **Stripe** — checkout + вебхук
+- **OpenAI** — AI-анализ фото волос (`src/lib/ai/diagnose.ts`)
+- **Vercel** — хостинг, Analytics, Speed Insights
+- Шрифты через `next/font/google`: Inter (body), Manrope (заголовки UI),
+  Playfair Display (hero, только веса 400/500), Fraunces (только /result и
+  /scan, `preload: false`)
 
-### Custom CSS Classes (km- prefix)
-These are design system utilities defined in globals.css:
-- `.km-container` - Container with max-width and padding
-- `.km-section` - Section padding
-- `.km-cta` - CTA button with variants (km-cta--dark, km-cta--light)
-- `.km-hero-title` - Hero title styling
-- `.km-section-title` - Section title styling
-- `.km-lead` - Lead paragraph
-- `.km-copy` - Body copy
-- `.km-card` - Card component
-- `.km-eyebrow` - Eyebrow text (uppercase, small)
+## Воронка (продуктовая логика)
 
-## Code Conventions
+1. Лендинг `/` → бесплатный тест `/quiz` (zustand + localStorage `km-quiz`)
+2. Результат теста `/result` → **бесплатный урок `/lesson`** (подарок)
+3. Выбор тарифа `/offer` → Stripe Checkout → `/checkout/success`
+4. Личный кабинет `/dashboard` (после Google-входа): видеоуроки, методички,
+   **AI-анализ** (`/dashboard/diagnostika`), Telegram
+5. AI-анализ доступен ТОЛЬКО с полным курсом. Работает по фото; если тест
+   пройден — его ответы прикладываются для точности (если нет — показывается
+   подсказка пройти тест, но анализ не блокируется)
 
-### Component Structure
-1. Use `"use client"` directive for client components
-2. Import dependencies at the top
-3. Type all props with TypeScript interfaces
-4. Use named exports for components
-5. Keep components focused and single-responsibility
+## Авторизация и доступы
 
-### Styling
-- **Primary approach**: Tailwind CSS classes
-- **Secondary**: Custom CSS classes (km- prefix) for complex/reusable patterns
-- **Avoid**: Inline styles (except for dynamic values)
-- **Avoid**: `<style jsx>` blocks
+- Вход только через Google: `/auth/login` → `supabase.auth.signInWithOAuth`
+  (redirectTo = `window.location.origin` — НЕ env, чтобы PKCE-cookie и callback
+  были на одном домене) → `/auth/callback` (обмен кода, upsert профиля)
+- `profiles.id` = `auth.users.id` (миграция `008_profiles_auth_sync.sql`:
+  триггер `on_auth_user_created` + RLS «по id ИЛИ по email»)
+- Доступы: `profiles.has_full_course`, `profiles.has_methodichka`.
+  Выставляются Stripe-вебхуком (`/api/stripe/webhook`) по email покупателя,
+  либо админ-allowlist `ADMIN_EMAILS` (env, выставляется в auth callback)
+- Проверка доступа в клиенте: `fetchProfileAccess()` из
+  `src/lib/profile-access.ts` (ищет по id, потом по email)
+- `/dashboard/*` защищён в `src/proxy.ts`; страницы уроков и диагностики
+  дополнительно проверяют `has_full_course`
+- Неоплатившим кабинет показывает экран «Доступ не открыт» с кнопкой покупки
+  (НЕ молчаливый редирект)
+- Dev-режим: `NEXT_PUBLIC_DEV_BYPASS_PAYWALL=true` в `.env.local` — пропускает
+  оплату локально. НИКОГДА не включать на Vercel.
 
-### Data Management
-- **Content**: Store in `src/config/landing-content.ts`
-- **Configuration**: Store in appropriate config files (payments.ts, feature-flags.ts)
-- **Avoid**: Hardcoding data in components
+## База данных (Supabase)
 
-### Images
-- Use `next/image` component
-- **Above-the-fold**: Add `priority` prop
-- **Below-the-fold**: Add `loading="lazy"` prop
-- **Responsive**: Use `sizes` prop for optimal loading
-- **Quality**: Use `quality={90-92}` for balance
+- `profiles`: id (= auth.uid), email (unique), full_name, has_full_course,
+  has_methodichka, stripe_customer_id. RLS: своя строка по id или email.
+- `lesson_progress`: user_id → profiles(id) ON UPDATE CASCADE, completed int[],
+  last_viewed. API: `/api/lesson-progress` (серверный Supabase-клиент —
+  НЕ createBrowserClient на сервере!)
+- Миграции в `supabase/migrations/` — выполнять по порядку в SQL Editor,
+  НЕ перезапускать старые скрипты поверх новых.
 
-### Animations
-- Import from `@/lib/animations`: `fadeUp`, `ease`, `viewport`
-- Use Framer Motion for scroll-triggered animations
-- Keep animations subtle and performant
+## Переменные окружения (Vercel)
 
-### Responsive Design
-- Mobile-first approach
-- Use Tailwind responsive prefixes: `sm:`, `md:`, `lg:`, `xl:`
-- Test on all breakpoints
-- Use `touch-pan-x` for horizontal scroll carousels to prevent vertical scrolling
+| Переменная | Что это |
+|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase клиент |
+| `SUPABASE_SERVICE_ROLE_KEY` | серверные операции (вебхук, callback) |
+| `STRIPE_SECRET_KEY` / `STRIPE_WEBHOOK_SECRET` / `STRIPE_PRICE_COURSE` / `STRIPE_PRICE_GUIDE` | Stripe |
+| `NEXT_PUBLIC_SITE_URL` или `NEXT_PUBLIC_URL` | канонический домен (для Stripe URL и метаданных) |
+| `ADMIN_EMAILS` | через запятую; полный доступ без оплаты |
+| `OPENAI_API_KEY` | AI-анализ |
+| `NEXT_PUBLIC_GA_ID` | Google Analytics 4 (`G-XXXXXXXXXX`), без него GA не грузится |
+| `RESEND_API_KEY` | письма |
 
-## SOLID Principles
+## SEO
 
-### Single Responsibility
-- Each component should have one reason to change
-- Separate concerns: UI, data fetching, business logic
+Что уже сделано в коде:
 
-### Open/Closed
-- Use composition over inheritance
-- Make components extensible via props
+- `src/app/robots.ts` → `/robots.txt`: закрыты `/dashboard/`, `/auth/`,
+  `/checkout/`, `/api/`, `/result`, `/scan/`; указан sitemap
+- `src/app/sitemap.ts` → `/sitemap.xml`: только публичные страницы
+  (`/`, `/quiz`, `/offer`, `/lesson`)
+- Метаданные (title, description, Open Graph, ru_RU) в `src/app/layout.tsx`;
+  `metadataBase` берётся из `NEXT_PUBLIC_SITE_URL`
 
-### Liskov Substitution
-- Ensure components can be substituted with their variants
-- Maintain consistent prop interfaces
+Правила при добавлении страниц:
 
-### Interface Segregation
-- Keep component props minimal and focused
-- Use optional props for flexibility
+- Новой публичной странице — свой `export const metadata` (title + description)
+  и строка в `sitemap.ts`
+- Приватные страницы (кабинет, оплата) в sitemap НЕ добавлять
+- Один `<h1>` на страницу, у картинок осмысленный `alt`
+- Производительность = SEO: не анимировать первый экран из `opacity: 0`,
+  не добавлять полноэкранных лоадеров (уже удалён LoadingScreen — не возвращать),
+  контраст текста ≥ 4.5:1
 
-### Dependency Inversion
-- Depend on abstractions (config, services) not concrete implementations
-- Use dependency injection for testability
+### Подключение Google Search Console (делается один раз, руками)
 
-## Common Patterns
+1. Зайди на https://search.google.com/search-console → «Добавить ресурс»
+2. Выбери «Доменный ресурс» и введи свой домен (или «Префикс URL» с
+   `https://домен`)
+3. Подтверждение: для доменного — TXT-запись в DNS (если домен куплен через
+   Vercel: Vercel → Domains → DNS → Add Record → TXT). Для префикса — можно
+   HTML-тегом: Google даст `<meta name="google-site-verification" …>`, его
+   значение добавляется в `layout.tsx` → `metadata.verification.google`
+4. После подтверждения: Search Console → «Файлы Sitemap» → отправь
+   `https://домен/sitemap.xml`
+5. Через несколько дней появятся данные: запросы, показы, клики, позиции
 
-### Section Component
-```tsx
-"use client"
+## Аналитика
 
-import { motion } from "framer-motion"
-import { fadeUp } from "@/lib/animations"
+Уже подключено:
 
-export function SectionName() {
-  return (
-    <section className="km-section">
-      <motion.div {...fadeUp()}>
-        {/* Content */}
-      </motion.div>
-    </section>
-  )
-}
-```
+- **Vercel Analytics + Speed Insights** — `layout.tsx`, работают сразу,
+  смотреть в Vercel → проект → Analytics / Speed Insights
+- **Google Analytics 4** — компонент `src/components/GoogleAnalytics.tsx`,
+  включается переменной `NEXT_PUBLIC_GA_ID`
 
-### Data from Config
-```tsx
-import { dataName } from "@/config/landing-content"
+### Подключение GA4 (делается один раз, руками)
 
-// Use dataName.map() instead of hardcoding
-```
+1. https://analytics.google.com → Админ → «Создать ресурс» (часовой пояс,
+   валюта EUR)
+2. «Потоки данных» → «Веб» → URL сайта → создать поток
+3. Скопируй **Measurement ID** вида `G-XXXXXXXXXX`
+4. Vercel → Settings → Environment Variables → `NEXT_PUBLIC_GA_ID` =
+   `G-XXXXXXXXXX` (Production) → Redeploy
+5. Проверка: открой сайт → GA4 «Отчёты → В реальном времени» — должен
+   появиться твой визит
 
-### CTA Button
-```tsx
-import { CTA } from "@/components/shared/CTA"
+Какие события стоит добавить позже (через `gtag('event', …)`):
+начало теста, завершение теста, клик «Выбрать тариф», успешная оплата
+(на `/checkout/success`), вход в кабинет, запуск AI-анализа.
 
-<CTA variant="dark">Button Text</CTA>
-```
+## Правила кода (сохраняются из прежней версии)
 
-## Guidelines for New Features
+- Контент — в `src/config/*` (landing-content.ts и др.), не хардкодить в компонентах
+- Клиентские компоненты — `"use client"`; named exports; типизировать пропсы; без `any`
+- Стили: Tailwind-классы; `km-`-утилиты для повторяющихся паттернов; инлайн-стили
+  только для динамики
+- Картинки: `next/image`; above-the-fold — `priority`, остальное lazy; `sizes` обязателен
+- Анимации: `@/lib/animations` (fadeUp, ease, viewport); НЕ анимировать
+  first-screen контент из невидимого состояния (LCP)
+- `export const dynamic` / `revalidate` — ТОЛЬКО в серверных компонентах
+  (в `"use client"`-файле это роняет сборку Next 16)
+- Mobile-first, проверка на всех брейкпоинтах
+- Платёжные ссылки — `getPaymentLink()` из `config/payments.ts`
+- Header (offer/lesson/уроки) и NavSection (лендинг) — разные компоненты;
+  NavSection после входа показывает имя пользователя
+- Коммиты: conventional commits (`feat:`, `fix:`, …), тестировать локально
+  (`npx next build`) перед пушем
 
-1. **Check existing patterns first** - Look for similar components and follow the pattern
-2. **Use centralized data** - Store content in config files
-3. **Follow naming conventions** - Use descriptive names, kebab-case for files
-4. **Type everything** - No `any` types
-5. **Keep it simple** - Avoid over-engineering
-6. **Test responsive** - Ensure works on mobile, tablet, desktop
-7. **Performance first** - Lazy load images, optimize bundles
-8. **Accessibility** - Use semantic HTML, proper ARIA labels
+## Чек-лист перед деплоем
 
-## File Naming
-- Components: PascalCase (e.g., `HeroSection.tsx`)
-- Utilities: camelCase (e.g., `animations.ts`)
-- Config: kebab-case (e.g., `landing-content.ts`)
-- Pages: lowercase (e.g., `page.tsx`)
-
-## Git Workflow
-- Commit frequently with descriptive messages
-- Use conventional commits: `feat:`, `fix:`, `refactor:`, `style:`
-- Test locally before pushing
-- Review changes before committing
-
-## Important Notes
-- **Font**: Manrope is used everywhere (no Georgia)
-- **Loading Screen**: Already integrated in layout.tsx
-- **Payment URLs**: Use `getPaymentLink()` from payments.ts
-- **Instagram Section**: Uses `instagramReels` from landing-content.ts
-- **Header/Nav**: Different components for different pages (Header for offer/lesson, NavSection for landing)
-- **Footer/FooterSection**: Different components (Footer for offer, FooterSection for landing)
-
-## Testing Checklist
-- [ ] Component renders without errors
-- [ ] Responsive on mobile, tablet, desktop
-- [ ] Images load correctly (priority/lazy)
-- [ ] Animations work smoothly
-- [ ] No TypeScript errors
-- [ ] No console warnings
-- [ ] Accessibility (screen readers, keyboard nav)
+- [ ] `npx next build` проходит без ошибок
+- [ ] Никаких `NEXT_PUBLIC_DEV_BYPASS_PAYWALL` на Vercel
+- [ ] Новые страницы: metadata + sitemap (если публичные)
+- [ ] Контраст и размеры тап-зон (Lighthouse Accessibility ≥ 95)
+- [ ] Supabase: redirect URL `https://домен/auth/callback` в Auth → URL Configuration
