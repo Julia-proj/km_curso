@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import { isDevBypass } from "@/lib/dev-bypass"
 
 interface PaymentModalProps {
   isOpen: boolean
@@ -17,43 +18,19 @@ export function PaymentModal({ isOpen, onClose, product, stripeLink }: PaymentMo
   const [showEmailInput, setShowEmailInput] = useState(false)
   const [devMode, setDevMode] = useState(false)
   const [isLocalhost, setIsLocalhost] = useState(false)
-  const [isPreview, setIsPreview] = useState(false)
-  const [shouldBypass, setShouldBypass] = useState(false)
 
-  // Detect localhost and preview after mount to avoid SSR/hydration mismatch.
+  // Env-driven bypass: explicit flag or a Vercel Preview deploy. Stable on the
+  // client (reads only NEXT_PUBLIC_* vars), so no hydration mismatch. NEVER true
+  // in production. Forced on (checkbox disabled) when active.
+  const envBypass = isDevBypass()
+
+  // Detect localhost after mount to avoid SSR/hydration mismatch. Localhost gets
+  // the dev checkbox too (it can never be the production domain).
   useEffect(() => {
-    const hostname = window.location.hostname
-    const isLocal = ["localhost", "127.0.0.1"].includes(hostname)
+    const isLocal = ["localhost", "127.0.0.1"].includes(window.location.hostname)
     setIsLocalhost(isLocal)
-    
-    // Check if dev bypass is enabled via env var
-    const hasDevEnv = process.env.NEXT_PUBLIC_DEV_BYPASS_PAYWALL === 'true'
-    
-    // Check for Vercel preview: hostname contains vercel.app but NOT production domain
-    const isVercelPreview = hostname.includes('vercel.app') && 
-                           !hostname.includes('km-curso.vercel.app') // replace with your production domain
-    
-    const isPreviewEnv = process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview' || isVercelPreview
-    
-    // On localhost: enable if env var is set OR if it's localhost (always allow dev mode)
-    // On preview: auto-enable
-    const devBypass = (isLocal && hasDevEnv) || isPreviewEnv || isLocal
-    
-    console.log('[PaymentModal] Dev bypass check:', {
-      hostname,
-      isLocal,
-      hasDevEnv,
-      isPreviewEnv,
-      isVercelPreview,
-      devBypass,
-      NEXT_PUBLIC_DEV_BYPASS_PAYWALL: process.env.NEXT_PUBLIC_DEV_BYPASS_PAYWALL,
-      NEXT_PUBLIC_VERCEL_ENV: process.env.NEXT_PUBLIC_VERCEL_ENV
-    })
-    
-    setIsPreview(isPreviewEnv) // Only true for actual preview deployments
-    setShouldBypass(devBypass) // True for localhost OR preview
-    setDevMode(devBypass) // Auto-enable dev mode
-  }, [])
+    setDevMode(envBypass || isLocal)
+  }, [envBypass])
 
   useEffect(() => {
     if (!isOpen) {
@@ -61,12 +38,16 @@ export function PaymentModal({ isOpen, onClose, product, stripeLink }: PaymentMo
       setShowEmailInput(false)
       setError(null)
       setIsLoading(false)
-      // Don't reset devMode if it's preview mode or should bypass
-      if (!isPreview && !shouldBypass) {
+      // Keep dev mode on when env-driven or on localhost.
+      if (!envBypass && !isLocalhost) {
         setDevMode(false)
       }
     }
-  }, [isOpen, isPreview, shouldBypass])
+  }, [isOpen, envBypass, isLocalhost])
+
+  // Bypass is allowed only where a dev checkbox is offered: localhost or a
+  // preview/flagged deploy. Cosmetic on the client — the real gate is Stripe.
+  const canBypass = devMode && (isLocalhost || envBypass)
 
   const whatsappMessage = encodeURIComponent("Здравствуйте! Я хочу оплатить курс.")
   const whatsappLink = `https://wa.me/34641261559?text=${whatsappMessage}`
@@ -80,17 +61,8 @@ export function PaymentModal({ isOpen, onClose, product, stripeLink }: PaymentMo
   const handleStripeClick = () => {
     setError(null)
 
-    console.log('[handleStripeClick] State:', {
-      devMode,
-      isLocalhost,
-      isPreview,
-      shouldBypass,
-      condition: devMode && (isLocalhost || isPreview || shouldBypass)
-    })
-
     // Dev bypass - skip email and go straight to success
-    if (devMode && (isLocalhost || isPreview || shouldBypass)) {
-      console.log('[PaymentModal] Dev bypass activated, redirecting to success')
+    if (canBypass) {
       window.location.href = `/checkout/success?session_id=dev_test_${Date.now()}&product=${product}`
       return
     }
@@ -119,10 +91,7 @@ export function PaymentModal({ isOpen, onClose, product, stripeLink }: PaymentMo
 
     setIsLoading(true)
     try {
-      // Dev bypass works on localhost AND preview deployments
-      const allowDevBypass = (devMode && isLocalhost) || isPreview
-      
-      if (allowDevBypass) {
+      if (canBypass) {
         window.location.href = `/checkout/success?session_id=dev_test_${Date.now()}&product=${product}`
         return
       }
@@ -189,28 +158,25 @@ export function PaymentModal({ isOpen, onClose, product, stripeLink }: PaymentMo
                   </div>
                 )}
 
-                {(isLocalhost || isPreview || shouldBypass) && (
+                {(isLocalhost || envBypass) && (
                   <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
                     <label className="flex items-center gap-3 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={devMode}
-                        onChange={(e) => {
-                          console.log('[Checkbox] Changed to:', e.target.checked)
-                          setDevMode(e.target.checked)
-                        }}
+                        onChange={(e) => setDevMode(e.target.checked)}
                         className="h-5 w-5 rounded border-2 border-[#E0DCD6] checked:bg-[#A0845C] checked:border-[#A0845C]"
-                        disabled={isPreview}
+                        disabled={envBypass}
                       />
                       <div className="flex-1">
                         <span className="font-sans text-sm font-semibold text-[#1A1A1A] block">
-                          {isPreview 
-                            ? '🔧 Dev mode (auto-enabled для preview)' 
+                          {envBypass
+                            ? '🔧 Dev mode (auto-enabled для preview)'
                             : '🔧 Dev mode (bypass Stripe)'}
                         </span>
                         <span className="font-sans text-xs text-[#666]">
-                          {isPreview 
-                            ? 'Оплата отключена на preview-деплоях' 
+                          {envBypass
+                            ? 'Оплата отключена на preview-деплоях'
                             : 'Пропустить оплату и перейти сразу к успеху'}
                         </span>
                       </div>
