@@ -27,67 +27,110 @@ export function WelcomePopup() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] flex items-end justify-center p-4 sm:items-center"
-          style={{ background: "rgba(20,10,5,0.55)", backdropFilter: "blur(4px)" }}
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+          style={{ background: "rgba(26,26,26,0.6)", backdropFilter: "blur(8px)" }}
           onClick={() => setOpen(false)}
         >
           <motion.div
-            initial={{ opacity: 0, y: 40, scale: 0.96 }}
+            initial={{ opacity: 0, y: 32, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.96 }}
-            transition={{ duration: 0.4, ease }}
-            className="relative w-full max-w-[min(22rem,calc(100vw-2rem))] rounded-2xl border border-border bg-cream p-6 shadow-[0_40px_100px_-20px_rgba(50,25,15,0.5)]"
+            exit={{ opacity: 0, y: 16, scale: 0.95 }}
+            transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+            className="relative w-full max-w-[20rem] overflow-hidden rounded-3xl"
+            style={{ background: "#FAF7F4", boxShadow: "0_25px_80px_-12px_rgba(26,26,26,0.35)" }}
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => setOpen(false)}
-              className="absolute right-4 top-4 h-7 w-7 flex items-center justify-center text-muted-foreground/50 transition-colors hover:text-foreground"
+              className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-black/5"
               aria-label="Закрыть"
+              style={{ color: "#A0845C" }}
             >
-              ✕
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
             </button>
 
-            <p
-              className="mb-2 font-sans font-medium uppercase"
-              style={{ fontSize: "0.6875rem", letterSpacing: "0.18em", color: "#C4956A" }}
-            >
-              Уже готова?
-            </p>
-            <h3 className="font-hero-face text-[1.125rem] font-semibold leading-tight tracking-[-0.025em] text-foreground">
-              Выбери свой формат
-            </h3>
+            <div className="p-6 pb-5">
+              <p
+                className="font-sans font-medium uppercase tracking-widest"
+                style={{ fontSize: "0.65rem", color: "#C4956A", letterSpacing: "0.2em" }}
+              >
+                Уже готова?
+              </p>
+              <h3
+                className="mt-2 font-hero-face font-semibold tracking-tight"
+                style={{ fontSize: "1.35rem", color: "#1A1A1A", lineHeight: 1.2 }}
+              >
+                Выбери формат
+              </h3>
+            </div>
 
-            <div className="mt-5 flex flex-row gap-2">
+            <div className="flex flex-col">
               <a
                 href={courseLink}
                 onClick={() => setOpen(false)}
-                className="group flex flex-1 items-center justify-center rounded-xl bg-[#D9A19D] px-4 py-3 transition-all hover:bg-[#C9918C]"
+                className="group relative flex items-center justify-between px-6 py-4 transition-colors hover:bg-black/[0.02]"
+                style={{ borderBottom: "1px solid rgba(160,132,92,0.12)" }}
               >
-                <div className="text-center">
-                  <p className="mb-1 font-sans font-semibold uppercase text-white/70" style={{ fontSize: "0.625rem", letterSpacing: "0.16em" }}>
+                <div>
+                  <p
+                    className="font-sans font-semibold uppercase"
+                    style={{ fontSize: "0.7rem", color: "#D9A19D", letterSpacing: "0.15em" }}
+                  >
                     Полный курс
                   </p>
-                  <p className="font-hero-face text-[1.125rem] font-semibold leading-none text-white">38€</p>
+                  <p
+                    className="mt-0.5 font-hero-face font-semibold"
+                    style={{ fontSize: "1.5rem", color: "#1A1A1A", lineHeight: 1 }}
+                  >
+                    38€
+                  </p>
+                </div>
+                <div
+                  className="flex h-10 w-10 items-center justify-center rounded-full transition-transform group-hover:scale-110"
+                  style={{ background: "#D9A19D" }}
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </div>
               </a>
 
               <a
                 href={guideLink}
                 onClick={() => setOpen(false)}
-                className="group flex flex-1 items-center justify-center rounded-xl border-2 border-[#D9A19D] bg-white px-4 py-3 transition-all hover:bg-[#FAF7F4]"
+                className="group relative flex items-center justify-between px-6 py-4 transition-colors hover:bg-black/[0.02]"
               >
-                <div className="text-center">
-                  <p className="mb-1 font-sans font-semibold uppercase text-[#A0845C]" style={{ fontSize: "0.625rem", letterSpacing: "0.16em" }}>
+                <div>
+                  <p
+                    className="font-sans font-semibold uppercase"
+                    style={{ fontSize: "0.7rem", color: "#A0845C", letterSpacing: "0.15em" }}
+                  >
                     Методичка
                   </p>
-                  <p className="font-hero-face text-[1.125rem] font-semibold leading-none text-[#1A1A1A]">12€</p>
+                  <p
+                    className="mt-0.5 font-hero-face font-semibold"
+                    style={{ fontSize: "1.5rem", color: "#1A1A1A", lineHeight: 1 }}
+                  >
+                    12€
+                  </p>
+                </div>
+                <div
+                  className="flex h-10 w-10 items-center justify-center rounded-full border-2 transition-transform group-hover:scale-110 group-hover:border-[#D9A19D]"
+                  style={{ borderColor: "#D9A19D", color: "#D9A19D" }}
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </div>
               </a>
             </div>
 
             <button
               onClick={() => setOpen(false)}
-              className="mt-4 w-full text-center font-sans text-xs text-muted-foreground underline-offset-2 hover:underline"
+              className="w-full py-4 text-center font-sans text-xs transition-colors hover:bg-black/[0.02]"
+              style={{ color: "#A0845C", letterSpacing: "0.02em" }}
             >
               Сначала посмотрю
             </button>

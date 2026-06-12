@@ -192,7 +192,7 @@ export function LandingHeroSection() {
         <div className="absolute inset-0">
           <Image
             alt="Елена - основатель HairLab"
-            className="h-full w-full translate-y-6 scale-[1.08] object-cover"
+            className="h-full w-full translate-y-4 scale-105 object-cover"
             fill
             fetchPriority="high"
             loading="eager"
@@ -208,13 +208,13 @@ export function LandingHeroSection() {
           <div className="absolute inset-x-0 bottom-0 h-[18%] bg-[#332923]/55" />
         </div>
 
-        <div className="relative z-10 flex min-h-[100svh] flex-col justify-start px-4 pb-[10rem] pt-8 sm:px-5 sm:pb-[11.5rem] sm:pt-9 min-[390px]:px-6 min-[390px]:pb-[12rem] min-[390px]:pt-10 md:px-8 md:pb-[13rem]">
-          <div className="w-full max-w-[23rem] pb-3 min-[390px]:pb-5 md:pb-6 md:max-w-[26rem]">
+        <div className="relative z-10 flex min-h-[100svh] flex-col justify-start px-4 pb-[9rem] pt-6 sm:px-5 sm:pb-[10rem] sm:pt-7 min-[390px]:px-6 min-[390px]:pb-[11rem] min-[390px]:pt-8 md:px-8 md:pb-[12rem]">
+          <div className="w-full max-w-[22rem] pb-2 min-[390px]:max-w-[24rem] min-[390px]:pb-3 md:max-w-[26rem] md:pb-4">
             <motion.p
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="mb-3 font-sans text-[10px] font-semibold uppercase tracking-[0.42em] text-[#EBC5BE] min-[390px]:mb-6 md:text-[11px]"
+              className="mb-2 font-sans text-[10px] font-semibold uppercase tracking-[0.42em] text-[#EBC5BE] min-[390px]:mb-3 md:text-[11px]"
             >
               Авторский курс
             </motion.p>
@@ -223,7 +223,7 @@ export function LandingHeroSection() {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.08, duration: 0.55 }}
-              className="font-serif text-[1.75rem] font-normal leading-[1.02] tracking-[-0.01em] text-white drop-shadow-[0_2px_18px_rgba(20,12,8,0.32)] min-[360px]:text-[2rem] min-[390px]:text-[2.5rem] md:text-[2.75rem]"
+              className="font-serif text-[1.6rem] font-normal leading-[1.05] tracking-[-0.01em] text-white drop-shadow-[0_2px_18px_rgba(20,12,8,0.32)] min-[360px]:text-[1.8rem] min-[390px]:text-[2.2rem] md:text-[2.5rem]"
             >
               Салонное
               <br />
@@ -236,7 +236,7 @@ export function LandingHeroSection() {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.16, duration: 0.55 }}
-              className="mt-3 font-sans text-sm leading-snug text-white drop-shadow-[0_2px_14px_rgba(20,12,8,0.22)] min-[390px]:text-base md:text-lg"
+              className="mt-2 font-sans text-sm leading-snug text-white drop-shadow-[0_2px_14px_rgba(20,12,8,0.22)] min-[390px]:text-base md:text-lg"
             >
               Теперь у тебя дома.
             </motion.p>
@@ -245,7 +245,7 @@ export function LandingHeroSection() {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.22, duration: 0.55 }}
-              className="mt-4 font-sans text-xs font-normal text-white/84 drop-shadow-[0_2px_14px_rgba(20,12,8,0.24)] min-[390px]:mt-6 min-[390px]:text-sm md:text-sm md:max-w-[28rem]"
+              className="mt-3 font-sans text-xs font-normal text-white/84 drop-shadow-[0_2px_14px_rgba(20,12,8,0.24)] min-[390px]:mt-4 min-[390px]:text-sm md:text-sm md:max-w-[28rem]"
             >
               База, которую мы передаём ученицам
               <br />
@@ -254,11 +254,11 @@ export function LandingHeroSection() {
             </motion.p>
           </div>
 
-          <div className="mt-1 min-[390px]:mt-4 md:mt-6">
+          <div className="mt-2 min-[390px]:mt-3 md:mt-4">
             <HeroVisuals tone="dark" />
           </div>
 
-          <div className="absolute inset-x-4 bottom-4 z-20 flex flex-col gap-2 sm:inset-x-5 sm:bottom-5 min-[390px]:inset-x-6 min-[390px]:bottom-6 md:inset-x-8 md:bottom-8">
+          <div className="absolute inset-x-4 bottom-4 z-20 flex flex-col gap-2 sm:inset-x-5 sm:bottom-4 min-[390px]:inset-x-6 min-[390px]:bottom-5 md:inset-x-8 md:bottom-6">
             <a
               href="/quiz"
               className="inline-flex min-h-[3.1rem] w-full items-center justify-center gap-2.5 rounded-full bg-[#FAF7F4] border-2 border-[#E0DCD6] px-4 py-2 shadow-[0_22px_48px_rgba(34,25,21,0.28)] transition-all hover:bg-white hover:border-[#C4956A] sm:min-h-[3.35rem] sm:px-5 min-[390px]:min-h-[3.75rem] min-[390px]:px-6 md:min-h-[4rem] md:px-8"
@@ -289,17 +289,61 @@ export function LandingHeroSection() {
       </div>
 
       {/* ── DESKTOP (lg+): editorial magazine split ── */}
-      <div className="hidden min-h-screen lg:grid lg:grid-cols-[1fr_minmax(400px,45%)] xl:grid-cols-[1fr_minmax(440px,46%)] 2xl:grid-cols-[1fr_minmax(480px,48%)]">
+      <div className="hidden min-h-screen lg:grid lg:grid-cols-[1fr_minmax(380px,42%)] xl:grid-cols-[1fr_minmax(420px,44%)] 2xl:grid-cols-[1fr_minmax(460px,46%)]">
 
         {/* Left: text column on cream background */}
-        <div className="flex flex-col items-center justify-center bg-[#FAF7F4] px-8 py-6 lg:px-10 xl:px-14 xl:py-8 2xl:px-16 2xl:py-10">
-          <div className="w-full max-w-[32rem] lg:max-w-[36rem] xl:max-w-[40rem]">
+        <div className="relative flex flex-col items-center justify-center overflow-hidden bg-[#FAF7F4] px-6 py-5 lg:px-8 xl:px-10 xl:py-6 2xl:px-12 2xl:py-7">
+          {/* Animated background blobs */}
+          <motion.div
+            className="absolute -top-20 -left-20 h-96 w-96 rounded-full"
+            style={{ background: "radial-gradient(circle, rgba(212,145,140,0.15) 0%, transparent 70%)" }}
+            animate={{
+              x: [0, 30, 0],
+              y: [0, -30, 0],
+              scale: [1, 1.1, 1],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+          <motion.div
+            className="absolute -bottom-32 -right-32 h-[30rem] w-[30rem] rounded-full"
+            style={{ background: "radial-gradient(circle, rgba(196,149,106,0.12) 0%, transparent 70%)" }}
+            animate={{
+              x: [0, -40, 0],
+              y: [0, 40, 0],
+              scale: [1, 1.15, 1],
+            }}
+            transition={{
+              duration: 25,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 2,
+            }}
+          />
+          <motion.div
+            className="absolute top-1/4 right-1/4 h-64 w-64 rounded-full"
+            style={{ background: "radial-gradient(circle, rgba(217,161,157,0.08) 0%, transparent 70%)" }}
+            animate={{
+              x: [0, 20, 0],
+              y: [0, 25, 0],
+            }}
+            transition={{
+              duration: 18,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 4,
+            }}
+          />
+          <div className="relative z-10 w-full max-w-[28rem] lg:max-w-[32rem] xl:max-w-[36rem]">
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="mb-5 flex items-center gap-3"
+              className="mb-4 flex items-center gap-3"
             >
               <span className="block h-px w-8 shrink-0 bg-[#C4956A]" aria-hidden="true" />
               <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.32em] text-[#C4956A]">
@@ -311,7 +355,7 @@ export function LandingHeroSection() {
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.08, duration: 0.55 }}
-              className="font-serif font-normal leading-[1.05] tracking-[-0.015em] text-[#1A1A1A] text-[clamp(2.5rem,4vw,4rem)] lg:text-[clamp(3rem,4vw,4.5rem)]"
+              className="font-serif font-normal leading-[1.05] tracking-[-0.015em] text-[#1A1A1A] text-[clamp(2.4rem,3.8vw,3.8rem)] lg:text-[clamp(2.8rem,4vw,4.2rem)]"
             >
               Салонное
               <br />
@@ -324,7 +368,7 @@ export function LandingHeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.16, duration: 0.55 }}
-              className="mt-5 font-sans text-2xl font-medium text-[#1A1A1A]"
+              className="mt-5 font-sans text-[1.25rem] font-medium text-[#1A1A1A] lg:text-[1.35rem]"
             >
               Теперь у тебя дома.
             </motion.p>
@@ -333,10 +377,10 @@ export function LandingHeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.55 }}
-              className="mt-4 max-w-[31rem] font-sans text-base leading-7 text-[#4A4038]"
+              className="mt-4 max-w-[30rem] font-sans text-[1rem] leading-[1.65] text-[#4A4038] lg:text-[1.05rem]"
             >
               База, которую мы передаём ученицам школы HAIRLAB.
-              <span className="mt-2 block font-medium text-[#C4956A]">+ составы и AI-диагностика</span>
+              <span className="mt-2 block font-semibold text-[#C4956A]">+ составы и AI-диагностика</span>
             </motion.p>
 
             <div className="pointer-events-none flex justify-center xl:justify-start xl:pl-3">
@@ -347,7 +391,7 @@ export function LandingHeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.23, duration: 0.55 }}
-              className="mt-7 flex flex-col items-stretch gap-3 xl:flex-row"
+              className="mt-6 flex flex-col items-stretch gap-3 xl:flex-row"
             >
               <a
                 href="/quiz"
@@ -387,8 +431,8 @@ export function LandingHeroSection() {
         </div>
 
         {/* Right: photo column */}
-        <div className="relative bg-[#FAF7F4] py-10 pr-8 lg:py-12 lg:pr-12 xl:py-16 xl:pr-16 2xl:py-20 2xl:pr-20">
-          <figure className="relative h-full w-full overflow-hidden rounded-[1.35rem] shadow-[0_24px_52px_-30px_rgba(40,28,22,0.42)]">
+        <div className="relative bg-[#FAF7F4] py-6 pr-5 lg:py-8 lg:pr-8 xl:py-10 xl:pr-10 2xl:py-12 2xl:pr-12">
+          <figure className="relative h-full w-full overflow-hidden rounded-[1.2rem] shadow-[0_24px_52px_-30px_rgba(40,28,22,0.42)]">
           <Image
             alt="Елена - основатель HairLab"
             className="object-cover"
