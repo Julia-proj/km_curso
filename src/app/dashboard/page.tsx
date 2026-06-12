@@ -23,7 +23,10 @@ export default function DashboardPage() {
       }
 
       // Dev bypass - allow access without payment
-      if (process.env.NEXT_PUBLIC_DEV_BYPASS_PAYWALL === 'true') {
+      const isDevBypass = process.env.NEXT_PUBLIC_DEV_BYPASS_PAYWALL === 'true' || 
+                         process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview'
+      
+      if (isDevBypass) {
         setHasFullCourse(true)
         setHasMethodichka(true)
         setReady(true)

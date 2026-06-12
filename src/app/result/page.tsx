@@ -183,6 +183,22 @@ export default function ResultPage() {
           >
             {nextLabel}
           </Link>
+          
+          <button
+            onClick={() => {
+              useQuizStore.getState().reset()
+              router.push('/quiz')
+            }}
+            className="inline-block text-sm transition-colors px-4 py-2"
+            style={{ 
+              color: "var(--color-ink-soft)",
+              border: "1px solid var(--color-line)",
+              borderRadius: "2px"
+            }}
+          >
+            ← Пройти тест заново
+          </button>
+          
           <Link
             href="/lesson"
             className="inline-flex items-center gap-1 text-sm transition-colors"

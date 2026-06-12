@@ -41,7 +41,10 @@ export default function DiagnostikaPage() {
       }
 
       // Dev bypass - allow access without payment
-      if (process.env.NEXT_PUBLIC_DEV_BYPASS_PAYWALL === 'true') {
+      const isDevBypass = process.env.NEXT_PUBLIC_DEV_BYPASS_PAYWALL === 'true' || 
+                         process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview'
+      
+      if (isDevBypass) {
         setIsAuthenticated(true)
         setHasPaidCourse(true)
         return

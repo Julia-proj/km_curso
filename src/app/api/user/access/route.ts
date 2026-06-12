@@ -2,6 +2,26 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 
 function getSupabase() {
+  // Dev bypass - return mock client
+  const isDevBypass = process.env.NEXT_PUBLIC_DEV_BYPASS_PAYWALL === 'true' || 
+                     process.env.VERCEL_ENV === 'preview';
+  
+  if (isDevBypass) {
+    // Return a mock Supabase client for dev mode
+    return {
+      from: () => ({
+        select: () => ({
+          eq: () => ({
+            single: async () => ({ 
+              data: { has_methodichka: true, has_full_course: true }, 
+              error: null 
+            })
+          })
+        })
+      })
+    } as any;
+  }
+  
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
     throw new Error('Supabase credentials are not configured')
   }
@@ -18,7 +38,10 @@ export async function GET(req: NextRequest) {
   }
 
   // Dev bypass - allow access without payment
-  if (process.env.NEXT_PUBLIC_DEV_BYPASS_PAYWALL === 'true') {
+  const isDevBypass = process.env.NEXT_PUBLIC_DEV_BYPASS_PAYWALL === 'true' || 
+                     process.env.VERCEL_ENV === 'preview'
+  
+  if (isDevBypass) {
     return NextResponse.json({
       has_methodichka: true,
       has_full_course: true,

@@ -2,6 +2,27 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 
 function getSupabase() {
+  // Dev bypass - return mock client
+  const isDevBypass = process.env.NEXT_PUBLIC_DEV_BYPASS_PAYWALL === 'true' || 
+                     process.env.VERCEL_ENV === 'preview';
+  
+  if (isDevBypass) {
+    // Return a mock Supabase client for dev mode
+    return {
+      from: () => ({
+        upsert: async () => ({ data: {}, error: null }),
+        select: () => ({
+          eq: () => ({
+            single: async () => ({ 
+              data: { lesson_1: true, lesson_2: false, lesson_3: false }, 
+              error: null 
+            })
+          })
+        })
+      })
+    } as any;
+  }
+  
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
     throw new Error('Supabase credentials are not configured')
   }

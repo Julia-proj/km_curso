@@ -3,7 +3,10 @@ import { NextResponse, type NextRequest } from 'next/server'
 
 export async function updateSession(request: NextRequest) {
   // Dev bypass - skip auth check
-  if (process.env.NEXT_PUBLIC_DEV_BYPASS_PAYWALL === 'true') {
+  const isDevBypass = process.env.NEXT_PUBLIC_DEV_BYPASS_PAYWALL === 'true' || 
+                     process.env.VERCEL_ENV === 'preview'
+  
+  if (isDevBypass) {
     return NextResponse.next({
       request,
     })

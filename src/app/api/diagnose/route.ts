@@ -5,6 +5,28 @@ import { z } from 'zod';
 import { featureFlags } from '@/config/feature-flags';
 
 function getSupabase() {
+  // Dev bypass - return mock client
+  const isDevBypass = process.env.NEXT_PUBLIC_DEV_BYPASS_PAYWALL === 'true' || 
+                     process.env.VERCEL_ENV === 'preview';
+  
+  if (isDevBypass) {
+    // Return a mock Supabase client for dev mode
+    return {
+      storage: {
+        from: () => ({
+          upload: async () => ({ data: { path: 'dev/mock.jpg' }, error: null }),
+          createSignedUrl: async () => ({ 
+            data: { signedUrl: 'https://placeholder.com/mock.jpg' }, 
+            error: null 
+          })
+        })
+      },
+      from: () => ({
+        insert: async () => ({ error: null })
+      })
+    } as any;
+  }
+  
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
     throw new Error('Supabase credentials are not configured');
   }
