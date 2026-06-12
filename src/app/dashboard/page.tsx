@@ -13,6 +13,8 @@ export default function DashboardPage() {
   const [ready, setReady] = useState(false)
   const [hasFullCourse, setHasFullCourse] = useState(false)
   const [hasMethodichka, setHasMethodichka] = useState(false)
+  const [userName, setUserName] = useState<string | null>(null)
+  const [userEmail, setUserEmail] = useState<string | null>(null)
 
   useEffect(() => {
     const checkAccess = async () => {
@@ -25,6 +27,7 @@ export default function DashboardPage() {
 
       // Dev bypass - allow access without payment
       if (isDevBypass()) {
+        setUserName("Dev-режим")
         setHasFullCourse(true)
         setHasMethodichka(true)
         setReady(true)
@@ -37,6 +40,14 @@ export default function DashboardPage() {
         router.push("/auth/login")
         return
       }
+
+      setUserName(
+        user.user_metadata?.full_name ||
+        user.user_metadata?.name ||
+        user.email ||
+        "Вы"
+      )
+      setUserEmail(user.email ?? null)
 
       // Check if user has paid access
       const { data: profile } = await supabase
@@ -71,6 +82,21 @@ export default function DashboardPage() {
       <div className="km-container">
         <div className="mx-auto max-w-2xl">
           <PostPaymentNav showBack={false} />
+
+          {/* Logged-in confirmation */}
+          {userName && (
+            <div className="mb-8 rounded-2xl border border-[#E5DDD5] bg-white p-5">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#A0845C]">
+                Вы вошли
+              </p>
+              <p className="mt-1 text-lg font-semibold text-[#1A1A1A]">{userName}</p>
+              {userEmail && <p className="text-sm text-[#888]">{userEmail}</p>}
+              <span className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-[#8FBF9F]/20 px-3 py-1 text-xs font-semibold text-[#5A8F6E]">
+                ✓ Доступ открыт
+              </span>
+            </div>
+          )}
+
           {/* Action cards */}
           <div
             style={{
