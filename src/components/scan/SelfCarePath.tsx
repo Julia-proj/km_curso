@@ -46,13 +46,13 @@ export function SelfCarePath() {
             onClick={() => handlePaymentClick("guide")}
             className="inline-flex items-center justify-center rounded-sm bg-[#1A1A1A] px-6 py-3 font-sans text-sm font-semibold uppercase tracking-[0.08em] text-white transition-all hover:bg-[#333]"
           >
-            Методичка за 15€
+            Методичка за 12€
           </button>
           <button
             onClick={() => handlePaymentClick("course")}
             className="inline-flex items-center justify-center rounded-sm border-2 border-[#E0DCD6] px-6 py-3 font-sans text-sm font-semibold uppercase tracking-[0.08em] text-[#1A1A1A] transition-all hover:border-[#1A1A1A] hover:bg-[#1A1A1A]/5"
           >
-            Полный курс за 39€
+            Полный курс за 38€
           </button>
         </div>
       </motion.section>

@@ -56,7 +56,7 @@ export default function ResultPage() {
       style={{ background: "var(--color-cream)" }}
     >
       <div className="w-full max-w-lg">
-        <PrePaymentNav showBack={true} />
+        <PrePaymentNav showBack={false} />
         <div className="pt-4">
         <p
           className="text-center mb-3"

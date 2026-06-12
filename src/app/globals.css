@@ -112,7 +112,7 @@
   --color-text-soft: var(--muted-foreground);
   --color-text-muted: oklch(0.63 0.02 42);
   --color-text-on-dark: var(--primary-foreground);
-  --color-accent-hover: var(--cocoa);
+  --color-accent-hover: #9C544E;
   --color-accent-soft: oklch(0.9 0.025 28);
   --color-rose-soft: oklch(0.92 0.024 22);
   --color-success: oklch(0.62 0.11 140);
@@ -183,7 +183,7 @@
   --color-ink: #1C1A17;
   --color-ink-soft: #57524B;
   --color-bronze: #A98A5B;
-  --color-accent: #C9885B;
+  --color-accent: #AD5F59;
   --color-line: rgba(28, 26, 23, 0.14);
 }
 
