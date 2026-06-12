@@ -38,7 +38,7 @@ export function Footer() {
               Условия
             </a>
             <a
-              href="#privacy"
+              href="/privacy"
               className="text-white/60 hover:text-white transition-colors"
             >
               Политика конфиденциальности
