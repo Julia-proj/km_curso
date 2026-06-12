@@ -26,13 +26,16 @@ export async function POST(req: NextRequest) {
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object as Stripe.Checkout.Session;
     const metadata = session.metadata || {};
+    // customer_email is only set when we passed it at session creation; for
+    // direct checkouts (popup) Stripe stores the buyer email in customer_details.
+    const buyerEmail = session.customer_email || session.customer_details?.email || null;
 
     if (metadata.type === 'limba_pack') {
       const supabase = getSupabase();
       await supabase.from('orders').insert({
         stripe_session_id: session.id,
         stripe_payment_intent: session.payment_intent as string,
-        user_email: session.customer_email,
+        user_email: buyerEmail,
         total_amount: session.amount_total,
         currency: session.currency,
         status: 'paid',
@@ -47,7 +50,7 @@ export async function POST(req: NextRequest) {
       });
 
     } else if (metadata.type === 'course' || session.amount_total === 3900) {
-      const email = session.customer_email;
+      const email = buyerEmail;
       if (email) {
         const supabase = getSupabase();
         // Get existing profile to preserve id if it exists
@@ -66,7 +69,7 @@ export async function POST(req: NextRequest) {
       }
 
     } else if (metadata.type === 'guide' || session.amount_total === 1500) {
-      const email = session.customer_email;
+      const email = buyerEmail;
       if (email) {
         const supabase = getSupabase();
         // Get existing profile to preserve id if it exists

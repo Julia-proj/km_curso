@@ -254,9 +254,9 @@ export function WhatYouGetSection({
         </div>
 
         <p className="mt-5 text-center font-sans text-xs leading-relaxed text-[#6B6B6B] sm:mt-6 sm:text-sm">
-          Оплата картой через Stripe — Европа, США и другие страны.
+          Оплата картой через Stripe: Европа, США и другие страны.
           <br className="sm:hidden" />{" "}
-          Для остальных стран —{" "}
+          Для остальных стран{" "}
           <a
             href={`https://wa.me/34641261559?text=${encodeURIComponent("Здравствуйте! Хочу оплатить курс, но оплата картой онлайн мне не подходит. Подскажите способ оплаты.")}`}
             target="_blank"

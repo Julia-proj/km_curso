@@ -5,17 +5,16 @@ import { getSiteUrl } from '@/lib/site-url';
 
 export async function POST(req: NextRequest) {
   try {
-    const { email, name } = await req.json();
-    
-    if (!email) {
-      return NextResponse.json({ error: 'Email обязателен' }, { status: 400 });
-    }
-    
+    // Email is optional: when missing (direct checkout from the popup),
+    // Stripe collects it on its own payment page and the webhook reads it
+    // from customer_details.
+    const { email, name } = await req.json().catch(() => ({}));
+
     const priceId = process.env.STRIPE_PRICE_GUIDE;
     if (!priceId) {
       throw new Error('STRIPE_PRICE_GUIDE is not configured');
     }
-    
+
     const stripe = getStripe();
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
@@ -26,7 +25,7 @@ export async function POST(req: NextRequest) {
           quantity: 1
         }
       ],
-      customer_email: email,
+      ...(email ? { customer_email: email } : {}),
       metadata: {
         type: 'guide',
         product_name: 'HAIRLAB KM Guide',

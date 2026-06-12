@@ -263,7 +263,7 @@ export function OfferSection() {
         </motion.p>
 
         <p className="mt-4 text-text-muted text-center text-xs max-w-2xl mx-auto sm:text-sm">
-          Оплата картой через Stripe — Европа, США и другие страны. Для остальных стран —{" "}
+          Оплата картой через Stripe: Европа, США и другие страны. Для остальных стран{" "}
           <a
             href={`https://wa.me/34641261559?text=${encodeURIComponent("Здравствуйте! Хочу оплатить курс, но оплата картой онлайн мне не подходит. Подскажите способ оплаты.")}`}
             target="_blank"

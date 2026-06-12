@@ -242,7 +242,7 @@ export function PaymentModal({ isOpen, onClose, product, stripeLink }: PaymentMo
                         Не получается оплатить картой?
                       </p>
                       <p className="mt-1 font-sans text-[11px] text-[#666] sm:text-xs">
-                        Напиши в WhatsApp — подберём способ для твоей страны
+                        Напиши в WhatsApp, подберём способ для твоей страны
                       </p>
                     </div>
                     <svg

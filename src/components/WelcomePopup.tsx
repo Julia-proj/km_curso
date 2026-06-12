@@ -3,13 +3,10 @@
 import { AnimatePresence, motion } from "framer-motion"
 import { useEffect, useState } from "react"
 
-import { ease } from "@/lib/animations"
-import { getPaymentLink } from "@/config/payments"
-
 export function WelcomePopup() {
   const [open, setOpen] = useState(false)
-  const courseLink = getPaymentLink("course")
-  const guideLink = getPaymentLink("guide")
+  // Which product is being sent to Stripe right now (disables both buttons).
+  const [loading, setLoading] = useState<"course" | "guide" | null>(null)
 
   useEffect(() => {
     if (sessionStorage.getItem("popup_shown")) return
@@ -19,6 +16,28 @@ export function WelcomePopup() {
     }, 1500)
     return () => clearTimeout(timer)
   }, [])
+
+  // The popup targets a warm audience: go straight to Stripe checkout, not to
+  // the offer page. Falls back to /offer if session creation fails.
+  const startCheckout = async (product: "course" | "guide") => {
+    if (loading) return
+    setLoading(product)
+    try {
+      const res = await fetch(`/api/checkout/${product}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({}),
+      })
+      const data = await res.json()
+      if (data?.url) {
+        window.location.href = data.url
+        return
+      }
+      throw new Error(data?.error || "Checkout failed")
+    } catch {
+      window.location.href = `/offer?product=${product}`
+    }
+  }
 
   return (
     <AnimatePresence>
@@ -67,10 +86,10 @@ export function WelcomePopup() {
             </div>
 
             <div className="flex flex-col">
-              <a
-                href={courseLink}
-                onClick={() => setOpen(false)}
-                className="group relative flex items-center justify-between px-6 py-4 transition-colors hover:bg-black/[0.02]"
+              <button
+                onClick={() => startCheckout("course")}
+                disabled={loading !== null}
+                className="group relative flex w-full items-center justify-between px-6 py-4 text-left transition-colors hover:bg-black/[0.02] disabled:opacity-60"
                 style={{ borderBottom: "1px solid rgba(160,132,92,0.12)" }}
               >
                 <div>
@@ -90,7 +109,7 @@ export function WelcomePopup() {
                     className="mt-1 font-sans text-xs"
                     style={{ color: "#6B6B6B" }}
                   >
-                    Все уроки + методички
+                    {loading === "course" ? "Открываем оплату..." : "Все уроки + методички"}
                   </p>
                 </div>
                 <div
@@ -101,12 +120,12 @@ export function WelcomePopup() {
                     <path d="M5 12h14M12 5l7 7-7 7" />
                   </svg>
                 </div>
-              </a>
+              </button>
 
-              <a
-                href={guideLink}
-                onClick={() => setOpen(false)}
-                className="group relative flex items-center justify-between px-6 py-4 transition-colors hover:bg-black/[0.02]"
+              <button
+                onClick={() => startCheckout("guide")}
+                disabled={loading !== null}
+                className="group relative flex w-full items-center justify-between px-6 py-4 text-left transition-colors hover:bg-black/[0.02] disabled:opacity-60"
               >
                 <div>
                   <p
@@ -125,7 +144,7 @@ export function WelcomePopup() {
                     className="mt-1 font-sans text-xs"
                     style={{ color: "#6B6B6B" }}
                   >
-                    Только PDF-гайды
+                    {loading === "guide" ? "Открываем оплату..." : "Только PDF-гайды"}
                   </p>
                 </div>
                 <div
@@ -136,8 +155,15 @@ export function WelcomePopup() {
                     <path d="M5 12h14M12 5l7 7-7 7" />
                   </svg>
                 </div>
-              </a>
+              </button>
             </div>
+
+            <p
+              className="px-6 pt-1 text-center font-sans"
+              style={{ fontSize: "0.65rem", color: "#6B6B6B" }}
+            >
+              Безопасная оплата картой через Stripe
+            </p>
 
             <button
               onClick={() => setOpen(false)}

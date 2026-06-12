@@ -199,22 +199,28 @@ export default function DiagnostikaPage() {
                 AI-анализ волос
               </h2>
               <p className="text-lg text-[var(--muted-foreground)]">
-                Загрузи фото своих волос, и я проанализирую их состояние, получи предварительный анализ и подберу подходящие уроки курса.
+                {quizMissing
+                  ? "Загрузи фото. AI оценит состояние волос и предложит индивидуальный уход Limba."
+                  : "Загрузи фото. AI объединит его с ответами твоего теста и предложит индивидуальный уход Limba."}
+              </p>
+              <p className="mt-2 text-sm text-[var(--muted-foreground)]">
+                Уход Limba предлагается на выбор. Если хочешь, подбирай уход сама по
+                методичкам и составам из курса.
               </p>
 
               <div className="mt-4 rounded-xl border border-[var(--border)] bg-[var(--sand)] p-4">
                 <p className="text-sm text-[var(--foreground)]">
-                  Чем лучше освещение и качество фото — тем точнее предварительный результат. Снимай при дневном свете, волосы сухие и распущенные.
+                  Снимай при дневном свете, волосы сухие и распущенные.
                 </p>
               </div>
 
               {quizMissing && (
                 <div className="mt-3 rounded-xl border border-[var(--border)] bg-[var(--card)] p-4">
                   <p className="text-sm text-[var(--foreground)]">
-                    Анализ работает и по одному фото, но если пройти бесплатный тест —
-                    AI учтёт твои ответы, и результат будет точнее.{" "}
+                    Рекомендуем сначала пройти бесплатный тест, чтобы результат был
+                    максимально точным.{" "}
                     <a href="/quiz" className="font-semibold underline underline-offset-2">
-                      Пройти тест (2 минуты) →
+                      Пройти тест →
                     </a>
                   </p>
                 </div>
