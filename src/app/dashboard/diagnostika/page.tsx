@@ -163,7 +163,7 @@ export default function DiagnostikaPage() {
       {/* Header */}
       <header className="border-b border-[var(--border)] bg-[var(--card)]">
         <div className="km-container py-4">
-          <PostPaymentNav showBack={false} />
+          <PostPaymentNav showBack={true} />
         </div>
       </header>
 
