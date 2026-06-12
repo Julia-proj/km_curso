@@ -17,10 +17,16 @@ export function PaymentModal({ isOpen, onClose, product, stripeLink }: PaymentMo
   const [showEmailInput, setShowEmailInput] = useState(false)
   const [devMode, setDevMode] = useState(false)
   const [isLocalhost, setIsLocalhost] = useState(false)
+  const [isPreview, setIsPreview] = useState(false)
 
-  // Detect localhost after mount to avoid SSR/hydration mismatch.
+  // Detect localhost and preview after mount to avoid SSR/hydration mismatch.
   useEffect(() => {
     setIsLocalhost(["localhost", "127.0.0.1"].includes(window.location.hostname))
+    // Check if dev bypass is enabled
+    const devBypass = process.env.NEXT_PUBLIC_DEV_BYPASS_PAYWALL === 'true' || 
+                     process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview'
+    setIsPreview(devBypass)
+    setDevMode(devBypass) // Auto-enable dev mode in preview
   }, [])
 
   useEffect(() => {
@@ -69,8 +75,10 @@ export function PaymentModal({ isOpen, onClose, product, stripeLink }: PaymentMo
 
     setIsLoading(true)
     try {
-      // Dev bypass only works locally — never on Vercel/production.
-      if (devMode && isLocalhost) {
+      // Dev bypass works on localhost AND preview deployments
+      const allowDevBypass = (devMode && isLocalhost) || isPreview
+      
+      if (allowDevBypass) {
         window.location.href = `/checkout/success?session_id=dev_test_${Date.now()}&product=${product}`
         return
       }
@@ -137,7 +145,7 @@ export function PaymentModal({ isOpen, onClose, product, stripeLink }: PaymentMo
                   </div>
                 )}
 
-                {isLocalhost && (
+                {(isLocalhost || isPreview) && (
                   <div className="mb-4">
                     <label className="flex items-center gap-2 cursor-pointer">
                       <input
@@ -145,8 +153,13 @@ export function PaymentModal({ isOpen, onClose, product, stripeLink }: PaymentMo
                         checked={devMode}
                         onChange={(e) => setDevMode(e.target.checked)}
                         className="h-4 w-4 rounded border-[#E0DCD6]"
+                        disabled={isPreview}
                       />
-                      <span className="font-sans text-xs text-[#666]">Dev mode (bypass Stripe, только localhost)</span>
+                      <span className="font-sans text-xs text-[#666]">
+                        {isPreview 
+                          ? 'Dev mode (auto-enabled для preview)' 
+                          : 'Dev mode (bypass Stripe, только localhost)'}
+                      </span>
                     </label>
                   </div>
                 )}

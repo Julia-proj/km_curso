@@ -17,6 +17,14 @@ function CheckoutSuccessContent() {
   // Auth check - user should be logged in after payment
   useEffect(() => {
     const checkAuth = async () => {
+      // Dev bypass - skip auth check
+      const isDevBypass = process.env.NEXT_PUBLIC_DEV_BYPASS_PAYWALL === 'true' || 
+                         process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview'
+      
+      if (isDevBypass) {
+        return
+      }
+      
       const supabase = createClient()
       if (!supabase) {
         // Auth not configured, skip check
