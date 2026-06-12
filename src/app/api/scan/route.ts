@@ -74,9 +74,10 @@ export async function POST(req: NextRequest) {
     const ext = MIME_TO_EXT[photo.type] || 'jpg';
     const fileName = `scans/${Date.now()}-${Math.random().toString(36).substring(2, 10)}.${ext}`;
     
+    const buffer = Buffer.from(await photo.arrayBuffer());
     const { data: uploadData, error: uploadError } = await supabaseAdmin.storage
       .from('hair-photos')
-      .upload(fileName, photo, { 
+      .upload(fileName, buffer, { 
         contentType: photo.type,
         cacheControl: '3600'
       });

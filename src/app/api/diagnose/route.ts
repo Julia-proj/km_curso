@@ -82,6 +82,8 @@ const MIME_TO_EXT: Record<string, string> = {
   'image/jpg': 'jpg',
   'image/png': 'png',
   'image/webp': 'webp',
+  'image/heic': 'jpg',
+  'image/heif': 'jpg',
 };
 
 const ALLOWED_MIME_TYPES = new Set(Object.keys(MIME_TO_EXT));
@@ -90,6 +92,7 @@ async function uploadImageToSupabase(
   file: File,
   fileName: string
 ): Promise<{ signedUrl: string; path: string }> {
+  const buffer = Buffer.from(await file.arrayBuffer());
   const supabase = getSupabase();
   console.log('[DIAGNOSIS] upload debug', {
     url: process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -99,7 +102,7 @@ async function uploadImageToSupabase(
   });
   const { data, error } = await supabase.storage
     .from('hair-photos')
-    .upload(fileName, file, {
+    .upload(fileName, buffer, {
       contentType: file.type,
       upsert: false,
     });
