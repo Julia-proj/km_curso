@@ -44,7 +44,7 @@ export function WelcomePopup() {
               onClick={() => setOpen(false)}
               className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-black/5"
               aria-label="Закрыть"
-              style={{ color: "#A0845C" }}
+              style={{ color: "#7E6644" }}
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M18 6L6 18M6 6l12 12" />
@@ -54,7 +54,7 @@ export function WelcomePopup() {
             <div className="p-6 pb-5">
               <p
                 className="font-sans font-medium uppercase tracking-widest"
-                style={{ fontSize: "0.65rem", color: "#C4956A", letterSpacing: "0.2em" }}
+                style={{ fontSize: "0.65rem", color: "#8A6238", letterSpacing: "0.2em" }}
               >
                 Уже готова?
               </p>
@@ -76,7 +76,7 @@ export function WelcomePopup() {
                 <div>
                   <p
                     className="font-sans font-semibold uppercase"
-                    style={{ fontSize: "0.7rem", color: "#D9A19D", letterSpacing: "0.15em" }}
+                    style={{ fontSize: "0.7rem", color: "#A0524C", letterSpacing: "0.15em" }}
                   >
                     Полный курс
                   </p>
@@ -88,7 +88,7 @@ export function WelcomePopup() {
                   </p>
                   <p
                     className="mt-1 font-sans text-xs"
-                    style={{ color: "#888" }}
+                    style={{ color: "#6B6B6B" }}
                   >
                     Все уроки + методички
                   </p>
@@ -111,7 +111,7 @@ export function WelcomePopup() {
                 <div>
                   <p
                     className="font-sans font-semibold uppercase"
-                    style={{ fontSize: "0.7rem", color: "#A0845C", letterSpacing: "0.15em" }}
+                    style={{ fontSize: "0.7rem", color: "#7E6644", letterSpacing: "0.15em" }}
                   >
                     Методичка
                   </p>
@@ -123,7 +123,7 @@ export function WelcomePopup() {
                   </p>
                   <p
                     className="mt-1 font-sans text-xs"
-                    style={{ color: "#888" }}
+                    style={{ color: "#6B6B6B" }}
                   >
                     Только PDF-гайды
                   </p>
@@ -142,7 +142,7 @@ export function WelcomePopup() {
             <button
               onClick={() => setOpen(false)}
               className="w-full py-4 text-center font-sans text-xs transition-colors hover:bg-black/[0.02]"
-              style={{ color: "#A0845C", letterSpacing: "0.02em" }}
+              style={{ color: "#7E6644", letterSpacing: "0.02em" }}
             >
               Сначала изучу программу
             </button>

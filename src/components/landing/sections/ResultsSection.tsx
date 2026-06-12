@@ -189,7 +189,7 @@ export function ResultsSection() {
                     {reel.description}
                   </p>
                   <div className="mt-auto">
-                    <span className="inline-flex items-center gap-0.5 text-xs font-semibold text-[#D29B9B] sm:gap-1 sm:text-xs">
+                    <span className="inline-flex items-center gap-0.5 text-xs font-semibold text-[#A0524C] sm:gap-1 sm:text-xs">
                       Смотреть
                       <ArrowIcon />
                     </span>
@@ -209,11 +209,16 @@ export function ResultsSection() {
                 aria-label={`Показать отзыв ${index + 1}`}
                 aria-current={activeIndex === index ? "true" : undefined}
                 onClick={() => scrollToCard(index)}
-                className={[
-                  "h-2 rounded-full transition-all",
-                  activeIndex === index ? "w-8 bg-[#1A1A1A]" : "w-2 bg-[#1A1A1A]/25 hover:bg-[#1A1A1A]/45",
-                ].join(" ")}
-              />
+                className="flex h-6 min-w-6 items-center justify-center"
+              >
+                <span
+                  aria-hidden="true"
+                  className={[
+                    "h-2 rounded-full transition-all",
+                    activeIndex === index ? "w-8 bg-[#1A1A1A]" : "w-2 bg-[#1A1A1A]/25 hover:bg-[#1A1A1A]/45",
+                  ].join(" ")}
+                />
+              </button>
             ))}
           </div>
         </div>

@@ -146,7 +146,7 @@ export function ProblemsSection() {
           className="mt-4 flex items-center justify-center gap-1.5 md:hidden"
           style={{ opacity: activeIndex === problemCards.length - 1 ? 0 : 1 }}
         >
-          <span className="font-sans text-xs font-medium text-[#D29B9B]">Листай</span>
+          <span className="font-sans text-xs font-medium text-[#A0524C]">Листай</span>
           <motion.div
             animate={{ x: [0, 12, 0] }}
             transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}

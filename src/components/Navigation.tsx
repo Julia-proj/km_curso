@@ -1,6 +1,6 @@
 "use client"
 
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 
 interface PrePaymentNavProps {
   showBack?: boolean
@@ -40,6 +40,10 @@ interface PostPaymentNavProps {
 
 export function PostPaymentNav({ showBack = true }: PostPaymentNavProps) {
   const router = useRouter()
+  const pathname = usePathname()
+  // On the dashboard itself a "to dashboard" link is pointless — offer the
+  // way back to the landing instead.
+  const onDashboard = pathname === "/dashboard"
 
   return (
     <div className="flex items-center justify-between w-full mb-8">
@@ -53,10 +57,10 @@ export function PostPaymentNav({ showBack = true }: PostPaymentNavProps) {
       )}
       {!showBack && <div />}
       <button
-        onClick={() => router.push("/dashboard")}
+        onClick={() => router.push(onDashboard ? "/" : "/dashboard")}
         className="inline-flex items-center gap-2 text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
       >
-        В личный кабинет →
+        {onDashboard ? "Вернуться на главную →" : "В личный кабинет →"}
       </button>
     </div>
   )

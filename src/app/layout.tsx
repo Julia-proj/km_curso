@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter, Manrope, Fraunces, Playfair_Display } from 'next/font/google'
 import './globals.css'
-import { LoadingScreen } from '@/components/LoadingScreen'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/react'
 
@@ -29,13 +28,17 @@ const fraunces = Fraunces({
   axes: ['SOFT', 'WONK'],
   variable: '--font-fraunces',
   display: 'swap',
+  // Only used on /result and /scan — don't preload it on every page (the
+  // browser downloads a font lazily, when text actually uses it).
+  preload: false,
   fallback: ['Georgia', 'serif'],
 })
 
 const playfair = Playfair_Display({
   subsets: ['cyrillic', 'latin'],
   style: ['normal', 'italic'],
-  weight: ['400', '500', '600'],
+  // Only 400 (headlines) and 500 italic (hero accent) are actually used.
+  weight: ['400', '500'],
   variable: '--font-serif-face',
   display: 'swap',
   fallback: ['Georgia', 'serif'],
@@ -81,7 +84,6 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body>
-        <LoadingScreen />
         <Analytics />
         <SpeedInsights />
         {children}

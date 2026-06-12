@@ -160,15 +160,15 @@ export default function ResultPage() {
               color: "var(--color-ink)",
             }}
           >
-            Следующий шаг — загрузи фото волос для AI-анализа. Чем точнее данные теста и фото,
-            тем точнее предварительный подбор ухода.
+            Следующий шаг — посмотри бесплатный урок в подарок. А после выбора тарифа
+            в личном кабинете тебя ждёт AI-анализ по фото волос и персональный подбор ухода.
           </p>
         </div>
 
         <div className="flex flex-col items-center gap-4">
           <Link
-            href={nextHref}
-            className="inline-block"
+            href="/lesson"
+            className="inline-block text-center"
             style={{
               background: "var(--color-accent)",
               padding: "1rem 2rem",
@@ -181,16 +181,31 @@ export default function ResultPage() {
               transition: "background-color 0.2s",
             }}
           >
+            Смотреть бесплатный урок
+          </Link>
+
+          <Link
+            href={nextHref}
+            className="inline-block text-center text-sm transition-colors px-6 py-3"
+            style={{
+              color: "var(--color-ink)",
+              border: "1px solid var(--color-ink)",
+              borderRadius: "2px",
+              fontWeight: 600,
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+            }}
+          >
             {nextLabel}
           </Link>
-          
+
           <button
             onClick={() => {
               useQuizStore.getState().reset()
               router.push('/quiz')
             }}
             className="inline-block text-sm transition-colors px-4 py-2"
-            style={{ 
+            style={{
               color: "var(--color-ink-soft)",
               border: "1px solid var(--color-line)",
               borderRadius: "2px"
@@ -198,14 +213,6 @@ export default function ResultPage() {
           >
             ← Пройти тест заново
           </button>
-          
-          <Link
-            href="/lesson"
-            className="inline-flex items-center gap-1 text-sm transition-colors"
-            style={{ color: "var(--color-ink-soft)" }}
-          >
-            Сначала бесплатный урок в подарок →
-          </Link>
         </div>
         </div>
       </div>
