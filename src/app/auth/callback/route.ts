@@ -13,17 +13,17 @@ export async function GET(request: Request) {
     if (supabase) {
       await supabase.auth.exchangeCodeForSession(code)
 
-      // Ensure a profiles row exists for this user (keyed by email). We only
-      // upsert the email so any paid flags set earlier by the Stripe webhook are
-      // preserved. This row is required for lesson_progress (FK on profiles.id).
-      // Admin-allowlisted emails get full access granted here (no payment).
+      // Ensure a profiles row exists for this user. Save the user id from auth.uid()
+      // and full_name from Google OAuth metadata. This row is required for
+      // lesson_progress (FK on profiles.id). Admin-allowlisted emails get full access.
       try {
         const { data: { user } } = await supabase.auth.getUser()
         if (user?.email) {
           const db = getSupabase()
+          const fullName = user.user_metadata?.full_name || user.user_metadata?.name || null
           const row = isAdminEmail(user.email)
-            ? { email: user.email, has_full_course: true, has_methodichka: true }
-            : { email: user.email }
+            ? { id: user.id, email: user.email, full_name: fullName, has_full_course: true, has_methodichka: true }
+            : { id: user.id, email: user.email, full_name: fullName }
           await db.from('profiles').upsert(row, { onConflict: 'email' })
         }
       } catch (e) {

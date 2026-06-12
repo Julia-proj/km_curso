@@ -10,10 +10,10 @@ import { isDevBypass } from "@/lib/dev-bypass"
 
 export const dynamic = 'force-dynamic'
 
-/** Load saved progress for an email. Best-effort: returns empty on any failure. */
-async function loadProgress(email: string): Promise<{ completed: number[]; lastViewed: number }> {
+/** Load saved progress for authenticated user. Best-effort: returns empty on any failure. */
+async function loadProgress(): Promise<{ completed: number[]; lastViewed: number }> {
   try {
-    const res = await fetch(`/api/lesson-progress?email=${encodeURIComponent(email)}`)
+    const res = await fetch("/api/lesson-progress")
     if (!res.ok) return { completed: [], lastViewed: 1 }
     const data = await res.json()
     return {
@@ -26,12 +26,12 @@ async function loadProgress(email: string): Promise<{ completed: number[]; lastV
 }
 
 /** Persist progress for a lesson. Best-effort: silently ignores errors. */
-async function saveProgress(email: string, lessonId: number, completed: boolean): Promise<void> {
+async function saveProgress(lessonId: number, completed: boolean): Promise<void> {
   try {
     await fetch("/api/lesson-progress", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, lessonId, completed }),
+      body: JSON.stringify({ lessonId, completed }),
     })
   } catch {
     // Saving is non-critical — the video still plays.
@@ -43,7 +43,6 @@ export default function LessonsPage() {
   const router = useRouter()
   const lessonParam = searchParams.get("lesson")
 
-  const [email, setEmail] = useState<string | null>(null)
   const [completed, setCompleted] = useState<number[]>([])
   // Guard so we only auto-resume to last-viewed once, on first load.
   const [resumed, setResumed] = useState(false)
@@ -62,28 +61,10 @@ export default function LessonsPage() {
   const isLastLesson = currentLessonIndexInArray === PAID_LESSONS.length - 1
   const isFirstLesson = currentLessonIndexInArray === 0
 
-  // Resolve the account email (Supabase session, or a dev placeholder).
+  // Load progress; auto-resume to last viewed lesson.
   useEffect(() => {
     let active = true
-    const resolve = async () => {
-      const supabase = createClient()
-      let resolved: string | null = null
-      if (supabase) {
-        const { data: { user } } = await supabase.auth.getUser()
-        resolved = user?.email ?? null
-      }
-      if (!resolved && isDevBypass()) resolved = "dev@example.com"
-      if (active) setEmail(resolved)
-    }
-    resolve()
-    return () => { active = false }
-  }, [])
-
-  // Load progress once we know the email; auto-resume to last viewed lesson.
-  useEffect(() => {
-    if (!email) return
-    let active = true
-    loadProgress(email).then(({ completed: done, lastViewed }) => {
+    loadProgress().then(({ completed: done, lastViewed }) => {
       if (!active) return
       setCompleted(done)
       if (!resumed && !lessonParam && lastViewed > 1) {
@@ -94,18 +75,17 @@ export default function LessonsPage() {
       }
     })
     return () => { active = false }
-  }, [email, lessonParam, resumed, router])
+  }, [lessonParam, resumed, router])
 
   // Record the current lesson as "last viewed" each time it changes.
   useEffect(() => {
-    if (!email) return
-    saveProgress(email, currentLesson.id, false)
-  }, [email, currentLesson.id])
+    saveProgress(currentLesson.id, false)
+  }, [currentLesson.id])
 
   const markCompleted = useCallback((lessonId: number) => {
     setCompleted((prev) => (prev.includes(lessonId) ? prev : [...prev, lessonId]))
-    if (email) saveProgress(email, lessonId, true)
-  }, [email])
+    saveProgress(lessonId, true)
+  }, [])
 
   const handleNext = () => {
     if (!isLastLesson) {

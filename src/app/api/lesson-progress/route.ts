@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
+import { createBrowserClient } from '@supabase/ssr'
 import { isDevBypass } from '@/lib/dev-bypass'
 
 function getSupabase() {
   // Dev bypass - return mock client
   if (isDevBypass()) {
     // Mock client for dev mode. Shape supports both chains the route uses:
-    //  - profiles/lesson_progress reads: .select(..).eq(..).single()
+    //  - lesson_progress reads: .select(..).eq(..).single()
     //  - progress writes:                .upsert(..).select().single()
     // Stateless: returns a valid empty-progress row so the UI works locally.
     const row = { id: 'dev-profile', completed: [], last_viewed: 1 };
@@ -25,7 +26,7 @@ function getSupabase() {
       }),
     } as any;
   }
-  
+
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
     throw new Error('Supabase credentials are not configured')
   }
@@ -35,40 +36,32 @@ function getSupabase() {
   )
 }
 
-// GET - retrieve lesson progress for a user
+// GET - retrieve lesson progress for authenticated user
 export async function GET(req: NextRequest) {
   try {
-    const { searchParams } = new URL(req.url)
-    const email = searchParams.get('email')
+    // Create browser client to get auth session
+    const supabase = createBrowserClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    )
 
-    if (!email) {
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
+
+    if (authError || !user) {
       return NextResponse.json(
-        { error: 'Email is required' },
-        { status: 400 }
+        { error: 'Unauthorized' },
+        { status: 401 }
       )
     }
 
-    const supabase = getSupabase()
+    // Use service role client for database operations
+    const db = getSupabase()
 
-    // Get user profile
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('id')
-      .eq('email', email)
-      .single()
-
-    if (!profile) {
-      return NextResponse.json(
-        { error: 'User not found' },
-        { status: 404 }
-      )
-    }
-
-    // Get lesson progress
-    const { data: progress } = await supabase
+    // Get lesson progress using user's auth id
+    const { data: progress } = await db
       .from('lesson_progress')
       .select('*')
-      .eq('user_id', profile.id)
+      .eq('user_id', user.id)
       .single()
 
     return NextResponse.json({
@@ -84,40 +77,42 @@ export async function GET(req: NextRequest) {
   }
 }
 
-// POST - update lesson progress
+// POST - update lesson progress for authenticated user
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
-    const { email, lessonId, completed } = body
+    const { lessonId, completed } = body
 
-    if (!email || !lessonId) {
+    if (!lessonId) {
       return NextResponse.json(
-        { error: 'Email and lessonId are required' },
+        { error: 'lessonId is required' },
         { status: 400 }
       )
     }
 
-    const supabase = getSupabase()
+    // Create browser client to get auth session
+    const supabase = createBrowserClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    )
 
-    // Get user profile
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('id')
-      .eq('email', email)
-      .single()
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
 
-    if (!profile) {
+    if (authError || !user) {
       return NextResponse.json(
-        { error: 'User not found' },
-        { status: 404 }
+        { error: 'Unauthorized' },
+        { status: 401 }
       )
     }
 
+    // Use service role client for database operations
+    const db = getSupabase()
+
     // Check if progress record exists
-    const { data: existingProgress } = await supabase
+    const { data: existingProgress } = await db
       .from('lesson_progress')
       .select('*')
-      .eq('user_id', profile.id)
+      .eq('user_id', user.id)
       .single()
 
     let updatedCompleted: number[] = existingProgress?.completed || []
@@ -129,14 +124,11 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Upsert progress. The conflict target MUST be user_id (the table's UNIQUE
-    // column) — otherwise the upsert defaults to the `id` primary key, always
-    // INSERTs a new row, and every save after the first violates UNIQUE(user_id)
-    // and fails silently, so progress never updates.
-    const { data: progress, error } = await supabase
+    // Upsert progress using user's auth id
+    const { data: progress, error } = await db
       .from('lesson_progress')
       .upsert({
-        user_id: profile.id,
+        user_id: user.id,
         completed: updatedCompleted,
         last_viewed: lessonId,
         updated_at: new Date().toISOString(),

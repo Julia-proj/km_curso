@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object as Stripe.Checkout.Session;
     const metadata = session.metadata || {};
-    
+
     if (metadata.type === 'limba_pack') {
       const supabase = getSupabase();
       await supabase.from('orders').insert({
@@ -39,29 +39,45 @@ export async function POST(req: NextRequest) {
         pickup_location: metadata.pickup_location,
         pickup_status: 'pending',
         recommendation_id: metadata.recommendation_id,
-        items: { 
-          recommendation_id: metadata.recommendation_id, 
+        items: {
+          recommendation_id: metadata.recommendation_id,
           customer_name: metadata.customer_name,
-          customer_phone: metadata.customer_phone 
+          customer_phone: metadata.customer_phone
         }
       });
-      
+
     } else if (metadata.type === 'course' || session.amount_total === 3900) {
       const email = session.customer_email;
       if (email) {
         const supabase = getSupabase();
+        // Get existing profile to preserve id if it exists
+        const { data: existing } = await supabase
+          .from('profiles')
+          .select('id')
+          .eq('email', email)
+          .single();
+
         await supabase.from('profiles').upsert({
+          id: existing?.id || undefined, // Preserve id if exists
           email,
           has_full_course: true,
           stripe_customer_id: session.customer as string
         }, { onConflict: 'email' });
       }
-      
+
     } else if (metadata.type === 'guide' || session.amount_total === 1500) {
       const email = session.customer_email;
       if (email) {
         const supabase = getSupabase();
+        // Get existing profile to preserve id if it exists
+        const { data: existing } = await supabase
+          .from('profiles')
+          .select('id')
+          .eq('email', email)
+          .single();
+
         await supabase.from('profiles').upsert({
+          id: existing?.id || undefined, // Preserve id if exists
           email,
           has_methodichka: true,
           stripe_customer_id: session.customer as string

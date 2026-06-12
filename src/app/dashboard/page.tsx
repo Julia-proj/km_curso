@@ -26,16 +26,17 @@ export default function DashboardPage() {
         return
       }
 
-      // Always resolve the real signed-in user first, so the Google name/email
-      // show up even when the local dev paywall bypass is enabled.
-      const user = await getCurrentUser()
+      // Get the authenticated user
+      const { data: { user } } = await supabase.auth.getUser()
 
       if (!user) {
         router.push("/auth/login")
         return
       }
 
-      setUserName(user.name)
+      // Get user name from metadata
+      const fullName = user.user_metadata?.full_name || user.user_metadata?.name || user.email || 'Вы'
+      setUserName(fullName)
       setUserEmail(user.email)
 
       // Dev bypass - grant access without payment (name above is still real)
@@ -46,11 +47,11 @@ export default function DashboardPage() {
         return
       }
 
-      // Check if user has paid access
+      // Check if user has paid access using user id
       const { data: profile } = await supabase
         .from('profiles')
         .select('has_full_course, has_methodichka')
-        .eq('email', user.email)
+        .eq('id', user.id)
         .single()
 
       if (profile && (profile.has_full_course || profile.has_methodichka)) {

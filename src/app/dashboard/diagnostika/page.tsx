@@ -59,11 +59,11 @@ export default function DiagnostikaPage() {
         return
       }
 
-      // Check if user has paid access
+      // Check if user has paid access using user id
       const { data: profile } = await supabase
         .from('profiles')
         .select('has_full_course')
-        .eq('email', user.email)
+        .eq('id', user.id)
         .single()
 
       if (profile && profile.has_full_course) {
