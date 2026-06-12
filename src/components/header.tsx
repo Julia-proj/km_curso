@@ -33,9 +33,12 @@ export function Header() {
       }`}
     >
       <div className="max-w-6xl mx-auto px-5 h-full flex items-center justify-between">
-        <span className="text-lg font-bold tracking-tight text-text">
+        <button
+          onClick={() => router.push("/")}
+          className="text-lg font-bold tracking-tight text-text hover:text-text-muted transition-colors"
+        >
           HAIRLAB
-        </span>
+        </button>
         <button
           onClick={handleLogout}
           className="text-sm font-medium text-text-muted hover:text-text transition-colors"
