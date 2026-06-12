@@ -40,6 +40,12 @@ export function NavSection() {
             </nav>
             <div className="flex items-center gap-2.5">
               <a
+                href="/auth/login"
+                className="px-1.5 py-2 text-xs font-medium uppercase tracking-[0.1em] text-[var(--color-cocoa)] transition-colors hover:text-foreground sm:px-2"
+              >
+                Войти
+              </a>
+              <a
                 href="/quiz"
                 className="rounded-sm border border-zinc-300/50 bg-zinc-50/80 px-4 py-2 text-xs font-medium uppercase tracking-[0.12em] text-[var(--color-cocoa)] transition-colors hover:border-zinc-400/60 hover:bg-zinc-100/80"
               >

@@ -13,6 +13,10 @@ const guideMockupBack = "/images/acces_pdf.PNG"
 const guideMockupFront = "/images/guia_pdf.PNG"
 const lessonScreen = "/images/hero_screen_lesson.png"
 
+// Shared 1x1 blur placeholder for the hero photos (valid base64, single source).
+const HERO_BLUR =
+  "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwC3ABHx//Z"
+
 function ArrowRightIcon({ size = 16 }: { size?: number }) {
   return (
     <svg
@@ -202,14 +206,14 @@ export function LandingHeroSection() {
             src={mobileHeroImage}
             style={{ objectPosition: "55% 45%" }}
             placeholder="blur"
-            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwC3ABHx//Z"
+            blurDataURL={HERO_BLUR}
           />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(54,45,39,0.42)_0%,rgba(54,45,39,0.22)_43%,rgba(54,45,39,0.02)_100%)]" />
           <div className="absolute inset-x-0 bottom-0 h-[35%] bg-[linear-gradient(180deg,rgba(55,45,39,0)_0%,rgba(44,35,30,0.54)_44%,rgba(39,31,27,0.9)_100%)]" />
           <div className="absolute inset-x-0 bottom-0 h-[18%] bg-[#332923]/55" />
         </div>
 
-        <div className="relative z-10 flex min-h-[100svh] flex-col justify-start px-4 pb-[9rem] pt-6 sm:px-5 sm:pb-[10rem] sm:pt-7 min-[390px]:px-6 min-[390px]:pb-[11rem] min-[390px]:pt-8 md:px-8 md:pb-[12rem]">
+        <div className="relative z-10 flex min-h-[100svh] flex-col justify-start px-4 pb-5 pt-6 sm:px-5 sm:pb-6 sm:pt-7 min-[390px]:px-6 min-[390px]:pt-8 md:px-8">
           <div className="w-full max-w-[22rem] pb-2 min-[390px]:max-w-[24rem] min-[390px]:pb-3 md:max-w-[26rem] md:pb-4">
             <motion.p
               initial={{ opacity: 0, y: 14 }}
@@ -259,7 +263,7 @@ export function LandingHeroSection() {
             <HeroVisuals tone="dark" />
           </div>
 
-          <div className="absolute inset-x-4 bottom-4 z-20 flex flex-col gap-2 sm:inset-x-5 sm:bottom-4 min-[390px]:inset-x-6 min-[390px]:bottom-5 md:inset-x-8 md:bottom-6">
+          <div className="mt-auto z-20 flex flex-col gap-2 pt-6 min-[390px]:pt-7">
             <a
               href="/quiz"
               className="inline-flex min-h-[3.1rem] w-full items-center justify-center gap-2.5 rounded-full bg-[#FAF7F4] border-2 border-[#E0DCD6] px-4 py-2 shadow-[0_22px_48px_rgba(34,25,21,0.28)] transition-all hover:bg-white hover:border-[#C4956A] sm:min-h-[3.35rem] sm:px-5 min-[390px]:min-h-[3.75rem] min-[390px]:px-6 md:min-h-[4rem] md:px-8"
@@ -402,7 +406,7 @@ export function LandingHeroSection() {
             src={desktopHeroImage}
             style={{ objectPosition: "center" }}
             placeholder="blur"
-            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCгоKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwC3ABHx//Z"
+            blurDataURL={HERO_BLUR}
           />
             <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-[#241712]/75 via-[#241712]/20 to-transparent" />
             <figcaption className="absolute inset-x-6 bottom-5 text-white lg:inset-x-7 lg:bottom-6 xl:inset-x-8 xl:bottom-8">

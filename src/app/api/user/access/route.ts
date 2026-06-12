@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { isDevBypass } from '@/lib/dev-bypass'
+import { isAdminEmail } from '@/lib/admin'
 
 function getSupabase() {
   // Dev bypass - return mock client
@@ -37,6 +38,14 @@ export async function GET(req: NextRequest) {
 
   // Dev bypass - allow access without payment
   if (isDevBypass()) {
+    return NextResponse.json({
+      has_methodichka: true,
+      has_full_course: true,
+    })
+  }
+
+  // Admin allowlist - full access without payment
+  if (isAdminEmail(email)) {
     return NextResponse.json({
       has_methodichka: true,
       has_full_course: true,
