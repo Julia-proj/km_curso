@@ -119,6 +119,23 @@ async function uploadImageToSupabase(
   file: File,
   fileName: string
 ): Promise<{ signedUrl: string; path: string }> {
+  // Dev bypass - convert to base64 data URL for OpenAI
+  const isDevBypass = process.env.NEXT_PUBLIC_DEV_BYPASS_PAYWALL === 'true' || 
+                     process.env.VERCEL_ENV === 'preview';
+  
+  if (isDevBypass) {
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const base64 = buffer.toString('base64');
+    const dataUrl = `data:${file.type};base64,${base64}`;
+    
+    console.log('[uploadImageToSupabase] Dev mode: using base64 data URL');
+    
+    return {
+      signedUrl: dataUrl,
+      path: `dev/${fileName}`
+    };
+  }
+  
   const buffer = Buffer.from(await file.arrayBuffer());
   const supabase = getSupabase();
   const { data, error } = await supabase.storage
@@ -152,6 +169,9 @@ async function analyzeImageWithOpenAI(imageUrl: string): Promise<{
   recommendations: string[];
   summary: string;
 }> {
+  console.log('[analyzeImageWithOpenAI] Starting analysis...');
+  console.log('[analyzeImageWithOpenAI] Image URL type:', imageUrl.startsWith('data:') ? 'base64 data URL' : 'external URL');
+  
   const openai = getOpenAI();
   const response = await openai.chat.completions.create({
     model: 'gpt-4o-mini',
@@ -223,12 +243,20 @@ async function analyzeImageWithOpenAI(imageUrl: string): Promise<{
     max_tokens: 1000,
   });
   
+  console.log('[analyzeImageWithOpenAI] OpenAI response received');
+  
   const content = response.choices[0].message.content;
   if (!content) {
     throw new Error('No content returned from OpenAI');
   }
   
   const parsed = JSON.parse(content);
+  console.log('[analyzeImageWithOpenAI] Analysis complete:', {
+    damageLevel: parsed.damageLevel,
+    signsCount: parsed.signs?.length,
+    recommendationsCount: parsed.recommendations?.length
+  });
+  
   return parsed;
 }
 
@@ -332,6 +360,7 @@ export async function POST(request: NextRequest) {
 
     while (retryCount <= 1) {
       try {
+        console.log(`[POST] Analysis attempt ${retryCount + 1}/2`);
         const result = await analyzeImageWithOpenAI(signedUrl);
 
         // Validate with Zod
@@ -344,8 +373,9 @@ export async function POST(request: NextRequest) {
         break;
       } catch (error) {
         retryCount++;
+        console.error(`[POST] Analysis attempt ${retryCount} failed:`, error);
         if (retryCount > 1) {
-          console.error('OpenAI validation failed after retry:', error);
+          console.error('[POST] OpenAI validation failed after retry');
           return NextResponse.json(
             { error: 'Failed to analyze image. Please try again.' },
             { status: 500 }
