@@ -41,8 +41,8 @@ export const DiagnosticSchema = z.object({
   recommended_limba_category: z.enum(['color', 'volume', 'detox', 'hydration'])
     .describe('Какая линия Limba больше всего подходит'),
   
-  secondary_limba_category: z.enum(['color', 'volume', 'detox', 'hydration']).optional()
-    .describe('Опциональная вторая категория если волосам нужен микс'),
+  secondary_limba_category: z.enum(['color', 'volume', 'detox', 'hydration']).nullable()
+    .describe('Опциональная вторая категория если волосам нужен микс, иначе null'),
   
   self_care_priorities: z.array(z.string()).min(2).max(5)
     .describe('Приоритетные направления ухода своими словами'),
