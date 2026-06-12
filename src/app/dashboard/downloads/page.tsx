@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { AnimatedBackground } from "@/components/AnimatedBackground"
-import { SESSION_KEY } from "@/lib/progress"
+import { createClient } from "@/lib/supabase/client"
 
 interface AccessState {
   loading: boolean
@@ -39,8 +39,9 @@ export default function DownloadsPage() {
 
   useEffect(() => {
     const checkAccess = async () => {
-      const session = localStorage.getItem(SESSION_KEY)
-      if (!session) {
+      const supabase = createClient()
+      if (!supabase) {
+        // Auth not configured, show no access
         setState({
           loading: false,
           hasAccess: false,
@@ -48,12 +49,38 @@ export default function DownloadsPage() {
         })
         return
       }
-      // In production, verify access via API
-      setState({
-        loading: false,
-        hasAccess: true,
-        email: "user@example.com",
-      })
+
+      const { data: { user } } = await supabase.auth.getUser()
+      
+      if (!user) {
+        setState({
+          loading: false,
+          hasAccess: false,
+          email: "",
+        })
+        return
+      }
+
+      // Check if user has paid access
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('has_methodichka')
+        .eq('email', user.email)
+        .single()
+
+      if (profile && profile.has_methodichka) {
+        setState({
+          loading: false,
+          hasAccess: true,
+          email: user.email || "",
+        })
+      } else {
+        setState({
+          loading: false,
+          hasAccess: false,
+          email: "",
+        })
+      }
     }
     checkAccess()
   }, [router])

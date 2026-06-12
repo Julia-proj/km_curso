@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation"
 import { useRouter } from "next/navigation"
 import { SuccessActionCard } from "@/components/checkout/SuccessActionCard"
 import { TELEGRAM_PRIVATE_INVITE } from "@/lib/constants"
-import { SESSION_KEY } from "@/lib/progress"
+import { createClient } from "@/lib/supabase/client"
 
 function CheckoutSuccessContent() {
   const searchParams = useSearchParams()
@@ -14,12 +14,23 @@ function CheckoutSuccessContent() {
   const isCourse = product === "course"
   const isGuide = product === "guide"
 
-  // Set session for course access
+  // Auth check - user should be logged in after payment
   useEffect(() => {
-    if (isCourse) {
-      localStorage.setItem(SESSION_KEY, "true")
+    const checkAuth = async () => {
+      const supabase = createClient()
+      if (!supabase) {
+        // Auth not configured, skip check
+        return
+      }
+
+      const { data: { session } } = await supabase.auth.getSession()
+      
+      if (!session) {
+        router.push("/auth/login")
+      }
     }
-  }, [isCourse])
+    checkAuth()
+  }, [router])
 
   return (
     <main className="min-h-screen bg-[#FAF7F4] py-16">

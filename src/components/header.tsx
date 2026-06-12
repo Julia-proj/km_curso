@@ -1,9 +1,20 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { createClient } from "@/lib/supabase/client"
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false)
+  const router = useRouter()
+
+  const handleLogout = async () => {
+    const supabase = createClient()
+    if (supabase) {
+      await supabase.auth.signOut()
+    }
+    router.push("/")
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,10 +32,16 @@ export function Header() {
           : "bg-transparent"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-5 h-full flex items-center">
+      <div className="max-w-6xl mx-auto px-5 h-full flex items-center justify-between">
         <span className="text-lg font-bold tracking-tight text-text">
           HAIRLAB
         </span>
+        <button
+          onClick={handleLogout}
+          className="text-sm font-medium text-text-muted hover:text-text transition-colors"
+        >
+          Выйти
+        </button>
       </div>
     </header>
   )

@@ -59,8 +59,8 @@ export async function POST(req: NextRequest) {
         type: 'limba_pack',
         pickup_location: 'studio_madrid'
       },
-      success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/scan/pickup/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/scan/result?recommendation_id=${rec.id}`
+      success_url: `${process.env.NEXT_PUBLIC_URL}/scan/pickup/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.NEXT_PUBLIC_URL}/scan/result?recommendation_id=${rec.id}`
     });
     
     return NextResponse.json({ url: session.url });

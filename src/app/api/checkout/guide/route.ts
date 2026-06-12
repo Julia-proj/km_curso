@@ -31,8 +31,8 @@ export async function POST(req: NextRequest) {
         product_name: 'HAIRLAB KM Guide',
         customer_name: name || ''
       },
-      success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}&product=guide`,
-      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/#offer`
+      success_url: `${process.env.NEXT_PUBLIC_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}&product=guide`,
+      cancel_url: `${process.env.NEXT_PUBLIC_URL}/#offer`
     });
     
     return NextResponse.json({ url: session.url });

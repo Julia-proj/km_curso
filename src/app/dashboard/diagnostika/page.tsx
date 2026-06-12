@@ -4,8 +4,9 @@ import { useEffect, useState, useRef } from "react"
 import { useRouter } from "next/navigation"
 import imageCompression from "browser-image-compression"
 import { useQuizStore } from "@/stores/quiz-store"
-import { saveDiagnosis, SESSION_KEY } from "@/lib/progress"
+import { saveDiagnosis } from "@/lib/progress"
 import { ensureHeatProtectionAdvice } from "@/lib/recommendations/pick-products"
+import { createClient } from "@/lib/supabase/client"
 
 interface DiagnosisResult {
   damageLevel: number
@@ -30,13 +31,35 @@ export default function DiagnostikaPage() {
   // Auth and course check - requires paid course access
   useEffect(() => {
     const checkAuth = async () => {
-      const session = localStorage.getItem(SESSION_KEY)
-      if (!session) {
+      const supabase = createClient()
+      if (!supabase) {
+        // Auth not configured, allow access for now
+        setIsAuthenticated(true)
+        setHasPaidCourse(true)
+        return
+      }
+
+      const { data: { user } } = await supabase.auth.getUser()
+      
+      if (!user) {
+        router.push("/auth/login")
+        return
+      }
+
+      // Check if user has paid access
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('has_full_course')
+        .eq('email', user.email)
+        .single()
+
+      if (profile && profile.has_full_course) {
+        setIsAuthenticated(true)
+        setHasPaidCourse(true)
+      } else {
         router.push("/offer")
         return
       }
-      setIsAuthenticated(true)
-      setHasPaidCourse(true)
     }
 
     checkAuth()
@@ -347,6 +370,13 @@ export default function DiagnostikaPage() {
                 className="km-cta km-cta--dark w-full"
               >
                 <span>Подобрать индивидуальный уход от Елены</span>
+              </button>
+
+              <button
+                onClick={handleReset}
+                className="w-full text-center text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] underline-offset-2 hover:underline py-2"
+              >
+                Пройти анализ заново
               </button>
 
               <button
