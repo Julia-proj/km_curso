@@ -385,8 +385,7 @@ export function LandingHeroSection() {
               transition={{ delay: 0.3, duration: 0.55 }}
               className="mt-6 max-w-[28rem] font-sans text-sm leading-6 tracking-[0.02em] text-[#8F857B] xl:max-w-[34rem]"
             >
-              12€ методичка · 38€ полный курс
-              <span className="block xl:inline"> с AI-диагностикой · доступ навсегда</span>
+              38€ полный курс с AI-диагностикой · доступ навсегда
             </motion.p>
 
           </div>
