@@ -53,8 +53,8 @@ export function WelcomePopup() {
             >
               Уже готова?
             </p>
-            <h3 className="font-hero-face text-[1.625rem] font-semibold leading-[1.15] tracking-[-0.025em] text-foreground">
-              Выбери свой<br />формат
+            <h3 className="font-hero-face text-[1.125rem] font-semibold leading-tight tracking-[-0.025em] text-foreground">
+              Выбери свой формат
             </h3>
 
             <div className="mt-5 flex flex-row gap-2">
