@@ -11,13 +11,13 @@ export const PAID_LESSONS = [
     id: 2,
     title: 'Урок 2: Типы повреждений',
     description: 'Классификация повреждений: химические, термические, механические',
-    youtubeId: 'PLACEHOLDER_LESSON_2', // Заменить на реальный YouTube ID
+    youtubeId: 'bcDbhj15-vo',
   },
   {
     id: 3,
     title: 'Урок 3: Составы для восстановления',
     description: 'Рабочие компоненты и их функции в уходе за волосами',
-    youtubeId: 'PLACEHOLDER_LESSON_3', // Заменить на реальный YouTube ID
+    youtubeId: 'ggyyceuMQTE',
   },
   {
     id: 4,
