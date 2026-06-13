@@ -199,7 +199,7 @@ export default function DashboardPage() {
             )}
 
             {/* Downloads - for both course and guide */}
-            {hasMethodichka && (
+            {(hasMethodichka || hasFullCourse) && (
               <SuccessActionCard
                 icon={
                   <svg

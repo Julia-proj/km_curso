@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
         }
       });
 
-    } else if (metadata.type === 'course' || session.amount_total === 3900) {
+    } else if (metadata.type === 'course' || session.amount_total === 3800) {
       const email = buyerEmail;
       if (email) {
         const supabase = getSupabase();
@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
         }, { onConflict: 'email' });
       }
 
-    } else if (metadata.type === 'guide' || session.amount_total === 1500) {
+    } else if (metadata.type === 'guide' || session.amount_total === 1200) {
       const email = buyerEmail;
       if (email) {
         const supabase = getSupabase();

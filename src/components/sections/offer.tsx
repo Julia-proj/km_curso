@@ -49,7 +49,7 @@ const fullCourseFeatures = [
   {
     title: "KM Guide включён",
     description:
-      "Полная PDF-карта ухода (32 страницы) - уже входит в курс.",
+      "Две методички в PDF (81 и 19 страниц) - уже входят в курс.",
   },
   {
     title: "Чек-листы и дополнительные материалы",
@@ -58,7 +58,7 @@ const fullCourseFeatures = [
 ]
 
 const guideFeatures = [
-  "32 страницы от мастера с 6-летним опытом",
+  "Две методички в PDF (81 и 19 страниц) от мастера с 6-летним опытом",
   "Диагностика и шкала повреждения 1-5",
   "Готовые протоколы для натуральных, окрашенных и осветлённых волос",
   "Карточки проверенных средств",
@@ -173,7 +173,7 @@ export function OfferSection() {
                 Система восстановления с Еленой
               </h3>
               <p className="font-hero-face text-3xl md:text-4xl font-medium text-text mb-4">
-                39€
+                38€
               </p>
               <p className="text-text-soft text-sm mb-6">
                 Для тех, кому нужен не просто гайд, а пошаговый маршрут. С видео,
@@ -206,7 +206,7 @@ export function OfferSection() {
                 onClick={() => handlePaymentClick("course")}
                 className="w-full inline-flex items-center justify-center px-8 py-4 bg-accent text-white font-medium text-sm rounded-full hover:bg-accent-hover transition-colors duration-200"
               >
-                Получить полный доступ - 39€
+                Получить полный доступ - 38€
               </button>
             </div>
           </motion.div>
@@ -225,7 +225,7 @@ export function OfferSection() {
               KM Guide: Карта восстановления
             </h3>
             <p className="font-hero-face text-2xl md:text-3xl font-medium text-text mb-4">
-              13€
+              12€
             </p>
             <p className="text-text-soft text-sm mb-6">
               Для тех, кто хочет сначала разобраться самостоятельно: понять свои
@@ -245,7 +245,7 @@ export function OfferSection() {
               onClick={() => handlePaymentClick("guide")}
               className="w-full inline-flex items-center justify-center px-6 py-3 bg-transparent border border-border text-text font-medium text-sm rounded-full hover:bg-bg-warm transition-colors duration-200"
             >
-              Начать с KM Guide - 13€
+              Начать с KM Guide - 12€
             </button>
           </motion.div>
         </div>

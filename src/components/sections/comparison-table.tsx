@@ -93,13 +93,13 @@ export function ComparisonTableSection() {
               <p className="text-text-soft text-xs md:text-sm font-medium">
                 KM Guide
               </p>
-              <p className="text-text font-hero-face font-medium">13€</p>
+              <p className="text-text font-hero-face font-medium">12€</p>
             </div>
             <div className="p-4 md:p-6 text-center border-l border-border bg-accent/5">
               <p className="text-text-soft text-xs md:text-sm font-medium">
                 Full Course
               </p>
-              <p className="text-text font-hero-face font-medium">39€</p>
+              <p className="text-text font-hero-face font-medium">38€</p>
             </div>
           </div>
 

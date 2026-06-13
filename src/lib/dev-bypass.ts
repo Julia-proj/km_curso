@@ -10,5 +10,7 @@
  * (ADMIN_EMAILS) — see src/lib/admin.ts.
  */
 export function isDevBypass(): boolean {
+  // Hard guard: never enable in a production build, even if the env var leaks in.
+  if (process.env.NODE_ENV === 'production') return false
   return process.env.NEXT_PUBLIC_DEV_BYPASS_PAYWALL === 'true'
 }

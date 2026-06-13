@@ -73,14 +73,15 @@ export default function DownloadsPage() {
         return
       }
 
-      // Check if user has paid access using user id
+      // Check if user has paid access using user id.
+      // Course buyers (has_full_course) also get the methodички — they're part of the course.
       const { data: profile } = await supabase
         .from('profiles')
-        .select('has_methodichka')
+        .select('has_methodichka, has_full_course')
         .eq('id', user.id)
         .single()
 
-      if (profile && profile.has_methodichka) {
+      if (profile && (profile.has_methodichka || profile.has_full_course)) {
         setState({
           loading: false,
           hasAccess: true,
