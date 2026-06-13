@@ -82,16 +82,13 @@ export default function LessonsPage() {
     checkAccess()
   }, [router])
 
-  // Simple parsing from the URL.
-  let lessonIndex = 0
+  // Look up the lesson by its id (ids are not 1-indexed: paid lessons start at 2).
+  let currentLesson = PAID_LESSONS[0]
   if (lessonParam) {
     const parsed = parseInt(lessonParam, 10)
-    if (!isNaN(parsed) && parsed >= 1 && parsed <= PAID_LESSONS.length) {
-      lessonIndex = parsed - 1
-    }
+    const found = PAID_LESSONS.find((l) => l.id === parsed)
+    if (found) currentLesson = found
   }
-
-  const currentLesson = PAID_LESSONS[lessonIndex] || PAID_LESSONS[0]
   const currentLessonIndexInArray = PAID_LESSONS.findIndex(l => l.id === currentLesson.id)
   const isLastLesson = currentLessonIndexInArray === PAID_LESSONS.length - 1
   const isFirstLesson = currentLessonIndexInArray === 0

@@ -1,12 +1,8 @@
 export const FREE_LESSON_YOUTUBE_ID = '0OYmg4DoXPk'
 
+// Урок 1 (Диагностика) — это бесплатный урок (FREE_LESSON_YOUTUBE_ID).
+// Платные уроки начинаются со 2-го.
 export const PAID_LESSONS = [
-  {
-    id: 1,
-    title: 'Урок 1: Диагностика состояния волос',
-    description: 'Как определить тип повреждения и степень поражения волос',
-    youtubeId: 'PLACEHOLDER_LESSON_1', // Заменить на реальный YouTube ID
-  },
   {
     id: 2,
     title: 'Урок 2: Типы повреждений',
