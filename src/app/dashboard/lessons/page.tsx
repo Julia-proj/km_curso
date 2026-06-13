@@ -233,14 +233,16 @@ export default function LessonsPage() {
                 />
               </div>
 
-              {/* Private access note — reassure that videos aren't publicly available */}
-              <div className="mt-4 flex items-start gap-2 rounded-[var(--radius-lg)] bg-[var(--color-bg-warm)] px-4 py-3 text-xs text-[var(--color-text-soft)] leading-relaxed">
-                <span aria-hidden="true" className="mt-px text-sm">🔒</span>
-                <span>
-                  Видео закрытые: их нет в поиске и на канале, они открываются только из твоего личного кабинета.
-                  Пожалуйста, не делись доступом, он оформлен лично для тебя.
-                </span>
-              </div>
+              {/* Private access note — shown only on the first lesson so it doesn't distract every time */}
+              {isFirstLesson && (
+                <div className="mt-3 flex items-start gap-1.5 px-1 text-[11px] text-[var(--color-text-muted)] leading-relaxed">
+                  <span aria-hidden="true" className="mt-px opacity-60">🔒</span>
+                  <span>
+                    Видео закрытые: их нет в поиске и на канале, они открываются только из твоего личного кабинета.
+                    Пожалуйста, не делись доступом, он оформлен лично для тебя.
+                  </span>
+                </div>
+              )}
 
               {/* Mark as watched */}
               <div className="mt-4">
