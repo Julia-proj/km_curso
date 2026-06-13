@@ -124,7 +124,7 @@ HAIRLAB — сайт-воронка авторского курса по вос�
 
 ### Подключение GA4 (делается один раз, руками)
 
-1. https://analytics.google.com → Админ → «Создать ресурс» (часовой пояс,
+1. https://analytics.google.com https://analytics.google.com → Админ → «Создать ресурс» (часовой пояс,
    валюта EUR)
 2. «Потоки данных» → «Веб» → URL сайта → создать поток
 3. Скопируй **Measurement ID** вида `G-XXXXXXXXXX`

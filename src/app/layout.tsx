@@ -3,7 +3,10 @@ import { Inter, Manrope, Fraunces, Playfair_Display } from 'next/font/google'
 import './globals.css'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/react'
-import { CookieConsent } from '@/components/CookieConsent'
+import dynamic from 'next/dynamic'
+
+// Lazy load CookieConsent (conditionally rendered, uses framer-motion)
+const CookieConsent = dynamic(() => import('@/components/CookieConsent').then(mod => ({ default: mod.CookieConsent })))
 
 const inter = Inter({
   subsets: ['cyrillic', 'latin'],
@@ -82,6 +85,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ru" className={`${inter.variable} ${manrope.variable} ${fraunces.variable} ${playfair.variable}`}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link rel="preconnect" href="https://www.google-analytics.com" />
+        <link rel="preconnect" href="https://vitals.vercel-analytics.com" />
+      </head>
       <body>
         <CookieConsent />
         <Analytics />

@@ -11,9 +11,10 @@ export function NavSection() {
   const [userName, setUserName] = useState<string | null>(null)
 
   useEffect(() => {
+    // Cache hero height to avoid repeated offsetHeight reads
+    const heroHeight = document.getElementById("hero-section")?.offsetHeight ?? window.innerHeight
+
     const onScroll = () => {
-      const heroHeight =
-        document.getElementById("hero-section")?.offsetHeight ?? window.innerHeight
       setVisible(window.scrollY > heroHeight * 0.85)
     }
     window.addEventListener("scroll", onScroll, { passive: true })

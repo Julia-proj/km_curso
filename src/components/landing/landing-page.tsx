@@ -1,8 +1,10 @@
 import dynamic from "next/dynamic"
-import { WelcomePopup } from "@/components/WelcomePopup"
 import { LandingHeroSection } from "@/components/landing/sections/LandingHeroSection"
 import { NavSection } from "@/components/landing/sections/NavSection"
 import { MarqueeSection } from "@/components/landing/sections/MarqueeSection"
+
+// Lazy load WelcomePopup (appears after 1.5s delay)
+const WelcomePopup = dynamic(() => import("@/components/WelcomePopup").then(mod => ({ default: mod.WelcomePopup })))
 
 // Lazy load below-the-fold sections
 const AboutSection = dynamic(() => import("@/components/landing/sections/AboutSection").then(mod => ({ default: mod.AboutSection })), {

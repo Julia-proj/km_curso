@@ -49,23 +49,25 @@ export function ProblemsSection() {
   const [activeIndex, setActiveIndex] = useState(0)
 
   const updateCarouselState = useCallback(() => {
-    const scroller = scrollerRef.current
-    if (!scroller) return
+    requestAnimationFrame(() => {
+      const scroller = scrollerRef.current
+      if (!scroller) return
 
-    const cards = Array.from(scroller.querySelectorAll<HTMLElement>("[data-carousel-card]"))
-    if (!cards.length) return
+      const cards = Array.from(scroller.querySelectorAll<HTMLElement>("[data-carousel-card]"))
+      if (!cards.length) return
 
-    const center = scroller.scrollLeft + scroller.clientWidth / 2
-    const closest = cards.reduce(
-      (best, card, index) => {
-        const cardCenter = card.offsetLeft + card.offsetWidth / 2
-        const distance = Math.abs(center - cardCenter)
-        return distance < best.distance ? { distance, index } : best
-      },
-      { distance: Number.POSITIVE_INFINITY, index: 0 }
-    )
+      const center = scroller.scrollLeft + scroller.clientWidth / 2
+      const closest = cards.reduce(
+        (best, card, index) => {
+          const cardCenter = card.offsetLeft + card.offsetWidth / 2
+          const distance = Math.abs(center - cardCenter)
+          return distance < best.distance ? { distance, index } : best
+        },
+        { distance: Number.POSITIVE_INFINITY, index: 0 }
+      )
 
-    setActiveIndex(closest.index)
+      setActiveIndex(closest.index)
+    })
   }, [])
 
   useEffect(() => {
