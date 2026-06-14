@@ -113,7 +113,7 @@ export function WhatYouGetSection({
                 <div className="flex shrink-0 justify-center">
                   <Image
                     alt="Меню курса: видео-уроки, AI-диагностика, методички и закрытый Telegram"
-                    src="/images/hero_screen_menu.jpg"
+                    src="/images/hero_screen_menu.webp"
                     width={560}
                     height={1024}
                     loading="lazy"
@@ -278,7 +278,7 @@ export function WhatYouGetSection({
                 <div className="relative aspect-[3/4] h-24 w-20 shrink-0 md:h-32 md:w-24">
                   <Image
                     alt="Результат восстановления волос"
-                    src="/images/foto2.png"
+                    src="/images/foto2.webp"
                     fill
                     loading="lazy"
                     quality={92}

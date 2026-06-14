@@ -36,7 +36,7 @@ export default function LessonPage() {
 
           {/* YouTube embed — responsive 16:9 */}
           <div
-            className="w-full rounded-[var(--radius-xl)] overflow-hidden bg-[var(--color-bg-warm)]"
+            className="w-full rounded-xl overflow-hidden bg-[var(--color-bg-warm)]"
             style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}
           >
             <iframe
@@ -64,7 +64,7 @@ export default function LessonPage() {
           <div className="text-center">
             <Link
               href="/offer"
-              className="inline-block rounded-none bg-[var(--color-accent)] px-8 py-4 text-sm font-semibold text-white transition-all hover:bg-[var(--color-accent-hover)] hover:shadow-lg hover:shadow-[var(--color-accent)]/30 hover:scale-105"
+              className="inline-block rounded-lg bg-[var(--color-accent)] px-8 py-4 text-sm font-semibold text-white transition-all hover:bg-[var(--color-accent-hover)] hover:shadow-lg hover:shadow-[var(--color-accent)]/30 hover:scale-105"
             >
               Выбрать свой формат
             </Link>

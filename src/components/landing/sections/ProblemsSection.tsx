@@ -10,37 +10,37 @@ const problemCards = [
   {
     title: "Сухость",
     description: "Волосы сухие даже после масок и кондиционеров",
-    image: "/images/1.PNG",
+    image: "/images/1.webp",
   },
   {
     title: "Спутанность",
     description: "Повреждение при расчёсывании, волосы рвутся",
-    image: "/images/2.PNG",
+    image: "/images/2.webp",
   },
   {
     title: "Ломкость",
     description: "Прозрачные концы, волосы ломаются по длине",
-    image: "/images/3.PNG",
+    image: "/images/3.webp",
   },
   {
     title: "Секущиеся концы",
     description: "Концы расщепляются и не поддаются уходу",
-    image: "/images/4.PNG",
+    image: "/images/4.webp",
   },
   {
     title: "Пористость",
     description: "Непослушные волосы, сложно укладывать",
-    image: "/images/5.PNG",
+    image: "/images/5.webp",
   },
   {
     title: "Отсутствие блеска",
     description: "Тусклые волосы без жизни и сияния",
-    image: "/images/6.PNG",
+    image: "/images/6.webp",
   },
   {
     title: "Сложная укладка",
     description: "Длительная укладка и постоянный дискомфорт",
-    image: "/images/7.PNG",
+    image: "/images/7.webp",
   },
 ] as const
 

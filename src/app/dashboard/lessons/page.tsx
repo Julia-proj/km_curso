@@ -8,6 +8,7 @@ import { PAID_LESSONS } from "@/config/lessons"
 import { createClient } from "@/lib/supabase/client"
 import { isDevBypass } from "@/lib/dev-bypass"
 import { fetchProfileAccess } from "@/lib/profile-access"
+import { CheckIcon, LockIcon, ArrowLeftIcon, ArrowRightIcon } from "@/components/landing/icons"
 
 export const dynamic = 'force-dynamic'
 
@@ -177,7 +178,7 @@ export default function LessonsPage() {
             }`}
             aria-hidden="true"
           >
-            {done ? "✓" : lesson.id}
+            {done ? <CheckIcon size={12} /> : lesson.id}
           </span>
           <span className="text-sm font-medium">Урок {lesson.id}</span>
         </div>
@@ -230,7 +231,7 @@ export default function LessonsPage() {
 
               {/* Video player */}
               <div
-                className="w-full rounded-[var(--radius-xl)] overflow-hidden bg-[var(--color-bg-warm)]"
+                className="w-full rounded-xl overflow-hidden bg-[var(--color-bg-warm)]"
                 style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}
               >
                 <iframe
@@ -245,7 +246,7 @@ export default function LessonsPage() {
               {/* Private access note — shown only on lesson 2 (the first course-only video) so it doesn't distract every time */}
               {currentLesson.id === 2 && (
                 <div className="mt-3 flex items-start gap-1.5 px-1 text-[11px] text-[var(--color-text-muted)] leading-relaxed">
-                  <span aria-hidden="true" className="mt-px opacity-60">🔒</span>
+                  <LockIcon size={13} className="mt-px flex-shrink-0 opacity-60" />
                   <span>
                     Видео закрытые: их нет в поиске и на канале, они открываются только из твоего личного кабинета.
                     Пожалуйста, не делись доступом, он оформлен лично для тебя.
@@ -258,7 +259,8 @@ export default function LessonsPage() {
                 {isDone(currentLesson.id) ? (
                   <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
                     <span className="inline-flex items-center gap-2 text-sm font-medium text-[var(--color-success)]">
-                      ✓ Урок отмечен как просмотренный
+                      <CheckIcon size={16} />
+                      Урок отмечен как просмотренный
                     </span>
                     <button
                       onClick={() => unmarkCompleted(currentLesson.id)}
@@ -282,13 +284,14 @@ export default function LessonsPage() {
                 <button
                   onClick={handlePrevious}
                   disabled={isFirstLesson}
-                  className={`px-6 py-3 rounded-lg font-medium transition-all ${
+                  className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all ${
                     isFirstLesson
                       ? "bg-gray-200 text-gray-400 cursor-not-allowed"
                       : "bg-[var(--color-text)] text-white hover:bg-[var(--color-text-muted)]"
                   }`}
                 >
-                  ← Назад
+                  <ArrowLeftIcon size={16} />
+                  Назад
                 </button>
 
                 <div className="text-sm text-[var(--color-text-muted)]">
@@ -298,13 +301,20 @@ export default function LessonsPage() {
                 <button
                   onClick={handleNext}
                   disabled={isLastLesson}
-                  className={`px-6 py-3 rounded-lg font-medium transition-all ${
+                  className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all ${
                     isLastLesson
                       ? "bg-gray-200 text-gray-400 cursor-not-allowed"
                       : "bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent-hover)]"
                   }`}
                 >
-                  {isLastLesson ? "Курс завершён" : "Далее →"}
+                  {isLastLesson ? (
+                    "Курс завершён"
+                  ) : (
+                    <>
+                      Далее
+                      <ArrowRightIcon size={16} />
+                    </>
+                  )}
                 </button>
               </div>
 

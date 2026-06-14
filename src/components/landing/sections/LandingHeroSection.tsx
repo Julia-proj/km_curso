@@ -6,7 +6,7 @@ import Image from "next/image"
 import { getPaymentLink } from "@/config/payments"
 import { HeroAnimatedBackground } from "@/components/HeroAnimatedBackground"
 
-const mobileHeroImage = "/images/newhero.PNG"
+const mobileHeroImage = "/images/newhero.webp"
 const desktopHeroImage = "/images/heronew.webp"
 
 const guideMockupBack = "/images/acces_pdf.webp"
@@ -93,7 +93,7 @@ function HeroVisuals({ tone = "light" }: { tone?: "light" | "dark" }) {
             className="object-cover object-top"
             src={guideMockupBack}
             fill
-            sizes="160px"
+            sizes="(max-width: 640px) 96px, (max-width: 768px) 104px, 128px"
           />
         </div>
         {/* передняя */}
@@ -106,7 +106,7 @@ function HeroVisuals({ tone = "light" }: { tone?: "light" | "dark" }) {
             className="object-cover object-top"
             src={guideMockupFront}
             fill
-            sizes="160px"
+            sizes="(max-width: 640px) 96px, (max-width: 768px) 104px, 128px"
           />
         </div>
       </div>
@@ -122,7 +122,7 @@ function HeroVisuals({ tone = "light" }: { tone?: "light" | "dark" }) {
             className="object-cover"
             src={lessonScreen}
             fill
-            sizes="(min-width: 768px) 144px, 112px"
+            sizes="(max-width: 640px) 88px, (max-width: 768px) 96px, 128px"
           />
           <span className="absolute inset-0 flex items-center justify-center">
             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/88 pl-0.5 text-[#1A1A1A] shadow-md sm:h-8 sm:w-8 md:h-9 md:w-9">
@@ -212,6 +212,7 @@ export function LandingHeroSection() {
             className="h-full w-full translate-y-4 scale-105 object-cover"
             fill
             priority
+            fetchPriority="high"
             quality={85}
             sizes="100vw"
             src={mobileHeroImage}
@@ -409,8 +410,8 @@ export function LandingHeroSection() {
             alt="Елена, основатель HAIRLAB"
             className="object-cover"
             fill
+            priority
             fetchPriority="high"
-            loading="eager"
             quality={85}
             sizes="42vw"
             src={desktopHeroImage}
