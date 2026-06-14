@@ -166,7 +166,7 @@ export default function DashboardPage() {
                     <polygon points="5 3 19 12 5 21 5 3" />
                   </svg>
                 }
-                label="Видеоуроки"
+                label="Видео-уроки"
                 description="Продолжить смотреть уроки курса"
                 href="/dashboard/lessons"
               />
@@ -241,7 +241,7 @@ export default function DashboardPage() {
                     <path d="M22 2L15 22L11 13L2 9L22 2Z" />
                   </svg>
                 }
-                label="Telegram канал"
+                label="Telegram-канал"
                 description="Присоединяйся к закрытому каналу с дополнительными материалами"
                 href={TELEGRAM_PRIVATE_INVITE}
                 external

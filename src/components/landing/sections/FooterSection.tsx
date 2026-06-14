@@ -11,7 +11,7 @@ export function FooterSection() {
           </p>
         </div>
         <div className="text-sm text-muted-foreground">
-          © {new Date().getFullYear()} Елена Александрова. Все права защищены.
+          © {new Date().getFullYear()} HAIRLAB. Все права защищены.
         </div>
       </div>
     </footer>

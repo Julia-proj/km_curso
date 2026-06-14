@@ -20,9 +20,9 @@ const videoLessons = [
 const extras = [
   "AI-диагностика по фото",
   "Личный кабинет",
-  "Персональный подбор средств по результатам теста и AI анализа",
+  "Персональный подбор средств по результатам теста и AI-анализа",
   "Методички включены",
-  "Доступ в закрытый Telegram канал с дополнительными материалами",
+  "Доступ в закрытый Telegram-канал с дополнительными материалами",
 ] as const
 
 const guideItems = [
@@ -151,8 +151,8 @@ export function WhatYouGetSection({
             <div className="mb-5 flex items-center gap-3 rounded-xl border border-[#E8E0D9] bg-[#FAF7F4] p-3 sm:mb-6 md:mb-5">
               <div className="flex shrink-0 gap-3">
                 {[
-                  { src: "/images/guia_pdf.PNG", alt: "Методичка", objPos: "50% 10%" },
-                  { src: "/images/acces_pdf.PNG", alt: "Аксессуары", objPos: "50% 0%" },
+                  { src: "/images/guia_pdf.webp", alt: "Методичка", objPos: "50% 10%" },
+                  { src: "/images/acces_pdf.webp", alt: "Аксессуары", objPos: "50% 0%" },
                 ].map((img) => (
                   <div key={img.src} className="relative">
                     <div className="absolute inset-0 translate-x-1 translate-y-1 rounded-[4px] bg-[#DDD5CB]" />
@@ -191,7 +191,7 @@ export function WhatYouGetSection({
             <div className="mb-4 flex items-end justify-between gap-4 sm:mb-5 md:mb-4">
               <div>
                 <p className="mb-1 font-sans text-xs uppercase tracking-[0.2em] text-[#999] sm:text-xs">
-                  Hairlab Guide
+                  HAIRLAB Guide
                 </p>
                 <div className="flex items-baseline gap-2">
                   <span className="font-sans text-sm text-[#999] line-through decoration-[#D29B9B]">39€</span>
@@ -205,8 +205,8 @@ export function WhatYouGetSection({
 
             <div className="mb-8 mt-6 flex gap-5 sm:mb-10 sm:mt-8 md:mb-8 md:mt-7">
               {[
-                { src: "/images/guia_pdf.PNG", alt: "Методичка по уходу", label: "Домашний уход", objPos: "50% 10%" },
-                { src: "/images/acces_pdf.PNG", alt: "Гайд по аксессуарам", label: "Аксессуары", objPos: "50% 0%" },
+                { src: "/images/guia_pdf.webp", alt: "Методичка по уходу", label: "Домашний уход", objPos: "50% 10%" },
+                { src: "/images/acces_pdf.webp", alt: "Гайд по аксессуарам", label: "Аксессуары", objPos: "50% 0%" },
               ].map((img) => (
                 <div key={img.src} className="flex flex-col items-center gap-2">
                   <div className="relative">
@@ -292,7 +292,7 @@ export function WhatYouGetSection({
                     р е з у л ь т а т
                   </p>
                   <h2 className="mb-3 font-hero-face text-lg font-medium leading-tight tracking-normal text-[#1A1A1A] text-balance sm:text-xl md:text-2xl">
-                    Гладкие, плотные волосы - это не генетика, а система.
+                    Гладкие, плотные волосы: это не генетика, а система.
                   </h2>
                   <div className="space-y-2 font-sans text-sm leading-relaxed text-[#5E554C] sm:text-sm md:text-base">
                     <p>

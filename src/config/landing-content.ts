@@ -166,11 +166,11 @@ export const instagramReels = [
 ] as const
 
 export const courseFeatures = [
-  { title: "AI-диагностика по фото", desc: "Загрузи фото - система покажет степень повреждения.", soon: false },
+  { title: "AI-диагностика по фото", desc: "Загрузи фото, и система покажет степень повреждения.", soon: false },
   { title: "Личный кабинет", desc: "Видишь, где остановилась. Возвращаешься в любой момент.", soon: false },
   { title: "Персональный подбор средств", desc: "По результатам теста и AI-анализа.", soon: false },
   { title: "Методички включены", desc: "PDF-карта ухода и гайд по аксессуарам входят в курс.", soon: false },
-  { title: "Закрытый Telegram канал", desc: "Доступ к дополнительным материалам.", soon: false },
+  { title: "Закрытый Telegram-канал", desc: "Доступ к дополнительным материалам.", soon: false },
 ] as const
 
 export const faqItems = [

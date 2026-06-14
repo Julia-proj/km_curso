@@ -7,10 +7,10 @@ import { getPaymentLink } from "@/config/payments"
 import { HeroAnimatedBackground } from "@/components/HeroAnimatedBackground"
 
 const mobileHeroImage = "/images/newhero.PNG"
-const desktopHeroImage = "/images/heronew.PNG"
+const desktopHeroImage = "/images/heronew.webp"
 
-const guideMockupBack = "/images/acces_pdf.PNG"
-const guideMockupFront = "/images/guia_pdf.PNG"
+const guideMockupBack = "/images/acces_pdf.webp"
+const guideMockupFront = "/images/guia_pdf.webp"
 const lessonScreen = "/images/hero_screen_lesson.webp"
 
 // Shared 1x1 blur placeholder for the hero photos (valid base64, single source).
@@ -208,11 +208,10 @@ export function LandingHeroSection() {
       <div className="relative flex min-h-[100svh] flex-col overflow-hidden lg:hidden">
         <div className="absolute inset-0">
           <Image
-            alt="Елена - основатель HairLab"
+            alt="Елена, основатель HAIRLAB"
             className="h-full w-full translate-y-4 scale-105 object-cover"
             fill
-            fetchPriority="high"
-            loading="eager"
+            priority
             quality={85}
             sizes="100vw"
             src={mobileHeroImage}
@@ -407,7 +406,7 @@ export function LandingHeroSection() {
         <div className="relative bg-transparent py-6 pr-5 lg:py-8 lg:pr-8 xl:py-10 xl:pr-10 2xl:py-12 2xl:pr-12">
           <figure className="relative h-full w-full overflow-hidden rounded-[1.2rem] shadow-[0_24px_52px_-30px_rgba(40,28,22,0.42)]">
           <Image
-            alt="Елена - основатель HairLab"
+            alt="Елена, основатель HAIRLAB"
             className="object-cover"
             fill
             fetchPriority="high"

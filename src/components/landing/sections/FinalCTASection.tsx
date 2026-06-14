@@ -23,7 +23,7 @@ export function FinalCTASection() {
             href="/quiz"
             className="inline-flex min-h-11 items-center justify-center gap-3 bg-[#D29B9B] px-10 py-5 font-sans text-sm font-semibold text-white transition-colors hover:bg-[#C08B8B]"
           >
-            Пройти тест бесбаатнт
+            Пройти тест бесплатно
             <ArrowRightIcon size={16} />
           </a>
           <p className="mt-6 font-sans text-xs tracking-[0.18em] text-white/30">

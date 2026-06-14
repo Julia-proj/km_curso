@@ -19,14 +19,14 @@ const GUIDES = [
     title: "Методичка: Основной уход",
     subtitle: "Шампуни, маски, кондиционеры, термозащита",
     pages: 81,
-    cover: "/images/guia_pdf.PNG",
+    cover: "/images/guia_pdf.webp",
   },
   {
     id: "guide-02",
     title: "Методичка: Аксессуары",
     subtitle: "Полотенца, расчёски, резинки, материалы для сна",
     pages: 19,
-    cover: "/images/acces_pdf.PNG",
+    cover: "/images/acces_pdf.webp",
   },
 ]
 

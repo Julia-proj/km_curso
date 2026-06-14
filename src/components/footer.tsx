@@ -46,12 +46,12 @@ export function Footer() {
           </div>
 
           <a
-            href="https://instagram.com/keratinmadrid"
+            href="https://instagram.com/keratin_madrid"
             target="_blank"
             rel="noopener noreferrer"
             className="text-white/60 hover:text-white transition-colors text-sm font-medium"
           >
-            Instagram: @keratinmadrid
+            Instagram: @keratin_madrid
           </a>
         </div>
 

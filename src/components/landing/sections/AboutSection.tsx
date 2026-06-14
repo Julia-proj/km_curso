@@ -16,7 +16,7 @@ export function AboutSection() {
             Система, основанная на практике
           </h2>
           <p className="mb-8 font-sans leading-relaxed text-[#666]">
-            Уже более 6 лет я и моя команда ежедневно восстанавливаем даже самые повреждённые волосы. Система HairLab построена на:
+            Уже более 6 лет я и моя команда ежедневно восстанавливаем даже самые повреждённые волосы. Система HAIRLAB построена на:
           </p>
 
           <ul className="divide-y divide-[#F0EBE5]">
@@ -41,7 +41,7 @@ export function AboutSection() {
               <div className="hidden md:block absolute inset-0 translate-x-3 translate-y-3 bg-[#E8E1DA] -z-10" />
               <div className="relative aspect-[3/4] sm:aspect-[2/3] md:h-[20rem] md:aspect-auto">
                 <Image
-                  alt="Елена HairLab"
+                  alt="Елена HAIRLAB"
                   className="object-contain object-center p-1.5 md:p-2"
                   fill
                   loading="lazy"
@@ -55,7 +55,7 @@ export function AboutSection() {
             <div className="relative mt-3 overflow-hidden rounded-lg border border-[#E6DED7] bg-[#F8F5F1] shadow-sm md:mt-10 md:h-[18rem]">
               <div className="relative aspect-[3/4] sm:aspect-[2/3] md:h-full md:aspect-auto">
                 <Image
-                  alt="Студия HairLab"
+                  alt="Студия HAIRLAB"
                   className="object-contain object-center p-1.5 md:p-2"
                   fill
                   loading="lazy"
