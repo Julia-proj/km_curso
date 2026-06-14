@@ -7,7 +7,9 @@ import { getCurrentUser } from "@/lib/auth-user"
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false)
-  const [userName, setUserName] = useState<string | null>(null)
+  // undefined = auth state not resolved yet (avoid flashing the wrong control),
+  // null = signed out, string = signed-in display name.
+  const [userName, setUserName] = useState<string | null | undefined>(undefined)
   const router = useRouter()
 
   const handleLogout = async () => {
@@ -46,22 +48,33 @@ export function Header() {
           HAIRLAB
         </button>
         <div className="flex items-center gap-4 md:gap-5">
-          <button
-            onClick={() => router.push("/dashboard")}
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-text-muted hover:text-text transition-colors"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
-            </svg>
-            <span className="hidden sm:inline">{userName ? userName : "Личный кабинет"}</span>
-          </button>
-          <button
-            onClick={handleLogout}
-            className="text-sm font-medium text-text-muted hover:text-text transition-colors"
-          >
-            Выйти
-          </button>
+          {userName === undefined ? null : userName ? (
+            <>
+              <button
+                onClick={() => router.push("/dashboard")}
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-text-muted hover:text-text transition-colors"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+                <span className="hidden sm:inline">{userName}</span>
+              </button>
+              <button
+                onClick={handleLogout}
+                className="text-sm font-medium text-text-muted hover:text-text transition-colors"
+              >
+                Выйти
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={() => router.push("/auth/login")}
+              className="text-sm font-medium text-text-muted hover:text-text transition-colors"
+            >
+              Войти
+            </button>
+          )}
         </div>
       </div>
     </header>

@@ -26,13 +26,17 @@ async function loadProgress(): Promise<{ completed: number[]; lastViewed: number
   }
 }
 
-/** Persist progress for a lesson. Best-effort: silently ignores errors. */
-async function saveProgress(lessonId: number, completed: boolean): Promise<void> {
+/**
+ * Persist progress for a lesson. Best-effort: silently ignores errors.
+ * `remove` explicitly un-marks a completion; plain `completed: false` only
+ * updates "last viewed" and never drops a completion (see the API route).
+ */
+async function saveProgress(lessonId: number, completed: boolean, remove = false): Promise<void> {
   try {
     await fetch("/api/lesson-progress", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ lessonId, completed }),
+      body: JSON.stringify({ lessonId, completed, remove }),
     })
   } catch {
     // Saving is non-critical — the video still plays.
@@ -119,6 +123,11 @@ export default function LessonsPage() {
   const markCompleted = useCallback((lessonId: number) => {
     setCompleted((prev) => (prev.includes(lessonId) ? prev : [...prev, lessonId]))
     saveProgress(lessonId, true)
+  }, [])
+
+  const unmarkCompleted = useCallback((lessonId: number) => {
+    setCompleted((prev) => prev.filter((id) => id !== lessonId))
+    saveProgress(lessonId, false, true)
   }, [])
 
   const handleNext = () => {
@@ -247,9 +256,17 @@ export default function LessonsPage() {
               {/* Mark as watched */}
               <div className="mt-4">
                 {isDone(currentLesson.id) ? (
-                  <span className="inline-flex items-center gap-2 text-sm font-medium text-[var(--color-success)]">
-                    ✓ Урок отмечен как просмотренный
-                  </span>
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                    <span className="inline-flex items-center gap-2 text-sm font-medium text-[var(--color-success)]">
+                      ✓ Урок отмечен как просмотренный
+                    </span>
+                    <button
+                      onClick={() => unmarkCompleted(currentLesson.id)}
+                      className="text-sm text-[var(--color-text-muted)] underline-offset-2 hover:text-[var(--color-text)] hover:underline"
+                    >
+                      Отменить
+                    </button>
+                  </div>
                 ) : (
                   <button
                     onClick={handleComplete}

@@ -86,11 +86,21 @@ export default function DashboardPage() {
           {/* Logged-in confirmation */}
           {userName && (
             <div className="mb-8 rounded-2xl border border-[#E5DDD5] bg-white p-5">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#A0845C]">
-                Вы вошли
-              </p>
-              <p className="mt-1 text-lg font-semibold text-[#1A1A1A]">{userName}</p>
-              {userEmail && <p className="text-sm text-[#888]">{userEmail}</p>}
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#A0845C]">
+                    Вы вошли
+                  </p>
+                  <p className="mt-1 text-lg font-semibold text-[#1A1A1A]">{userName}</p>
+                  {userEmail && <p className="text-sm text-[#888]">{userEmail}</p>}
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="shrink-0 text-sm font-medium text-[#A0845C] underline underline-offset-4 transition-colors hover:text-[#1A1A1A]"
+                >
+                  Выйти
+                </button>
+              </div>
               {hasAnyAccess ? (
                 <span className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-[#8FBF9F]/20 px-3 py-1 text-xs font-semibold text-[#5A8F6E]">
                   ✓ Доступ открыт
@@ -128,12 +138,6 @@ export default function DashboardPage() {
                   className="rounded-lg border border-[#D0C8BE] bg-white px-5 py-2.5 text-sm font-medium text-[#1A1A1A] transition-colors hover:bg-[#FAF7F4]"
                 >
                   Проверить ещё раз
-                </button>
-                <button
-                  onClick={handleLogout}
-                  className="px-3 py-2.5 text-sm font-medium text-[#A0845C] underline underline-offset-4 transition-colors hover:text-[#1A1A1A]"
-                >
-                  Выйти
                 </button>
               </div>
             </div>

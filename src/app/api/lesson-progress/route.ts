@@ -87,7 +87,7 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
-    const { lessonId, completed } = body
+    const { lessonId, completed, remove } = body
 
     if (!lessonId) {
       return NextResponse.json(
@@ -125,13 +125,18 @@ export async function POST(req: NextRequest) {
       .eq('user_id', user.id)
       .single()
 
-    const updatedCompleted: number[] = existingProgress?.completed || []
+    let updatedCompleted: number[] = existingProgress?.completed || []
 
     if (completed) {
       // Add lesson to completed if not already there
       if (!updatedCompleted.includes(lessonId)) {
         updatedCompleted.push(lessonId)
       }
+    } else if (remove) {
+      // Explicit un-mark. We key off `remove` (not `completed: false`) because
+      // the "last viewed" tracker also posts `completed: false` and must never
+      // drop a completion.
+      updatedCompleted = updatedCompleted.filter((id) => id !== lessonId)
     }
 
     // Upsert progress using user's auth id
