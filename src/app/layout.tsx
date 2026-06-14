@@ -88,16 +88,38 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+              @font-face {
+                font-family: 'Inter';
+                font-display: swap;
+              }
+              @font-face {
+                font-family: 'Manrope';
+                font-display: swap;
+              }
+              @font-face {
+                font-family: 'Fraunces';
+                font-display: swap;
+              }
+              @font-face {
+                font-family: 'Playfair Display';
+                font-display: swap;
+              }
+            `,
+          }}
+        />
         <link rel="preconnect" href="https://www.google-analytics.com" />
         <link rel="preconnect" href="https://vitals.vercel-analytics.com" />
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         <link rel="dns-prefetch" href="https://vitals.vercel-analytics.com" />
       </head>
       <body>
+        {children}
         <CookieConsent />
         <Analytics />
         <SpeedInsights />
-        {children}
       </body>
     </html>
   )

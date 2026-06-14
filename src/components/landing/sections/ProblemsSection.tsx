@@ -125,7 +125,7 @@ export function ProblemsSection() {
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                   fill
                   loading="lazy"
-                  quality={88}
+                  quality={80}
                   sizes="(max-width: 640px) 85vw, 288px"
                   src={card.image}
                 />

@@ -164,7 +164,7 @@ export function ResultsSection() {
                     src={reel.image}
                     fill
                     sizes="(min-width: 1024px) 210px, 70vw"
-                    quality={90}
+                    quality={85}
                     className="object-contain transition duration-700 group-hover:scale-[1.03]"
                     style={{ objectPosition: reel.objectPosition }}
                   />

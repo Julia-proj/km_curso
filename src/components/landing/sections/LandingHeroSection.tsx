@@ -213,7 +213,7 @@ export function LandingHeroSection() {
             fill
             priority
             fetchPriority="high"
-            quality={85}
+            quality={80}
             sizes="100vw"
             src={mobileHeroImage}
             style={{ objectPosition: "55% 45%" }}
@@ -230,7 +230,7 @@ export function LandingHeroSection() {
             <motion.p
               initial={false}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.4 }}
               className="mb-2 font-sans text-[10px] font-semibold uppercase tracking-[0.42em] text-[#EBC5BE] min-[390px]:mb-3 md:text-[11px]"
             >
               Авторский курс
@@ -239,7 +239,7 @@ export function LandingHeroSection() {
             <motion.h1
               initial={false}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.08, duration: 0.55 }}
+              transition={{ delay: 0.05, duration: 0.45 }}
               className="font-serif text-[1.6rem] font-normal leading-[1.05] tracking-[-0.01em] text-white drop-shadow-[0_2px_18px_rgba(20,12,8,0.32)] min-[360px]:text-[1.8rem] min-[390px]:text-[2.2rem] md:text-[2.5rem]"
             >
               Салонное
@@ -252,7 +252,7 @@ export function LandingHeroSection() {
             <motion.p
               initial={false}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.16, duration: 0.55 }}
+              transition={{ delay: 0.1, duration: 0.45 }}
               className="mt-2 font-sans text-sm leading-snug text-white drop-shadow-[0_2px_14px_rgba(20,12,8,0.22)] min-[390px]:text-base md:text-lg"
             >
               Теперь у тебя дома.
@@ -261,7 +261,7 @@ export function LandingHeroSection() {
             <motion.p
               initial={false}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.22, duration: 0.55 }}
+              transition={{ delay: 0.15, duration: 0.45 }}
               className="mt-3 font-sans text-xs font-normal text-white/84 drop-shadow-[0_2px_14px_rgba(20,12,8,0.24)] min-[390px]:mt-4 min-[390px]:text-sm md:text-sm md:max-w-[28rem]"
             >
               База, которую мы передаём ученицам
@@ -412,7 +412,7 @@ export function LandingHeroSection() {
             fill
             priority
             fetchPriority="high"
-            quality={85}
+            quality={80}
             sizes="42vw"
             src={desktopHeroImage}
             style={{ objectPosition: "center" }}
