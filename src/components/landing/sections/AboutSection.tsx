@@ -45,9 +45,9 @@ export function AboutSection() {
                   className="object-contain object-center p-1.5 md:p-2"
                   fill
                   loading="lazy"
-                  quality={92}
+                  quality={85}
                   sizes="(min-width: 1024px) 320px, (min-width: 768px) 280px, 45vw"
-                  src="/images/foto3.png"
+                  src="/images/foto3.webp"
                 />
               </div>
             </div>
