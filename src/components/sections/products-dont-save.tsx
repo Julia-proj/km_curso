@@ -70,7 +70,7 @@ export function ProductsDontSaveSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-10 md:mt-12 py-6 px-6 md:px-8 bg-surface border-l-4 border-accent rounded-lg"
+          className="mt-10 md:mt-12 py-6 px-6 md:px-8 bg-surface border border-border rounded-lg shadow-sm"
         >
           <p className="text-text text-base md:text-lg leading-relaxed">
             Средства работают. Но только когда ты точно знаешь, что нужно твоим
