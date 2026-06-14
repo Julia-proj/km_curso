@@ -125,8 +125,8 @@ export function ProblemsSection() {
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                   fill
                   loading="lazy"
-                  quality={80}
-                  sizes="(max-width: 640px) 85vw, 288px"
+                  quality={75}
+                  sizes="(max-width: 640px) 85vw, 320px"
                   src={card.image}
                 />
                 <span className="absolute left-3 top-4 bg-white/90 px-2 py-1 font-mono text-xs uppercase tracking-[0.22em] text-[#1A1A1A]">

@@ -45,8 +45,8 @@ export function AboutSection() {
                   className="object-contain object-center p-1.5 md:p-2"
                   fill
                   loading="lazy"
-                  quality={85}
-                  sizes="(min-width: 1024px) 320px, (min-width: 768px) 280px, 45vw"
+                  quality={75}
+                  sizes="(min-width: 1024px) 180px, (min-width: 768px) 170px, 35vw"
                   src="/images/foto3.webp"
                 />
               </div>
@@ -59,8 +59,8 @@ export function AboutSection() {
                   className="object-contain object-center p-1.5 md:p-2"
                   fill
                   loading="lazy"
-                  quality={80}
-                  sizes="(min-width: 1024px) 290px, (min-width: 768px) 250px, 45vw"
+                  quality={75}
+                  sizes="(min-width: 1024px) 180px, (min-width: 768px) 170px, 35vw"
                   src="/images/salon1.webp"
                 />
               </div>
