@@ -41,22 +41,22 @@ export const SIGN_LABELS: Record<string, string> = {
 export const CATEGORY_INFO: Record<LimbaCategory, { label: string; description: string; why: string }> = {
   color: {
     label: 'Color',
-    description: 'Защита цвета и яркость — для окрашенных и осветлённых волос',
+    description: 'Защита цвета и яркость для окрашенных и осветлённых волос',
     why: 'защита цвета и блеск окрашенных волос'
   },
   volume: {
     label: 'Volume',
-    description: 'Объём и плотность — для тонких и ослабленных волос',
+    description: 'Объём и плотность для тонких и ослабленных волос',
     why: 'плотность и восстановление тонких и ослабленных волос'
   },
   hydration: {
     label: 'Hydration',
-    description: 'Увлажнение и восстановление — для сухих, пористых и ломких волос',
+    description: 'Увлажнение и восстановление для сухих, пористых и ломких волос',
     why: 'увлажнение и питание для сухих и пористых волос'
   },
   detox: {
     label: 'Detox',
-    description: 'Детокс кожи головы — глубокое очищение и баланс',
+    description: 'Детокс кожи головы: глубокое очищение и баланс',
     why: 'глубокое очищение и обновление'
   }
 }
@@ -69,6 +69,10 @@ export const PRICES = {
   heatProtection: 25,
   detoxShampoo: 20,
   scalpPeel: 25,
+  peptideMask: 25,
+  mangoCream: 35,
+  glazeCream: 25,
+  goldenHour: 25,
 } as const
 
 export const LIMBA_PRODUCTS: LimbaProduct[] = [
@@ -191,6 +195,38 @@ export const LIMBA_PRODUCTS: LimbaProduct[] = [
     description: 'Защита от фена, утюжка и стайлера. Разглаживает и питает. Универсальный шаг для всех.',
     price_eur: PRICES.heatProtection,
     image: '/images/limba/thermo.png',
+    category: 'universal',
+  },
+  {
+    id: 'limba-glaze-cream',
+    name: 'Крем-термозащита Limba Thermal Protection Glaze',
+    description: 'Крем-термозащита перед сушкой: облегчает расчёсывание и укладку, защищает от термического и механического воздействия. Масла ши и кокоса, гидролизованный кератин и витамины для плотности и блеска без утяжеления.',
+    price_eur: PRICES.glazeCream,
+    image: '/images/limba/glaze_cream.png',
+    category: 'universal',
+  },
+  {
+    id: 'limba-mango-cream',
+    name: 'Крем Limba Organic Line Mango',
+    description: 'Несмываемый питательный крем на влажные волосы перед сушкой. Масла авокадо, манго и арган, гидролизаты и керамиды. Удерживает влагу, разглаживает, защищает от термо и механики, уменьшает пушение.',
+    price_eur: PRICES.mangoCream,
+    image: '/images/limba/mango.png',
+    category: 'universal',
+  },
+  {
+    id: 'limba-golden-hour',
+    name: 'Спрей-финиш Limba Glance Golden Hour',
+    description: 'Завершающий уход после укладки: блеск, гладкость, защита длины от пересушивания и пушения, более ухоженный вид волос.',
+    price_eur: PRICES.goldenHour,
+    image: '/images/limba/golden_thermo.jpg',
+    category: 'universal',
+  },
+  {
+    id: 'limba-peptide-mask',
+    name: 'Пептидная маска Limba Instant Transformation',
+    description: 'Пептидная маска (можно как несмываемый уход на влажные волосы): уплотняет поверхность волоса, приглаживает кутикулу, повышает прочность и создаёт тонкую защитную плёнку без перегруза тонкой структуры.',
+    price_eur: PRICES.peptideMask,
+    image: '/images/limba/mask_peptide.png',
     category: 'universal',
   },
 ]

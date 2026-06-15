@@ -280,6 +280,14 @@ export async function POST(request: NextRequest) {
       summary: diagnosis.summary,
       recommendedCategory: diagnosis.recommended_limba_category,
       secondaryCategory: diagnosis.secondary_limba_category ?? null,
+      // Visual assessment — consumed by the care page to build the plan.
+      hairForm: diagnosis.hair_form,
+      porosity: diagnosis.hair_classification.apparent_porosity,
+      density: diagnosis.hair_classification.apparent_density,
+      thicknessCause: diagnosis.hair_classification.thickness_cause,
+      deficits: diagnosis.deficits,
+      overMoistureRisk: diagnosis.over_moisture_risk,
+      irreversibleEnds: diagnosis.irreversible_ends,
     });
 
   } catch (error) {

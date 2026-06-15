@@ -5,6 +5,17 @@
 
 export type LimbaCategory = 'color' | 'volume' | 'detox' | 'hydration'
 
+export type HairForm = 'straight' | 'wavy' | 'curly' | 'unknown'
+export type Porosity = 'low' | 'medium' | 'high' | 'unknown'
+export type Density = 'thin' | 'medium' | 'thick' | 'unknown'
+export type ThicknessCause = 'genetic' | 'damage' | 'mixed' | 'unknown'
+
+export interface HairDeficits {
+  hydration: boolean
+  lipids: boolean
+  protein: boolean
+}
+
 export interface SavedDiagnosis {
   damageLevel: number
   signs: string[]
@@ -13,6 +24,14 @@ export interface SavedDiagnosis {
   /** Limba line the AI recommends from the photo + quiz (care page uses it). */
   recommendedCategory?: LimbaCategory | null
   secondaryCategory?: LimbaCategory | null
+  /** Visual assessment from the photo — drives the care plan together with the quiz. */
+  hairForm?: HairForm
+  porosity?: Porosity
+  density?: Density
+  thicknessCause?: ThicknessCause
+  deficits?: HairDeficits
+  overMoistureRisk?: boolean
+  irreversibleEnds?: boolean
   savedAt: string
 }
 

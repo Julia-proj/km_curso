@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import imageCompression from "browser-image-compression"
 import { PostPaymentNav } from "@/components/Navigation"
 import { useQuizStore } from "@/stores/quiz-store"
-import { saveDiagnosis } from "@/lib/progress"
+import { saveDiagnosis, type HairForm, type Porosity, type Density, type ThicknessCause, type HairDeficits } from "@/lib/progress"
 import { ensureHeatProtectionAdvice } from "@/lib/recommendations/pick-products"
 import { createClient } from "@/lib/supabase/client"
 import { isDevBypass } from "@/lib/dev-bypass"
@@ -19,6 +19,29 @@ interface DiagnosisResult {
   summary: string
   recommendedCategory?: LimbaCategory | null
   secondaryCategory?: LimbaCategory | null
+  hairForm?: HairForm
+  porosity?: Porosity
+  density?: Density
+  thicknessCause?: ThicknessCause
+  deficits?: HairDeficits
+  overMoistureRisk?: boolean
+  irreversibleEnds?: boolean
+}
+
+const FORM_LABEL: Record<string, string> = { straight: "Прямые", wavy: "Волнистые", curly: "Кудрявые" }
+const POROSITY_LABEL: Record<string, string> = { low: "Низкая пористость", medium: "Средняя пористость", high: "Высокая пористость" }
+const DENSITY_LABEL: Record<string, string> = { thin: "Тонкая структура", medium: "Средняя плотность", thick: "Плотная структура" }
+
+/** Visual chips from the AI photo assessment, skipping unknowns. */
+function visualChips(r: DiagnosisResult): string[] {
+  const chips: string[] = []
+  if (r.hairForm && r.hairForm !== "unknown") chips.push(FORM_LABEL[r.hairForm])
+  if (r.porosity && r.porosity !== "unknown") chips.push(POROSITY_LABEL[r.porosity])
+  if (r.density && r.density !== "unknown") chips.push(DENSITY_LABEL[r.density])
+  if (r.deficits?.hydration) chips.push("Дефицит влаги")
+  if (r.deficits?.lipids) chips.push("Дефицит липидов")
+  if (r.deficits?.protein) chips.push("Дефицит протеинов")
+  return chips
 }
 
 export default function DiagnostikaPage() {
@@ -325,6 +348,30 @@ export default function DiagnostikaPage() {
                 </p>
               </div>
             </div>
+
+            {/* Visual assessment chips (AI photo) */}
+            {visualChips(result).length > 0 && (
+              <div className="bg-[var(--card)] rounded-2xl p-6 border border-[var(--border)] mb-6">
+                <p className="text-sm uppercase tracking-wider text-[var(--muted-foreground)] mb-3">
+                  Что показал AI-анализ фото
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {visualChips(result).map((chip, i) => (
+                    <span
+                      key={i}
+                      className="rounded-full bg-[var(--sand)] px-3 py-1 text-sm text-[var(--foreground)]"
+                    >
+                      {chip}
+                    </span>
+                  ))}
+                </div>
+                {result.irreversibleEnds && (
+                  <p className="mt-3 text-sm text-[var(--muted-foreground)]">
+                    Концы сильно повреждены, их лучше постепенно срезать. Уход защитит остальную длину.
+                  </p>
+                )}
+              </div>
+            )}
 
             {/* What I See */}
             <div className="bg-[var(--card)] rounded-2xl p-8 border border-[var(--border)] mb-6">
