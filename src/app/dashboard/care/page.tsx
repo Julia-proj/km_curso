@@ -26,7 +26,7 @@ export default function CarePage() {
   // Funnel gating runs after mount so persisted localStorage is available.
   useEffect(() => {
     if (!isQuizCompleted()) {
-      router.replace("/quiz")
+      router.replace("/quiz?next=/dashboard/diagnostika")
       return
     }
     const saved = getDiagnosis()

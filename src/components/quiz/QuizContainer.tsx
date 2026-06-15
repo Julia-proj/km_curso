@@ -15,7 +15,12 @@ export function QuizContainer() {
 
   useEffect(() => {
     if (currentStep >= total) {
-      router.push('/result')
+      // The quiz is shared by the marketing funnel (→ /result) and the
+      // dashboard funnel, which passes ?next=/dashboard/... to return there
+      // after the test. Only internal paths are honoured (no open redirects).
+      const next = new URLSearchParams(window.location.search).get('next')
+      const dest = next && next.startsWith('/') ? next : '/result'
+      router.push(dest)
     }
   }, [currentStep, total, router])
 

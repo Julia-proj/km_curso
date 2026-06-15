@@ -243,8 +243,8 @@ export default function LessonsPage() {
                 />
               </div>
 
-              {/* Private access note — shown only on lesson 2 (the first course-only video) so it doesn't distract every time */}
-              {currentLesson.id === 2 && (
+              {/* Private access note — shown on every course-only video. Lesson 1 is the free diagnostic clip (also public at /lesson), so it's excluded. */}
+              {!isFirstLesson && (
                 <div className="mt-3 flex items-start gap-1.5 px-1 text-[11px] text-[var(--color-text-muted)] leading-relaxed">
                   <LockIcon size={13} className="mt-px flex-shrink-0 opacity-60" />
                   <span>

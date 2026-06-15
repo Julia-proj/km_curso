@@ -1,12 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { PrePaymentNav } from '@/components/Navigation'
 import { useQuizStore } from '@/stores/quiz-store'
 import { quizQuestions } from '@/config/quiz-data'
-import { hasDiagnosis } from '@/lib/progress'
 
 function getFeedback(questionId: string, optionId: string): string {
   const question = quizQuestions.find((q) => q.id === questionId)
@@ -32,12 +31,6 @@ export default function ResultPage() {
   const router = useRouter()
   const { answers } = useQuizStore()
   const hasAnswers = Object.keys(answers).length > 0
-
-  // Detect an existing AI diagnosis after mount (localStorage is client-only).
-  const [aiDone, setAiDone] = useState(false)
-  useEffect(() => {
-    setAiDone(hasDiagnosis())
-  }, [])
 
   useEffect(() => {
     if (!hasAnswers) {

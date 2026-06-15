@@ -28,22 +28,23 @@ export default function DiagnostikaPage() {
 
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null)
   const [hasPaidCourse, setHasPaidCourse] = useState<boolean | null>(null)
-  // True when the free quiz was never taken (checked after mount — the quiz
-  // lives in localStorage). Analysis still works by photo alone.
-  const [quizMissing, setQuizMissing] = useState(false)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [result, setResult] = useState<DiagnosisResult | null>(null)
   const [error, setError] = useState<string | null>(null)
 
-  useEffect(() => {
-    setQuizMissing(Object.keys(useQuizStore.getState().answers).length === 0)
-  }, [])
-
   // Auth and course check - requires paid course access
   useEffect(() => {
     const checkAuth = async () => {
+      // Rule: take the test before the AI analysis — the analysis combines the
+      // test answers with the photo, and a fixed order keeps the funnel simple.
+      // After the quiz the user is returned here via ?next=.
+      if (!useQuizStore.getState().isCompleted()) {
+        router.replace("/quiz?next=/dashboard/diagnostika")
+        return
+      }
+
       const supabase = createClient()
       if (!supabase) {
         // Auth not configured, allow access for now
@@ -199,9 +200,7 @@ export default function DiagnostikaPage() {
                 AI-анализ волос
               </h2>
               <p className="text-lg text-[var(--muted-foreground)]">
-                {quizMissing
-                  ? "Загрузи фото. AI оценит состояние волос и предложит индивидуальный уход Limba."
-                  : "Загрузи фото. AI объединит его с ответами твоего теста и предложит индивидуальный уход Limba."}
+                Загрузи фото. AI объединит его с ответами твоего теста и предложит индивидуальный уход Limba.
               </p>
               <p className="mt-2 text-sm text-[var(--muted-foreground)]">
                 Уход Limba предлагается на выбор. Если хочешь, подбирай уход сама по
@@ -213,18 +212,6 @@ export default function DiagnostikaPage() {
                   Снимай при дневном свете, волосы сухие и распущенные.
                 </p>
               </div>
-
-              {quizMissing && (
-                <div className="mt-3 rounded-xl border border-[var(--border)] bg-[var(--card)] p-4">
-                  <p className="text-sm text-[var(--foreground)]">
-                    Рекомендуем сначала пройти бесплатный тест, чтобы результат был
-                    максимально точным.{" "}
-                    <a href="/quiz" className="font-semibold underline underline-offset-2">
-                      Пройти тест →
-                    </a>
-                  </p>
-                </div>
-              )}
             </div>
 
             {!previewUrl ? (
