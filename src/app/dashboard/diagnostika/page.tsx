@@ -51,6 +51,9 @@ export default function DiagnostikaPage() {
 
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null)
   const [hasPaidCourse, setHasPaidCourse] = useState<boolean | null>(null)
+  // Quiz not done (or its answers were lost): show an explainer instead of
+  // dropping the user straight into the test with no context.
+  const [needsQuiz, setNeedsQuiz] = useState(false)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const [isAnalyzing, setIsAnalyzing] = useState(false)
@@ -61,10 +64,11 @@ export default function DiagnostikaPage() {
   useEffect(() => {
     const checkAuth = async () => {
       // Rule: take the test before the AI analysis — the analysis combines the
-      // test answers with the photo, and a fixed order keeps the funnel simple.
-      // After the quiz the user is returned here via ?next=.
+      // test answers with the photo. If it's not done (or the answers were
+      // lost), show an explainer screen rather than silently bouncing into the
+      // quiz, which confused people. The quiz returns here via ?next=.
       if (!useQuizStore.getState().isCompleted()) {
-        router.replace("/quiz?next=/dashboard/diagnostika")
+        setNeedsQuiz(true)
         return
       }
 
@@ -191,6 +195,61 @@ export default function DiagnostikaPage() {
   const handleSelectCare = () => {
     // Send the user to the personalised Limba care page (funnel-gated)
     router.push("/dashboard/care")
+  }
+
+  // Test not passed yet (or its answers were lost): explain why it's needed
+  // before letting them upload a photo, then send them to the quiz.
+  if (needsQuiz) {
+    return (
+      <div className="min-h-screen bg-[var(--background)]">
+        <header className="border-b border-[var(--border)] bg-[var(--card)]">
+          <div className="km-container py-4">
+            <PostPaymentNav showBack={true} />
+          </div>
+        </header>
+
+        <main className="km-container py-12">
+          <div className="max-w-xl mx-auto">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-8">
+              <span className="inline-flex items-center rounded-full bg-[var(--sand)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--accent)]">
+                Шаг 1 из 2
+              </span>
+
+              <h2 className="mt-4 text-2xl md:text-3xl font-semibold text-[var(--foreground)]">
+                Сначала пройди короткий тест
+              </h2>
+
+              <p className="mt-3 text-[var(--muted-foreground)] leading-relaxed">
+                AI-анализ совмещает фото с ответами теста: тест рассказывает о
+                привычках (как часто моешь, чем укладываешь, окрашены ли волосы),
+                а фото показывает структуру. Вместе подбор получается точным. Без
+                теста рекомендации будут общими.
+              </p>
+
+              <p className="mt-3 text-sm text-[var(--muted-foreground)] leading-relaxed">
+                Если ты уже проходила тест, но он не сохранился, просто пройди
+                ещё раз, это займёт 1-2 минуты. После теста ты вернёшься сюда
+                автоматически.
+              </p>
+
+              <button
+                onClick={() => router.push("/quiz?next=/dashboard/diagnostika")}
+                className="mt-6 km-cta km-cta--dark w-full"
+              >
+                <span>Пройти тест</span>
+              </button>
+
+              <button
+                onClick={() => router.push("/dashboard")}
+                className="mt-3 w-full text-center text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] underline-offset-2 hover:underline py-2"
+              >
+                В кабинет
+              </button>
+            </div>
+          </div>
+        </main>
+      </div>
+    )
   }
 
   // Loading state while checking auth
