@@ -113,11 +113,11 @@ export function WhatYouGetSection({
                 <div className="flex shrink-0 justify-center">
                   <Image
                     alt="Меню курса: видео-уроки, AI-диагностика, методички и закрытый Telegram"
-                    src="/images/hero_screen_menu.webp"
+                    src="/images/hero_screen_menu.jpg"
                     width={560}
                     height={1024}
                     loading="lazy"
-                    quality={90}
+                    quality={85}
                     className="h-auto w-auto max-h-[240px] rounded-lg shadow-sm sm:max-h-[280px] md:max-h-[260px]"
                     sizes="(max-width: 768px) 50vw, 200px"
                   />
