@@ -214,38 +214,6 @@ export default function DashboardPage() {
               />
             )}
 
-            {/* Bonus - share the course on Instagram to unlock an extra lesson */}
-            {hasFullCourse && isBonusVisible() && (
-              <SuccessActionCard
-                icon={
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#A0845C"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <polyline points="20 12 20 22 4 22 4 12" />
-                    <rect x="2" y="7" width="20" height="5" />
-                    <line x1="12" y1="22" x2="12" y2="7" />
-                    <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" />
-                    <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
-                  </svg>
-                }
-                label={featureFlags.bonusStatus === "soon" ? "Бонусы — скоро" : "Бонусы"}
-                description={
-                  featureFlags.bonusStatus === "soon"
-                    ? "Скоро: поделись курсом и получи урок про пилинги в подарок"
-                    : "Поделись курсом в сторис, отметь нас и получи бонусный урок"
-                }
-                href="/dashboard/bonus"
-              />
-            )}
-
             {/* Downloads - for both course and guide */}
             {(hasMethodichka || hasFullCourse) && (
               <SuccessActionCard
@@ -293,6 +261,39 @@ export default function DashboardPage() {
                 description="Присоединяйся к закрытому каналу с дополнительными материалами"
                 href={TELEGRAM_PRIVATE_INVITE}
                 external
+              />
+            )}
+
+            {/* Bonus - share the course on Instagram to unlock an extra lesson.
+                Kept last in the menu so the main course actions come first. */}
+            {hasFullCourse && isBonusVisible() && (
+              <SuccessActionCard
+                icon={
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#A0845C"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <polyline points="20 12 20 22 4 22 4 12" />
+                    <rect x="2" y="7" width="20" height="5" />
+                    <line x1="12" y1="22" x2="12" y2="7" />
+                    <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" />
+                    <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
+                  </svg>
+                }
+                label={featureFlags.bonusStatus === "soon" ? "Бонусы (скоро)" : "Бонусы"}
+                description={
+                  featureFlags.bonusStatus === "soon"
+                    ? "Скоро: поделись курсом и получи урок про пилинги в подарок"
+                    : "Поделись курсом в сторис, отметь нас и получи бонусный урок"
+                }
+                href="/dashboard/bonus"
               />
             )}
 

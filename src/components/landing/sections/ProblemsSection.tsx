@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import Image from "next/image"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { type PointerEvent, useCallback, useEffect, useRef, useState } from "react"
 
 import { fadeUp } from "@/lib/animations"
 
@@ -97,6 +97,36 @@ export function ProblemsSection() {
     cards[targetIndex].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" })
   }
 
+  // Desktop drag-to-scroll: grab the row with the mouse and drag to browse the
+  // images directly, instead of clicking the arrow one card at a time. Touch
+  // is left to the browser's native swipe (already smooth on mobile).
+  const drag = useRef({ active: false, startX: 0, startScroll: 0 })
+
+  const onPointerDown = (e: PointerEvent<HTMLDivElement>) => {
+    const scroller = scrollerRef.current
+    if (!scroller || e.pointerType === "touch" || e.button !== 0) return
+    drag.current = { active: true, startX: e.clientX, startScroll: scroller.scrollLeft }
+    // Free movement while dragging; snap is re-applied on release so the row
+    // settles to the nearest card.
+    scroller.style.scrollSnapType = "none"
+    scroller.setPointerCapture(e.pointerId)
+  }
+
+  const onPointerMove = (e: PointerEvent<HTMLDivElement>) => {
+    const scroller = scrollerRef.current
+    if (!scroller || !drag.current.active) return
+    scroller.scrollLeft = drag.current.startScroll - (e.clientX - drag.current.startX)
+  }
+
+  const endDrag = (e: PointerEvent<HTMLDivElement>) => {
+    const scroller = scrollerRef.current
+    if (!scroller || !drag.current.active) return
+    drag.current.active = false
+    scroller.style.scrollSnapType = ""
+    try { scroller.releasePointerCapture(e.pointerId) } catch {}
+    updateCarouselState()
+  }
+
   return (
     <section className="bg-[#F5F0EB] py-12 md:py-20">
       <div className="mx-auto max-w-6xl">
@@ -110,7 +140,11 @@ export function ProblemsSection() {
         <div
           ref={scrollerRef}
           onScroll={updateCarouselState}
-          className="no-scrollbar flex snap-x snap-mandatory gap-3 overflow-x-auto overflow-y-hidden px-5 pb-4 [scroll-padding-inline:1.25rem] sm:gap-4 sm:px-6 sm:pb-3"
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={endDrag}
+          onPointerCancel={endDrag}
+          className="no-scrollbar flex snap-x snap-mandatory select-none gap-3 overflow-x-auto overflow-y-hidden px-5 pb-4 [scroll-padding-inline:1.25rem] sm:gap-4 sm:px-6 sm:pb-3 md:cursor-grab md:active:cursor-grabbing"
         >
           {problemCards.map((card, index) => (
             <motion.article
@@ -123,6 +157,7 @@ export function ProblemsSection() {
                 <Image
                   alt={card.title}
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  draggable={false}
                   fill
                   loading="lazy"
                   quality={75}

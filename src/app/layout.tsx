@@ -49,7 +49,14 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
+  // Resolves social-share image URLs to an absolute origin. Falls back to the
+  // canonical domain so link previews never point at localhost when the env
+  // vars are missing in production.
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    process.env.NEXT_PUBLIC_URL ||
+    'https://www.hairlab.es'
+  ),
   title: 'Елена Александрова. Салонное восстановление волос дома',
   description:
     'Авторский курс по восстановлению волос в домашних условиях. Подбор составов, протоколы и гайды от практика с 6+ лет опыта.',
@@ -60,8 +67,9 @@ export const metadata: Metadata = {
     description:
       'Авторский курс по восстановлению волос в домашних условиях. Подбор составов, протоколы и гайды от практика с 6+ лет опыта.',
     type: 'website',
-    images: ['/images/hero.PNG'],
+    siteName: 'HAIRLAB',
     locale: 'ru_RU',
+    // og image comes from src/app/opengraph-image.tsx (branded card).
   },
   robots: {
     index: true,
