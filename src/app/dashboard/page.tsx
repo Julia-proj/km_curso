@@ -9,6 +9,7 @@ import { TELEGRAM_PRIVATE_INVITE } from "@/lib/constants"
 import { createClient } from "@/lib/supabase/client"
 import { isDevBypass } from "@/lib/dev-bypass"
 import { fetchProfileAccess } from "@/lib/profile-access"
+import { featureFlags, isBonusVisible } from "@/config/feature-flags"
 
 export default function DashboardPage() {
   const router = useRouter()
@@ -17,6 +18,7 @@ export default function DashboardPage() {
   const [hasMethodichka, setHasMethodichka] = useState(false)
   const [userName, setUserName] = useState<string | null>(null)
   const [userEmail, setUserEmail] = useState<string | null>(null)
+  const [isAdmin, setIsAdmin] = useState(false)
   const [refreshKey, setRefreshKey] = useState(0)
 
   useEffect(() => {
@@ -58,6 +60,16 @@ export default function DashboardPage() {
     }
     checkAccess()
   }, [router, refreshKey])
+
+  // Is the signed-in user an admin? (Server decides — see /api/admin/whoami.)
+  useEffect(() => {
+    let active = true
+    fetch("/api/admin/whoami")
+      .then((r) => (r.ok ? r.json() : { isAdmin: false }))
+      .then((d) => { if (active) setIsAdmin(!!d.isAdmin) })
+      .catch(() => {})
+    return () => { active = false }
+  }, [refreshKey])
 
   const handleLogout = async () => {
     const supabase = createClient()
@@ -202,6 +214,38 @@ export default function DashboardPage() {
               />
             )}
 
+            {/* Bonus - share the course on Instagram to unlock an extra lesson */}
+            {hasFullCourse && isBonusVisible() && (
+              <SuccessActionCard
+                icon={
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#A0845C"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <polyline points="20 12 20 22 4 22 4 12" />
+                    <rect x="2" y="7" width="20" height="5" />
+                    <line x1="12" y1="22" x2="12" y2="7" />
+                    <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" />
+                    <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
+                  </svg>
+                }
+                label={featureFlags.bonusStatus === "soon" ? "Бонусы — скоро" : "Бонусы"}
+                description={
+                  featureFlags.bonusStatus === "soon"
+                    ? "Скоро: поделись курсом и получи урок про пилинги в подарок"
+                    : "Поделись курсом в сторис, отметь нас и получи бонусный урок"
+                }
+                href="/dashboard/bonus"
+              />
+            )}
+
             {/* Downloads - for both course and guide */}
             {(hasMethodichka || hasFullCourse) && (
               <SuccessActionCard
@@ -249,6 +293,31 @@ export default function DashboardPage() {
                 description="Присоединяйся к закрытому каналу с дополнительными материалами"
                 href={TELEGRAM_PRIVATE_INVITE}
                 external
+              />
+            )}
+
+            {/* Admin only - bonus claim review */}
+            {isAdmin && (
+              <SuccessActionCard
+                icon={
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#A0845C"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M9 11l3 3L22 4" />
+                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                  </svg>
+                }
+                label="Заявки на бонус (админ)"
+                description="Проверить отметки в Instagram и открыть бонусный урок"
+                href="/dashboard/admin/bonus"
               />
             )}
           </div>
