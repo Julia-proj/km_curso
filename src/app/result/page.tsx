@@ -1,11 +1,12 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { PrePaymentNav } from '@/components/Navigation'
 import { useQuizStore } from '@/stores/quiz-store'
 import { quizQuestions } from '@/config/quiz-data'
+import { createClient } from '@/lib/supabase/client'
 
 function getFeedback(questionId: string, optionId: string): string {
   const question = quizQuestions.find((q) => q.id === questionId)
@@ -32,11 +33,30 @@ export default function ResultPage() {
   const { answers } = useQuizStore()
   const hasAnswers = Object.keys(answers).length > 0
 
+  // Logged-in users took the test from inside the cabinet — send them back to
+  // the cabinet instead of the marketing "buy a plan" CTAs.
+  const [loggedIn, setLoggedIn] = useState(false)
+
   useEffect(() => {
     if (!hasAnswers) {
       router.replace('/quiz')
     }
   }, [hasAnswers, router])
+
+  useEffect(() => {
+    let active = true
+    const supabase = createClient()
+    if (!supabase) return
+    supabase.auth
+      .getUser()
+      .then(({ data }: { data: { user: unknown | null } }) => {
+        if (active) setLoggedIn(!!data.user)
+      })
+      .catch(() => {})
+    return () => {
+      active = false
+    }
+  }, [])
 
   if (!hasAnswers) return null
 
@@ -153,44 +173,67 @@ export default function ResultPage() {
               color: "var(--color-ink)",
             }}
           >
-            Следующий шаг: посмотри бесплатный урок в подарок. А после выбора тарифа
-            в личном кабинете тебя ждёт AI-анализ по фото волос и персональный подбор ухода.
+            {loggedIn
+              ? "Следующий шаг: вернись в личный кабинет, там AI-анализ по фото волос и персональный подбор ухода."
+              : "Следующий шаг: посмотри бесплатный урок в подарок. А после выбора тарифа в личном кабинете тебя ждёт AI-анализ по фото волос и персональный подбор ухода."}
           </p>
         </div>
 
         <div className="flex flex-col items-center gap-4">
-          <Link
-            href="/lesson"
-            className="inline-block text-center"
-            style={{
-              background: "var(--color-accent)",
-              padding: "1rem 2rem",
-              fontSize: "0.875rem",
-              fontWeight: 600,
-              letterSpacing: "0.11em",
-              textTransform: "uppercase",
-              color: "white",
-              borderRadius: "2px",
-              transition: "background-color 0.2s",
-            }}
-          >
-            Смотреть бесплатный урок
-          </Link>
+          {loggedIn ? (
+            <Link
+              href="/dashboard"
+              className="inline-block text-center"
+              style={{
+                background: "var(--color-accent)",
+                padding: "1rem 2rem",
+                fontSize: "0.875rem",
+                fontWeight: 600,
+                letterSpacing: "0.11em",
+                textTransform: "uppercase",
+                color: "white",
+                borderRadius: "2px",
+                transition: "background-color 0.2s",
+              }}
+            >
+              В личный кабинет
+            </Link>
+          ) : (
+            <>
+              <Link
+                href="/lesson"
+                className="inline-block text-center"
+                style={{
+                  background: "var(--color-accent)",
+                  padding: "1rem 2rem",
+                  fontSize: "0.875rem",
+                  fontWeight: 600,
+                  letterSpacing: "0.11em",
+                  textTransform: "uppercase",
+                  color: "white",
+                  borderRadius: "2px",
+                  transition: "background-color 0.2s",
+                }}
+              >
+                Смотреть бесплатный урок
+              </Link>
 
-          <Link
-            href={nextHref}
-            className="inline-block text-center text-sm transition-colors px-6 py-3"
-            style={{
-              color: "var(--color-ink)",
-              border: "1px solid var(--color-ink)",
-              borderRadius: "2px",
-              fontWeight: 600,
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-            }}
-          >
-            {nextLabel}
-          </Link>
+              <Link
+                href={nextHref}
+                className="inline-block text-center text-sm transition-colors px-6 py-3"
+                style={{
+                  color: "var(--color-ink)",
+                  border: "1px solid var(--color-ink)",
+                  borderRadius: "2px",
+                  fontWeight: 600,
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                }}
+              >
+                {nextLabel}
+              </Link>
+            </>
+          )}
 
           <button
             onClick={() => {

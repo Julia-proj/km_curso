@@ -11,7 +11,7 @@ export default function QuizPage() {
   return (
     <main className="min-h-screen bg-[#FAF7F4] flex flex-col items-center justify-center px-4 py-16">
       <div className="w-full max-w-lg">
-        <PrePaymentNav showBack={true} />
+        <PrePaymentNav showBack={false} />
         <div className="text-center mb-10">
           <span className="text-base font-semibold text-[#D29B9B] tracking-wide">
             HAIRLAB

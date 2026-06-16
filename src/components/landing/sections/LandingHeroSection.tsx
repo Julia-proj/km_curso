@@ -224,7 +224,7 @@ export function LandingHeroSection() {
   const ctaHref = loggedIn ? "/dashboard" : guideLink
   const ctaLabel = loggedIn ? "Войти в кабинет" : "Методичка за 12€"
   const ctaColor = loggedIn
-    ? "bg-[#5A8F6E] hover:bg-[#4F7E60]"
+    ? "bg-[#1A1A1A] hover:bg-[#2A2A2A]"
     : "bg-[#AD5F59] hover:bg-[#9C544E]"
 
   return (
