@@ -11,6 +11,7 @@ interface QuizQuestionProps {
 }
 
 export function QuizQuestion({ question, selectedOptionId, onSelect }: QuizQuestionProps) {
+  const hasImages = question.options.some((o) => o.image)
   return (
     <motion.div
       key={question.id}
@@ -23,11 +24,18 @@ export function QuizQuestion({ question, selectedOptionId, onSelect }: QuizQuest
       <h2 className="text-xl sm:text-2xl font-semibold text-[#1A1A1A] leading-snug">
         {question.question}
       </h2>
-      <div className="flex flex-col gap-3 mt-1 sm:gap-4">
+      <div
+        className={
+          hasImages
+            ? 'grid grid-cols-3 gap-2 mt-1 sm:gap-3'
+            : 'flex flex-col gap-3 mt-1 sm:gap-4'
+        }
+      >
         {question.options.map((option) => (
           <QuizOption
             key={option.id}
             label={option.label}
+            image={option.image}
             selected={selectedOptionId === option.id}
             onClick={() => onSelect(option.id)}
           />

@@ -66,7 +66,10 @@ export default function CarePage() {
 
   const view = useMemo(() => {
     if (!plan) return null
-    const setProducts = getProductsByIds([plan.shampoo, plan.conditioner, ...plan.masks])
+    // Main set holds only the recommended (главная) mask; the optional masks are
+    // a soft alternation upgrade and stay out of the main total.
+    const setProducts = getProductsByIds([plan.shampoo, plan.conditioner, plan.primaryMask])
+    const optionalMaskProducts = getProductsByIds(plan.optionalMasks)
     const leaveInProducts = getProductsByIds(plan.leaveIns)
     const detoxProducts = getProductsByIds(plan.detoxIds)
     const setTotal = setProducts.reduce((a, p) => a + p.price_eur, 0)
@@ -74,6 +77,7 @@ export default function CarePage() {
     const detoxTotal = detoxProducts.reduce((a, p) => a + p.price_eur, 0)
     return {
       setProducts,
+      optionalMaskProducts,
       leaveInProducts,
       detoxProducts,
       setTotal,
@@ -210,6 +214,37 @@ export default function CarePage() {
           </section>
         )}
 
+        {/* Optional second mask — alternation upgrade, shown softly */}
+        {view.optionalMaskProducts.length > 0 && (
+          <section className="mt-8">
+            <div className="mb-1 inline-flex rounded-sm bg-[#C4956A]/15 px-3 py-1.5">
+              <span className="font-sans text-xs font-semibold uppercase tracking-[0.12em] text-[#C4956A]">
+                по желанию · чтобы усилить
+              </span>
+            </div>
+            <h2 className="mb-2 mt-3 font-hero-face text-xl font-semibold text-[#1A1A1A]">
+              Можно добавить для чередования
+            </h2>
+            <p className="mb-4 font-body text-sm leading-relaxed text-[#666]">
+              Основная маска уже закрывает главный запрос. Если захочешь усилить
+              уход, добавь вторую и чередуй её с основной через мытьё, чтобы
+              закрыть и другой дефицит.
+            </p>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {view.optionalMaskProducts.map((p) => (
+                <ProductCard
+                  key={p.id}
+                  id={p.id}
+                  name={p.name}
+                  description={p.description}
+                  priceEur={p.price_eur}
+                  imagePath={p.image}
+                />
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* Leave-ins / finish */}
         {view.leaveInProducts.length > 0 && (
           <section className="mt-8">
@@ -235,19 +270,21 @@ export default function CarePage() {
           </section>
         )}
 
-        {/* Optional scalp detox add-ons */}
+        {/* Scalp detox — green shampoo for everyone, peel as an oily-scalp add-on */}
         {view.detoxProducts.length > 0 && (
           <section className="mt-8">
             <div className="mb-1 inline-flex rounded-sm bg-[#8FBF9F]/20 px-3 py-1.5">
               <span className="font-sans text-xs font-semibold uppercase tracking-[0.12em] text-[#5A8F6E]">
-                по желанию · для кожи головы
+                для кожи головы
               </span>
             </div>
             <h2 className="mb-2 mt-3 font-hero-face text-xl font-semibold text-[#1A1A1A]">
-              Дополнительно при жирной коже головы
+              Детокс кожи головы
             </h2>
             <p className="mb-4 font-body text-sm leading-relaxed text-[#666]">
-              Можно взять сразу или начать с чего-то одного, например с пилинга.
+              {plan.detoxAdvice}
+              {plan.detoxIds.includes("limba-scalp-peel") &&
+                " Пилинг-скраб можно добавить при жирной коже головы."}
             </p>
             <div className="grid gap-3 sm:grid-cols-2">
               {view.detoxProducts.map((p) => (

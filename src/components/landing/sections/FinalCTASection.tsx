@@ -27,7 +27,7 @@ export function FinalCTASection() {
             <ArrowRightIcon size={16} />
           </a>
           <p className="mt-6 font-sans text-xs tracking-[0.18em] text-white/30">
-            10 вопросов · без регистрации · персональные рекомендации
+            12 вопросов · без регистрации · персональные рекомендации
           </p>
         </motion.div>
       </div>

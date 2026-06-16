@@ -1,9 +1,11 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 
 import { getPaymentLink } from "@/config/payments"
+import { createClient } from "@/lib/supabase/client"
 import { HeroAnimatedBackground } from "@/components/HeroAnimatedBackground"
 
 const mobileHeroImage = "/images/newhero.webp"
@@ -201,6 +203,30 @@ function HeroProductPreview() {
 export function LandingHeroSection() {
   const guideLink = getPaymentLink("guide")
 
+  // Returning, signed-in visitors get a "go to cabinet" CTA instead of the
+  // "buy the guide" button (a different colour makes it visually clear).
+  const [loggedIn, setLoggedIn] = useState(false)
+  useEffect(() => {
+    let active = true
+    const supabase = createClient()
+    if (!supabase) return
+    supabase.auth
+      .getUser()
+      .then(({ data }: { data: { user: unknown | null } }) => {
+        if (active) setLoggedIn(!!data.user)
+      })
+      .catch(() => {})
+    return () => {
+      active = false
+    }
+  }, [])
+
+  const ctaHref = loggedIn ? "/dashboard" : guideLink
+  const ctaLabel = loggedIn ? "Войти в кабинет" : "Методичка за 12€"
+  const ctaColor = loggedIn
+    ? "bg-[#5A8F6E] hover:bg-[#4F7E60]"
+    : "bg-[#AD5F59] hover:bg-[#9C544E]"
+
   return (
     <section id="hero-section" className="relative flex flex-col overflow-hidden bg-[#FAF7F4]">
 
@@ -290,11 +316,11 @@ export function LandingHeroSection() {
               </span>
             </a>
             <a
-              href={guideLink}
-              className="inline-flex min-h-[3.1rem] w-full items-center justify-center rounded-full bg-[#AD5F59] px-4 py-2.5 shadow-[0_22px_48px_rgba(34,25,21,0.28)] transition-all hover:bg-[#9C544E] sm:min-h-[3.35rem] sm:px-5 min-[390px]:min-h-[3.75rem] min-[390px]:px-6 md:min-h-[4rem] md:px-8"
+              href={ctaHref}
+              className={`inline-flex min-h-[3.1rem] w-full items-center justify-center rounded-full ${ctaColor} px-4 py-2.5 shadow-[0_22px_48px_rgba(34,25,21,0.28)] transition-all sm:min-h-[3.35rem] sm:px-5 min-[390px]:min-h-[3.75rem] min-[390px]:px-6 md:min-h-[4rem] md:px-8`}
             >
               <span className="inline-flex items-center gap-2 font-sans text-[10px] font-semibold uppercase tracking-[0.18em] text-white min-[390px]:text-[11px] min-[390px]:tracking-[0.24em] md:text-[12px] md:tracking-[0.28em]">
-                Методичка за 12€
+                {ctaLabel}
                 <ArrowRightIcon size={16} />
               </span>
             </a>
@@ -381,11 +407,11 @@ export function LandingHeroSection() {
                 </span>
               </a>
               <a
-                href={guideLink}
-                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#AD5F59] px-8 py-3 text-white shadow-[0_14px_30px_-12px_rgba(210,145,140,0.75)] transition-all hover:bg-[#9C544E] xl:flex-1"
+                href={ctaHref}
+                className={`inline-flex items-center justify-center gap-2 rounded-2xl ${ctaColor} px-8 py-3 text-white shadow-[0_14px_30px_-12px_rgba(210,145,140,0.75)] transition-all xl:flex-1`}
               >
                 <span className="inline-flex items-center gap-2 font-sans text-sm font-semibold">
-                  Методичка за 12€
+                  {ctaLabel}
                   <ArrowRightIcon size={16} />
                 </span>
               </a>

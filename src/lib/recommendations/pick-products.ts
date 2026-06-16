@@ -7,7 +7,7 @@
 
 import type { LimbaCategory } from '@/config/limba-products'
 import { getProductsByIds } from '@/config/limba-products'
-import type { SavedDiagnosis, HairDeficits } from '@/lib/progress'
+import type { SavedDiagnosis, HairDeficits, Porosity } from '@/lib/progress'
 
 export type QuizAnswers = Record<string, string>
 
@@ -39,12 +39,24 @@ export function needsHeatProtection(answers: QuizAnswers, damageLevel: number): 
 }
 
 /**
- * Scalp detox (green shampoo + peel) is an ADD-ON to the main set, suggested
+ * Oily-scalp signal — the scalp PEEL is suggested on top of the green shampoo
  * when the user washes daily (oily-prone scalp) or signs mention oiliness.
  */
 export function needsScalpDetox(answers: QuizAnswers, signs: string[] = []): boolean {
   const oilyMentioned = signs.some((s) => /жир|сальн|себум|корн/i.test(s))
   return washesDaily(answers) || oilyMentioned
+}
+
+/**
+ * The green detox shampoo is recommended for (almost) everyone. Frequency
+ * depends on how often the hair is washed: rare washers (раз в неделю) use it
+ * once every 2-3 weeks, everyone else once a week.
+ */
+export function detoxFrequencyAdvice(answers: QuizAnswers): string {
+  const rare = answers['q2'] === 'q2_d' // моет голову раз в неделю
+  return rare
+    ? 'Зелёный детокс-шампунь: раз в 2-3 недели, мягко очищает кожу головы (ты моешь голову редко).'
+    : 'Зелёный детокс-шампунь: раз в неделю, очищает кожу головы от налёта и себума.'
 }
 
 /**
@@ -178,16 +190,82 @@ function shortName(id: string): string {
   return p.name.replace(/^(Маска|Кондиционер|Шампунь|Крем-термозащита|Крем|Спрей-термозащита|Спрей-финиш|Пептидная маска)\s+Limba\s*/i, '').trim() || p.name
 }
 
+// ── Structure (q11) & porosity photo (q12) ─────────────────────────────────
+// These two test questions sharpen the mask choice. Per Elena's rule: high
+// porosity → hydrating (green), medium porosity / tangling → discipline
+// (beige). We COMBINE the test with the AI photo read; the cautious side wins
+// for over-moisture (if either says "medium / tangling", we play it safe).
+
+/** Porosity picked in the picture question (q12), if answered. */
+export function quizPorosity(a: QuizAnswers): Porosity | undefined {
+  switch (a['q12']) {
+    case 'q12_a': return 'low'
+    case 'q12_b': return 'medium'
+    case 'q12_c': return 'high'
+    default: return undefined
+  }
+}
+
+/** Hair feels thin by structure (q11_b). */
+function quizSaysThin(a: QuizAnswers): boolean {
+  return a['q11'] === 'q11_b'
+}
+
+/** Hair is curly by structure (q11_f). */
+function quizSaysCurly(a: QuizAnswers): boolean {
+  return a['q11'] === 'q11_f'
+}
+
+/**
+ * Colored / bleached / toned hair → pink Color Prolonger pair.
+ * (q1 окрашенные/осветлённые/блонд, or the AI line is color.)
+ */
+function isColoredHair(primary: PrimaryCategory, a: QuizAnswers, d: SavedDiagnosis): boolean {
+  return (
+    primary === 'color' ||
+    d.recommendedCategory === 'color' ||
+    a['q1'] === 'q1_b' ||
+    a['q1'] === 'q1_c' ||
+    a['q1'] === 'q1_d'
+  )
+}
+
+/**
+ * Porous / curly / dry / fluffy / strongly tangling hair → green Hydrating pair.
+ * Combines the structure question (q11), the porosity photo (q12 = high), the
+ * main concern (q3) and the AI photo read.
+ */
+function needsHydrationPair(a: QuizAnswers, d: SavedDiagnosis): boolean {
+  return (
+    a['q3'] === 'q3_a' || // сухость и пушистость
+    a['q3'] === 'q3_c' || // путаются, плохо расчёсываются
+    ['q11_a', 'q11_c', 'q11_d', 'q11_e'].includes(a['q11']) || // пушистые / сухие / запутываются
+    quizSaysCurly(a) || // q11_f кудрявые, пористые
+    quizPorosity(a) === 'high' ||
+    d.porosity === 'high' ||
+    d.hairForm === 'curly' ||
+    Boolean(d.deficits?.hydration)
+  )
+}
+
 /**
  * Resolve what the hair lacks. Prefers the AI's visual deficits; falls back to
  * quiz-derived guesses when the photo analysis is missing (older saved data).
+ * The structure question (q11) and porosity photo (q12) reinforce the deficits.
  */
 export function resolveDeficits(answers: QuizAnswers, d: SavedDiagnosis): HairDeficits {
-  if (d.deficits) return d.deficits
-  return {
+  const base: HairDeficits = d.deficits ?? {
     hydration: answers['q3'] === 'q3_a' || d.recommendedCategory === 'hydration',
     protein: answers['q3'] === 'q3_b' || (d.damageLevel ?? 0) >= 3,
     lipids: answers['q3'] === 'q3_c' || answers['q3'] === 'q3_d',
+  }
+  return {
+    hydration:
+      base.hydration ||
+      ['q11_a', 'q11_c', 'q11_f'].includes(answers['q11']) ||
+      quizPorosity(answers) === 'high',
+    protein: base.protein || quizSaysThin(answers),
+    lipids: base.lipids || answers['q11'] === 'q11_d' || answers['q11'] === 'q11_e',
   }
 }
 
@@ -199,40 +277,45 @@ const MASK = {
   peptide: 'limba-peptide-mask',    // Instant Transformation — прочность / несмывашка
 } as const
 
-/** Up to two masks for rotation (+ peptide as a treatment when damaged). */
+/**
+ * Masks in priority order. The FIRST is the recommended (главная) mask shown as
+ * "твоя маска"; the rest are optional, offered softly for alternation.
+ * Bucket mask (need-specific) leads in most cases; Rejuvenating (фиолетовая)
+ * covers protein + lipids and is the usual second:
+ *   1. Colored / bleached / toned       → главная розовая Color, then фиолетовая
+ *   2. Porous / curly / dry / fluffy /  → главная зелёная Hydrating, then фиолетовая
+ *      strongly tangling
+ *   3. Everyone else                    → главная бежевая Discipline, then фиолетовая
+ * On heavy damage (4-5/5 or destroyed ends) Rejuvenating becomes главная and the
+ * peptide mask is added as extra strength.
+ */
 export function pickMasks(
   primary: PrimaryCategory,
   answers: QuizAnswers,
   d: SavedDiagnosis
 ): string[] {
   const deficits = resolveDeficits(answers, d)
-  const tangles = answers['q3'] === 'q3_c'
-  const isColoredType = d.recommendedCategory === 'color' || primary === 'color'
 
-  const masks: string[] = []
-
-  // Mask A — the main line mask.
-  if (primary === 'color') {
-    masks.push(MASK.color)
-  } else if (primary === 'volume') {
-    masks.push(MASK.rejuvenating)
+  // Bucket mask (need-specific): green / pink / beige.
+  let bucketMask: string
+  if (isColoredHair(primary, answers, d)) {
+    bucketMask = MASK.color
+  } else if (needsHydrationPair(answers, d)) {
+    bucketMask = MASK.hydrating
   } else {
-    // hydration line: discipline when tangling / over-moisture risk, else hydrating
-    masks.push(tangles || d.overMoistureRisk ? MASK.discipline : MASK.hydrating)
+    bucketMask = MASK.discipline
   }
 
-  // Mask B — complement by deficit (different from A).
-  if ((deficits.protein || deficits.lipids) && !masks.includes(MASK.rejuvenating)) {
-    masks.push(MASK.rejuvenating)
-  } else if (deficits.hydration && !d.overMoistureRisk && !masks.includes(MASK.hydrating)) {
-    masks.push(MASK.hydrating)
-  } else if (isColoredType && !masks.includes(MASK.color)) {
-    masks.push(MASK.color)
-  }
+  // Главная маска первой: обычно маска по корзине, но при сильном повреждении
+  // ведущей становится восстанавливающая (фиолетовая Rejuvenating).
+  const repairFirst = (d.damageLevel ?? 0) >= 4 || Boolean(d.irreversibleEnds)
+  const masks = repairFirst
+    ? [MASK.rejuvenating, bucketMask]
+    : [bucketMask, MASK.rejuvenating]
 
-  // Peptide as a strength treatment for heavier damage / destroyed ends.
-  if (((d.damageLevel ?? 0) >= 4 || d.irreversibleEnds || deficits.protein) && !masks.includes(MASK.peptide)) {
-    masks.push(MASK.peptide)
+  // Peptide as extra strength for heavier damage / destroyed ends / weak protein.
+  if ((d.damageLevel ?? 0) >= 4 || d.irreversibleEnds || deficits.protein) {
+    if (!masks.includes(MASK.peptide)) masks.push(MASK.peptide)
   }
 
   return [...new Set(masks)].slice(0, 3)
@@ -321,7 +404,13 @@ export interface CarePlan {
   shampoo: string
   detox: boolean
   detoxIds: string[]
+  /** Frequency advice for the green detox shampoo. */
+  detoxAdvice: string
   masks: string[]
+  /** The recommended (главная) mask — shown as «твоя маска». */
+  primaryMask: string
+  /** Optional masks for alternation, shown softly (not pushed). */
+  optionalMasks: string[]
   conditioner: string
   leaveIns: string[]
   schedule: string[]
@@ -351,13 +440,21 @@ export function buildCarePlan(answers: QuizAnswers, d: SavedDiagnosis): CarePlan
         : undefined
 
   const shampoo = `limba-${primary}-shampoo`
-  const detox = needsScalpDetox(answers, d.signs) || aiPrimary === 'detox' || aiSecondary === 'detox'
-  const detoxIds = detox ? ['limba-detox-shampoo', 'limba-scalp-peel'] : []
+  // Green detox shampoo is recommended for (almost) everyone now; the scalp
+  // peel stays an oily-scalp add-on.
+  const oilyScalp = needsScalpDetox(answers, d.signs) || aiPrimary === 'detox' || aiSecondary === 'detox'
+  const detoxIds = ['limba-detox-shampoo', ...(oilyScalp ? ['limba-scalp-peel'] : [])]
+  const detox = true
+  const detoxAdvice = detoxFrequencyAdvice(answers)
 
   const masks = pickMasks(primary, answers, d)
+  const primaryMask = masks[0]
+  const optionalMasks = masks.slice(1)
   const conditioner = pickConditioner(primary, d)
   const leaveIns = pickLeaveIns(answers, d)
-  const schedule = buildSchedule(masks, conditioner, d)
+  // Schedule is written around the recommended (главная) mask; the optional
+  // masks are an upgrade for alternation, shown softly on the page.
+  const schedule = buildSchedule([primaryMask], conditioner, d)
   const regimen = buildRegimen(answers, d)
 
   const reasons: string[] = []
@@ -379,7 +476,7 @@ export function buildCarePlan(answers: QuizAnswers, d: SavedDiagnosis): CarePlan
     ...new Set([
       shampoo,
       conditioner,
-      ...masks,
+      primaryMask,
       ...leaveIns,
       ...detoxIds,
     ]),
@@ -391,7 +488,10 @@ export function buildCarePlan(answers: QuizAnswers, d: SavedDiagnosis): CarePlan
     shampoo,
     detox,
     detoxIds,
+    detoxAdvice,
     masks,
+    primaryMask,
+    optionalMasks,
     conditioner,
     leaveIns,
     schedule,

@@ -20,7 +20,7 @@ export default function QuizPage() {
             Тест по состоянию волос
           </h1>
           <p className="text-sm text-[#666]">
-            10 вопросов. Займёт около 2 минут.
+            12 вопросов. Займёт около 2 минут.
           </p>
         </div>
         <QuizContainer />
