@@ -66,24 +66,23 @@ export default function CarePage() {
 
   const view = useMemo(() => {
     if (!plan) return null
-    // Main set holds only the recommended (главная) mask; the optional masks are
-    // a soft alternation upgrade and stay out of the main total.
-    const setProducts = getProductsByIds([plan.shampoo, plan.conditioner, plan.primaryMask])
-    const optionalMaskProducts = getProductsByIds(plan.optionalMasks)
-    const leaveInProducts = getProductsByIds(plan.leaveIns)
+    // Core set: shampoo + conditioner + главная mask + one thermal protection.
+    const setProducts = getProductsByIds([plan.shampoo, plan.conditioner, plan.primaryMask, plan.thermalProtection])
+    const additionalMaskProducts = plan.additionalMask ? getProductsByIds([plan.additionalMask]) : []
+    const peptideProducts = plan.peptideMask ? getProductsByIds([plan.peptideMask]) : []
+    const finishProducts = plan.finish ? getProductsByIds([plan.finish]) : []
     const detoxProducts = getProductsByIds(plan.detoxIds)
     const setTotal = setProducts.reduce((a, p) => a + p.price_eur, 0)
-    const leaveInTotal = leaveInProducts.reduce((a, p) => a + p.price_eur, 0)
     const detoxTotal = detoxProducts.reduce((a, p) => a + p.price_eur, 0)
     return {
       setProducts,
-      optionalMaskProducts,
-      leaveInProducts,
+      additionalMaskProducts,
+      peptideProducts,
+      finishProducts,
       detoxProducts,
       setTotal,
-      leaveInTotal,
       detoxTotal,
-      grandTotal: setTotal + leaveInTotal + detoxTotal,
+      grandTotal: setTotal + detoxTotal,
     }
   }, [plan])
 
@@ -98,10 +97,22 @@ export default function CarePage() {
     )
   }
 
+  // Itemised order for Elena: every recommended product on its own line.
+  const fmt = (p: { name: string; price_eur: number }) => `• ${p.name} — ${p.price_eur}€`
+  const orderProducts = [...view.setProducts, ...view.detoxProducts]
+  const optionalProducts = [
+    ...view.additionalMaskProducts,
+    ...view.peptideProducts,
+    ...view.finishProducts,
+  ]
   const waMessage = encodeURIComponent(
-    `Здравствуйте! Прошла тест и AI-анализ. Хочу набор Limba ${getCategoryLabel(plan.primary)}` +
-      (plan.detox ? " + детокс для кожи головы" : "") +
-      `. Итого ${view.grandTotal}€. Заберу в студии Мадрид.`
+    "Здравствуйте! Прошла тест и AI-анализ. Хочу заказать уход Limba:\n" +
+      orderProducts.map(fmt).join("\n") +
+      `\nИтого набор: ${view.grandTotal}€.` +
+      (optionalProducts.length
+        ? "\n\nДополнительно по желанию:\n" + optionalProducts.map(fmt).join("\n")
+        : "") +
+      "\nСамовывоз, студия HAIRLAB Мадрид."
   )
   const waLink = `${CONTACT_INFO.whatsapp.url}?text=${waMessage}`
 
@@ -215,7 +226,7 @@ export default function CarePage() {
         )}
 
         {/* Optional second mask — alternation upgrade, shown softly */}
-        {view.optionalMaskProducts.length > 0 && (
+        {view.additionalMaskProducts.length > 0 && (
           <section className="mt-8">
             <div className="mb-1 inline-flex rounded-sm bg-[#C4956A]/15 px-3 py-1.5">
               <span className="font-sans text-xs font-semibold uppercase tracking-[0.12em] text-[#C4956A]">
@@ -231,7 +242,7 @@ export default function CarePage() {
               закрыть и другой дефицит.
             </p>
             <div className="grid gap-3 sm:grid-cols-2">
-              {view.optionalMaskProducts.map((p) => (
+              {view.additionalMaskProducts.map((p) => (
                 <ProductCard
                   key={p.id}
                   id={p.id}
@@ -245,18 +256,53 @@ export default function CarePage() {
           </section>
         )}
 
-        {/* Leave-ins / finish */}
-        {view.leaveInProducts.length > 0 && (
+        {/* Peptide mask — separate strength treatment, only on heavier damage */}
+        {view.peptideProducts.length > 0 && (
           <section className="mt-8">
-            <h2 className="mb-1 font-hero-face text-xl font-semibold text-[#1A1A1A]">
-              Защита и финиш
+            <div className="mb-1 inline-flex rounded-sm bg-[#C4956A]/15 px-3 py-1.5">
+              <span className="font-sans text-xs font-semibold uppercase tracking-[0.12em] text-[#C4956A]">
+                по желанию · при сильном повреждении
+              </span>
+            </div>
+            <h2 className="mb-2 mt-3 font-hero-face text-xl font-semibold text-[#1A1A1A]">
+              Пептидная маска для прочности
             </h2>
             <p className="mb-4 font-body text-sm leading-relaxed text-[#666]">
-              Несмываемый уход и термозащита: наносятся на влажные волосы перед сушкой и
-              после укладки.
+              При сильном повреждении: уплотняет волос и повышает прочность.
+              Можно как несмываемый уход на влажные волосы или усилением в маске.
             </p>
             <div className="grid gap-3 sm:grid-cols-2">
-              {view.leaveInProducts.map((p) => (
+              {view.peptideProducts.map((p) => (
+                <ProductCard
+                  key={p.id}
+                  id={p.id}
+                  name={p.name}
+                  description={p.description}
+                  priceEur={p.price_eur}
+                  imagePath={p.image}
+                />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Finish — Golden Hour, only for active heat styling */}
+        {view.finishProducts.length > 0 && (
+          <section className="mt-8">
+            <div className="mb-1 inline-flex rounded-sm bg-[#C4956A]/15 px-3 py-1.5">
+              <span className="font-sans text-xs font-semibold uppercase tracking-[0.12em] text-[#C4956A]">
+                по желанию · финиш
+              </span>
+            </div>
+            <h2 className="mb-2 mt-3 font-hero-face text-xl font-semibold text-[#1A1A1A]">
+              Финиш после укладки
+            </h2>
+            <p className="mb-4 font-body text-sm leading-relaxed text-[#666]">
+              Блеск, гладкость и защита длины после укладки. Рекомендуем, потому
+              что ты активно пользуешься феном или утюжком.
+            </p>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {view.finishProducts.map((p) => (
                 <ProductCard
                   key={p.id}
                   id={p.id}

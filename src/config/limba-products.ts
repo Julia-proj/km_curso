@@ -192,9 +192,9 @@ export const LIMBA_PRODUCTS: LimbaProduct[] = [
   {
     id: 'limba-heat-protection',
     name: 'Спрей-термозащита Limba Protein',
-    description: 'Защита от фена, утюжка и стайлера. Разглаживает и питает. Универсальный шаг для всех.',
+    description: 'Универсальная защита от термического и механического воздействия при укладке. Распутывает, разглаживает пористые, окрашенные и повреждённые волосы, даёт мягкость и блеск. Гидролизаты шёлка, пшеницы и риса укрепляют и предотвращают ломкость и сечение, есть UV-фильтр. Подходит всем.',
     price_eur: PRICES.heatProtection,
-    image: '/images/limba/thermo.png',
+    image: '/images/limba/thermo_spray.png',
     category: 'universal',
   },
   {
