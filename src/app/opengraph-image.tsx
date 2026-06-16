@@ -5,7 +5,7 @@ import { join } from 'node:path'
 // Branded link-preview card shown when hairlab.es is shared in chats and posts.
 // 1200x630 is the Open Graph standard. Rendered with PT Serif so the Cyrillic
 // copy displays correctly (the default next/og font has no Cyrillic glyphs).
-export const alt = 'HAIRLAB · подбор ухода за волосами по фото и тесту'
+export const alt = 'HAIRLAB · салонное восстановление волос дома, бесплатный тест и AI-диагностика по фото'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -82,15 +82,33 @@ export default async function Image() {
           }}
         />
 
-        {/* tagline */}
+        {/* tagline: promise on top, free-test hook below in the accent tone */}
         <div
           style={{
             display: 'flex',
-            fontSize: 42,
-            color: '#57524B',
+            flexDirection: 'column',
+            alignItems: 'center',
           }}
         >
-          Подбор ухода по фото и тесту
+          <div
+            style={{
+              display: 'flex',
+              fontSize: 46,
+              color: '#1C1A17',
+            }}
+          >
+            Салонное восстановление волос дома
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              fontSize: 28,
+              color: '#9C544E',
+              marginTop: 20,
+            }}
+          >
+            Бесплатный тест и AI-диагностика по фото
+          </div>
         </div>
 
         {/* footer url */}
