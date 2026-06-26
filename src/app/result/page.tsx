@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { PrePaymentNav } from '@/components/Navigation'
 import { useQuizStore } from '@/stores/quiz-store'
 import { quizQuestions } from '@/config/quiz-data'
+import { asIds } from '@/lib/quiz-answers'
 import { createClient } from '@/lib/supabase/client'
 
 function getFeedback(questionId: string, optionId: string): string {
@@ -99,15 +100,14 @@ export default function ResultPage() {
         </h1>
 
         <div className="flex flex-col gap-4 mb-10">
-          {INSIGHT_QUESTIONS.map(({ id, label }) => {
-            const optionId = answers[id]
-            if (!optionId) return null
-            const feedback = getFeedback(id, optionId)
-            if (!feedback) return null
-            const answerLabel = getOptionLabel(id, optionId)
-            return (
-              <div
-                key={id}
+          {INSIGHT_QUESTIONS.flatMap(({ id, label }) =>
+            asIds(answers[id]).map((optionId) => {
+              const feedback = getFeedback(id, optionId)
+              if (!feedback) return null
+              const answerLabel = getOptionLabel(id, optionId)
+              return (
+                <div
+                  key={`${id}-${optionId}`}
                 style={{
                   border: "1px solid var(--color-line)",
                   borderRadius: "2px",
@@ -152,8 +152,9 @@ export default function ResultPage() {
                   {feedback}
                 </p>
               </div>
-            )
-          })}
+              )
+            })
+          )}
         </div>
 
         <div

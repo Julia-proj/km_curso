@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { AnimatePresence } from 'framer-motion'
 import { useQuizStore } from '@/stores/quiz-store'
 import { quizQuestions } from '@/config/quiz-data'
+import { asIds } from '@/lib/quiz-answers'
 import { QuizQuestion } from './QuizQuestion'
 import { QuizProgress } from './QuizProgress'
 
@@ -27,9 +28,22 @@ export function QuizContainer() {
   if (currentStep >= total) return null
 
   const question = quizQuestions[currentStep]
-  const selectedOptionId = answers[question.id] ?? null
+  const maxSelect = question.maxSelect ?? 1
+  const isMulti = maxSelect > 1
+  const selectedIds = asIds(answers[question.id])
 
   const handleSelect = (optionId: string) => {
+    if (isMulti) {
+      // Toggle within the array, capped at maxSelect. No auto-advance — the
+      // user confirms with the "Продолжить" button below.
+      const next = selectedIds.includes(optionId)
+        ? selectedIds.filter((id) => id !== optionId)
+        : selectedIds.length < maxSelect
+          ? [...selectedIds, optionId]
+          : selectedIds
+      setAnswer(question.id, next)
+      return
+    }
     setAnswer(question.id, optionId)
     setTimeout(() => nextStep(), 350)
   }
@@ -49,7 +63,8 @@ export function QuizContainer() {
           <QuizQuestion
             key={question.id}
             question={question}
-            selectedOptionId={selectedOptionId}
+            selectedIds={selectedIds}
+            maxSelect={maxSelect}
             onSelect={handleSelect}
           />
         </AnimatePresence>
@@ -75,7 +90,25 @@ export function QuizContainer() {
         ) : (
           <span />
         )}
-        <span />
+        {isMulti ? (
+          <button
+            type="button"
+            onClick={() => nextStep()}
+            disabled={selectedIds.length === 0}
+            className="text-sm font-semibold transition-colors flex items-center gap-2 px-5 py-2 rounded-sm disabled:opacity-40 disabled:cursor-not-allowed"
+            style={{
+              color: "var(--color-paper)",
+              background: "var(--color-ink)",
+            }}
+          >
+            Продолжить
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </button>
+        ) : (
+          <span />
+        )}
       </div>
     </div>
   )

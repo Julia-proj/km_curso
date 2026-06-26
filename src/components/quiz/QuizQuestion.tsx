@@ -6,12 +6,14 @@ import { QuizOption } from './QuizOption'
 
 interface QuizQuestionProps {
   question: QuizQuestionType
-  selectedOptionId: string | null
+  selectedIds: string[]
+  maxSelect: number
   onSelect: (optionId: string) => void
 }
 
-export function QuizQuestion({ question, selectedOptionId, onSelect }: QuizQuestionProps) {
+export function QuizQuestion({ question, selectedIds, maxSelect, onSelect }: QuizQuestionProps) {
   const hasImages = question.options.some((o) => o.image)
+  const isMulti = maxSelect > 1
   return (
     <motion.div
       key={question.id}
@@ -24,6 +26,11 @@ export function QuizQuestion({ question, selectedOptionId, onSelect }: QuizQuest
       <h2 className="text-xl sm:text-2xl font-semibold text-[#1A1A1A] leading-snug">
         {question.question}
       </h2>
+      {isMulti && (
+        <p className="-mt-2 text-sm text-[#888]">
+          Можно выбрать до {maxSelect} вариантов
+        </p>
+      )}
       <div
         className={
           hasImages
@@ -36,7 +43,8 @@ export function QuizQuestion({ question, selectedOptionId, onSelect }: QuizQuest
             key={option.id}
             label={option.label}
             image={option.image}
-            selected={selectedOptionId === option.id}
+            selected={selectedIds.includes(option.id)}
+            multi={isMulti}
             onClick={() => onSelect(option.id)}
           />
         ))}

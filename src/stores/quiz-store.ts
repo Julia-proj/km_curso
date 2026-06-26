@@ -2,12 +2,13 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { quizQuestions } from '@/config/quiz-data'
 import type { DamageLevel } from '@/types/quiz'
+import { asIds, type AnswerValue } from '@/lib/quiz-answers'
 
 interface QuizStore {
   currentStep: number
-  /** questionId -> selected optionId */
-  answers: Record<string, string>
-  setAnswer: (questionId: string, optionId: string) => void
+  /** questionId -> selected optionId(s). Multi-select questions store an array. */
+  answers: Record<string, AnswerValue>
+  setAnswer: (questionId: string, value: AnswerValue) => void
   nextStep: () => void
   prevStep: () => void
   getScore: () => number
@@ -23,9 +24,9 @@ export const useQuizStore = create<QuizStore>()(
       currentStep: 0,
       answers: {},
 
-      setAnswer: (questionId, optionId) =>
+      setAnswer: (questionId, value) =>
         set((state) => ({
-          answers: { ...state.answers, [questionId]: optionId },
+          answers: { ...state.answers, [questionId]: value },
         })),
 
       nextStep: () => set((state) => ({ currentStep: state.currentStep + 1 })),
@@ -36,10 +37,14 @@ export const useQuizStore = create<QuizStore>()(
       getScore: () => {
         const { answers } = get()
         return quizQuestions.reduce((total, question) => {
-          const selectedOptionId = answers[question.id]
-          if (!selectedOptionId) return total
-          const option = question.options.find((o) => o.id === selectedOptionId)
-          return total + (option?.score ?? 0)
+          const ids = asIds(answers[question.id])
+          if (ids.length === 0) return total
+          // Multi-select questions contribute the MAX of the selected options
+          // (the most severe concern) so two picks never inflate the scale.
+          const scores = ids.map(
+            (id) => question.options.find((o) => o.id === id)?.score ?? 0
+          )
+          return total + Math.max(...scores)
         }, 0)
       },
 
@@ -52,7 +57,7 @@ export const useQuizStore = create<QuizStore>()(
 
       isCompleted: () => {
         const { answers } = get()
-        return quizQuestions.every((q) => Boolean(answers[q.id]))
+        return quizQuestions.every((q) => asIds(answers[q.id]).length > 0)
       },
 
       reset: () => set({ currentStep: 0, answers: {} }),

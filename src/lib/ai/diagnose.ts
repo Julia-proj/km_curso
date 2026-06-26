@@ -2,6 +2,7 @@ import { z } from 'zod';
 import OpenAI from 'openai';
 import { zodResponseFormat } from 'openai/helpers/zod';
 import { quizQuestions } from '@/config/quiz-data';
+import { asIds, getConcerns, type AnswerMap } from '@/lib/quiz-answers';
 
 function getOpenAI() {
   if (!process.env.OPENAI_API_KEY) {
@@ -83,15 +84,19 @@ export interface QuizContext {
   recent_treatments?: string[];
 }
 
-/** Human-readable label for a selected quiz option (q-code -> label). */
-function quizLabel(
-  questionId: string,
-  answers: Record<string, string>
-): string | undefined {
-  const optionId = answers[questionId];
-  if (!optionId) return undefined;
+/** Label for a specific (questionId, optionId) pair. */
+function optionLabel(questionId: string, optionId: string): string | undefined {
   const question = quizQuestions.find((q) => q.id === questionId);
   return question?.options.find((o) => o.id === optionId)?.label;
+}
+
+/** Human-readable label for a single-select quiz option (q-code -> label). */
+function quizLabel(
+  questionId: string,
+  answers: AnswerMap
+): string | undefined {
+  const optionId = asIds(answers[questionId])[0];
+  return optionId ? optionLabel(questionId, optionId) : undefined;
 }
 
 /**
@@ -100,7 +105,7 @@ function quizLabel(
  * when the quiz hasn't been answered so the prompt falls back to "photo only".
  */
 export function quizAnswersToContext(
-  answers: Record<string, string> | null | undefined
+  answers: AnswerMap | null | undefined
 ): QuizContext | undefined {
   if (!answers || Object.keys(answers).length === 0) return undefined;
 
@@ -118,9 +123,15 @@ export function quizAnswersToContext(
     (v): v is string => Boolean(v)
   );
 
+  // q3 is multi-select (up to two concerns): join their labels for the prompt.
+  const concernLabels = getConcerns(answers)
+    .map((id) => optionLabel('q3', id))
+    .filter((v): v is string => Boolean(v));
+  const main_concern = concernLabels.length ? concernLabels.join(', ') : undefined;
+
   return {
     hair_type: quizLabel('q1', answers),
-    main_concern: quizLabel('q3', answers),
+    main_concern,
     wash_frequency: quizLabel('q2', answers),
     heat_styling,
     recent_treatments,

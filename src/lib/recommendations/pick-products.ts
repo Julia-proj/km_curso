@@ -9,8 +9,9 @@ import type { LimbaCategory } from '@/config/limba-products'
 import { getProductsByIds } from '@/config/limba-products'
 import type { SavedDiagnosis, HairDeficits, Porosity } from '@/lib/progress'
 import { quizQuestions } from '@/config/quiz-data'
+import { getConcerns, asIds } from '@/lib/quiz-answers'
 
-export type QuizAnswers = Record<string, string>
+export type QuizAnswers = Record<string, string | string[]>
 
 /** Universal heat-protection advice line — single source of truth. */
 export const HEAT_PROTECTION_ADVICE =
@@ -45,7 +46,8 @@ export function needsHeatProtection(answers: QuizAnswers, damageLevel: number): 
  */
 export function needsScalpDetox(answers: QuizAnswers, signs: string[] = []): boolean {
   const oilyMentioned = signs.some((s) => /жир|сальн|себум|корн/i.test(s))
-  return washesDaily(answers) || oilyMentioned
+  const oilyConcern = getConcerns(answers).includes('q3_f')
+  return washesDaily(answers) || oilyMentioned || oilyConcern
 }
 
 /**
@@ -65,7 +67,7 @@ export function detoxFrequencyAdvice(answers: QuizAnswers): string {
  * (default) vs a disciplining mask when the main concern is tangling.
  */
 export function resolveMaskId(primary: LimbaCategory, answers: QuizAnswers): string {
-  if (primary === 'hydration' && answers['q3'] === 'q3_c') {
+  if (primary === 'hydration' && getConcerns(answers).includes('q3_c')) {
     return 'limba-discipline-mask'
   }
   return `limba-${primary}-mask`
@@ -116,21 +118,32 @@ export function inferCategory(answers: QuizAnswers): {
       break
   }
 
-  // Q3 — main concern
-  switch (answers['q3']) {
-    case 'q3_a': // сухость и пушистость
-      score.hydration += 3
-      break
-    case 'q3_b': // ломкость и потеря длины
-      score.volume += 2
-      score.hydration += 1
-      break
-    case 'q3_c': // путаются / плохо расчёсываются
-      score.hydration += 2
-      break
-    case 'q3_d': // тусклость
-      score.color += 1
-      break
+  // Q3 — main concern(s). Up to two are selected; weights add up so two
+  // concerns naturally produce a primary + secondary line.
+  for (const concern of getConcerns(answers)) {
+    switch (concern) {
+      case 'q3_a': // сухость и пушистость
+        score.hydration += 3
+        break
+      case 'q3_b': // ломкость и потеря длины
+        score.volume += 2
+        score.hydration += 1
+        break
+      case 'q3_c': // путаются / плохо расчёсываются
+        score.hydration += 2
+        break
+      case 'q3_d': // тусклость
+        score.color += 1
+        break
+      case 'q3_e': // секущиеся кончики — лёгкая гидрация, защита длины
+        score.hydration += 2
+        break
+      case 'q3_g': // тоньше / потеря объёма
+        score.volume += 2
+        break
+      // q3_f (жирнятся) — это кожа головы, не волокно: детокс не primary,
+      // обрабатывается в needsScalpDetox.
+    }
   }
 
   const ordered = (Object.keys(score) as PrimaryCategory[]).sort(
@@ -207,9 +220,9 @@ export function quizPorosity(a: QuizAnswers): Porosity | undefined {
   }
 }
 
-/** Hair feels thin by structure (q11_b). */
+/** Hair feels thin by structure (q11_b) or the user names volume loss (q3_g). */
 function quizSaysThin(a: QuizAnswers): boolean {
-  return a['q11'] === 'q11_b'
+  return a['q11'] === 'q11_b' || getConcerns(a).includes('q3_g')
 }
 
 /** Hair is curly by structure (q11_f). */
@@ -220,14 +233,17 @@ function quizSaysCurly(a: QuizAnswers): boolean {
 /** Cumulative test score (same scale as the quiz store: >9 = high damage). */
 function testScore(a: QuizAnswers): number {
   return quizQuestions.reduce((sum, q) => {
-    const opt = q.options.find((o) => o.id === a[q.id])
-    return sum + (opt?.score ?? 0)
+    const ids = asIds(a[q.id])
+    if (ids.length === 0) return sum
+    // Multi-select questions contribute the MAX selected score (same as the store).
+    const scores = ids.map((id) => q.options.find((o) => o.id === id)?.score ?? 0)
+    return sum + Math.max(...scores)
   }, 0)
 }
 
 /** Heavy damage inferred from the TEST only (stable, photo-independent). */
 function testDamageHigh(a: QuizAnswers): boolean {
-  return a['q1'] === 'q1_d' || a['q3'] === 'q3_b' || testScore(a) > 9
+  return a['q1'] === 'q1_d' || getConcerns(a).includes('q3_b') || testScore(a) > 9
 }
 
 /**
@@ -248,10 +264,12 @@ function isColoredHair(primary: PrimaryCategory, a: QuizAnswers): boolean {
  * Fully test-driven (q3 concern, q11 structure, q12 porosity photo).
  */
 function needsHydrationPair(a: QuizAnswers): boolean {
+  const concerns = getConcerns(a)
   return (
-    a['q3'] === 'q3_a' || // сухость и пушистость
-    a['q3'] === 'q3_c' || // путаются, плохо расчёсываются
-    ['q11_a', 'q11_c', 'q11_d', 'q11_e'].includes(a['q11']) || // пушистые / сухие / запутываются
+    concerns.includes('q3_a') || // сухость и пушистость
+    concerns.includes('q3_c') || // путаются, плохо расчёсываются
+    concerns.includes('q3_e') || // секущиеся кончики — увлажнение и защита длины
+    ['q11_a', 'q11_c', 'q11_d', 'q11_e'].includes(a['q11'] as string) || // пушистые / сухие / запутываются
     quizSaysCurly(a) || // q11_f кудрявые, пористые
     quizPorosity(a) === 'high'
   )
@@ -262,16 +280,21 @@ function needsHydrationPair(a: QuizAnswers): boolean {
  * shown separately in the "что показал AI" block but do NOT drive products.
  */
 export function resolveDeficits(answers: QuizAnswers): HairDeficits {
+  const concerns = getConcerns(answers)
   return {
     hydration:
-      answers['q3'] === 'q3_a' ||
-      ['q11_a', 'q11_c', 'q11_f'].includes(answers['q11']) ||
+      concerns.includes('q3_a') ||
+      ['q11_a', 'q11_c', 'q11_f'].includes(answers['q11'] as string) ||
       quizPorosity(answers) === 'high',
     protein:
-      answers['q3'] === 'q3_b' || quizSaysThin(answers) || testDamageHigh(answers),
+      concerns.includes('q3_b') ||
+      concerns.includes('q3_g') ||
+      quizSaysThin(answers) ||
+      testDamageHigh(answers),
     lipids:
-      answers['q3'] === 'q3_c' ||
-      answers['q3'] === 'q3_d' ||
+      concerns.includes('q3_c') ||
+      concerns.includes('q3_d') ||
+      concerns.includes('q3_e') ||
       answers['q11'] === 'q11_d' ||
       answers['q11'] === 'q11_e',
   }
@@ -444,8 +467,9 @@ export function buildCarePlan(answers: QuizAnswers, d: SavedDiagnosis): CarePlan
   const thermalProtection = pickThermalProtection(answers)
   const finish = usesHeatStyling(answers) ? 'limba-golden-hour' : undefined
 
-  // Green detox shampoo for everyone; peel only for frequent (daily) washing.
-  const oilyScalp = washesDaily(answers)
+  // Green detox shampoo for everyone; peel for frequent (daily) washing or an
+  // explicit oiliness concern (q3_f).
+  const oilyScalp = washesDaily(answers) || getConcerns(answers).includes('q3_f')
   const detoxIds = ['limba-detox-shampoo', ...(oilyScalp ? ['limba-scalp-peel'] : [])]
   const detox = true
   const detoxAdvice = detoxFrequencyAdvice(answers)
