@@ -115,6 +115,10 @@ export default function CarePage() {
       "\nСамовывоз, студия HAIRLAB Мадрид."
   )
   const waLink = `${CONTACT_INFO.whatsapp.url}?text=${waMessage}`
+  const otherCityMsg = encodeURIComponent(
+    "Я не из Мадрида. Подскажите, где купить Limba рядом со мной или чем заменить по составу."
+  )
+  const otherCityLink = `${CONTACT_INFO.whatsapp.url}?text=${otherCityMsg}`
 
   // Visual line: "прямые · средняя пористость · тонкая структура"
   const visualBits = [
@@ -138,6 +142,11 @@ export default function CarePage() {
         <p className="mt-3 font-body text-base leading-relaxed text-[#666]">
           На основе твоего теста и AI-анализа фото. Предварительный уровень повреждения:{" "}
           <span className="font-semibold text-[#1A1A1A]">{diagnosis.damageLevel}/5</span>.
+        </p>
+        <p className="mt-3 font-body text-sm leading-relaxed text-[#888]">
+          Это готовый вариант, если не хочешь разбираться в составах. Покупать не
+          обязательно: в курсе ты учишься подбирать любые средства сама, а Limba
+          просто одна из линий, которую мы тестируем.
         </p>
 
         {/* Block 1 — what the AI saw on the photo */}
@@ -380,7 +389,18 @@ export default function CarePage() {
           </a>
           <p className="mt-4 font-body text-sm leading-relaxed text-[#666]">
             Самовывоз из студии HAIRLAB Мадрид: <strong>{CONTACT_INFO.salon.address}</strong>.
-            Доставка по Испании появится позже.
+          </p>
+          <p className="mt-2 font-body text-sm leading-relaxed text-[#666]">
+            Из другого города или страны?{" "}
+            <a
+              href={otherCityLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-[#1A1A1A] underline underline-offset-2"
+            >
+              Напиши мне в WhatsApp
+            </a>
+            : подскажу, где купить Limba рядом с тобой или чем заменить по составу.
           </p>
           <p className="mt-3 font-body text-xs leading-relaxed text-[#999]">
             Все рекомендации предварительные и основаны на твоих ответах и AI-анализе фото. Точный подбор: в методичках, видео-уроках или на консультации.
