@@ -1,6 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
-import { getSupabase } from '@/lib/supabase'
-import { isAdminEmail } from '@/lib/admin'
+import { ensureProfile } from '@/lib/ensure-profile'
 import { NextResponse } from 'next/server'
 
 // The PKCE code verifier lives in a cookie on the host the user started the
@@ -29,30 +28,16 @@ export async function GET(request: Request) {
     return NextResponse.redirect(`${origin}/auth/login?error=exchange_failed`)
   }
 
-  // Ensure a profiles row exists for this user. Save the user id from auth.uid()
-  // and full_name from Google OAuth metadata. This row is required for
-  // lesson_progress (FK on profiles.id). Admin-allowlisted emails get full access.
+  // Ensure a profiles row exists for this user (id from auth.uid(), full_name
+  // from Google OAuth metadata, admin flags for allowlisted emails). Shared with
+  // the email-OTP sync route. Non-fatal — sign-in still succeeds on failure.
   try {
     const { data: { user } } = await supabase.auth.getUser()
-
-    if (user?.email) {
-      const db = getSupabase()
-      const fullName = user.user_metadata?.full_name || user.user_metadata?.name || null
-
-      const row = isAdminEmail(user.email)
-        ? { id: user.id, email: user.email, full_name: fullName, has_full_course: true, has_methodichka: true }
-        : { id: user.id, email: user.email, full_name: fullName }
-
-      const { error: upsertError } = await db
-        .from('profiles')
-        .upsert(row, { onConflict: 'email' })
-      if (upsertError) {
-        console.error('[auth/callback] profile upsert failed:', upsertError.message)
-      }
+    if (user) {
+      await ensureProfile(user)
     }
   } catch (e) {
-    console.error('[auth/callback] profile upsert failed:', e)
-    // Non-fatal — sign-in still succeeds.
+    console.error('[auth/callback] ensureProfile failed:', e)
   }
 
   return NextResponse.redirect(`${origin}/dashboard`)
